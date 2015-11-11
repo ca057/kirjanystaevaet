@@ -92,6 +92,13 @@
 			<artifactId>h2</artifactId>
 			<version>${dbh2.version}</version>
 		</dependency>
+		
+		<!-- WebMVC -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
 
 	</dependencies>
 </project>
