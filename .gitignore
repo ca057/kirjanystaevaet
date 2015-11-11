@@ -1,0 +1,8 @@
+# gitignore - ergänzen falls notwendig!
+
+*.prefs
+*.DS_Store
+/.recommenders
+/.metadata
+*/bin
+*.class
