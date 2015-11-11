@@ -17,7 +17,7 @@ public class RootConfig {
 		EmbeddedDatabase db = builder
 			.setType(EmbeddedDatabaseType.H2) 
 			// TODO File auswechseln
-			.addScript("classpath:DataDump_h2.txt")
+			.addScript("classpath:resources/DataDump_h2.txt")
 			.build();
 		return db;
 	}
