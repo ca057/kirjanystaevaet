@@ -12,7 +12,6 @@ public class Main {
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(RootConfig.class);
 		JdbcTemplate jdbc = ctx.getBean(JdbcTemplate.class);
 		
-		System.out.println(jdbc.queryForObject("select count(*) from nameF", Integer.class));
+		System.out.println(jdbc.queryForObject("select count(*) FROM PUBLIC.bookauthors", Integer.class));
 	}
-
 }

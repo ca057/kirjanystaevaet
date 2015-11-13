@@ -9,22 +9,16 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 public class RootConfig {
-	
-	@Bean
-	public DataSource getDataSource() {
-		// no need shutdown, EmbeddedDatabaseFactoryBean will take care of this
-		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-		EmbeddedDatabase db = builder
-			.setType(EmbeddedDatabaseType.H2) 
-			// TODO File auswechseln
-			.addScript("classpath:resources/DataDump_h2.txt")
-			.build();
-		return db;
-	}
 
 	@Bean
 	public JdbcTemplate getJdbcTemplate() {
-		return new JdbcTemplate(getDataSource());
+		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+		EmbeddedDatabase db = builder
+			.setType(EmbeddedDatabaseType.H2)
+			// TODO File auswechseln
+			.addScript("classpath:resources/DataDump_h2.txt")
+			.build();
+		return new JdbcTemplate(db);
 	}
 
 }
