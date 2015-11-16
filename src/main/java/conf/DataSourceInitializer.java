@@ -10,9 +10,18 @@ import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
+/**
+ * This class provides a DataSource. The database which is created is based on
+ * H2
+ * 
+ * @author Hannes
+ */
 @Configuration
 public class DataSourceInitializer {
 
+	/**
+	 * @return
+	 */
 	@Bean(name = "dataSource")
 	public DataSource getDataSource() {
 		DataSource dataSource = createDataSource();
@@ -23,7 +32,7 @@ public class DataSourceInitializer {
 	private DatabasePopulator createDatabasePopulator() {
 		ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
 		databasePopulator.setContinueOnError(true);
-		databasePopulator.addScript(new ClassPathResource("./resources/DataDump_h2.txt"));
+		databasePopulator.addScript(new ClassPathResource("./DataDump_h2.txt"));
 		return databasePopulator;
 	}
 
@@ -32,8 +41,9 @@ public class DataSourceInitializer {
 		simpleDriverDataSource.setDriverClass(org.h2.Driver.class);
 		simpleDriverDataSource.setUrl("jdbc:h2:./database/kirjanystaevaet;AUTO_RECONNECT=TRUE");
 
-		simpleDriverDataSource.setUsername("");
-		simpleDriverDataSource.setPassword("");
+		// TODO: Das muss dann ausgelagert werden
+		// simpleDriverDataSource.setUsername("");
+		// simpleDriverDataSource.setPassword("");
 		return simpleDriverDataSource;
 	}
 
