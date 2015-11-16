@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `bookauthors` (
+CREATE TABLE `bookauthors` (
   `AuthorID` int(11) NOT NULL AUTO_INCREMENT,
   `nameF` varchar(15) NOT NULL,
   `nameL` varchar(15) NOT NULL,
