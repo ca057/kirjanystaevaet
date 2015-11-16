@@ -6,3 +6,5 @@
 /.metadata
 */bin
 *.class
+*.db
+/.settings
