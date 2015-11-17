@@ -7,6 +7,3 @@
 */bin
 *.class
 *.db
-/.settings
-*.classpath
-*.project
