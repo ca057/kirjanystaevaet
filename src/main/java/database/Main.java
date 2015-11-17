@@ -23,3 +23,5 @@ public class Main {
 		System.out.println(jdbc.queryForObject("select count(*) FROM PUBLIC.bookauthors", Integer.class));
 	}
 }
+
+// Testkommentar
