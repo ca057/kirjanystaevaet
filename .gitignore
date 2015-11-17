@@ -14,9 +14,6 @@
 *.class
 
 *.db
-.project
-.classpath
-.settings/
 target/classes
 target/test-classes
 db
