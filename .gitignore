@@ -1,9 +1,22 @@
-# gitignore - ergänzen falls notwendig!
+﻿# gitignore - ergänzen falls notwendig!
+
 
 *.prefs
+
 *.DS_Store
+
 /.recommenders
+
 /.metadata
+
 */bin
+
 *.class
+
 *.db
+.project
+.classpath
+.settings/
+target/classes
+target/test-classes
+db
