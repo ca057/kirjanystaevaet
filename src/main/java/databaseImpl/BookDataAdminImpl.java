@@ -1,7 +1,7 @@
 package databaseImpl;
 
-import database.BookDataQuery;
+import database.BookDataAdmin;
 
-public class BookDataAdminImpl implements BookDataQuery {
+public class BookDataAdminImpl implements BookDataAdmin {
 
 }
