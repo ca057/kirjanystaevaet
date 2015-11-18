@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Controller for the route to home.
  */
 @Controller
-public class HomeController {
+public class ContactController {
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/kontakt", method = RequestMethod.GET)
 	public String homepage() {
-		return "homepage";
+		return "contact";
 	}
 }
