@@ -12,6 +12,8 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homepage() {
+		System.out.println("hello");
 		return "homepage";
+		// return "home";
 	}
 }

@@ -3,7 +3,7 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-	<definition name="base" template="WEB-INF/layout/page.jsp">
+	<definition name="base" template="/WEB-INF/layout/page.jsp">
 		<put-attribute name="header" value="/WEB-INF/layout/header.jsp"></put-attribute>
 		<put-attribute name="navigation" value="/WEB-INF/layout/navigation.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/layout/footer.jsp"></put-attribute>
@@ -15,6 +15,6 @@
 	</definition>
 
 	<definition name="contact" extends="base">
-		<put-attribute name="content" value="/WEB-INF/layout/contact.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/views/contact.jsp"></put-attribute>
 	</definition>
 </tiles-definitions>
