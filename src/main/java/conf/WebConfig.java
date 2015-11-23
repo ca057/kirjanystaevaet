@@ -19,16 +19,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
-	//
-	// @Bean
-	// public ViewResolver viewResolver() {
-	// InternalResourceViewResolver resolver = new
-	// InternalResourceViewResolver();
-	// resolver.setPrefix("/WEB-INF/views/");
-	// resolver.setSuffix(".html");
-	// resolver.setExposeContextBeansAsAttributes(true);
-	// return resolver;
-	// }
 
 	@Bean
 	public TilesConfigurer tilesConfigurer() {

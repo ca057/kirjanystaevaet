@@ -1,5 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
-<%@ tablib uri="http://tiles.apache.org/tags-tiles" prefix="t"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="t"%>
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 
 <!-- session ggf. anpassen! -->
 <%@ page session="false" contentType="text/html; charset=UTF-8"%>
