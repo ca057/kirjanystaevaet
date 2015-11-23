@@ -7,13 +7,12 @@
 <head lang="de">
 	<title>WebShop</title>
 
-	<!-- alle Meta-Informationen die benötigt werden -->
 	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+	<meta name="viewport" content="initial-scale=1" />
 
-	<!-- Stylesheets (Reihenfolge beachten!) -->
-	<link rel="stylesheet" href="<s:url value='/res/main.css'/>">
-
-	<!-- JavaScripts (Reihenfolge beachten!) -->
+	<link rel="stylesheet" href="<s:url value='/resources/css/style.css'/>">
+	
+	<script type="text/javascript" src="<s:url value='/resources/js/script.js'/>"></script>
 </head>
 
 <body>
