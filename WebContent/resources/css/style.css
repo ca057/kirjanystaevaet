@@ -11,4 +11,91 @@ html, body {
 	width: 100%;
 	height: 100%;
 	font-family: Tahoma, sans-serif;
+	color: #212121;
+	background-color: #CFD8DC;
+}
+
+/* all containers */
+
+div#wrapper {
+	height: 100%;
+	max-width: 1000px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin: 0 auto 0 auto;
+	background-color: #FFFFFF;
+}
+
+div#wrapper > * {
+	width: 100%;
+	height: auto;
+}
+
+header {
+	background-color: #FFC107;
+}
+
+nav {
+	background-color: #009688;
+}
+
+div#content-wrapper > * {
+	padding: 5px;
+}
+
+footer {
+	background-color: #009688;
+	width: 100%;
+	height: auto;
+	padding: 5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	align-content: center;
+}
+
+/* all the content */
+/* all links */
+a {
+    cursor: pointer;
+    border-bottom: 1px solid #212121;
+}
+
+a:link, a:visited {
+    color: #212121;
+    text-decoration:none;
+    border-bottom: 1px solid #212121;
+}
+
+a:focus, a:hover, a:active {
+    color: #212121;
+    text-decoration:none;
+    border-bottom: 0px solid #212121;
+}
+
+/* all lists */
+.list-inline {
+	list-style: none;
+	padding: 0;
+}
+
+.list-inline li {
+	display: inline-block;
+}
+
+.footer-content li::AFTER {
+	content: " | ";
+}
+
+.footer-content li:last-child::AFTER {
+	content: none;
+}
+
+/* media queries */
+@media screen and (max-width: 1000px) {
+	body {
+		padding: 0 10px 0 10px;
+	}
 }

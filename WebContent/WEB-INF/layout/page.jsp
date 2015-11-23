@@ -17,21 +17,23 @@
 
 <body>
 	<div id="wrapper">
-		<!-- Header (gleichbleibend auf allen Seiten) -->
-		<header>
-			<t:insertAttribute name="header"></t:insertAttribute>
-		</header>
-
-		<!-- Navigation (gleichbleibend auf allen Seiten, wird dynamisch anhand der Kategorien generiert) -->
-		<nav>
-			<t:insertAttribute name="navigation"></t:insertAttribute>
-		</nav>
-	
-		<!-- Inhalt (hier folgt der jeweilige Seiteninhalt) -->
 		<div id="content-wrapper">
-			<t:insertAttribute name="content"></t:insertAttribute>
-		</div>
+			<!-- Header (gleichbleibend auf allen Seiten) -->
+			<header>
+				<t:insertAttribute name="header"></t:insertAttribute>
+			</header>
 	
+			<!-- Navigation (gleichbleibend auf allen Seiten, wird dynamisch anhand der Kategorien generiert) -->
+			<nav>
+				<t:insertAttribute name="navigation"></t:insertAttribute>
+			</nav>
+		
+			<!-- Inhalt (hier folgt der jeweilige Seiteninhalt) -->
+			<div id="content">
+				<t:insertAttribute name="content"></t:insertAttribute>
+			</div>
+		</div>
+		
 		<!-- Footer (auf allen Seiten gleich) -->
 		<footer>
 			<t:insertAttribute name="footer"></t:insertAttribute>
