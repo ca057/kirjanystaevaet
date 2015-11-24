@@ -1,8 +1,8 @@
-package appl.database.databaseImpl;
+package appl.databasemanagement.databaseImpl;
 
 import java.util.List;
 
-import appl.database.BookDataAdmin;
+import appl.databasemanagement.BookDataAdmin;
 
 public class BookDataAdminImpl implements BookDataAdmin {
 

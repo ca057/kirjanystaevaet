@@ -1,4 +1,4 @@
-package appl.database;
+package appl.databasemanagement;
 
 import java.util.List;
 
