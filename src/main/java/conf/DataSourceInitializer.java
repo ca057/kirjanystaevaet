@@ -1,5 +1,8 @@
 package conf;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
@@ -32,7 +35,10 @@ public class DataSourceInitializer {
 	private DatabasePopulator createDatabasePopulator() {
 		ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
 		databasePopulator.setContinueOnError(true);
-		databasePopulator.addScript(new ClassPathResource("./DataDump_h2.txt"));
+		// TODO Ist das gut so?
+		if (!(Files.exists(Paths.get("./database/kirjanystaevaet.mv.db")))) {
+			databasePopulator.addScript(new ClassPathResource("./DataDump_h2.txt"));
+		}
 		return databasePopulator;
 	}
 
