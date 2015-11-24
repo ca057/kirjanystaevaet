@@ -1,10 +1,10 @@
-package databaseImpl;
+package appl.database.databaseImpl;
 
 import java.util.Map;
 
-import database.BookDataQuery;
-import database.SearchOptions;
-import database.Searchfields;
+import appl.database.BookDataQuery;
+import appl.database.SearchOptions;
+import appl.database.Searchfields;
 
 public class BookDataQueryImpl implements BookDataQuery {
 

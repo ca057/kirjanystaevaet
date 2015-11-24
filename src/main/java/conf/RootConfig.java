@@ -4,10 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import database.BookDataAdmin;
-import database.BookDataQuery;
-import databaseImpl.BookDataAdminImpl;
-import databaseImpl.BookDataQueryImpl;
+import appl.database.BookDataAdmin;
+import appl.database.BookDataQuery;
+import appl.database.databaseImpl.BookDataAdminImpl;
+import appl.database.databaseImpl.BookDataQueryImpl;
 
 @Configuration
 public class RootConfig {
@@ -21,8 +21,9 @@ public class RootConfig {
 	public BookDataAdmin getBookDataAdmin() {
 		return new BookDataAdminImpl();
 	}
+
 	@Bean
-	public BookDataQuery getBookDataQuery(){
+	public BookDataQuery getBookDataQuery() {
 		return new BookDataQueryImpl();
 	}
 

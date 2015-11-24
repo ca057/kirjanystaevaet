@@ -1,4 +1,4 @@
-package database;
+package appl.database;
 
 import java.util.Map;
 
