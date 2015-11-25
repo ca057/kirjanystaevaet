@@ -19,8 +19,8 @@ public class Main {
 		JdbcTemplate jdbc = ctx.getBean(JdbcTemplate.class);
 
 		int counter = 1;
-		List<Author> authors = jdbc.query("SELECT * FROM PUBLIC.bookauthors WHERE nameF=?", new String[] { "Jason" },
-				new AuthorRowMapper());
+		List<Author> authors = jdbc.query("SELECT * FROM PUBLIC.bookauthors WHERE nameF=? AND nameL=?",
+				new String[] { "Jason", "Gilmore" }, new AuthorRowMapper());
 		for (Author a : authors) {
 			System.out.println("Autor " + counter++ + ": " + a.getNameF() + ", " + a.getNameL());
 		}
