@@ -22,6 +22,10 @@
 		<put-attribute name="content" value="/WEB-INF/views/categories.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="search" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/search.jsp"></put-attribute>
+	</definition>
+	
 	<definition name="404" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/error/404.jsp"></put-attribute>
 	</definition>
