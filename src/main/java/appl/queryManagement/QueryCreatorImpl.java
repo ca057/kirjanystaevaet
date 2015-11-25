@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class queryCreatorImpl implements queryCreator{
+public class QueryCreatorImpl implements QueryCreator{
 /*
 	@Override
 	public Map getBookByID(String id) {
@@ -14,7 +14,7 @@ public class queryCreatorImpl implements queryCreator{
 */
 	@Override
 	public List<String> getCategories() {
-		// TODO Auto-generated method stub
+		// TODO vernünftige Abfrage an die Datenbank
 		List<String> categoryList = new ArrayList<String>();
 
 		categoryList.add("Bla");
