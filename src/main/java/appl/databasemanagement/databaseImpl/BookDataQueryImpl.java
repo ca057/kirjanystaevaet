@@ -1,5 +1,6 @@
 package appl.databasemanagement.databaseImpl;
 
+import java.util.List;
 import java.util.Map;
 
 import appl.databasemanagement.BookDataQuery;
@@ -15,13 +16,7 @@ public class BookDataQueryImpl implements BookDataQuery {
 	}
 
 	@Override
-	public Map searchAuthors(Map<Enum<Searchfields>, String> searchterms, Enum<SearchOptions> searchOptions) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Map searchCategories(Map<Enum<Searchfields>, String> searchterms, Enum<SearchOptions> searchOptions) {
+	public List<String> getCategories() {
 		// TODO Auto-generated method stub
 		return null;
 	}
