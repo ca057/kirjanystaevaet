@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import appl.databasemanagement.rowMapper.AuthorRowMapper;
 import appl.databasemanagement.rowMapper.BookRowMapper;
 import appl.items.Author;
-import apps.items.Book;
+import appl.items.Book;
 import conf.RootConfig;
 
 public class Main {

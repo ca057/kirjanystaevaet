@@ -1,4 +1,4 @@
-package apps.items;
+package appl.items;
 
 public class Book {
 	private String isbn;

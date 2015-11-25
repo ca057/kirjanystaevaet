@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import apps.items.Book;
+import appl.items.Book;
 
 public class BookRowMapper implements RowMapper {
 	JdbcTemplate template;
