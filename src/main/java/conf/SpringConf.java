@@ -8,6 +8,8 @@ import appl.databasemanagement.BookDataQuery;
 import appl.databasemanagement.databaseImpl.BookDataAdminImpl;
 import appl.databasemanagement.databaseImpl.BookDataQueryImpl;
 import appl.ordermanagement.Order;
+import appl.ordermanagement.OrderAdmin;
+import appl.ordermanagement.ordermanagementImpl.OrderAdminImpl;
 import appl.ordermanagement.ordermanagementImpl.OrderImpl;
 import appl.queryManagement.QueryCreator;
 import appl.queryManagement.QueryCreatorImpl;
@@ -35,5 +37,9 @@ public class SpringConf {
 	@Bean
 	public BookDataQuery bookDataQueryBean(){
 		return new BookDataQueryImpl();
+	}
+	@Bean
+	public OrderAdmin orderAdminBean(){
+		return new OrderAdminImpl();
 	}
 }
