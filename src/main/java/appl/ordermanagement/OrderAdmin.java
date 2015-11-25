@@ -2,7 +2,7 @@ package appl.ordermanagement;
 
 import appl.ordermanagement.ordermanagementImpl.OrderImpl;
 
-public interface orderAdmin {
+public interface OrderAdmin {
 
 	public void createOrder();
 
