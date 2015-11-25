@@ -1,5 +1,7 @@
 package web;
 
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +21,7 @@ public class CategoriesController {
 	@RequestMapping(value = "/kategorie/{category}", method = RequestMethod.GET)
 	public String categories(@PathVariable("category") String category, Model m) throws CategoryNotFoundException {
 		if (checkIfExistingCategory(category)) {
-			m.addAttribute("name", category);
+			m.addAttribute("name", getCorrectCategoryName(category));
 			return "categories";
 		} else {
 			throw new CategoryNotFoundException("Die Kategorie " + category + " wurde nicht gefunden.");
@@ -27,7 +29,19 @@ public class CategoriesController {
 	}
 
 	private boolean checkIfExistingCategory(String category) {
+		// TODO use beans
+		return new QueryCreatorImpl().getCategories().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
+				.contains(category.toUpperCase());
+	}
+
+	private String getCorrectCategoryName(String category) throws CategoryNotFoundException {
+		// TODO use beans
 		QueryCreator query = new QueryCreatorImpl();
-		return query.getCategories().contains(category);
+		for (String c : query.getCategories()) {
+			if (category.toUpperCase().equals(c.toUpperCase())) {
+				return c;
+			}
+		}
+		throw new CategoryNotFoundException("Die Kategorie " + category + " wurde nicht gefunden.");
 	}
 }
