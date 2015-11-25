@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import appl.queryManagement.queryCreator;
-import appl.queryManagement.queryCreatorImpl;
+import appl.queryManagement.QueryCreator;
+import appl.queryManagement.QueryCreatorImpl;
 import exceptions.CategoryNotFoundException;
 
 /**
@@ -27,7 +27,7 @@ public class CategoriesController {
 	}
 
 	private boolean checkIfExistingCategory(String category) {
-		queryCreator query = new queryCreatorImpl();
+		QueryCreator query = new QueryCreatorImpl();
 		return query.getCategories().contains(category);
 	}
 }
