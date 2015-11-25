@@ -4,7 +4,7 @@ public class Book {
 	private String isbn;
 	private String title;
 	private String description;
-	private int price;
+	private double price;
 	private String publisher;
 	private String pubdate;
 	private String edition;
@@ -22,7 +22,7 @@ public class Book {
 		this.description = description;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
@@ -54,7 +54,7 @@ public class Book {
 		return description;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 

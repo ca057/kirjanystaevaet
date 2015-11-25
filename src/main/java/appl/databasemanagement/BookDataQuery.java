@@ -9,5 +9,7 @@ public interface BookDataQuery {
 
 	public List<String> getCategories();
 
+	// public String getCategory(String name);
+
 	public Map searchAll(Map<Enum<Searchfields>, String> searchterms, Enum<SearchOptions> searchOptions);
 }
