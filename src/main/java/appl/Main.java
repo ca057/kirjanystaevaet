@@ -1,5 +1,7 @@
 package appl;
 
+import java.util.List;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,10 +18,20 @@ public class Main {
 		// jdbc.execute("INSERT INTO PUBLIC.bookauthors (`AuthorID`, `nameF`,
 		// `nameL`) VALUES (1, 'Jason', 'Gilmore');"); -> Funktioniert
 		// (Fehlermeldung kommt)
-		jdbc.execute("DELETE FROM PUBLIC.bookauthors WHERE `nameF`='Jason' AND `nameL`='Gilmore';");
-		jdbc.execute("DELETE FROM PUBLIC.bookauthors WHERE `nameF`='Tschäisen' AND `nameL`='Gilmore';");
-		jdbc.execute("INSERT INTO PUBLIC.bookauthors (`nameF`, `nameL`) VALUES ('Jason', 'Gilmore');");
-		jdbc.execute("INSERT INTO PUBLIC.bookauthors (`nameF`, `nameL`) VALUES ('Tschäisen', 'Gilmore');");
-		System.out.println(jdbc.queryForObject("select count(*) FROM PUBLIC.bookauthors", Integer.class));
+		// jdbc.execute("DELETE FROM PUBLIC.bookauthors WHERE `nameF`='Jason'
+		// AND `nameL`='Gilmore';");
+		// jdbc.execute("DELETE FROM PUBLIC.bookauthors WHERE
+		// `nameF`='Tschäisen' AND `nameL`='Gilmore';");
+		// jdbc.execute("INSERT INTO PUBLIC.bookauthors (`nameF`, `nameL`)
+		// VALUES ('Jason', 'Gilmore');");
+		// jdbc.execute("INSERT INTO PUBLIC.bookauthors (`nameF`, `nameL`)
+		// VALUES ('Tschäisen', 'Gilmore');");
+
+		List<String> map = jdbc.queryForList("SELECT * FROM PUBLIC.bookauthors", String.class);
+		for (String o : map) {
+			System.out.println(o);
+		}
+		// System.out.println(jdbc.queryForObject("select count(*) FROM
+		// PUBLIC.bookauthors", Integer.class));
 	}
 }
