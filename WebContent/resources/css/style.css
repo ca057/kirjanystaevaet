@@ -93,6 +93,29 @@ a:focus, a:hover, a:active {
 	content: none;
 }
 
+/* input fields */
+
+div#searchfield {
+	width: 100%;
+}
+
+div#searchfield form {
+	max-width: 500px;
+	margin: 0 auto 0 auto;
+}
+
+div#searchfield form input[type=text] {
+	width: 100%;
+}
+
+div#searchfield form input[type=submit] {
+	margin: 0 auto 0 auto;
+}
+
+div#searchfield form * {
+	display: block;
+}
+
 /* media queries */
 @media screen and (max-width: 1000px) {
 	body {
