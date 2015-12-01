@@ -16,11 +16,13 @@ public class SearchController {
 			@RequestParam(value = "isbn", required = false) String isbn,
 			@RequestParam(value = "year", required = false) String year,
 			@RequestParam(value = "category", required = false) String category, Model m) {
+		String query = "Keine Suchanfrage gestellt.";
 		if (all != null && !all.isEmpty()) {
-			System.out.println("Offene Suche über: " + all);
+			query = all;
 		} else {
 
 		}
+		m.addAttribute("query", all);
 		return "search";
 	}
 }

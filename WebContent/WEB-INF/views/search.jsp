@@ -18,4 +18,5 @@
 	</form>
 	
 	<h3>Suchergebnisse</h3>
+	<p>Suchanfrage: <span class="query">&bdquo;<c:out value='${query}' />&ldquo;</span></p>
 </section>
