@@ -93,7 +93,7 @@ public class Book implements Serializable {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "category", catalog = "public", joinColumns = {
+	@JoinTable(name = "bookcategories", catalog = "public", joinColumns = {
 			@JoinColumn(name = "ISBN", nullable = false, updatable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "CATEGORYID", nullable = false, updatable = false) })
 	public Set<Category> getCategories() {
@@ -101,7 +101,7 @@ public class Book implements Serializable {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "category", catalog = "public", joinColumns = {
+	@JoinTable(name = "bookauthors", catalog = "public", joinColumns = {
 			@JoinColumn(name = "ISBN", nullable = false, updatable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "AUTHORID", nullable = false, updatable = false) })
 	public Set<Author> getAuthors() {
