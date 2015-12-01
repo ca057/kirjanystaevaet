@@ -1,5 +1,9 @@
 package conf;
 
+import java.sql.SQLException;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,6 +23,11 @@ public class RootConfig {
 	@Bean
 	public JdbcTemplate getJdbcTemplate() {
 		return new JdbcTemplate(new DataSourceInitializer().getDataSource());
+	}
+
+	@Bean
+	public Session getSession() throws HibernateException, SQLException {
+		return HibernateUtil.getSessionFactory().getCurrentSession();
 	}
 
 	@Bean

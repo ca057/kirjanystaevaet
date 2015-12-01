@@ -7,7 +7,6 @@ import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
@@ -37,7 +36,8 @@ public class DataSourceInitializer {
 		databasePopulator.setContinueOnError(true);
 		// TODO Ist das gut so?
 		if (!(Files.exists(Paths.get("./database/kirjanystaevaet.mv.db")))) {
-			databasePopulator.addScript(new ClassPathResource("./DataDump_h2.txt"));
+			// databasePopulator.addScript(new
+			// ClassPathResource("./DataDump_h2.txt"));
 		}
 		return databasePopulator;
 	}

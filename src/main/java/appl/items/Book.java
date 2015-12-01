@@ -1,7 +1,5 @@
 package appl.items;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -19,7 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "bookdescriptions", catalog = "books", uniqueConstraints = { @UniqueConstraint(columnNames = "ISBN") })
+@Table(name = "BOOKDESCRIPTIONS", catalog = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "ISBN") })
 public class Book implements Serializable {
 	private String isbn;
 	private String title;
@@ -33,8 +32,26 @@ public class Book implements Serializable {
 	private Set<Category> categories = new HashSet<Category>(0);
 	private Set<Author> authors = new HashSet<Author>(0);
 
+	public Book() {
+	}
+
+	public Book(String isbn, String title, String description, double price, String publisher, String pubdate,
+			String edition, int pages, Set<Category> categories, Set<Author> authors) {
+		super();
+		this.isbn = isbn;
+		this.title = title;
+		this.description = description;
+		this.price = price;
+		this.publisher = publisher;
+		this.pubdate = pubdate;
+		this.edition = edition;
+		this.pages = pages;
+		this.categories = categories;
+		this.authors = authors;
+	}
+
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ISBN", unique = true, nullable = false)
 	public String getIsbn() {
 		return isbn;
@@ -50,12 +67,12 @@ public class Book implements Serializable {
 		return description;
 	}
 
-	@Column(name = "DESCRIPTION", nullable = true, length = 20)
+	@Column(name = "PRICE", nullable = true, length = 20)
 	public double getPrice() {
 		return price;
 	}
 
-	@Column(name = "PUBLISHER", nullable = false, length = 20)
+	@Column(name = "PUBLISHER", nullable = true, length = 20)
 	public String getPublisher() {
 		return publisher;
 	}
@@ -76,7 +93,7 @@ public class Book implements Serializable {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "category", catalog = "books", joinColumns = {
+	@JoinTable(name = "category", catalog = "public", joinColumns = {
 			@JoinColumn(name = "ISBN", nullable = false, updatable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "CATEGORYID", nullable = false, updatable = false) })
 	public Set<Category> getCategories() {
@@ -84,7 +101,7 @@ public class Book implements Serializable {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "category", catalog = "books", joinColumns = {
+	@JoinTable(name = "category", catalog = "public", joinColumns = {
 			@JoinColumn(name = "ISBN", nullable = false, updatable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "AUTHORID", nullable = false, updatable = false) })
 	public Set<Author> getAuthors() {

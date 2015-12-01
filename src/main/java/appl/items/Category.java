@@ -1,7 +1,5 @@
 package appl.items;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,13 +8,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "bookcategories", catalog = "books", uniqueConstraints = {
+@Table(name = "bookcategories", catalog = "public", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "CATEGORYID") })
 public class Category implements Serializable {
 	private int categoryID;
@@ -24,8 +23,14 @@ public class Category implements Serializable {
 
 	private Set<Book> books = new HashSet<Book>(0);
 
+	public Category(String categoryName, Set<Book> books) {
+		super();
+		CategoryName = categoryName;
+		this.books = books;
+	}
+
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "CATEGORYID", unique = true, nullable = false)
 	public int getCategoryID() {
 		return categoryID;

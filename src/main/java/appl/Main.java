@@ -1,37 +1,82 @@
 package appl;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.hibernate.Session;
 
-import appl.databasemanagement.rowMapper.AuthorRowMapper;
-import appl.databasemanagement.rowMapper.BookRowMapper;
 import appl.items.Author;
 import appl.items.Book;
-import conf.RootConfig;
+import appl.items.Category;
+import conf.HibernateUtil;
 
 public class Main {
 
+	// public static void main(String[] args) {
+	// ApplicationContext ctx = new
+	// AnnotationConfigApplicationContext(RootConfig.class);
+	// JdbcTemplate jdbc = ctx.getBean(JdbcTemplate.class);
+	//
+	// int counter = 1;
+	// List<Author> authors = jdbc.query("SELECT * FROM PUBLIC.bookauthors WHERE
+	// nameF=? AND nameL=?",
+	// new String[] { "Jason", "Gilmore" }, new AuthorRowMapper());
+	// for (Author a : authors) {
+	// System.out.println("Autor " + counter++ + ": " + a.getNameF() + ", " +
+	// a.getNameL());
+	// }
+	//
+	// List<Book> list = jdbc.query(
+	// "SELECT * FROM PUBLIC.bookcategories, PUBLIC.bookcategoriesbooks,
+	// PUBLIC.bookdescriptions, PUBLIC.bookauthorbooks, PUBLIC.bookauthors",
+	// new BookRowMapper());
+	// for (Book o : list) {
+	// System.out.println(o.getTitle());
+	// }
+	// // System.out.println(jdbc.queryForObject("select count(*) FROM
+	// // PUBLIC.bookauthors", Integer.class));
+	// }
+
 	public static void main(String[] args) {
-		ApplicationContext ctx = new AnnotationConfigApplicationContext(RootConfig.class);
-		JdbcTemplate jdbc = ctx.getBean(JdbcTemplate.class);
 
-		int counter = 1;
-		List<Author> authors = jdbc.query("SELECT * FROM PUBLIC.bookauthors WHERE nameF=? AND nameL=?",
-				new String[] { "Jason", "Gilmore" }, new AuthorRowMapper());
-		for (Author a : authors) {
-			System.out.println("Autor " + counter++ + ": " + a.getNameF() + ", " + a.getNameL());
-		}
+		System.out.println("Hibernate many to many (Annotation)");
+		// ApplicationContext ctx = new
+		// AnnotationConfigApplicationContext(RootConfig.class);
+		// Session session = ctx.getBean(Session.class);
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
-		List<Book> list = jdbc.query(
-				"SELECT * FROM PUBLIC.bookcategories, PUBLIC.bookcategoriesbooks, PUBLIC.bookdescriptions, PUBLIC.bookauthorbooks, PUBLIC.bookauthors",
-				new BookRowMapper());
-		for (Book o : list) {
-			System.out.println(o.getTitle());
-		}
-		// System.out.println(jdbc.queryForObject("select count(*) FROM
-		// PUBLIC.bookauthors", Integer.class));
+		session.beginTransaction();
+
+		Book book = new Book("1213452", "title", "Desc", 10.00, "String publisher", "String pubdate", "String edition",
+				10, null, null);
+
+		Author author = new Author();
+		author.setNameF("Hans");
+		author.setNameL("Peter");
+
+		Set<Book> books = new HashSet<>();
+
+		Set<Author> authors = new HashSet<>();
+		authors.add(author);
+
+		books.add(new Book("1213452", "title", "Desc", 10.00, "String publisher", "String pubdate", "String edition",
+				10, null, authors));
+		books.add(new Book("12134394", "title", "Desc", 10.00, "String publisher", "String pubdate", "String edition",
+				10, null, authors));
+
+		Category category1 = new Category("Category1", books);
+		Category category2 = new Category("Category2", null);
+
+		Set<Category> categories = new HashSet<Category>();
+		categories.add(category1);
+		categories.add(category2);
+
+		book.setCategories(categories);
+
+		session.save(book);
+
+		session.getTransaction().commit();
+		System.out.println("Done");
 	}
+
 }
