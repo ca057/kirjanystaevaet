@@ -10,10 +10,10 @@ public class QueryCreatorImpl implements QueryCreator {
 	 * @Override public Map getBookByID(String id) { // TODO Auto-generated
 	 * method stub return null; }
 	 */
-	public QueryCreatorImpl(){
-		
+	public QueryCreatorImpl() {
+
 	}
-	
+
 	@Override
 	public List<String> getCategories() {
 		// TODO vernünftige Abfrage an die Datenbank
@@ -47,10 +47,8 @@ public class QueryCreatorImpl implements QueryCreator {
 
 	@Override
 	public List<Book> getBooksByMetadata(String title, String author, String year, String isbn, String category) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
-	
-	
 
 }
