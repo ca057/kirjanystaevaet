@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 
-public class QueryController {
+public class SearchController {
 
 	@RequestMapping(value = "/suche", method = RequestMethod.GET)
 	public String query(
