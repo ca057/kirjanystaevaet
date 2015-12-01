@@ -82,6 +82,7 @@ public class Main {
 		for (Book o : list) {
 			System.out.println("\n---------------------\n");
 			System.out.println(o.getTitle());
+			System.out.println(o.getIsbn());
 			System.out.println("\n---------------------\n");
 		}
 
