@@ -20,9 +20,18 @@ public class SearchController {
 		if (all != null && !all.isEmpty()) {
 			query = all;
 		} else {
-
+			if (title != null && !title.isEmpty()) {
+			}
+			if (author != null && !title.isEmpty()) {
+			}
+			if (isbn != null && !isbn.isEmpty()) {
+			}
+			if (year != null && !year.isEmpty()) {
+			}
+			if (category != null && !category.isEmpty()) {
+			}
 		}
-		m.addAttribute("query", all);
+		m.addAttribute("query", query);
 		return "search";
 	}
 }
