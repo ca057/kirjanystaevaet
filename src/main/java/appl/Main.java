@@ -4,11 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.hibernate.Session;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import appl.items.Author;
 import appl.items.Book;
 import appl.items.Category;
-import conf.HibernateUtil;
+import conf.RootConfig;
 
 public class Main {
 
@@ -40,10 +42,8 @@ public class Main {
 	public static void main(String[] args) {
 
 		System.out.println("Hibernate many to many (Annotation)");
-		// ApplicationContext ctx = new
-		// AnnotationConfigApplicationContext(RootConfig.class);
-		// Session session = ctx.getBean(Session.class);
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		ApplicationContext ctx = new AnnotationConfigApplicationContext(RootConfig.class);
+		Session session = ctx.getBean(Session.class);
 
 		session.beginTransaction();
 

@@ -22,7 +22,8 @@ public class RootConfig {
 
 	@Bean
 	public JdbcTemplate getJdbcTemplate() {
-		return new JdbcTemplate(new DataSourceInitializer().getDataSource());
+		// return new JdbcTemplate(new DataSourceInitializer().getDataSource());
+		return null;
 	}
 
 	@Bean
