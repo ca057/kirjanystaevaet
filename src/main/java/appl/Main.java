@@ -1,8 +1,10 @@
 package appl;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -75,8 +77,18 @@ public class Main {
 
 		session.save(book);
 
+		Query query = session.createQuery("from Book");
+		List<Book> list = query.list();
+		for (Book o : list) {
+			System.out.println("\n---------------------\n");
+			System.out.println(o.getTitle());
+			System.out.println("\n---------------------\n");
+		}
+
 		session.getTransaction().commit();
 		System.out.println("Done");
+		System.exit(0);
+
 	}
 
 }
