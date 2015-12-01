@@ -2,13 +2,13 @@ package web;
 
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import appl.queryManagement.QueryCreator;
 import appl.queryManagement.QueryCreatorImpl;
 import exceptions.CategoryNotFoundException;
 
@@ -17,6 +17,13 @@ import exceptions.CategoryNotFoundException;
  */
 @Controller
 public class CategoriesController {
+
+	@Autowired
+	private QueryCreatorImpl query;
+
+	public void setQuery(QueryCreatorImpl query) {
+		this.query = query;
+	}
 
 	@RequestMapping(value = "/kategorie/{category}", method = RequestMethod.GET)
 	public String categories(@PathVariable("category") String category, Model m) throws CategoryNotFoundException {
@@ -29,14 +36,11 @@ public class CategoriesController {
 	}
 
 	private boolean checkIfExistingCategory(String category) {
-		// TODO use beans
-		return new QueryCreatorImpl().getCategories().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
+		return query.getCategories().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
 				.contains(category.toUpperCase());
 	}
 
 	private String getCorrectCategoryName(String category) throws CategoryNotFoundException {
-		// TODO use beans
-		QueryCreator query = new QueryCreatorImpl();
 		for (String c : query.getCategories()) {
 			if (category.toUpperCase().equals(c.toUpperCase())) {
 				return c;
