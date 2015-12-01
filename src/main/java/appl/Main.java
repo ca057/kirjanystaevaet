@@ -25,7 +25,9 @@ public class Main {
 			System.out.println("Autor " + counter++ + ": " + a.getNameF() + ", " + a.getNameL());
 		}
 
-		List<Book> list = jdbc.query("SELECT * FROM PUBLIC.bookdescriptions", new BookRowMapper());
+		List<Book> list = jdbc.query(
+				"SELECT * FROM PUBLIC.bookcategories, PUBLIC.bookcategoriesbooks, PUBLIC.bookdescriptions, PUBLIC.bookauthorbooks, PUBLIC.bookauthors",
+				new BookRowMapper());
 		for (Book o : list) {
 			System.out.println(o.getTitle());
 		}

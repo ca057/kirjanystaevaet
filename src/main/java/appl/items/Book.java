@@ -1,6 +1,26 @@
 package appl.items;
 
-public class Book {
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+@Entity
+@Table(name = "bookdescriptions", catalog = "books", uniqueConstraints = { @UniqueConstraint(columnNames = "ISBN") })
+public class Book implements Serializable {
 	private String isbn;
 	private String title;
 	private String description;
@@ -8,7 +28,68 @@ public class Book {
 	private String publisher;
 	private String pubdate;
 	private String edition;
-	private String pages;
+	private int pages;
+
+	private Set<Category> categories = new HashSet<Category>(0);
+	private Set<Author> authors = new HashSet<Author>(0);
+
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "ISBN", unique = true, nullable = false)
+	public String getIsbn() {
+		return isbn;
+	}
+
+	@Column(name = "TITLE", nullable = false, length = 20)
+	public String getTitle() {
+		return title;
+	}
+
+	@Column(name = "DESCRIPTION", nullable = true, length = 20)
+	public String getDescription() {
+		return description;
+	}
+
+	@Column(name = "DESCRIPTION", nullable = true, length = 20)
+	public double getPrice() {
+		return price;
+	}
+
+	@Column(name = "PUBLISHER", nullable = false, length = 20)
+	public String getPublisher() {
+		return publisher;
+	}
+
+	@Column(name = "PUBDATE", nullable = true, length = 20)
+	public String getPubdate() {
+		return pubdate;
+	}
+
+	@Column(name = "EDITION", nullable = true, length = 20)
+	public String getEdition() {
+		return edition;
+	}
+
+	@Column(name = "PAGES", nullable = true, length = 20)
+	public int getPages() {
+		return pages;
+	}
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "category", catalog = "books", joinColumns = {
+			@JoinColumn(name = "ISBN", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "CATEGORYID", nullable = false, updatable = false) })
+	public Set<Category> getCategories() {
+		return categories;
+	}
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "category", catalog = "books", joinColumns = {
+			@JoinColumn(name = "ISBN", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "AUTHORID", nullable = false, updatable = false) })
+	public Set<Author> getAuthors() {
+		return authors;
+	}
 
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
@@ -38,40 +119,16 @@ public class Book {
 		this.edition = edition;
 	}
 
-	public void setPages(String pages) {
+	public void setPages(int pages) {
 		this.pages = pages;
 	}
 
-	public String getIsbn() {
-		return isbn;
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public String getPublisher() {
-		return publisher;
-	}
-
-	public String getPubdate() {
-		return pubdate;
-	}
-
-	public String getEdition() {
-		return edition;
-	}
-
-	public String getPages() {
-		return pages;
+	public void setAuthors(Set<Author> authors) {
+		this.authors = authors;
 	}
 
 }
