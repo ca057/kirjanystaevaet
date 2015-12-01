@@ -5,8 +5,8 @@
 	<h2>Herzlich Willkommen</h2>
 	
 	<div id="searchfield">
-		<form action="">
-			<input type="text" name="search" required/>
+		<form action="suche" method="get">
+			<input type="text" name="all" required/>
 			<input type="submit" value="Suchen" />
 		</form>
 	</div>

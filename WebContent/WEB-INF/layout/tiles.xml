@@ -7,7 +7,6 @@
 		<put-attribute name="header" value="/WEB-INF/layout/header.jsp"></put-attribute>
 		<put-attribute name="navigation" value="/WEB-INF/layout/navigation.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/layout/footer.jsp"></put-attribute>
-		
 	</definition>
 	
 	<definition name="homepage" extends="base">
