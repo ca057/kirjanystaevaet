@@ -3,6 +3,8 @@ package appl.queryManagement;
 import java.util.ArrayList;
 import java.util.List;
 
+import appl.items.Book;
+
 public class QueryCreatorImpl implements QueryCreator {
 	/*
 	 * @Override public Map getBookByID(String id) { // TODO Auto-generated
@@ -24,5 +26,31 @@ public class QueryCreatorImpl implements QueryCreator {
 
 		return categoryList;
 	}
+
+	@Override
+	public List<Book> getBooksByCategory(String category) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Book getBookByIsbn(int isbn) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Book> getBooksByOpenSearch(String searchTerm) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Book> getBooksByMetadata(String title, String author, String year, String isbn, String category) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 
 }

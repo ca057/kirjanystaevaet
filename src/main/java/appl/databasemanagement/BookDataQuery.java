@@ -12,4 +12,7 @@ public interface BookDataQuery {
 	// public String getCategory(String name);
 
 	public Map searchAll(Map<Enum<Searchfields>, String> searchterms, Enum<SearchOptions> searchOptions);
+	
+	
+	//private Object searchInBookCategoriesBooks(int isbn);
 }
