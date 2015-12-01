@@ -16,6 +16,68 @@ import conf.RootConfig;
 
 public class Main {
 
+	public static void main(String[] args) {
+		// Session (Hibernate) als Bean bekommen
+		ApplicationContext ctx = new AnnotationConfigApplicationContext(RootConfig.class);
+		Session session = ctx.getBean(Session.class);
+
+		// Transaction: "Allows the application to define units of work, while
+		// maintaining abstraction from the underlying transaction
+		// implementation"
+		session.beginTransaction();
+
+		// Testdaten anlegen
+		Set<Book> books = createTestData();
+
+		// Bücher speichern. save() oder persist()?
+		for (Book b : books) {
+			session.save(b);
+		}
+
+		// Testabfrage
+		Query query = session.createQuery("from Book");
+		List<Book> list = query.list();
+		for (Book o : list) {
+			System.out.println("\n---------------------\n");
+			System.out.println(o.getTitle());
+			System.out.println(o.getIsbn());
+			System.out.println("\n---------------------\n");
+		}
+
+		session.getTransaction().commit();
+		System.out.println("Done");
+		System.exit(0);
+
+	}
+
+	private static Set<Book> createTestData() {
+		Set<Book> books = new HashSet<>();
+		Set<Author> authors = new HashSet<>();
+
+		Author author = new Author();
+		author.setNameF("Hans");
+		author.setNameL("Peter");
+		authors.add(author);
+
+		Book book = new Book("1213452", "title", "Desc", 11.00, "String publisher", "String pubdate", "String edition",
+				10, null, null);
+
+		books.add(new Book("1213452", "title", "Desc", 12.00, "String publisher", "String pubdate", "String edition",
+				10, null, authors));
+		books.add(new Book("12134394", "title", "Desc", 10.00, "String publisher", "String pubdate", "String edition",
+				10, null, authors));
+
+		Category category1 = new Category("Category1", books);
+		Category category2 = new Category("Category2", null);
+
+		Set<Category> categories = new HashSet<Category>();
+		categories.add(category1);
+		categories.add(category2);
+
+		book.setCategories(categories);
+		return books;
+	}
+
 	// public static void main(String[] args) {
 	// ApplicationContext ctx = new
 	// AnnotationConfigApplicationContext(RootConfig.class);
@@ -40,56 +102,5 @@ public class Main {
 	// // System.out.println(jdbc.queryForObject("select count(*) FROM
 	// // PUBLIC.bookauthors", Integer.class));
 	// }
-
-	public static void main(String[] args) {
-
-		System.out.println("Hibernate many to many (Annotation)");
-		ApplicationContext ctx = new AnnotationConfigApplicationContext(RootConfig.class);
-		Session session = ctx.getBean(Session.class);
-
-		session.beginTransaction();
-
-		Book book = new Book("1213452", "title", "Desc", 10.00, "String publisher", "String pubdate", "String edition",
-				10, null, null);
-
-		Author author = new Author();
-		author.setNameF("Hans");
-		author.setNameL("Peter");
-
-		Set<Book> books = new HashSet<>();
-
-		Set<Author> authors = new HashSet<>();
-		authors.add(author);
-
-		books.add(new Book("1213452", "title", "Desc", 10.00, "String publisher", "String pubdate", "String edition",
-				10, null, authors));
-		books.add(new Book("12134394", "title", "Desc", 10.00, "String publisher", "String pubdate", "String edition",
-				10, null, authors));
-
-		Category category1 = new Category("Category1", books);
-		Category category2 = new Category("Category2", null);
-
-		Set<Category> categories = new HashSet<Category>();
-		categories.add(category1);
-		categories.add(category2);
-
-		book.setCategories(categories);
-
-		session.save(book);
-
-		Query query = session.createQuery("from Book");
-		List<Book> list = query.list();
-		for (Book o : list) {
-			System.out.println("\n---------------------\n");
-			System.out.println(o.getTitle());
-			System.out.println(o.getIsbn());
-			System.out.println("\n---------------------\n");
-		}
-
-		session.getTransaction().commit();
-		System.out.println("Done");
-		System.exit(0);
-
-	}
 
 }
