@@ -1,6 +1,5 @@
 package appl.items;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "BOOKDESCRIPTIONS", catalog = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "ISBN") })
-public class Book implements Serializable {
+public class Book {
 	private String isbn;
 	private String title;
 	private String description;
@@ -54,37 +53,37 @@ public class Book implements Serializable {
 		return isbn;
 	}
 
-	@Column(name = "TITLE", nullable = false, length = 20)
+	@Column(name = "TITLE", nullable = false, length = 256)
 	public String getTitle() {
 		return title;
 	}
 
-	@Column(name = "DESCRIPTION", nullable = true, length = 20)
+	@Column(name = "DESCRIPTION", nullable = true, length = 1024)
 	public String getDescription() {
 		return description;
 	}
 
-	@Column(name = "PRICE", nullable = true, length = 20)
+	@Column(name = "PRICE", nullable = true, length = 8)
 	public double getPrice() {
 		return price;
 	}
 
-	@Column(name = "PUBLISHER", nullable = true, length = 20)
+	@Column(name = "PUBLISHER", nullable = true, length = 256)
 	public String getPublisher() {
 		return publisher;
 	}
 
-	@Column(name = "PUBDATE", nullable = true, length = 20)
+	@Column(name = "PUBDATE", nullable = true, length = 256)
 	public String getPubdate() {
 		return pubdate;
 	}
 
-	@Column(name = "EDITION", nullable = true, length = 20)
+	@Column(name = "EDITION", nullable = true, length = 256)
 	public String getEdition() {
 		return edition;
 	}
 
-	@Column(name = "PAGES", nullable = true, length = 20)
+	@Column(name = "PAGES", nullable = true, length = 8)
 	public int getPages() {
 		return pages;
 	}

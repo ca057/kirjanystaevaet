@@ -1,6 +1,5 @@
 package appl.items;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,11 +16,15 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "bookcategories", catalog = "public", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "CATEGORYID") })
-public class Category implements Serializable {
+public class Category {
 	private int categoryID;
 	private String CategoryName;
 
 	private Set<Book> books = new HashSet<Book>(0);
+
+	private Category() {
+
+	}
 
 	public Category(String categoryName, Set<Book> books) {
 		super();

@@ -1,6 +1,5 @@
 package appl.items;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +15,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "bookauthors", catalog = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "AUTHORID") })
-public class Author implements Serializable {
+public class Author {
 	private int authorId;
 	private String nameF;
 	private String nameL;
