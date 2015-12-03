@@ -16,6 +16,7 @@ public class HibernateUtil {
 			Configuration cfg = new Configuration();
 			if (Files.notExists(Paths.get("./database/kirjanystaevaet.mv.db"))) {
 				cfg.setProperty("hibernate.hbm2ddl.auto", "create");
+				cfg.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
 			}
 			return cfg.configure().buildSessionFactory();
 		} catch (Throwable ex) {
@@ -23,6 +24,10 @@ public class HibernateUtil {
 			System.err.println("Initial SessionFactory creation failed." + ex);
 			throw new ExceptionInInitializerError(ex);
 		}
+	}
+
+	private static void addDataDump() {
+
 	}
 
 	public static SessionFactory getSessionFactory() {

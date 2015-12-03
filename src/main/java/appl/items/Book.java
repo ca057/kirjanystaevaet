@@ -58,7 +58,7 @@ public class Book {
 		return title;
 	}
 
-	@Column(name = "DESCRIPTION", nullable = true, length = 1024)
+	@Column(name = "DESCRIPTION", nullable = true, length = 4096)
 	public String getDescription() {
 		return description;
 	}

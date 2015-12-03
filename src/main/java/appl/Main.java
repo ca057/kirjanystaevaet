@@ -27,12 +27,12 @@ public class Main {
 		session.beginTransaction();
 
 		// Testdaten anlegen
-		Set<Book> books = createTestData();
+		// Set<Book> books = createTestData();
 
 		// Bücher speichern. save() oder persist()?
-		for (Book b : books) {
-			session.save(b);
-		}
+		// for (Book b : books) {
+		// session.save(b);
+		// }
 
 		// Testabfrage
 		Query query = session.createQuery("from Book");
@@ -41,6 +41,7 @@ public class Main {
 			System.out.println("\n---------------------\n");
 			System.out.println(o.getTitle());
 			System.out.println(o.getIsbn());
+			System.out.println(o.getCategories());
 			System.out.println("\n---------------------\n");
 		}
 
@@ -67,6 +68,7 @@ public class Main {
 		books.add(new Book("12134394", "title", "Desc", 10.00, "String publisher", "String pubdate", "String edition",
 				10, null, authors));
 
+		// books.add(book);
 		Category category1 = new Category("Category1", books);
 		Category category2 = new Category("Category2", null);
 
