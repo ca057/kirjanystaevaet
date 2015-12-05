@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -21,7 +23,7 @@ public class Author {
 	private Set<Book> books = new HashSet<Book>(0);
 
 	@Id
-	// @GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "AUTHORID", unique = true, nullable = false)
 	public int getAuthorId() {
 		return authorId;
