@@ -4,8 +4,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -46,9 +48,17 @@ public class Main {
 			System.out.println("---------------------\n");
 		}
 
-		// System.out.println(session.createQuery("from author").list());
-		// System.out.println(((Author) session.createQuery("from Author where
-		// AuthorId=31").uniqueResult()).getBooks());
+		// Das geht nicht: System.out.println(session.createQuery("from
+		// author").list());
+		System.out.println("---------------------\n");
+		System.out.println(((Author) session.createQuery("from Author where AuthorId=31").uniqueResult()).getBooks());
+		System.out.println("---------------------\n");
+		System.out
+				.println((Book) session.createCriteria(Book.class).setFetchMode("categories", FetchMode.JOIN)
+						.add(Restrictions.idEq(((Book) session
+								.createQuery("from Book where title='Programming ASP.NET'").uniqueResult()).getIsbn()))
+				.uniqueResult());
+		System.out.println("---------------------\n");
 
 		session.getTransaction().commit();
 		System.out.println("Done");
