@@ -1,33 +1,32 @@
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES
-(1, 'Jason', 'Gilmore'),
-(2, 'David', 'Sklar'),
-(3, 'Luke', 'Welling'),
-(4, 'Laura', 'Thomson'),
-(5, 'Steve', 'Krug'),
-(6, 'Ben', 'Forta'),
-(8, 'Jakob', 'Nielsen'),
-(9, 'Hoa', 'Loranger'),
-(11, 'Alan', 'Beaulieu'),
-(12, 'Jesse', 'Liberty'),
-(13, 'Dan', 'Hurwitz'),
-(14, 'Michele E.', 'Davis'),
-(15, 'John A.', 'Phillips'),
-(16, 'Jeffrey', 'Friedl'),
-(17, 'Michael J.', 'Hernandez'),
-(18, 'John L.', 'Viescas'),
-(22, 'Stephan', 'Walther'),
-(23, 'Andrew', 'Watt'),
-(24, 'Eric', 'Rosebrok'),
-(25, 'Kevin', 'Tatroe'),
-(26, 'Rasmus', 'Lerdorf'),
-(27, 'Peter', 'MacIntyre'),
-(29, 'Matthew', 'MacDonald'),
-(30, 'Julian', 'Templeman'),
-(31, 'Thomas', 'Erl'),
-(32, 'Hugh E.', 'Williams'),
-(33, 'David', 'Lane');
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (1, 'Jason', 'Gilmore'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (2, 'David', 'Sklar'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (3, 'Luke', 'Welling'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (4, 'Laura', 'Thomson'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (5, 'Steve', 'Krug'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (6, 'Ben', 'Forta'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (8, 'Jakob', 'Nielsen'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (9, 'Hoa', 'Loranger'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (11, 'Alan', 'Beaulieu'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (12, 'Jesse', 'Liberty'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (13, 'Dan', 'Hurwitz'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (14, 'Michele E.', 'Davis'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (15, 'John A.', 'Phillips'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (16, 'Jeffrey', 'Friedl'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (17, 'Michael J.', 'Hernandez'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (18, 'John L.', 'Viescas'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (22, 'Stephan', 'Walther'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (23, 'Andrew', 'Watt'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (24, 'Eric', 'Rosebrok'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (25, 'Kevin', 'Tatroe'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (26, 'Rasmus', 'Lerdorf'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (27, 'Peter', 'MacIntyre'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (29, 'Matthew', 'MacDonald'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (30, 'Julian', 'Templeman'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (31, 'Thomas', 'Erl'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (32, 'Hugh E.', 'Williams'),
+INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (33, 'David', 'Lane');
 
-/*
+
 INSERT INTO `bookdescriptions` (`ISBN`, `DESCRIPTION`, `EDITION`, `PAGES`, `PRICE`, `PUBLISHER`, `PUBDATE`, `TITLE`) VALUES ('0131428985',  '<p>The emergence of key second-generation Web  services standards has positioned service-oriented architecture (SOA)  as the foremost platform for contemporary business automation  solutions. The integration of SOA principles and technology is  empowering organizations to build applications with unprecedented  levels of flexibility, agility, and sophistication (while also allowing  them to leverage existing legacy environments).</p><p>This  guide will help you dramatically reduce the risk, complexity, and cost  of integrating the many new concepts and technologies introduced by the  SOA platform. It brings together the first comprehensive collection of  field-proven strategies, guidelines, and best practices for making the  transition toward the service-oriented enterprise.</p><p>Writing  for architects, analysts, managers, and developers, Thomas Erl offers  expert advice for making strategic decisions about both immediate and  long-term integration issues. Erl addresses a broad spectrum of  integration challenges, covering technical and design issues, as well  as strategic planning.</p><ul>  <li>Covers crucial second-generation  (WS-*) Web services standards: BPEL4WS, WS-Security, S-Coordination,  WS-Transaction, WS-Policy, WS-ReliableMessaging, and WS-Attachments </li>  <li>Includes  hundreds of individual integration strategies and more than 60 best  practices for both XML and Web services technologies </li>  <li>Includes a complete tutorial on service-oriented design principles for business and technical modeling </li>  <li>Explores  design issues related to a wide variety of service-oriented integration  architectures that integrate XML and Web services into legacy and EAI  environments </li>  <li>Provides a clear roadmap for planning a long-term migration toward a standardized service-oriented enterprise</li></ul><p>Service-oriented  architecture is no longer an exclusive discipline practiced only by  expensive consultants. With this book''s help, you can plan, architect,  and implement your own service-oriented environments-efficiently and  cost-effectively.</p>', '1', '560', '44.95','April 16, 2004', 'Prentice Hall', 'Service-Oriented Architecture : A Field Guide to Integrating XML and Web Services');
 INSERT INTO `bookdescriptions` (`ISBN`, `DESCRIPTION`, `EDITION`, `PAGES`, `PRICE`, `PUBLISHER`, `PUBDATE`, `TITLE`) VALUES ('0201433362', '<p>To the people who are accomplished in its use, Structured Query  Language (SQL) is a highly capable, eminently flexible, even beautiful  way of describing the data that you want from a database, or the  changes that you want to make to a database. For the rest of us,  however, SQL is a first-class nuisance that we do our best to avoid by  relying on relatively user-friendly--but usually less powerful--tools. <em>SQL Queries for Mere Mortals</em> aims to bring SQL-phobes  closer to the first camp by tutoring them carefully in what SQL can do.<p> The authors recognize that SQL queries usually come about as a result  of questions from human beings, and so usefully spend a fair bit of  time showing how to convert, say, &quot;In what cities do our customers  live?&quot; into, &quot;Select city from the customers table&quot; and, finally,  &quot;SELECT city FROM customers&quot; in SQL. They call this the &quot;translation  and clean up&quot; process, and it''s a fine approach. They don''t press it  too far, however, and are equally adept at presenting straight  explanations of SQL syntax elements in prose. They spend a lot of  energy graphically diagramming aspects of SQL syntax in a format that  requires some up-front study. A particular reader might prefer text  capsules to this arrow-intensive format, but other learners might like  the graphical syntax diagrams. <em>--David Wall</em></p>', '1', '528', '54.99', 'August 21, 2000', 'Addison-Wesley Professional', 'SQL Queries for Mere Mortals: A Hands-On Guide to Data Manipulation in SQL ');
 INSERT INTO `bookdescriptions` (`ISBN`, `DESCRIPTION`, `EDITION`, `PAGES`, `PRICE`, `PUBLISHER`, `PUBDATE`, `TITLE`) VALUES ('0321344758',  '<p>Usability design is one of the most important--yet often least attractive--tasks for a Web developer. In <em>Don''t Make Me Think</em>, author Steve Krug lightens up the subject with good humor and excellent, to-the-point examples.</p><p> The title of the book is its chief personal design premise. All of the  tips, techniques, and examples presented revolve around users being  able to surf merrily through a well-designed site with minimal  cognitive strain. Readers will quickly come to agree with many of the  book''s assumptions, such as &quot;We don''t read pages--we scan them&quot; and &quot;We  don''t figure out how things work--we muddle through.&quot; Coming to grips  with such hard facts sets the stage for Web design that then produces  topnotch sites.</p><p> Using an attractive mix of full-color screen  shots, cute cartoons and diagrams, and informative sidebars, the book  keeps your attention and drives home some crucial points. Much of the  content is devoted to proper use of conventions and content layout, and  the &quot;before and after&quot; examples are superb. Topics such as the wise use  of rollovers and usability testing are covered using a consistently  practical approach.</p><p> This is the type of book you can blow  through in a couple of evenings. But despite its conciseness, it will  give you an expert''s ability to judge Web design. You''ll never form a  first impression of a site in the same way again. <em>--Stephen W. Plain</em></p><p> <strong>Topics covered:</strong> </p><ul>  <li>User patterns </li>  <li>Designing for scanning </li>  <li>Wise use of copy </li>  <li>Navigation design </li>  <li>Home page layout </li>  <li>Usability testing</li></ul>', '2', '224', '35.00', 'Aug. 18, 2005', 'New Riders Press', 'Don''t Make Me Think');
@@ -45,16 +44,17 @@ INSERT INTO `bookdescriptions` (`ISBN`, `DESCRIPTION`, `EDITION`, `PAGES`, `PRIC
 INSERT INTO `bookdescriptions` (`ISBN`, `DESCRIPTION`, `EDITION`, `PAGES`, `PRICE`, `PUBLISHER`, `PUBDATE`, `TITLE`) VALUES ('0764574892', '<p>Regular expressions help users and developers to find and manipulate  text more effectively and efficiently. In addition, regular expressions  are supported by many scripting languages, programming languages, and  databases. This example-rich tutorial helps debunk the traditional  reputation of regular expressions as being cryptic. It explains the  various parts of a regular expression pattern, what those parts mean,  how to use them, and common pitfalls to avoid when writing regular  expressions. With chapters on using regular expressions with popular  Windows platform software including databases, cross platform scripting  languages, and programming languages, you''ll learn to make effective  use of the power provided by regular expressions once you fully  comprehend their strengths and potential. What you will learn from this  book -Fundamental concepts of regular expressions and how to write them  -How to break down a text manipulation problem into component parts so  you can then logically construct a regular expression pattern -How to  use regular expressions in several scripting and programming languages  and software packages -The variations that exist among regular  expression dialects -Reusable, real-world working code that can be used  to solve everyday regular expression problems Who this book is for:  This book is for developers who need to manipulate text but are new to  regular expressions. Some basic programming or scripting experience is  useful but not required.</p>','1', '768', '39.99', 'February 4, 2005', 'Wrox', 'Beginning Regular Expressions');
 INSERT INTO `bookdescriptions` (`ISBN`, `DESCRIPTION`, `EDITION`, `PAGES`, `PRICE`, `PUBLISHER`, `PUBDATE`, `TITLE`) VALUES ('0782142796', '<p>  PHP and MySQL are great tools for building database-driven  websites. There''s nothing new about that. What is new is the  environment in which your site operates&mdash;a world rich (and growing  richer) in web services that can add value and functionality in many  different ways. Creating Interactive Web Sites with PHP and Web  Services walks you through every step of a major web project&mdash;a  content-management system&mdash;teaching you both the basic techniques and  little-known tricks you need to build successful web sites. And you can  use those skills to develop dynamic applications that will meet your  special requirements. Here''s some of what you''ll find covered inside: </p><ul>  <li>Adding, deleting, and displaying data with a custom content-management system </li>  <li>Building a template system with PHP </li>  <li>Interacting with web services using PHP and MySQL </li>  <li>Creating and managing a user system and a shopping cart </li>  <li>Processing credit card payments using merchant accounts and third-party payment solutions </li>  <li>Tracking site statistics using PHP and MySQL </li>  <li>Enhancing your site with third-party scripts </li></ul><p> Tons of examples, complete with explanations and supported by online  source code, will speed your progress, whether you''re a true beginner  or already have PHP experience. This book is platform-agnostic, so it  doesn''t matter if you''re deploying your site on Linux or Windows. You  also get PHP and MySQL references, so you can quickly resolve questions  about syntax and similar issues. </p>', '1', '512', '39.99', 'December 19, 2003', 'Sybex', 'Creating Interactive Web Sites with PHP and Web Services');
 INSERT INTO `bookdescriptions` (`ISBN`, `DESCRIPTION`, `EDITION`, `PAGES`, `PRICE`, `PUBLISHER`, `PUBDATE`, `TITLE`) VALUES ('1590595521',  '<p> <em>Beginning PHP 5 and MYSQL: From Novice to Professional</em> offers a comprehensive introduction to two of the most popular Web  application building technologies on the planet: the scripting language  PHP and the MySQL database server. This book will not only expose you  to the core aspects of both technologies, but will provide valuable  insight into how they are used in unison to create dynamic data-driven  Web applications.</p><p><em>Beginning PHP 5 and MYSQL</em> explains the  new features of the latest releases of the world&rsquo;s most popular Open  Source Web development technologies: MySQL 4 database server and PHP 5  scripting language. This book explores the benefits, extensive new  features, and advantages of the object-oriented PHP 5, and how it can  be used in conjunction with MySQL 4 to create powerful dynamic Web  sites. </p><p> This is the perfect book for the Web designer,  programmer, hobbyist, or novice that wants to learn how to create  applications with PHP 5 and MySQL 4, and is a great entrance point for  Apress&rsquo;s extensive spectrum of PHP books planned for 2004.</p>','1', '952', '44.99', 'January 23, 2006', 'Apress', 'Beginning PHP and MySQL 5');
-INSERT INTO `bookdescriptions` (`ISBN`, `DESCRIPTION`, `EDITION`, `PAGES`, `PRICE`, `PUBLISHER`, `PUBDATE`, `TITLE`) VALUES ('1590595726', '<p><em>Beginning ASP.NET 2.0 in C# 2005: From Novice to Professional</em> steers you through the maze of ASP.NET web programming concepts. You  will learn language and theory simultaneously, mastering the core  techniques necessary to develop good coding practices and enhance your  skill set.</p><p>This book provides thorough coverage of ASP.NET,  guiding you from beginning to advanced techniques, such as querying  databases from within a web page and performance-tuning your site.  You''ll find tips for best practices and comprehensive discussions of  key database and XML principles.</p><p>The book also emphasizes the  invaluable coding techniques of object orientation and code-behind,  which will enable you to build real-world websites instead of just  scraping by with simplified coding practices. By the time you finish  this book, you will have mastered the core techniques essential to  professional ASP.NET developers.</p>', '1', '1184', '49.99', 'January 27, 2006', 'Apress’, ‘Beginning ASP.NET 2.0 in C#');
+INSERT INTO `bookdescriptions` (`ISBN`, `DESCRIPTION`, `EDITION`, `PAGES`, `PRICE`, `PUBLISHER`, `PUBDATE`, `TITLE`) VALUES ('1590595726', '<p><em>Beginning ASP.NET 2.0 in C# 2005: From Novice to Professional</em> steers you through the maze of ASP.NET web programming concepts. You  will learn language and theory simultaneously, mastering the core  techniques necessary to develop good coding practices and enhance your  skill set.</p><p>This book provides thorough coverage of ASP.NET,  guiding you from beginning to advanced techniques, such as querying  databases from within a web page and performance-tuning your site.  You''ll find tips for best practices and comprehensive discussions of  key database and XML principles.</p><p>The book also emphasizes the  invaluable coding techniques of object orientation and code-behind,  which will enable you to build real-world websites instead of just  scraping by with simplified coding practices. By the time you finish  this book, you will have mastered the core techniques essential to  professional ASP.NET developers.</p>', '1', '1184', '49.99', 'January 27, 2006', 'Apress', 'Beginning ASP.NET 2.0 in C#');
 
-INSERT INTO `bookcategories` VALUES (1, 'PHP');
-INSERT INTO `bookcategories` VALUES (2, 'MySQL');
-INSERT INTO `bookcategories` VALUES (3, 'Web Usability');
-INSERT INTO `bookcategories` VALUES (4, 'SQL');
-INSERT INTO `bookcategories` VALUES (5, 'ASP.NET');
-INSERT INTO `bookcategories` VALUES (6, 'Regular Expressions');
-INSERT INTO `bookcategories` VALUES (7, 'Web Services');
-INSERT INTO `bookcategories` VALUES (8, 'Morse Code');
+INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (1, 'PHP');
+INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (2, 'MySQL');
+INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (3, 'Web Usability');
+INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (4, 'SQL');
+INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (5, 'ASP.NET');
+INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (6, 'Regular Expressions');
+INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (7, 'Web Services');
+INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (8, 'Morse Code');
+
 
 INSERT INTO `bookauthorsbooks` VALUES ('0131428985', 31);
 INSERT INTO `bookauthorsbooks` VALUES ('0201433362', 17);
@@ -83,28 +83,27 @@ INSERT INTO `bookauthorsbooks` VALUES ('1590595521', 1);
 INSERT INTO `bookauthorsbooks` VALUES ('1590595726', 29);
 INSERT INTO `bookauthorsbooks` VALUES ('1590595726', 30);
 
-INSERT INTO `bookcategoriesbooks` VALUES (1, '0131428985');
-INSERT INTO `bookcategoriesbooks` VALUES (1, '0596005431');
-INSERT INTO `bookcategoriesbooks` VALUES (1, '0596005601');
-INSERT INTO `bookcategoriesbooks` VALUES (1, '0596006810');
-INSERT INTO `bookcategoriesbooks` VALUES (1, '0596101104');
-INSERT INTO `bookcategoriesbooks` VALUES (1, '0672326728');
-INSERT INTO `bookcategoriesbooks` VALUES (1, '0782142796');
-INSERT INTO `bookcategoriesbooks` VALUES (1, '1590595521');
-INSERT INTO `bookcategoriesbooks` VALUES (2, '0596005431');
-INSERT INTO `bookcategoriesbooks` VALUES (2, '0596101104');
-INSERT INTO `bookcategoriesbooks` VALUES (2, '0672326728');
-INSERT INTO `bookcategoriesbooks` VALUES (2, '1590595521');
-INSERT INTO `bookcategoriesbooks` VALUES (3, '0321344758');
-INSERT INTO `bookcategoriesbooks` VALUES (3, '0321350316');
-INSERT INTO `bookcategoriesbooks` VALUES (4, '0201433362');
-INSERT INTO `bookcategoriesbooks` VALUES (4, '0596007272');
-INSERT INTO `bookcategoriesbooks` VALUES (4, '0672325675');
-INSERT INTO `bookcategoriesbooks` VALUES (5, '059600916X');
-INSERT INTO `bookcategoriesbooks` VALUES (5, '0672328232');
-INSERT INTO `bookcategoriesbooks` VALUES (5, '1590595726');
-INSERT INTO `bookcategoriesbooks` VALUES (6, '0596528124');
-INSERT INTO `bookcategoriesbooks` VALUES (6, '0764574892');
-INSERT INTO `bookcategoriesbooks` VALUES (7, '0131428985');
-INSERT INTO `bookcategoriesbooks` VALUES (7, '0782142796');
-*/
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (1, '0131428985');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (1, '0596005431');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (1, '0596005601');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (1, '0596006810');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (1, '0596101104');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (1, '0672326728');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (1, '0782142796');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (1, '1590595521');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (2, '0596005431');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (2, '0596101104');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (2, '0672326728');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (2, '1590595521');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (3, '0321344758');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (3, '0321350316');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (4, '0201433362');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (4, '0596007272');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (4, '0672325675');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (5, '059600916X');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (5, '0672328232');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (5, '1590595726');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (6, '0596528124');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (6, '0764574892');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (7, '0131428985');
+INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (7, '0782142796');
