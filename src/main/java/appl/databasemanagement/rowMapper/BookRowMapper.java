@@ -25,7 +25,7 @@ public class BookRowMapper implements RowMapper {
 		book.setPublisher(rs.getString(5));
 		book.setPubdate(rs.getString(6));
 		book.setEdition(rs.getString(7));
-		book.setPages(rs.getString(8));
+		book.setPages(Integer.parseInt(rs.getString(8)));
 		return book;
 	}
 

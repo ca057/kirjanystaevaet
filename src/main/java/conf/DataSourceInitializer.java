@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 /**
@@ -28,7 +27,8 @@ public class DataSourceInitializer {
 	@Bean(name = "dataSource")
 	public DataSource getDataSource() {
 		DataSource dataSource = createDataSource();
-		DatabasePopulatorUtils.execute(createDatabasePopulator(), dataSource);
+		// DatabasePopulatorUtils.execute(createDatabasePopulator(),
+		// dataSource);
 		return dataSource;
 	}
 
