@@ -4,10 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -53,12 +51,11 @@ public class Main {
 		System.out.println("---------------------\n");
 		System.out.println(((Author) session.createQuery("from Author where AuthorId=31").uniqueResult()).getBooks());
 		System.out.println("---------------------\n");
-		System.out
-				.println((Book) session.createCriteria(Book.class).setFetchMode("categories", FetchMode.JOIN)
-						.add(Restrictions.idEq(((Book) session
-								.createQuery("from Book where title='Programming ASP.NET'").uniqueResult()).getIsbn()))
-				.uniqueResult());
-		System.out.println("---------------------\n");
+
+		// Ein normales Buch, ein Buch mit criteriaQuery
+		Book usualBook = (Book) session.createQuery("from Book where ISBN='0131428985'").uniqueResult();
+		System.out.println("---------------------\n" + usualBook.getCategories() + "\n"
+				+ usualBook.getAuthors().iterator().next().getBooks() + "\n---------------------");
 
 		session.getTransaction().commit();
 		System.out.println("Done");
