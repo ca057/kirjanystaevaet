@@ -26,10 +26,6 @@ public class HibernateUtil {
 		}
 	}
 
-	private static void addDataDump() {
-
-	}
-
 	public static SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
