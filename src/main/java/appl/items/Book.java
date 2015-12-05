@@ -88,18 +88,14 @@ public class Book {
 		return pages;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "bookcategoriesbooks", catalog = "public", joinColumns = {
-			@JoinColumn(name = "ISBN", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "CATEGORYID", nullable = false, updatable = false) })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "bookcategoriesbooks", catalog = "public", joinColumns = @JoinColumn(name = "ISBN") , inverseJoinColumns = @JoinColumn(name = "CATEGORYID") )
 	public Set<Category> getCategories() {
 		return categories;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "bookauthorsbooks", catalog = "public", joinColumns = {
-			@JoinColumn(name = "ISBN", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "AUTHORID", nullable = false, updatable = false) })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "bookauthorsbooks", catalog = "public", joinColumns = @JoinColumn(name = "ISBN") , inverseJoinColumns = @JoinColumn(name = "AUTHORID") )
 	public Set<Author> getAuthors() {
 		return authors;
 	}
