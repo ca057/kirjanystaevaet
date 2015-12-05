@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "BOOKDESCRIPTIONS", catalog = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "ISBN") })
+@Table(name = "BOOKDESCRIPTIONS", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "ISBN") })
 public class Book {
 	private String isbn;
 	private String title;
@@ -88,14 +88,14 @@ public class Book {
 		return pages;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "bookcategoriesbooks", catalog = "public", joinColumns = @JoinColumn(name = "ISBN") , inverseJoinColumns = @JoinColumn(name = "CATEGORYID") )
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "bookcategoriesbooks", schema = "public", joinColumns = @JoinColumn(name = "ISBN") , inverseJoinColumns = @JoinColumn(name = "CATEGORYID") )
 	public Set<Category> getCategories() {
 		return categories;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "bookauthorsbooks", catalog = "public", joinColumns = @JoinColumn(name = "ISBN") , inverseJoinColumns = @JoinColumn(name = "AUTHORID") )
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "bookauthorsbooks", schema = "public", joinColumns = @JoinColumn(name = "ISBN") , inverseJoinColumns = @JoinColumn(name = "AUTHORID") )
 	public Set<Author> getAuthors() {
 		return authors;
 	}
@@ -138,6 +138,13 @@ public class Book {
 
 	public void setAuthors(Set<Author> authors) {
 		this.authors = authors;
+	}
+
+	@Override
+	public String toString() {
+		return "Book [isbn=" + isbn + ", title=" + title + ", description=" + description + ", price=" + price
+				+ ", publisher=" + publisher + ", pubdate=" + pubdate + ", edition=" + edition + ", pages=" + pages
+				+ "]";
 	}
 
 }

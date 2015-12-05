@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "bookcategories", catalog = "public", uniqueConstraints = {
+@Table(name = "bookcategories", schema = "public", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "CATEGORYID") })
 public class Category {
 	private int categoryID;
@@ -42,7 +42,7 @@ public class Category {
 		return CategoryName;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "categories")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
 	public Set<Book> getBooks() {
 		return books;
 	}
@@ -57,6 +57,11 @@ public class Category {
 
 	public void setCategoryName(String categoryName) {
 		CategoryName = categoryName;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [categoryID=" + categoryID + ", CategoryName=" + CategoryName + "]";
 	}
 
 }

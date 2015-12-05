@@ -38,12 +38,17 @@ public class Main {
 		Query query = session.createQuery("from Book");
 		List<Book> list = query.list();
 		for (Book o : list) {
-			System.out.println("\n---------------------\n");
+			System.out.println("\n---------------------");
 			System.out.println(o.getTitle());
 			System.out.println(o.getIsbn());
-			System.out.println(o.getCategories());
-			System.out.println("\n---------------------\n");
+			System.out.println(o.getCategories().iterator().next().toString());
+			System.out.println(o.getAuthors().iterator().next().toString());
+			System.out.println("---------------------\n");
 		}
+
+		// System.out.println(session.createQuery("from author").list());
+		// System.out.println(((Author) session.createQuery("from Author where
+		// AuthorId=31").uniqueResult()).getBooks());
 
 		session.getTransaction().commit();
 		System.out.println("Done");

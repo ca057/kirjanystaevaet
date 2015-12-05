@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "bookauthors", catalog = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "AUTHORID") })
+@Table(name = "bookauthors", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "AUTHORID") })
 public class Author {
 	private int authorId;
 	private String nameF;
@@ -50,7 +50,7 @@ public class Author {
 		this.nameL = nameL;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "authors")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "authors")
 	public Set<Book> getBooks() {
 		return books;
 	}
@@ -61,6 +61,11 @@ public class Author {
 
 	public void setBooks(Set<Book> books) {
 		this.books = books;
+	}
+
+	@Override
+	public String toString() {
+		return "Author [authorId=" + authorId + ", nameF=" + nameF + ", nameL=" + nameL + "]";
 	}
 
 }
