@@ -47,6 +47,46 @@ public class queryFun {
 		System.out.println("---------------------\n" + usualBook.getCategories() + "\n"
 				+ usualBook.getAuthors().iterator().next().getBooks() + "\n---------------------");
 
+		
+		
+		// Select -> nicht das ganze Objekt bekommen, sondern nur nen String oder so
+		System.out.println("\n --------- SELECT ----------------------------- \n");
+		//Query querySelect = session.createQuery("select nameF from Book where nameL=Gilmore");
+		Query querySelect = session.createQuery("select description from Book where isbn='0131428985'");
+		List<String> name = querySelect.list();
+		System.out.println("Anzahl der ELement: " + name.size());
+		//System.out.println("The desc is: " + name.getDescription());
+		//System.out.println("The isbn is: " + name.getIsbn());
+		for (String n : name){
+			//System.out.println("The isbn is: " + n.getIsbn());
+			//System.out.println("The name is: " + n.getDescription());
+			System.out.println("Desc: " + n);
+		}
+		
+		
+		// Kategorien suchen -> für getCategories
+		System.out.println("\n ---------------------------- KATEGORIEN -------------------------");
+		Query query2 = session.createQuery("select distinct categoryName from Category");
+		List<String> cats = query2.list();
+		System.out.println("Anzahl der ELement: " + cats.size());
+		//System.out.println("The desc is: " + name.getDescription());
+		//System.out.println("The isbn is: " + name.getIsbn());
+		for (String n : cats){
+			//System.out.println("The isbn is: " + n.getIsbn());
+			//System.out.println("The name is: " + n.getDescription());
+			System.out.println("Desc: " + n);
+		}
+		
+		// getBookByCategory
+		/*System.out.println("\n ------------------ getBookByCategory---------\n");
+		Query query3 = session.createQuery("from Book where categories.CategoryName=:cat");
+		query.setString("name", "MySQL");
+		List<Book> books = query3.list();
+		for (Book n : books){
+			System.out.println("Titel: " + n.getTitle());
+		}
+		*/
+		
 		session.getTransaction().commit();
 		System.out.println("Done");
 		System.exit(0);
