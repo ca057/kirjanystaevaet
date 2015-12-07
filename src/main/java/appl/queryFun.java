@@ -77,15 +77,16 @@ public class queryFun {
 			System.out.println("Desc: " + n);
 		}
 		
-		// getBookByCategory
-		/*System.out.println("\n ------------------ getBookByCategory---------\n");
-		Query query3 = session.createQuery("from Book where categories.CategoryName=:cat");
-		query.setString("name", "MySQL");
-		List<Book> books = query3.list();
-		for (Book n : books){
-			System.out.println("Titel: " + n.getTitle());
+		// Versuche eines Joins. Für Autoren funktioniert es, aber nicht für categorien, was mega seltsam ist, da es exakt diesselbe Struktur ist
+		//Query query3 = session.createQuery("select a.CategoryName from Book b join b.categories a where b.isbn ='0131428985'");
+		System.out.println("\n ------------------ getBookByCategory---------\n");
+		Query query3 = session.createQuery("select a.nameF from Book b join b.authors a where b.isbn ='0131428985'");
+		//query.setString("name", "MySQL");
+		List<String> books = query3.list();
+		for (String n : books){
+			System.out.println("Cat: " + n);
 		}
-		*/
+		
 		
 		session.getTransaction().commit();
 		System.out.println("Done");
