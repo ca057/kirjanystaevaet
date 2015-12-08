@@ -31,6 +31,7 @@ public class SearchController {
 			@RequestParam(value = "isbn", required = false) String isbn,
 			@RequestParam(value = "year", required = false) String year,
 			@RequestParam(value = "category", required = false) String category, Model m) {
+		queryTerm = "";
 		m.addAttribute("results", processSearchTerms(all, title, author, isbn, year, category));
 		m.addAttribute("query", queryTerm);
 		return "search";
@@ -49,23 +50,23 @@ public class SearchController {
 			String searchCategory = "";
 			if (title != null && !title.isEmpty()) {
 				searchTitle = title;
-				queryTerm += "Titel: " + title;
+				queryTerm += " Titel: " + title;
 			}
 			if (author != null && !author.isEmpty()) {
 				searchAuthor = author;
-				queryTerm += "; Autor: " + author;
+				queryTerm += " Autor: " + author;
 			}
 			if (isbn != null && !isbn.isEmpty()) {
 				searchIsbn = isbn;
-				queryTerm += "; ISBN: " + isbn;
+				queryTerm += " ISBN: " + isbn;
 			}
 			if (year != null && !year.isEmpty()) {
 				searchYear = year;
-				queryTerm += "; Jahr: " + year;
+				queryTerm += " Jahr: " + year;
 			}
 			if (category != null && !category.isEmpty()) {
 				searchCategory = category;
-				queryTerm += "; Kategorie: " + category;
+				queryTerm += " Kategorie: " + category;
 			}
 			return query.getBooksByMetadata(searchTitle, searchAuthor, searchYear, searchIsbn, searchCategory);
 		}
