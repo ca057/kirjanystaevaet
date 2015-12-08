@@ -57,6 +57,13 @@ footer {
 }
 
 /* all the content */
+
+/* different useful classes */
+
+.font-bold {
+	font-weight: bold;
+}
+
 /* all links */
 a {
     cursor: pointer;
@@ -83,6 +90,10 @@ a:focus, a:hover, a:active {
 
 .list-inline li {
 	display: inline-block;
+}
+
+.float-right {
+	float: right;
 }
 
 .footer-content li::AFTER {
@@ -112,7 +123,7 @@ div#searchfield form input[type=submit] {
 	margin: 0 auto 0 auto;
 }
 
-div#searchfield form * {
+form * {
 	display: block;
 }
 
