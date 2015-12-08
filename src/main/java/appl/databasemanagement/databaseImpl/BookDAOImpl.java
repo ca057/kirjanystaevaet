@@ -10,18 +10,12 @@ import org.springframework.stereotype.Service;
 import appl.databasemanagement.BookDAO;
 import appl.databasemanagement.Searchfields;
 import appl.items.Book;
-import appl.items.Category;
 
 @Service
 public class BookDAOImpl implements BookDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-
-	@Override
-	public List<Category> getCategories() {
-		return sessionFactory.getCurrentSession().createQuery("select distinct categoryName from Category").list();
-	}
 
 	@Override
 	public List<Book> getBooksByCategory(String category) {

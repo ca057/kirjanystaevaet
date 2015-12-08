@@ -4,11 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import appl.items.Book;
-import appl.items.Category;
 
 public interface BookDAO {
-
-	public List<Category> getCategories();
 
 	public List<Book> getBooksByCategory(String category);
 
