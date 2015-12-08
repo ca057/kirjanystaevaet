@@ -1,6 +1,6 @@
 package appl.logic.users;
 
-import appl.logic.users.impl.UserImpl;
+import appl.data.dao.impl.UserDAOImpl;
 
 public interface UserAdmin {
 
@@ -11,6 +11,6 @@ public interface UserAdmin {
 	public void updateUser();
 
 	// TODO Beans?
-	public UserImpl getUser();
+	public UserDAOImpl getUser();
 
 }

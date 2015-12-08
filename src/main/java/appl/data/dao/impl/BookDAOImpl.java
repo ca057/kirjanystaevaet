@@ -46,10 +46,9 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public boolean insertBook(Book book) {
 		try {
-			// TODO save gibt identifier zurück, vll kann man da auch über if
-			// !null arbeiten
-			sessionFactory.getCurrentSession().save(book);
-			return true;
+			// TODO save gibt identifier zurück, aber das ist vermutlich auch
+			// nicht so überragend gelöst
+			return sessionFactory.getCurrentSession().save(book) != null;
 		} catch (HibernateException e) {
 			// TODO falls das bleibt, sinnvolles Exceptionhandling
 			return false;
@@ -69,7 +68,7 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public boolean updateBook(Book book, Map<Searchfields, String> map) {
-		// TODO Auto-generated method stub
+		// TODO session.merge()? session.saveOrUpdate()?
 		return false;
 	}
 
