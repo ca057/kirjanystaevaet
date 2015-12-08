@@ -8,4 +8,6 @@
 	<!-- Und diesen Menüpunkt gibt es immer -->
 	<li><a href="<c:url value='/suche' />" title="Suche">Suche</a></li>
 	<li><a href="<c:url value='/kontakt'/>" title="Kontakt und Impressum">Kontakt/Impressum</a></li>
+	<!-- diesen Menüpunkt gibt es auch immer und der ist ganz rechts und ändert sich in "Mein Konto" wenn man eingeloggt ist -->
+	<li class="float-right"><a href="<c:url value='/login'/>" title="">Login</a></li>
 </ul>
