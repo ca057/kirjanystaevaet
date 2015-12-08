@@ -2,8 +2,6 @@ package appl.databasemanagement.databaseImpl;
 
 import java.util.List;
 
-import appl.databasemanagement.BookDataAdmin;
-
 public class BookDataAdminImpl implements BookDataAdmin {
 
 	@Override
@@ -15,7 +13,6 @@ public class BookDataAdminImpl implements BookDataAdmin {
 
 	@Override
 	public boolean addBookCategoriesBooks(int CatId, String isnb) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
