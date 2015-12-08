@@ -24,7 +24,7 @@
 			<p>Noch keine Suchanfrage gestellt.</p>
 		</c:when>
 		<c:otherwise>
-			<p>Suchanfrage: <span class="query"><c:out value='${query}' /></span></p>
+			<p><span class="font-bold">Suchanfrage:</span> <span class="query"><c:out value='${query}' /></span></p>
 			
 			<!-- Hier müssen die ganzen gefundenen Bücher hin -->
 		</c:otherwise>
