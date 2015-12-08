@@ -11,7 +11,7 @@ import appl.data.items.Book;
 public interface BookDAO {
 
 	@Transactional
-	public List<Book> getBooksByCategory(String category);
+	public List<Book> getBooksByCategory(String categoryName);
 
 	@Transactional
 	public Book getBookByIsbn(int isbn);

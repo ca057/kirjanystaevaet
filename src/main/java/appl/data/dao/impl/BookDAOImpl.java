@@ -3,6 +3,7 @@ package appl.data.dao.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,15 +19,16 @@ public class BookDAOImpl implements BookDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public List<Book> getBooksByCategory(String category) {
-		// TODO Auto-generated method stub
+	public List<Book> getBooksByCategory(String categoryName) {
+		// return ((Category)
+		// (sessionFactory.getCurrentSession().createQuery("from Category where
+		// categoryName = " + categoryName).uniqueResult())).getBooks();
 		return null;
 	}
 
 	@Override
 	public Book getBookByIsbn(int isbn) {
-		// TODO Auto-generated method stub
-		return null;
+		return (Book) sessionFactory.getCurrentSession().createQuery("from Book where isbn=" + isbn).uniqueResult();
 	}
 
 	@Override
@@ -43,14 +45,26 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public boolean insertBook(Book book) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			// TODO save gibt identifier zurück, vll kann man da auch über if
+			// !null arbeiten
+			sessionFactory.getCurrentSession().save(book);
+			return true;
+		} catch (HibernateException e) {
+			// TODO falls das bleibt, sinnvolles Exceptionhandling
+			return false;
+		}
 	}
 
 	@Override
 	public boolean deleteBook(Book book) {
-		// TODO Auto-generated method stub
-		return false;
+		// TODO siehe insertBook
+		try {
+			sessionFactory.getCurrentSession().delete(book);
+			return true;
+		} catch (HibernateException e) {
+			return false;
+		}
 	}
 
 	@Override
