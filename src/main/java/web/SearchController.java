@@ -1,6 +1,5 @@
 package web;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,8 @@ import appl.queryManagement.QueryCreatorImpl;
 @Controller
 public class SearchController {
 
+	private String queryTerm = "";
+
 	@Autowired
 	private QueryCreatorImpl query;
 
@@ -30,11 +31,16 @@ public class SearchController {
 			@RequestParam(value = "isbn", required = false) String isbn,
 			@RequestParam(value = "year", required = false) String year,
 			@RequestParam(value = "category", required = false) String category, Model m) {
-		String queryTerm = "Keine Suchanfrage gestellt.";
-		List<Book> results = new ArrayList();
+		m.addAttribute("results", processSearchTerms(all, title, author, isbn, year, category));
+		m.addAttribute("query", queryTerm);
+		return "search";
+	}
+
+	private List<Book> processSearchTerms(String all, String title, String author, String isbn, String year,
+			String category) {
 		if (all != null && !all.isEmpty()) {
-			results = query.getBooksByOpenSearch(all);
 			queryTerm = all;
+			return query.getBooksByOpenSearch(all);
 		} else {
 			String searchTitle = "";
 			String searchAuthor = "";
@@ -43,23 +49,25 @@ public class SearchController {
 			String searchCategory = "";
 			if (title != null && !title.isEmpty()) {
 				searchTitle = title;
+				queryTerm += "Titel: " + title;
 			}
 			if (author != null && !author.isEmpty()) {
 				searchAuthor = author;
+				queryTerm += "; Autor: " + author;
 			}
 			if (isbn != null && !isbn.isEmpty()) {
 				searchIsbn = isbn;
+				queryTerm += "; ISBN: " + isbn;
 			}
 			if (year != null && !year.isEmpty()) {
 				searchYear = year;
+				queryTerm += "; Jahr: " + year;
 			}
 			if (category != null && !category.isEmpty()) {
 				searchCategory = category;
+				queryTerm += "; Kategorie: " + category;
 			}
-			results = query.getBooksByMetadata(searchTitle, searchAuthor, searchYear, searchIsbn, searchCategory);
+			return query.getBooksByMetadata(searchTitle, searchAuthor, searchYear, searchIsbn, searchCategory);
 		}
-		m.addAttribute("query", queryTerm);
-		m.addAllAttributes(results);
-		return "search";
 	}
 }
