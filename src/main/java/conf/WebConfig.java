@@ -42,6 +42,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 			// registry.addResourceHandler("/resources/js/**").addResourceLocations("/resources/js/").setCachePeriod(3600);
 			registry.addResourceHandler("/resources/css/**").addResourceLocations("/resources/css/");
 			registry.addResourceHandler("/resources/js/**").addResourceLocations("/resources/js/");
+			// TODO check if needed
+			registry.addResourceHandler("/ressources/img/**").addResourceLocations("/resources/img/");
 		}
 	}
 
