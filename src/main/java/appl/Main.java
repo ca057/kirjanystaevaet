@@ -1,6 +1,6 @@
 package appl;
 
-import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -10,8 +10,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(RootConfig.class);
-		Session session = ctx.getBean(Session.class);
-		new QueryFun().doSomeTesting(session);
+		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
+		new QueryFun().doSomeTesting(sessionFactory);
 
 		// JdbcTemplate jdbc = ctx.getBean(JdbcTemplate.class);
 		// new QueryFun().jdbcStuff(jdbc);

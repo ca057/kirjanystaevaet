@@ -12,8 +12,8 @@
     <property name="hibernate.connection.password"></property>
     <property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
     <property name="show_sql">true</property>
-    <mapping class="appl.items.Book" />
-    <mapping class="appl.items.Author" />
-    <mapping class="appl.items.Category" />
+    <mapping class="appl.data.items.Book" />
+    <mapping class="appl.data.items.Author" />
+    <mapping class="appl.data.items.Category" />
 </session-factory>
 </hibernate-configuration>
