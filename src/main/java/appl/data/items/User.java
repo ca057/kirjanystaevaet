@@ -1,4 +1,4 @@
-package appl.items;
+package appl.data.items;
 
 public class User {
 

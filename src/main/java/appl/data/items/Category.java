@@ -1,4 +1,4 @@
-package appl.items;
+package appl.data.items;
 
 import java.util.HashSet;
 import java.util.Set;

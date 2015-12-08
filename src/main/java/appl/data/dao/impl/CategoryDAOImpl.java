@@ -1,4 +1,4 @@
-package appl.databasemanagement.databaseImpl;
+package appl.data.dao.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -7,10 +7,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import appl.databasemanagement.CategoryDAO;
-import appl.databasemanagement.Searchfields;
-import appl.items.Book;
-import appl.items.Category;
+import appl.data.dao.CategoryDAO;
+import appl.data.dao.Searchfields;
+import appl.data.items.Book;
+import appl.data.items.Category;
 
 @Service
 public class CategoryDAOImpl implements CategoryDAO {

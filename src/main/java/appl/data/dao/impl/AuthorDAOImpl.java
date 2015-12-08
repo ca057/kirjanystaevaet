@@ -1,4 +1,4 @@
-package appl.databasemanagement.databaseImpl;
+package appl.data.dao.impl;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import appl.databasemanagement.AuthorDAO;
-import appl.items.Author;
+import appl.data.dao.AuthorDAO;
+import appl.data.items.Author;
 
 @Service
 public class AuthorDAOImpl implements AuthorDAO {

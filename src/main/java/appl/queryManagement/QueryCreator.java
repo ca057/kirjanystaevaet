@@ -2,7 +2,7 @@ package appl.queryManagement;
 
 import java.util.List;
 
-import appl.items.Book;
+import appl.data.items.Book;
 
 public interface QueryCreator {
 

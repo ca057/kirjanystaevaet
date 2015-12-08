@@ -1,9 +1,9 @@
-package appl.databasemanagement;
+package appl.data.dao;
 
 import java.util.List;
 import java.util.Map;
 
-import appl.items.Book;
+import appl.data.items.Book;
 
 public interface BookDAO {
 

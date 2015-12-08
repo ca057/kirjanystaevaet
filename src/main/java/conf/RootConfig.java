@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import appl.databasemanagement.BookDAO;
-import appl.databasemanagement.databaseImpl.BookDAOImpl;
+import appl.data.dao.BookDAO;
+import appl.data.dao.impl.BookDAOImpl;
 import appl.ordermanagement.OrderAdmin;
 import appl.ordermanagement.ordermanagementImpl.OrderAdminImpl;
 import appl.queryManagement.QueryCreator;

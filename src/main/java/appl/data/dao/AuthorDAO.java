@@ -1,8 +1,8 @@
-package appl.databasemanagement;
+package appl.data.dao;
 
 import java.util.List;
 
-import appl.items.Author;
+import appl.data.items.Author;
 
 public interface AuthorDAO {
 

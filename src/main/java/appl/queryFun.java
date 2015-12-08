@@ -8,11 +8,11 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import appl.databasemanagement.rowMapper.AuthorRowMapper;
-import appl.databasemanagement.rowMapper.BookRowMapper;
-import appl.items.Author;
-import appl.items.Book;
-import appl.items.Category;
+import appl.data.dao.rowMapper.AuthorRowMapper;
+import appl.data.dao.rowMapper.BookRowMapper;
+import appl.data.items.Author;
+import appl.data.items.Book;
+import appl.data.items.Category;
 
 public class queryFun {
 

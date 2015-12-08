@@ -1,4 +1,4 @@
-package appl.databasemanagement.databaseImpl;
+package appl.data.dao.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -7,9 +7,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import appl.databasemanagement.BookDAO;
-import appl.databasemanagement.Searchfields;
-import appl.items.Book;
+import appl.data.dao.BookDAO;
+import appl.data.dao.Searchfields;
+import appl.data.items.Book;
 
 @Service
 public class BookDAOImpl implements BookDAO {
