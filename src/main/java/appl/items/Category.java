@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 		@UniqueConstraint(columnNames = "CATEGORYID") })
 public class Category {
 	private int categoryID;
-	private String CategoryName;
+	private String categoryName;
 
 	private Set<Book> books = new HashSet<Book>(0);
 
@@ -26,7 +26,7 @@ public class Category {
 
 	public Category(String categoryName, Set<Book> books) {
 		super();
-		CategoryName = categoryName;
+		this.categoryName = categoryName;
 		this.books = books;
 	}
 
@@ -39,7 +39,7 @@ public class Category {
 
 	@Column(name = "CATEGORYNAME", nullable = false)
 	public String getCategoryName() {
-		return CategoryName;
+		return categoryName;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
@@ -56,12 +56,12 @@ public class Category {
 	}
 
 	public void setCategoryName(String categoryName) {
-		CategoryName = categoryName;
+		this.categoryName = categoryName;
 	}
 
 	@Override
 	public String toString() {
-		return "Category [categoryID=" + categoryID + ", CategoryName=" + CategoryName + "]";
+		return "Category [categoryID=" + categoryID + ", CategoryName=" + categoryName + "]";
 	}
 
 }

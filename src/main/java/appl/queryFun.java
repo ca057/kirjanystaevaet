@@ -43,7 +43,7 @@ public class queryFun {
 		// author").list());
 
 		// Test von fetch type
-		Book usualBook = (Book) session.createQuery("from Book where ISBN='0131428985'").uniqueResult();
+		Book usualBook = (Book) session.createQuery("from Book where isbn='0131428985'").uniqueResult();
 		System.out.println("---------------------\n" + usualBook.getCategories() + "\n"
 				+ usualBook.getAuthors().iterator().next().getBooks() + "\n---------------------");
 
@@ -79,12 +79,23 @@ public class queryFun {
 		
 		// Versuche eines Joins. Für Autoren funktioniert es, aber nicht für categorien, was mega seltsam ist, da es exakt diesselbe Struktur ist
 		//Query query3 = session.createQuery("select a.CategoryName from Book b join b.categories a where b.isbn ='0131428985'");
-		System.out.println("\n ------------------ getBookByCategory---------\n");
-		Query query3 = session.createQuery("select a.nameF from Book b join b.authors a where b.isbn ='0131428985'");
+		System.out.println("\n ------------------ getCategoryOfBook-----\n");
+		Query query3 = session.createQuery("select a.categoryName from Book b join b.categories a where b.isbn ='0131428985'");
 		//query.setString("name", "MySQL");
 		List<String> books = query3.list();
 		for (String n : books){
 			System.out.println("Cat: " + n);
+		}
+		
+		// Select Book by Category
+		
+		System.out.println("\n ------------------ getBookByCategory-----\n");
+		Query query4 = session.createQuery("select b from Book b join b.categories a where a.categoryName='PHP'");
+		//query.setString("name", "MySQL");
+		List<Book> books1 = query4.list();
+		for (Book n : books1){
+			System.out.println("Titel: " + n.getTitle() + " Cat: " + n.getCategories());
+			//System.out.println("Titel: " + n);
 		}
 		
 		
