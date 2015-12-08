@@ -8,13 +8,11 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import appl.data.dao.rowMapper.AuthorRowMapper;
-import appl.data.dao.rowMapper.BookRowMapper;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
 
-public class queryFun {
+public class QueryFun {
 
 	public void doSomeTesting(Session session) {
 		// Transaction: "Allows the application to define units of work, while
@@ -106,20 +104,24 @@ public class queryFun {
 	}
 
 	public void jdbcStuff(JdbcTemplate jdbc) {
-		int counter = 1;
-		List<Author> authors = jdbc.query("SELECT * FROM PUBLIC.bookauthors WHERE nameF=? AND nameL=?",
-				new String[] { "Jason", "Gilmore" }, new AuthorRowMapper());
-		for (Author a : authors) {
-			System.out.println("Autor " + counter++ + ": " + a.getNameF() + ", " + a.getNameL());
-		}
-
-		List<Book> list = jdbc.query(
-				"SELECT * FROM PUBLIC.bookcategories, PUBLIC.bookcategoriesbooks, PUBLIC.bookdescriptions, PUBLIC.bookauthorbooks, PUBLIC.bookauthors",
-				new BookRowMapper());
-		for (Book o : list) {
-			System.out.println(o.getTitle());
-		}
-		System.out.println(jdbc.queryForObject("select count(*) FROM PUBLIC.bookauthors", Integer.class));
+		// int counter = 1;
+		// List<Author> authors = jdbc.query("SELECT * FROM PUBLIC.bookauthors
+		// WHERE nameF=? AND nameL=?",
+		// new String[] { "Jason", "Gilmore" }, new AuthorRowMapper());
+		// for (Author a : authors) {
+		// System.out.println("Autor " + counter++ + ": " + a.getNameF() + ", "
+		// + a.getNameL());
+		// }
+		//
+		// List<Book> list = jdbc.query(
+		// "SELECT * FROM PUBLIC.bookcategories, PUBLIC.bookcategoriesbooks,
+		// PUBLIC.bookdescriptions, PUBLIC.bookauthorbooks, PUBLIC.bookauthors",
+		// new BookRowMapper());
+		// for (Book o : list) {
+		// System.out.println(o.getTitle());
+		// }
+		// System.out.println(jdbc.queryForObject("select count(*) FROM
+		// PUBLIC.bookauthors", Integer.class));
 	}
 
 	public Set<Book> createTestData() {

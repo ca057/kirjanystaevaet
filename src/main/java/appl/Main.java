@@ -11,10 +11,10 @@ public class Main {
 	public static void main(String[] args) {
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(RootConfig.class);
 		Session session = ctx.getBean(Session.class);
-		new queryFun().doSomeTesting(session);
+		new QueryFun().doSomeTesting(session);
 
 		// JdbcTemplate jdbc = ctx.getBean(JdbcTemplate.class);
-		// new queryFun().jdbcStuff(jdbc);
+		// new QueryFun().jdbcStuff(jdbc);
 	}
 
 }

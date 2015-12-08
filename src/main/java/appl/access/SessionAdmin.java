@@ -1,4 +1,4 @@
-package appl.sessionmanagement;
+package appl.access;
 
 public interface SessionAdmin {
 
