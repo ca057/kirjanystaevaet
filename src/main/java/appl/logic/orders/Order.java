@@ -1,4 +1,4 @@
-package appl.ordermanagement;
+package appl.logic.orders;
 
 public interface Order {
 

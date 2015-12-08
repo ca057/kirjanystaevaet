@@ -3,6 +3,7 @@ package appl.data.dao;
 import java.util.List;
 import java.util.Map;
 
+import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 
 public interface BookDAO {

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import appl.data.dao.BookDAO;
-import appl.data.dao.Searchfields;
+import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 
 @Service

@@ -1,6 +1,6 @@
-package appl.usermanagement;
+package appl.logic.users;
 
-import appl.usermanagement.usermanagementImpl.UserImpl;
+import appl.logic.users.impl.UserImpl;
 
 public interface UserAdmin {
 

@@ -1,4 +1,4 @@
-package appl.queryManagement;
+package appl.logic.queries;
 
 import java.util.List;
 

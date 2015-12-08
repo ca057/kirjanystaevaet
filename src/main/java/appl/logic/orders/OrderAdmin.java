@@ -1,6 +1,6 @@
-package appl.ordermanagement;
+package appl.logic.orders;
 
-import appl.ordermanagement.ordermanagementImpl.OrderImpl;
+import appl.logic.orders.impl.OrderImpl;
 
 /**
  * 

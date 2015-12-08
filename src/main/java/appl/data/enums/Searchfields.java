@@ -1,4 +1,4 @@
-package appl.data.dao;
+package appl.data.enums;
 
 public enum Searchfields {
 	AUTHORID, NAMEF, NAMEL, 

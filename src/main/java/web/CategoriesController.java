@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import appl.queryManagement.QueryCreatorImpl;
+import appl.logic.queries.QueryCreatorImpl;
 import exceptions.CategoryNotFoundException;
 
 /**

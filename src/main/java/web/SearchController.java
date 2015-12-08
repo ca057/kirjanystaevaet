@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.data.items.Book;
-import appl.queryManagement.QueryCreatorImpl;
+import appl.logic.queries.QueryCreatorImpl;
 
 @Controller
 public class SearchController {

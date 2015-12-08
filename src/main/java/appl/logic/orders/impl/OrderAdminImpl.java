@@ -1,5 +1,5 @@
-package appl.ordermanagement.ordermanagementImpl;
-import appl.ordermanagement.OrderAdmin;
+package appl.logic.orders.impl;
+import appl.logic.orders.OrderAdmin;
 
 public class OrderAdminImpl implements OrderAdmin{
 

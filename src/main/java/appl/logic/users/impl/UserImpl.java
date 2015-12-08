@@ -1,6 +1,6 @@
-package appl.usermanagement.usermanagementImpl;
+package appl.logic.users.impl;
 
-import appl.usermanagement.User;
+import appl.data.items.User;
 
 public class UserImpl implements User {
 

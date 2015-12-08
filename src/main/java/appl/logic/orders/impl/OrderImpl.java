@@ -1,6 +1,6 @@
-package appl.ordermanagement.ordermanagementImpl;
+package appl.logic.orders.impl;
 
-import appl.ordermanagement.Order;
+import appl.logic.orders.Order;
 
 public class OrderImpl implements Order {
 

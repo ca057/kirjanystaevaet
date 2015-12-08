@@ -10,10 +10,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import appl.data.dao.BookDAO;
 import appl.data.dao.impl.BookDAOImpl;
-import appl.ordermanagement.OrderAdmin;
-import appl.ordermanagement.ordermanagementImpl.OrderAdminImpl;
-import appl.queryManagement.QueryCreator;
-import appl.queryManagement.QueryCreatorImpl;
+import appl.logic.orders.OrderAdmin;
+import appl.logic.orders.impl.OrderAdminImpl;
+import appl.logic.queries.QueryCreator;
+import appl.logic.queries.QueryCreatorImpl;
 
 @Configuration
 public class RootConfig {

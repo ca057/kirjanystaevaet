@@ -1,9 +1,11 @@
 package appl.data.items;
 
-public class User {
+public interface User {
 
-	public User() {
-		// TODO Auto-generated constructor stub
-	}
+	public void getName();
+
+	public void getAddress();
+
+	public void getOrders();
 
 }
