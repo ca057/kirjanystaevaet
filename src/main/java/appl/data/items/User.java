@@ -20,7 +20,7 @@ public class User {
 	private String street;
 	private String streetnumber;
 	private PLZ plz;
-	// TODO Bankverbindung?
+	// TODO Bankverbindung = Rechnung
 	// TODO Orders?
 
 	@Id

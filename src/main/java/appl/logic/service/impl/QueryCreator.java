@@ -1,4 +1,4 @@
-package appl.logic.queries;
+package appl.logic.service.impl;
 
 import java.util.List;
 

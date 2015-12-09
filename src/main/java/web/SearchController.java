@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.data.items.Author;
 import appl.data.items.Book;
-import appl.logic.queries.QueryCreatorImpl;
+import appl.logic.service.impl.QueryCreatorImpl;
 
 @Controller
 public class SearchController {

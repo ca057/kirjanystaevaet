@@ -31,6 +31,7 @@ public interface BookDAO {
 	@Transactional
 	public boolean updateBook(Book book, Map<Searchfields, String> map);
 
+	@Transactional
 	public Book executeQuery(String query);
 
 }
