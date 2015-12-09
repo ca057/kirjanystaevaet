@@ -36,4 +36,22 @@ public class AuthorDAOImpl implements AuthorDAO {
 				.uniqueResult();
 	}
 
+	@Override
+	public boolean insertAuthor(Author author) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteAuthor(Author author) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateAuthor(Author author) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

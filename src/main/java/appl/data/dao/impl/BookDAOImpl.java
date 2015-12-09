@@ -72,4 +72,10 @@ public class BookDAOImpl implements BookDAO {
 		return false;
 	}
 
+	@Override
+	public Book executeQuery(String query) {
+		sessionFactory.getCurrentSession().createQuery(query).uniqueResult();
+		return null;
+	}
+
 }

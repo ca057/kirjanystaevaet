@@ -20,4 +20,13 @@ public interface AuthorDAO {
 	@Transactional
 	public Author getAuthorByID(int authorID);
 
+	@Transactional
+	public boolean insertAuthor(Author author);
+
+	@Transactional
+	public boolean deleteAuthor(Author author);
+
+	@Transactional
+	public boolean updateAuthor(Author author);
+
 }
