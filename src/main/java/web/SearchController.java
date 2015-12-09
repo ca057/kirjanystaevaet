@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.data.items.Author;
 import appl.data.items.Book;
-import appl.logic.service.impl.QueryCreatorImpl;
+import appl.logic.service.CategoryService;
 
 @Controller
 public class SearchController {
@@ -22,10 +22,10 @@ public class SearchController {
 	private String queryTerm = "";
 
 	@Autowired
-	private QueryCreatorImpl query;
+	private CategoryService service;
 
-	public void setQuery(QueryCreatorImpl query) {
-		this.query = query;
+	public void setService(CategoryService service) {
+		this.service = service;
 	}
 
 	@RequestMapping(value = "/suche", method = RequestMethod.GET)
@@ -36,7 +36,9 @@ public class SearchController {
 			@RequestParam(value = "year", required = false) String year,
 			@RequestParam(value = "category", required = false) String category, Model m) {
 		queryTerm = "";
-		m.addAttribute("results", processSearchTerms(all, title, author, isbn, year, category));
+		// m.addAttribute("results", processSearchTerms(all, title, author,
+		// isbn, year, category));
+		m.addAttribute("results", returnDummyBooks());
 		m.addAttribute("query", queryTerm);
 		return "search";
 	}
@@ -45,7 +47,7 @@ public class SearchController {
 			String category) {
 		if (all != null && !all.isEmpty()) {
 			queryTerm = all;
-			return query.getBooksByOpenSearch(all);
+			// return service.getBooksByOpenSearch(all);
 		} else {
 			String searchTitle = "";
 			String searchAuthor = "";
@@ -72,8 +74,11 @@ public class SearchController {
 				searchCategory = category;
 				queryTerm += " Kategorie: " + category;
 			}
-			return query.getBooksByMetadata(searchTitle, searchAuthor, searchYear, searchIsbn, searchCategory);
+			// return service.getBooksByMetadata(searchTitle, searchAuthor,
+			// searchYear, searchIsbn, searchCategory);
 		}
+		// FIXME !!!!!
+		return null;
 	}
 
 	private List<Book> returnDummyBooks() {

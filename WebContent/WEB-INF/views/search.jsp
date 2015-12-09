@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<tiles:useAttribute id="list" name="items" classname="java.util.List" />
+
 <section>
 	<h2>Suche</h2>
 	<form>

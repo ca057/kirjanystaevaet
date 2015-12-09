@@ -14,11 +14,13 @@ import appl.logic.service.CategoryService;
 public class CategoryServiceImpl implements CategoryService {
 	CategoryDAO dao = new CategoryDAOImpl();
 
+	@Override
 	public List<String> getAllCategoryNames() {
 		List<Category> categories = dao.getCategories();
 		List<String> names = new LinkedList<String>();
 		for (Category ct : categories) {
 			names.add(ct.getCategoryName());
+			System.out.println(ct.getCategoryName());
 		}
 		return names;
 	}

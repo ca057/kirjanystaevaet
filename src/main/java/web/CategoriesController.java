@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import appl.logic.service.impl.QueryCreatorImpl;
+import appl.logic.service.CategoryService;
 import exceptions.CategoryNotFoundException;
 
 /**
@@ -19,10 +19,10 @@ import exceptions.CategoryNotFoundException;
 public class CategoriesController {
 
 	@Autowired
-	private QueryCreatorImpl query;
+	private CategoryService service;
 
-	public void setQuery(QueryCreatorImpl query) {
-		this.query = query;
+	public void setService(CategoryService service) {
+		this.service = service;
 	}
 
 	@RequestMapping(value = "/kategorie/{category}", method = RequestMethod.GET)
@@ -36,12 +36,12 @@ public class CategoriesController {
 	}
 
 	private boolean checkIfExistingCategory(String category) {
-		return query.getCategories().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
+		return service.getAllCategories().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
 				.contains(category.toUpperCase());
 	}
 
 	private String getCorrectCategoryName(String category) throws CategoryNotFoundException {
-		for (String c : query.getCategories()) {
+		for (String c : service.getAllCategories()) {
 			if (category.toUpperCase().equals(c.toUpperCase())) {
 				return c;
 			}
