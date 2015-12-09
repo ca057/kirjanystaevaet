@@ -6,13 +6,13 @@ import java.util.Map;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import appl.data.dao.BookDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 
-@Service
+@Component
 public class BookDAOImpl implements BookDAO {
 
 	@Autowired

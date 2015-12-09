@@ -3,16 +3,18 @@ package appl.logic.service.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import appl.data.dao.CategoryDAO;
-import appl.data.dao.impl.CategoryDAOImpl;
 import appl.data.items.Category;
 import appl.logic.service.CategoryService;
 
-@Service
+@Component
 public class CategoryServiceImpl implements CategoryService {
-	CategoryDAO dao = new CategoryDAOImpl();
+
+	@Autowired
+	private CategoryDAO dao;
 
 	@Override
 	public List<String> getAllCategoryNames() {
@@ -21,6 +23,9 @@ public class CategoryServiceImpl implements CategoryService {
 		for (Category ct : categories) {
 			names.add(ct.getCategoryName());
 			System.out.println(ct.getCategoryName());
+		}
+		if (names.isEmpty()) {
+			throw new RuntimeException("aösdlkfj");
 		}
 		return names;
 	}

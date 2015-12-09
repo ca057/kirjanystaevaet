@@ -6,11 +6,13 @@ import java.util.Map;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import appl.data.dao.UserDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.User;
 
+@Component
 public class UserDAOImpl implements UserDAO {
 
 	@Autowired
