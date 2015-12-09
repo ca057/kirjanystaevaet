@@ -36,12 +36,15 @@ public class CategoriesController {
 	}
 
 	private boolean checkIfExistingCategory(String category) {
-		return service.getAllCategories().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
+		if (service == null) {
+			System.out.println("Servie is null");
+		}
+		return service.getAllCategoryNames().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
 				.contains(category.toUpperCase());
 	}
 
 	private String getCorrectCategoryName(String category) throws CategoryNotFoundException {
-		for (String c : service.getAllCategories()) {
+		for (String c : service.getAllCategoryNames()) {
 			if (category.toUpperCase().equals(c.toUpperCase())) {
 				return c;
 			}

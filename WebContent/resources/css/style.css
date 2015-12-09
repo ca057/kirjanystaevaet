@@ -15,6 +15,38 @@ html, body {
 	background-color: #CFD8DC;
 }
 
+/* all font stuff */
+
+p {
+	margin-bottom: 1px;
+}
+
+h1 {
+	font-size: x-large;
+}
+
+h2 {
+	font-family: large;
+}
+
+/* all links */
+a {
+    cursor: pointer;
+    border-bottom: 1px solid #212121;
+}
+
+a:link, a:visited {
+    color: #212121;
+    text-decoration:none;
+    border-bottom: 1px solid #212121;
+}
+
+a:focus, a:hover, a:active {
+    color: #212121;
+    text-decoration:none;
+    border-bottom: 0px solid #212121;
+}
+
 /* all containers */
 
 div#wrapper {
@@ -62,24 +94,6 @@ footer {
 
 .font-bold {
 	font-weight: bold;
-}
-
-/* all links */
-a {
-    cursor: pointer;
-    border-bottom: 1px solid #212121;
-}
-
-a:link, a:visited {
-    color: #212121;
-    text-decoration:none;
-    border-bottom: 1px solid #212121;
-}
-
-a:focus, a:hover, a:active {
-    color: #212121;
-    text-decoration:none;
-    border-bottom: 0px solid #212121;
 }
 
 /* all lists */

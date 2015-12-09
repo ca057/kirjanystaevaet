@@ -18,6 +18,10 @@ public class CategoryDAOImpl implements CategoryDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
 	@Override
 	public List<Category> getCategories() {
 		return sessionFactory.getCurrentSession().createQuery("from Category").list();
