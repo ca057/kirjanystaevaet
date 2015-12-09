@@ -15,5 +15,7 @@
     <mapping class="appl.data.items.Book" />
     <mapping class="appl.data.items.Author" />
     <mapping class="appl.data.items.Category" />
+    <mapping class="appl.data.items.PLZ" />
+    <mapping class="appl.data.items.User" />
 </session-factory>
 </hibernate-configuration>
