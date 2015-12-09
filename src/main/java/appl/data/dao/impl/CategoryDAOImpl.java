@@ -20,7 +20,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public List<Category> getCategories() {
-		return sessionFactory.getCurrentSession().createQuery("select distinct categoryName from Category").list();
+		return sessionFactory.getCurrentSession().createQuery("from Category").list();
 	}
 
 	@Override
