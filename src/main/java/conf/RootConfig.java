@@ -12,6 +12,8 @@ import appl.data.dao.BookDAO;
 import appl.data.dao.impl.BookDAOImpl;
 import appl.logic.orders.OrderAdmin;
 import appl.logic.orders.impl.OrderAdminImpl;
+import appl.logic.service.CategoryService;
+import appl.logic.service.impl.CategoryServiceImpl;
 
 @Configuration
 public class RootConfig {
@@ -28,6 +30,10 @@ public class RootConfig {
 	}
 
 	// Beans for Controller
+	@Bean
+	public CategoryService categoryServiceBean() {
+		return new CategoryServiceImpl();
+	}
 
 	@Bean
 	public BookDAO bookDataQueryBean() {

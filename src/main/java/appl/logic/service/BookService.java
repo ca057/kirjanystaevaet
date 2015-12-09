@@ -1,4 +1,4 @@
-package appl.logic.service.impl.service;
+package appl.logic.service;
 
 import org.springframework.stereotype.Service;
 

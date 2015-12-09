@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import appl.logic.service.impl.service.CategoryService;
+import appl.logic.service.CategoryService;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
