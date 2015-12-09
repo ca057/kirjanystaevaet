@@ -1,10 +1,14 @@
-package appl.logic.queries;
+package appl.logic.service.impl;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 import appl.data.items.Book;
 
+@Service
 public class QueryCreatorImpl implements QueryCreator {
 	/*
 	 * @Override public Map getBookByID(String id) { // TODO Auto-generated
@@ -23,6 +27,11 @@ public class QueryCreatorImpl implements QueryCreator {
 		categoryList.add("PHP");
 		categoryList.add("MySQL");
 		categoryList.add("mysql");
+		LinkedList<String> list = new LinkedList<String>();
+		// (new
+		// CategoryDAOImpl().getCategories().iterator().next().getCategoryName());
+		// session.createQuery("select distinct categoryName from
+		// Category").list();
 
 		return categoryList;
 	}

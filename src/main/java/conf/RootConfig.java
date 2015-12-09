@@ -12,8 +12,6 @@ import appl.data.dao.BookDAO;
 import appl.data.dao.impl.BookDAOImpl;
 import appl.logic.orders.OrderAdmin;
 import appl.logic.orders.impl.OrderAdminImpl;
-import appl.logic.queries.QueryCreator;
-import appl.logic.queries.QueryCreatorImpl;
 
 @Configuration
 public class RootConfig {
@@ -29,21 +27,7 @@ public class RootConfig {
 		return HibernateUtil.getSessionFactory();
 	}
 
-	@Bean
-	public BookDAO getBookDataQuery() {
-		return new BookDAOImpl();
-	}
-
 	// Beans for Controller
-	@Bean
-	public QueryCreator queryCreatorBean() {
-		return new QueryCreatorImpl();
-	}
-
-	/*
-	 * @Bean public Order orderBean(){ return new OrderImpl(); }
-	 */
-	// Beans for Model
 
 	@Bean
 	public BookDAO bookDataQueryBean() {
