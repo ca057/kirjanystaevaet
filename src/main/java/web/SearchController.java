@@ -1,6 +1,9 @@
 package web;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.logic.queries.QueryCreatorImpl;
 
@@ -70,5 +74,26 @@ public class SearchController {
 			}
 			return query.getBooksByMetadata(searchTitle, searchAuthor, searchYear, searchIsbn, searchCategory);
 		}
+	}
+
+	private List<Book> returnDummyBooks() {
+		List<Book> books = new ArrayList<Book>();
+		for (int i = 0; i < 10; i++) {
+			Book tmp = new Book();
+			Author author = new Author();
+			author.setNameF("Chabo");
+			author.setNameL("Babo");
+			Set<Author> set = new HashSet<>();
+			set.add(author);
+			tmp.setAuthors(set);
+			tmp.setDescription("Lorem ipsum text");
+			tmp.setEdition("v" + i);
+			tmp.setIsbn(i + "45674567");
+			tmp.setPages(666);
+			tmp.setPrice(i + 0.99);
+			tmp.setTitle("Der Titel des wunderbaren Buches " + i);
+			books.add(tmp);
+		}
+		return books;
 	}
 }
