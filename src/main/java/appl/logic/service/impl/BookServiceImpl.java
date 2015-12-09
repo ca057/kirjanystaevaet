@@ -3,11 +3,14 @@ package appl.logic.service.impl;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import appl.data.dao.BookDAO;
 import appl.data.dao.impl.BookDAOImpl;
 import appl.data.items.Book;
 import appl.logic.service.BookService;
 
+@Component
 public class BookServiceImpl implements BookService {
 	BookDAO dao = new BookDAOImpl();
 

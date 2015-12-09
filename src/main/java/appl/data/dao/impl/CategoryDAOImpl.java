@@ -5,14 +5,14 @@ import java.util.Map;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import appl.data.dao.CategoryDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 import appl.data.items.Category;
 
-@Service
+@Component
 public class CategoryDAOImpl implements CategoryDAO {
 
 	@Autowired

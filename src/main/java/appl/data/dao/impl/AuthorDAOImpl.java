@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import appl.data.dao.AuthorDAO;
 import appl.data.items.Author;
 
-@Service
+@Component
 public class AuthorDAOImpl implements AuthorDAO {
 
 	@Autowired

@@ -14,6 +14,7 @@ public class HibernateUtil {
 		try {
 			// Create the SessionFactory from hibernate.cfg.xml
 			Configuration cfg = new Configuration();
+			// FIXME Pfad für Server anpassen
 			if (Files.notExists(Paths.get("./database/kirjanystaevaet.mv.db"))) {
 				cfg.setProperty("hibernate.hbm2ddl.auto", "create");
 				cfg.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
