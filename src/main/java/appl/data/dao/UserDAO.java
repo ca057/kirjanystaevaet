@@ -3,25 +3,35 @@ package appl.data.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import appl.data.enums.Searchfields;
 import appl.data.items.User;
 
 public interface UserDAO {
 
-	User getUsers();
+	@Transactional
+	List<User> getUsers();
 
-	List<User> getUsersByName();
+	@Transactional
+	List<User> getUsersByName(String name);
 
-	List<User> getUsersBySurname();
+	@Transactional
+	List<User> getUsersBySurname(String surname);
 
-	List<User> getUserByNickname();
+	@Transactional
+	List<User> getUserByNickname(String nickname);
 
-	List<User> getUserByEMail();
+	@Transactional
+	List<User> getUserByEMail(String email);
 
+	@Transactional
 	boolean insertUser(User user);
 
+	@Transactional
 	boolean deleteUser(User user);
 
+	@Transactional
 	boolean updateUser(User user, Map<Searchfields, String> map);
 
 }

@@ -11,31 +11,29 @@ import appl.data.items.Author;
 
 @Service
 public class AuthorDAOImpl implements AuthorDAO {
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
 	public List<Author> getAuthors() {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from Author").list();
 	}
 
 	@Override
 	public List<Author> getAuthorsByNameF(String nameF) {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from Author where nameF like %" + nameF + "%").list();
 	}
 
 	@Override
 	public List<Author> getAuthorsByNameL(String nameL) {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from Author where nameL like %" + nameL + "%").list();
 	}
 
 	@Override
 	public Author getAuthorByID(int authorID) {
-		// TODO Auto-generated method stub
-		return null;
+		return (Author) sessionFactory.getCurrentSession().createQuery("from Author where authorID = " + authorID)
+				.uniqueResult();
 	}
 
 }
