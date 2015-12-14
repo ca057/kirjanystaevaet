@@ -13,7 +13,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "bookcategories", schema = "public", uniqueConstraints = {
-		@UniqueConstraint(columnNames = "CATEGORYID") })
+		@UniqueConstraint(columnNames = "categoryId") })
 public class Category {
 	private int categoryID;
 	private String categoryName;
@@ -32,12 +32,12 @@ public class Category {
 
 	@Id
 	// @GeneratedValue
-	@Column(name = "CATEGORYID", unique = true, nullable = false)
+	@Column(name = "categoryId", unique = true, nullable = false)
 	public int getCategoryID() {
 		return categoryID;
 	}
 
-	@Column(name = "CATEGORYNAME", nullable = false)
+	@Column(name = "categoryName", nullable = false)
 	public String getCategoryName() {
 		return categoryName;
 	}

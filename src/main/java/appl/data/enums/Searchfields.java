@@ -1,7 +1,7 @@
 package appl.data.enums;
 
 public enum Searchfields {
-	AUTHORID, NAMEF, NAMEL, 
-	ISBN, TITLE, DESCRIPTION, PRICE, PUBLISHER, PUBDATE, EDITION, PAGES, 
-	CATEGORYID, CATEGORYNAME;
+	authorId, nameF, nameL, 
+	isbn, title, description, price, publisher, pubdate, edition, pages, 
+	categoryId, categoryName;
 }

@@ -64,7 +64,7 @@ public class SearchController {
 			}
 			if (isbn != null && !isbn.isEmpty()) {
 				searchIsbn = isbn;
-				queryTerm += " ISBN: " + isbn;
+				queryTerm += " isbn: " + isbn;
 			}
 			if (year != null && !year.isEmpty()) {
 				searchYear = year;

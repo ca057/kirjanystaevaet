@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "bookauthors", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "AUTHORID") })
+@Table(name = "bookauthors", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "authorId") })
 public class Author {
 	private int authorId;
 	private String nameF;
@@ -23,7 +23,7 @@ public class Author {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "AUTHORID", unique = true, nullable = false)
+	@Column(name = "authorId", unique = true, nullable = false)
 	public int getAuthorId() {
 		return authorId;
 	}
@@ -32,7 +32,7 @@ public class Author {
 		this.authorId = id;
 	}
 
-	@Column(name = "NAMEF", nullable = false)
+	@Column(name = "nameF", nullable = false)
 	public String getNameF() {
 		return nameF;
 	}
@@ -41,7 +41,7 @@ public class Author {
 		this.nameF = nameF;
 	}
 
-	@Column(name = "NAMEL", nullable = false)
+	@Column(name = "nameL", nullable = false)
 	public String getNameL() {
 		return nameL;
 	}

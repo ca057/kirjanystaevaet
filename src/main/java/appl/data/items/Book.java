@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "BOOKDESCRIPTIONS", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "ISBN") })
+@Table(name = "BOOKDESCRIPTIONS", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "isbn") })
 public class Book {
 	private String isbn;
 	private String title;
@@ -48,54 +48,54 @@ public class Book {
 	}
 
 	@Id
-	@Column(name = "ISBN", unique = true, nullable = false)
+	@Column(name = "isbn", unique = true, nullable = false)
 	public String getIsbn() {
 		return isbn;
 	}
 
-	@Column(name = "TITLE", nullable = false, length = 256)
+	@Column(name = "title", nullable = false, length = 256)
 	public String getTitle() {
 		return title;
 	}
 
-	@Column(name = "DESCRIPTION", nullable = true, length = 4096)
+	@Column(name = "description", nullable = true, length = 4096)
 	public String getDescription() {
 		return description;
 	}
 
-	@Column(name = "PRICE", nullable = true, length = 8)
+	@Column(name = "price", nullable = true, length = 8)
 	public double getPrice() {
 		return price;
 	}
 
-	@Column(name = "PUBLISHER", nullable = true, length = 256)
+	@Column(name = "publisher", nullable = true, length = 256)
 	public String getPublisher() {
 		return publisher;
 	}
 
-	@Column(name = "PUBDATE", nullable = true, length = 256)
+	@Column(name = "pubdate", nullable = true, length = 256)
 	public String getPubdate() {
 		return pubdate;
 	}
 
-	@Column(name = "EDITION", nullable = true, length = 256)
+	@Column(name = "edition", nullable = true, length = 256)
 	public String getEdition() {
 		return edition;
 	}
 
-	@Column(name = "PAGES", nullable = true, length = 8)
+	@Column(name = "pages", nullable = true, length = 8)
 	public int getPages() {
 		return pages;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "bookcategoriesbooks", schema = "public", joinColumns = @JoinColumn(name = "ISBN") , inverseJoinColumns = @JoinColumn(name = "CATEGORYID") )
+	@JoinTable(name = "bookcategoriesbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "categoryId") )
 	public Set<Category> getCategories() {
 		return categories;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "bookauthorsbooks", schema = "public", joinColumns = @JoinColumn(name = "ISBN") , inverseJoinColumns = @JoinColumn(name = "AUTHORID") )
+	@JoinTable(name = "bookauthorsbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "authorId") )
 	public Set<Author> getAuthors() {
 		return authors;
 	}

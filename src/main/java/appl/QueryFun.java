@@ -1,24 +1,44 @@
 package appl;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import appl.data.dao.BookDAO;
+import appl.data.enums.Searchfields;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
 
 public class QueryFun {
 
+	public void doSomeTesting2(ApplicationContext ctx) {
+		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
+		sessionFactory.getCurrentSession().beginTransaction();
+		BookDAO dao = ctx.getBean(BookDAO.class);
+		HashMap<Searchfields, String> map = new HashMap<Searchfields, String>();
+		map.put(Searchfields.categoryName, "php");
+		map.put(Searchfields.title, "Architecture");
+		map.put(Searchfields.nameF, "Thomas");
+		List result = dao.getBooksByMetadata(map);
+		sessionFactory.getCurrentSession().getTransaction().commit();
+		System.out.println(result);
+	}
+
 	public void doSomeTesting(SessionFactory sessionFactory) {
 		// Transaction: "Allows the application to define units of work, while
 		// maintaining abstraction from the underlying transaction
 		// implementation"
 		sessionFactory.getCurrentSession().beginTransaction();
+
+		System.out.println(sessionFactory.getCurrentSession()
+				.createQuery("from Book where category.name like php and author.nameF like Jason").uniqueResult());
 
 		// Bücher speichern. save() oder persist()?
 		// for (Book b : createTestData()) {

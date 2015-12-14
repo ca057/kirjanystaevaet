@@ -11,7 +11,8 @@ public class Main {
 	public static void main(String[] args) {
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(RootConfig.class);
 		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
-		new QueryFun().doSomeTesting(sessionFactory);
+		new QueryFun().doSomeTesting2(ctx);
+		// new QueryFun().doSomeTesting(sessionFactory);
 		// FIXME DB auch bei Serverbetrieb anlegen!
 
 		// JdbcTemplate jdbc = ctx.getBean(JdbcTemplate.class);

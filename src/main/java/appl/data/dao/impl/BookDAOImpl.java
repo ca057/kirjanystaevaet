@@ -2,9 +2,12 @@ package appl.data.dao.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,8 +42,25 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Criteria cr = setupAndGetCriteria();
+		for (Entry<Searchfields, String> entry : map.entrySet()) {
+			String key = entry.getKey().toString();
+			if ((key.contains("category"))) {
+				cr.add(Restrictions.ilike("c." + key, "%" + entry.getValue() + "%"));
+			} else if (key.contains("name") || key.contains("author")) {
+				cr.add(Restrictions.ilike("a." + key, "%" + entry.getValue() + "%"));
+			} else {
+				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
+			}
+		}
+		return (List<Book>) cr.list();
+	}
+
+	private Criteria setupAndGetCriteria() {
+		Criteria cr = sessionFactory.getCurrentSession().createCriteria(Book.class);
+		cr.createAlias("categories", "c");
+		cr.createAlias("authors", "a");
+		return cr;
 	}
 
 	@Override
