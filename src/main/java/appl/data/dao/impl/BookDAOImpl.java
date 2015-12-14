@@ -57,10 +57,8 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	private Criteria setupAndGetCriteria() {
-		Criteria cr = sessionFactory.getCurrentSession().createCriteria(Book.class);
-		cr.createAlias("categories", "c");
-		cr.createAlias("authors", "a");
-		return cr;
+		return sessionFactory.getCurrentSession().createCriteria(Book.class).createAlias("categories", "c")
+				.createAlias("authors", "a");
 	}
 
 	@Override
