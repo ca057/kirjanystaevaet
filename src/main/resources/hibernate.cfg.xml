@@ -18,5 +18,6 @@
     <mapping class="appl.data.items.Category" />
     <mapping class="appl.data.items.PLZ" />
     <mapping class="appl.data.items.User" />
+    <mapping class="appl.data.items.User" />
 </session-factory>
 </hibernate-configuration>

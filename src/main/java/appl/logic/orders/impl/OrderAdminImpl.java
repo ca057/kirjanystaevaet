@@ -1,4 +1,5 @@
 package appl.logic.orders.impl;
+import appl.data.items.Order;
 import appl.logic.orders.OrderAdmin;
 
 public class OrderAdminImpl implements OrderAdmin{
@@ -16,7 +17,7 @@ public class OrderAdminImpl implements OrderAdmin{
 	}
 
 	@Override
-	public OrderImpl getOrder() {
+	public Order getOrder() {
 		// TODO Auto-generated method stub
 		return null;
 	}
