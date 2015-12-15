@@ -13,6 +13,7 @@ html, body {
 	font-family: Tahoma, sans-serif;
 	color: #212121;
 	background-color: #CFD8DC;
+	hyphens: auto;
 }
 
 /* all font stuff */
@@ -21,6 +22,7 @@ p {
 	font-size: 1em;
 	line-height: 150%;
 	margin-bottom: 0.5em;
+	text-align: justify;
 }
 
 h1 {
