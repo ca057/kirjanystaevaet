@@ -24,6 +24,10 @@
 	<definition name="search" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/search.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="book" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/book.jsp"></put-attribute>
+	</definition>
 
 	<definition name="login" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/login.jsp"></put-attribute>
