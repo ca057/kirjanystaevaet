@@ -29,6 +29,7 @@ public class QueryFun {
 		List result = dao.getBooksByMetadata(map);
 		sessionFactory.getCurrentSession().getTransaction().commit();
 		System.out.println(result);
+		System.exit(0);
 	}
 
 	public void doSomeTesting(SessionFactory sessionFactory) {
