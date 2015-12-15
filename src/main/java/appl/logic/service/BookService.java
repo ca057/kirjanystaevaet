@@ -13,7 +13,7 @@ public interface BookService {
 
 	public List<String> getBooksByCategory(String category);
 
-	public Book getBookByIsbn(int isbn);
+	public Book getBookByIsbn(String isbn);
 
 	public List<Book> getBooksByOpenSearch(String searchTerm);
 
