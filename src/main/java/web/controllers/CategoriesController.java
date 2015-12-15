@@ -1,4 +1,4 @@
-package web;
+package web.controllers;
 
 import java.util.stream.Collectors;
 
