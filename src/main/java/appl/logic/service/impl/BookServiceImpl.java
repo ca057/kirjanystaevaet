@@ -30,7 +30,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book getBookByIsbn(int isbn) {
+	public Book getBookByIsbn(String isbn) {
 		// TODO Auto-generated method stub
 		return null;
 	}
