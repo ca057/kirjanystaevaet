@@ -26,12 +26,22 @@
 		</c:when>
 		<c:otherwise>
 			<p><span class="font-bold">Suchanfrage:</span> <span class="query"><c:out value='${query}' /></span></p>
-			
-			<c:forEach var="item" items="${results}">
-			<!-- <p><tiles:insertAttribute value="${item}" flush="true" /><p>  -->  
-			<p></p>
-			</c:forEach>
-			<!-- Hier müssen die ganzen gefundenen Bücher hin -->
+			<c:choose>
+				<c:when test="${results.isEmpty()}">
+					<p>Keine Suchergebnisse</p>
+				</c:when>
+				<c:otherwise>
+				
+					<c:forEach var="book" items="${results}">
+						<p><c:out value="${book.getTitle()}"/></p>
+						<p><c:out value="${book.getDescription()}"/></p>
+						<p><c:out value="${book.getPages()}"/></p>
+						<p><c:out value="${book.getPublisher()}"/></p>
+						<p><c:out value="${book.getIsbn()}"/></p>
+						<p><c:out value="${book.getPrice()}"/></p>
+					</c:forEach> 
+				</c:otherwise>
+			</c:choose>
 		</c:otherwise>
 	</c:choose>
 </section>
