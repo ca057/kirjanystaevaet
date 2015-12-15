@@ -2,18 +2,12 @@ package appl.data.items;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
-import java.util.HashSet;
-
-import java.util.Set;
 
 @Entity
 @Table(name = "user", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "userID") })
@@ -26,22 +20,9 @@ public class User {
 	private String street;
 	private String streetnumber;
 	private PLZ plz;
-	private Set<Order> orders;
 	// TODO Bankverbindung = Rechnung
+	// TODO Orders?
 
-
-	public User (int userID, String nickname, String name, String surname, String email, String street, String streetnumber, PLZ plz ){
-		this.userID = userID;
-		this.nickname = nickname;
-		this.name = name;
-		this.surname = surname;
-		this.email = email;
-		this.street = street;
-		this.streetnumber = streetnumber;
-		this.plz = plz;
-		
-		this.orders = new HashSet<Order>();
-	}
 	@Id
 	@GeneratedValue
 	@Column(name = "USERID", unique = true, nullable = false)
@@ -83,10 +64,6 @@ public class User {
 	@JoinColumn(name = "postcode")
 	public PLZ getPlz() {
 		return plz;
-	}
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	public Set<Order> getOrders() {
-		return this.orders;
 	}
 
 	public void setStreet(String street) {
