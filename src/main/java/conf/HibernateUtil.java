@@ -18,6 +18,7 @@ public class HibernateUtil {
 			if (Files.notExists(Paths.get("./database/kirjanystaevaet.mv.db"))) {
 				cfg.setProperty("hibernate.hbm2ddl.auto", "create");
 				cfg.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
+				// cfg.setProperty(propertyName, value);
 			}
 			return cfg.configure().buildSessionFactory();
 		} catch (Throwable ex) {

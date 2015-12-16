@@ -7,20 +7,14 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import appl.logic.orders.OrderAdmin;
-import appl.logic.orders.impl.OrderAdminImpl;
-
+@EnableTransactionManagement
 @Configuration
 @ComponentScan({ "appl.data.dao.impl", "appl.logic.service.impl" })
 public class RootConfig {
-
-	@Bean
-	public JdbcTemplate getJdbcTemplate() {
-		// return new JdbcTemplate(new DataSourceInitializer().getDataSource());
-		return null;
-	}
 
 	@Bean
 	public SessionFactory getSessionFactory() throws HibernateException, SQLException {
@@ -28,8 +22,21 @@ public class RootConfig {
 	}
 
 	@Bean
-	public OrderAdmin orderAdminBean() {
-		return new OrderAdminImpl();
+	public PlatformTransactionManager txManager() throws HibernateException, SQLException {
+		return new HibernateTransactionManager(getSessionFactory());
 	}
+
+	// @Bean
+	// public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean()
+	// {
+	// return null;
+	// }
+	//
+	// @Bean
+	// public PlatformTransactionManager transactionManager() {
+	// JpaTransactionManager transactionManager = new JpaTransactionManager();
+	// transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
+	// return transactionManager;
+	// }
 
 }

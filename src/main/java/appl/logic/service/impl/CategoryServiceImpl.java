@@ -4,13 +4,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import appl.data.dao.CategoryDAO;
 import appl.data.items.Category;
 import appl.logic.service.CategoryService;
 
-@Component
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired

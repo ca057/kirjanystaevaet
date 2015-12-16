@@ -10,24 +10,21 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import appl.data.dao.BookDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.logic.service.BookService;
 
 public class QueryFun {
 
 	public void doSomeTesting2(ApplicationContext ctx) {
-		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
-		sessionFactory.getCurrentSession().beginTransaction();
-		BookDAO dao = ctx.getBean(BookDAO.class);
+		BookService service = ctx.getBean(BookService.class);
 		HashMap<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.categoryName, "php");
 		map.put(Searchfields.title, "Architecture");
 		map.put(Searchfields.nameF, "Thomas");
-		List result = dao.getBooksByMetadata(map);
-		sessionFactory.getCurrentSession().getTransaction().commit();
+		List result = service.getBooksByMetadata(map);
 		System.out.println(result);
 	}
 

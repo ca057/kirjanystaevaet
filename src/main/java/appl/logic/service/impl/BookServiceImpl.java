@@ -2,17 +2,21 @@ package appl.logic.service.impl;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import appl.data.dao.BookDAO;
-import appl.data.dao.impl.BookDAOImpl;
+import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 import appl.logic.service.BookService;
 
-@Component
+@Service
 public class BookServiceImpl implements BookService {
-	BookDAO dao = new BookDAOImpl();
+
+	@Autowired
+	BookDAO dao;
 
 	@Override
 	public List<Book> getAllBooks() {
@@ -42,9 +46,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<Book> getBooksByMetadata(String title, String author, String year, String isbn, String category) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) {
+		return dao.getBooksByMetadata(map);
 	}
 
 }
