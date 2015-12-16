@@ -17,6 +17,9 @@ public class Main {
 
 		// JdbcTemplate jdbc = ctx.getBean(JdbcTemplate.class);
 		// new QueryFun().jdbcStuff(jdbc);
+		
+		// OrderTesting
+		new QueryFun().doSomeOrderTesting(ctx);
 	}
 
 }
