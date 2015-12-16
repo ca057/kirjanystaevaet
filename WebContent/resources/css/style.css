@@ -107,10 +107,33 @@ footer {
 
 /* all the content */
 
+/* different stuff */
+.add-to-cart {
+	height: 30px;
+}
+
+.add-to-cart * {
+	display: inline-block;
+}
+
+.add-to-cart img {
+	height: 100%;
+}
+
+.add-to-cart p {
+	font-size: inherit;
+	color: yellow;
+	height: 100%;
+}
+
 /* different useful classes */
 
 .font-bold {
 	font-weight: bold;
+}
+
+.inline {
+	display: inline-block;
 }
 
 /* all lists */

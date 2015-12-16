@@ -7,4 +7,10 @@
 	<h4>Beschreibung</h4>
 	<p><c:out value="${book.getDescription()}"></c:out></p>
 	<img class="book-cover" src="<c:url value="/img/cover/${book.getIsbn()}.jpg"/>" title="<c:out value="Cover des Buchs '${book.getTitle()}'"/>">
+
+	<div class="add-to-cart">
+		<!-- hier brauchen wir noch ein form-element, welches das buch zum Warenkorb hinzufügt -->
+		<img src="<c:url value="/img/icons/ic_add_shopping_cart_black_36dp.png" />" title="Zum Warenkorb hinzufügen" />
+		<p>Zum Warenkorb hinzufügen</p>
+	</div>
 </section>
