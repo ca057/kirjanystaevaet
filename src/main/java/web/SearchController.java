@@ -35,7 +35,7 @@ public class SearchController {
 			@RequestParam(value = "isbn", required = false) String isbn,
 			@RequestParam(value = "year", required = false) String year,
 			@RequestParam(value = "category", required = false) String category, Model m) {
-		queryTerm = "";
+		queryTerm = "kacka";
 		// m.addAttribute("results", processSearchTerms(all, title, author,
 		// isbn, year, category));
 		m.addAttribute("results", returnDummyBooks());
