@@ -1,4 +1,4 @@
-package exceptions;
+package exceptions.controller;
 
 public class CategoryNotFoundException extends Exception {
 
