@@ -37,6 +37,10 @@
 		<put-attribute name="content" value="/WEB-INF/views/user.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="cart" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/cart.jsp"></put-attribute>
+	</definition>
+	
 	<definition name="404" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/error/404.jsp"></put-attribute>
 	</definition>

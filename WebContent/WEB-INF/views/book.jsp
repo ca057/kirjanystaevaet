@@ -10,7 +10,11 @@
 
 	<div class="add-to-cart">
 		<!-- hier brauchen wir noch ein form-element, welches das buch zum Warenkorb hinzufügt -->
-		<img src="<c:url value="/img/icons/ic_add_shopping_cart_black_36dp.png" />" title="Zum Warenkorb hinzufügen" />
-		<p>Zum Warenkorb hinzufügen</p>
+		<form action="../warenkorb" method="post" id="cartForm">
+			<button type="submit" form="cartForm" value='<c:out value="${book.getIsbn()}"></c:out>' name="isbn">
+				<img src="<c:url value="/img/icons/ic_add_shopping_cart_black_36dp.png" />" title="Zum Warenkorb hinzufügen" />
+				<p>Zum Warenkorb hinzufügen</p>
+			</button>
+		</form>
 	</div>
 </section>
