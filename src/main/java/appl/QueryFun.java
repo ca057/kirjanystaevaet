@@ -11,10 +11,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import appl.data.dao.BookDAO;
+import appl.data.dao.OrderDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.data.items.Order;
+import appl.data.items.PLZ;
+import appl.data.items.User;
 
 public class QueryFun {
 
@@ -28,8 +32,31 @@ public class QueryFun {
 		map.put(Searchfields.nameF, "Thomas");
 		List result = dao.getBooksByMetadata(map);
 		sessionFactory.getCurrentSession().getTransaction().commit();
+		// ORderdaten einfügen
+		sessionFactory.getCurrentSession().beginTransaction();
+		
+		
 		System.out.println(result);
 		System.exit(0);
+	}
+
+	public void doSomeOrderTesting(ApplicationContext ctx){
+		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
+		sessionFactory.getCurrentSession().beginTransaction();
+		Order order = createOrderTestData();
+		OrderDAO oDao = ctx.getBean(OrderDAO.class);
+		oDao.insertOrder(order);
+		
+		// Orderabfragen
+
+	}
+	
+	public Order createOrderTestData (){
+		Set<Book> book = createTestData();
+		User user = createUserTestData();
+		Order order = new Order("id012", book, user, 1990, 8, 6, 0, 4, 12);
+		return order;
+		
 	}
 
 	public void doSomeTesting(SessionFactory sessionFactory) {
@@ -175,6 +202,16 @@ public class QueryFun {
 
 		book.setCategories(categories);
 		return books;
+	}
+	
+	public User createUserTestData(){
+		PLZ plz = new PLZ();
+		plz.setPlace("Buxtehude");
+		plz.setPostcode("000000");
+		
+		User user1 = new User(1, "krabbe", "Rosenhagen", "Madeleine", "xyz@ihp.de", "streetstrett", "23a", plz);
+		return user1;
+		
 	}
 
 }
