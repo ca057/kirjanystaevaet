@@ -46,6 +46,8 @@ public class QueryFun {
 		Order order = createOrderTestData();
 		OrderDAO oDao = ctx.getBean(OrderDAO.class);
 		oDao.insertOrder(order);
+		
+		// Orderabfragen
 
 	}
 	

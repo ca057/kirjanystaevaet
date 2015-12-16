@@ -1,18 +1,23 @@
 package appl.logic.service.impl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import appl.data.dao.BookDAO;
 import appl.data.dao.impl.BookDAOImpl;
+import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 import appl.logic.service.BookService;
 
 @Component
 public class BookServiceImpl implements BookService {
-	BookDAO dao = new BookDAOImpl();
+	@Autowired
+	BookDAO dao;
 
 	@Override
 	public List<Book> getAllBooks() {
@@ -31,7 +36,10 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Book getBookByIsbn(String isbn) {
-		// TODO Auto-generated method stub
+		Map map = new HashMap<Searchfields, String>();
+		map.put(Searchfields.isbn, isbn);
+		
+		List<Book> bookList = dao.getBooksByMetadata(map);
 		return null;
 	}
 
