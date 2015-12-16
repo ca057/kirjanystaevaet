@@ -11,9 +11,9 @@
 	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
 	<meta name="viewport" content="initial-scale=1" />
 
-	<link rel="stylesheet" href="<s:url value='/resources/css/style.css'/>">
+	<link rel="stylesheet" href="<s:url value='/css/style.css'/>">
 	
-	<script type="text/javascript" src="<s:url value='/resources/js/script.js'/>"></script>
+	<script type="text/javascript" src="<s:url value='/js/script.js'/>"></script>
 </head>
 
 <body>
