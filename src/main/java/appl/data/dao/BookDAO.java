@@ -3,9 +3,12 @@ package appl.data.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 
+@Transactional
 public interface BookDAO {
 
 	public List<Book> getBooksByCategory(String categoryName);

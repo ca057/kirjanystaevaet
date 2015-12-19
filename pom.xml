@@ -13,10 +13,10 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Spring -->
-		<spring-framework.version>4.2.2.RELEASE</spring-framework.version>
+		<spring-framework.version>4.2.3.RELEASE</spring-framework.version>
 
 		<!-- Hibernate / JPA -->
-		<hibernate.version>5.0.4.Final</hibernate.version>
+		<hibernate.version>5.0.5.Final</hibernate.version>
 
 		<!-- Logging -->
 		<logback.version>1.0.13</logback.version>
@@ -43,6 +43,12 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${spring-framework.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring-framework.version}</version>
+	</dependency>
+		
 
 		<!-- Logging with SLF4J & LogBack -->
 		<dependency>
@@ -65,6 +71,23 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
+		<dependency>
+    		<groupId>org.hibernate</groupId>
+    		<artifactId>hibernate-core</artifactId>
+    		<version>${hibernate.version}</version>
+    		</dependency>
+    		<dependency>
+    			<groupId>org.hibernate</groupId>
+   			 <artifactId>hibernate-c3p0</artifactId>
+   			 <version>${hibernate.version}</version>
+		</dependency>
+		<!--  
+		<dependency>
+    		<groupId>org.hibernate</groupId>
+    		<artifactId>hibernate-ehcache</artifactId>
+    		<version>${hibernate.version}</version>
+		</dependency>
+		-->
 		
 		<!-- Database stuff --> 
         <dependency>

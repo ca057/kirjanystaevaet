@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import appl.data.dao.BookDAO;
-import appl.data.dao.impl.BookDAOImpl;
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 import appl.logic.service.BookService;
 
-@Component
+@Service
 public class BookServiceImpl implements BookService {
+
 	@Autowired
 	BookDAO dao;
 
@@ -38,7 +38,7 @@ public class BookServiceImpl implements BookService {
 	public Book getBookByIsbn(String isbn) {
 		Map map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.isbn, isbn);
-		
+
 		List<Book> bookList = dao.getBooksByMetadata(map);
 		return null;
 	}
@@ -50,9 +50,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<Book> getBooksByMetadata(String title, String author, String year, String isbn, String category) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) {
+		return dao.getBooksByMetadata(map);
 	}
 
 }

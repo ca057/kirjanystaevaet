@@ -6,44 +6,43 @@ import java.util.Map.Entry;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 
 import appl.data.dao.BookDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 
-@Component
+@Repository
 public class BookDAOImpl implements BookDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	private Criteria setupAndGetCriteria() {
-		return sessionFactory.getCurrentSession().createCriteria(Book.class).createAlias("categories", "c")
-				.createAlias("authors", "a");
+		if (sessionFactory == null) {
+			throw new RuntimeException("[Error] SessionFactory is null");
+		}
+		Session s = sessionFactory.getCurrentSession();
+		Criteria cr = s.createCriteria(Book.class);
+		return cr.createAlias("categories", "c").createAlias("authors", "a");
 	}
 
 	@Override
-	@Transactional
 	public List<Book> getBooksByCategory(String categoryName) {
-		// return ((Category)
-		// (sessionFactory.getCurrentSession().createQuery("from Category where
-		// categoryName = " + categoryName).uniqueResult())).getBooks();
+		// TODO implement this
 		return null;
 	}
 
 	@Override
-	@Transactional
 	public Book getBookByIsbn(int isbn) {
 		return (Book) sessionFactory.getCurrentSession().createQuery("from Book where isbn=" + isbn).uniqueResult();
 	}
 
 	@Override
-	@Transactional
 	public List<Book> getBooksByOpenSearch(String searchTerm) {
 		// TODO Auto-generated method stub
 		return null;
@@ -52,8 +51,8 @@ public class BookDAOImpl implements BookDAO {
 	
 	
 	@Override
-	@Transactional
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) {
+		// sessionFactory.getCurrentSession().beginTransaction();
 		Criteria cr = setupAndGetCriteria();
 		for (Entry<Searchfields, String> entry : map.entrySet()) {
 			String key = entry.getKey().toString();
@@ -65,11 +64,12 @@ public class BookDAOImpl implements BookDAO {
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
 			}
 		}
-		return (List<Book>) cr.list();
+		List result = (List<Book>) cr.list();
+		// sessionFactory.getCurrentSession().getTransaction().commit();
+		return result;
 	}
 
 	@Override
-	@Transactional
 	public boolean insertBook(Book book) {
 		try {
 			// TODO save gibt identifier zurück, aber das ist vermutlich auch
@@ -82,7 +82,6 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	@Transactional
 	public boolean deleteBook(Book book) {
 		// TODO siehe insertBook
 		try {
@@ -94,14 +93,12 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	@Transactional
 	public boolean updateBook(Book book, Map<Searchfields, String> map) {
 		// TODO session.merge()? session.saveOrUpdate()?
 		return false;
 	}
 
 	@Override
-	@Transactional
 	public Book executeQuery(String query) {
 		sessionFactory.getCurrentSession().createQuery(query).uniqueResult();
 		return null;
