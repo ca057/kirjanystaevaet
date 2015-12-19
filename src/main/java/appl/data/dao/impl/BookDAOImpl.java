@@ -11,7 +11,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import appl.data.dao.BookDAO;
 import appl.data.enums.Searchfields;
@@ -50,7 +49,6 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	@Transactional
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) {
 		// sessionFactory.getCurrentSession().beginTransaction();
 		Criteria cr = setupAndGetCriteria();

@@ -10,16 +10,16 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import appl.data.dao.BookDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
-import appl.logic.service.BookService;
 
 public class QueryFun {
 
 	public void doSomeTesting2(ApplicationContext ctx) {
-		BookService service = ctx.getBean(BookService.class);
+		BookDAO service = ctx.getBean(BookDAO.class);
 		HashMap<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.categoryName, "php");
 		map.put(Searchfields.title, "Architecture");
