@@ -9,8 +9,6 @@ import javax.sql.DataSource;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -69,8 +67,11 @@ public class RootConfig {
 				cfg.setProperty("hibernate.hbm2ddl.auto", "create");
 				cfg.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
 			}
-			return cfg.setProperties(createProperties()).buildSessionFactory(new StandardServiceRegistryBuilder()
-					.applySettings(cfg.getProperties()).applySetting(Environment.DATASOURCE, getDataSource()).build());
+			return cfg.setProperties(createProperties()).buildSessionFactory(
+			// new
+			// StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).applySetting(Environment.DATASOURCE,
+			// getDataSource()).build()
+			);
 		} catch (Throwable ex) {
 			// Make sure you log the exception, as it might be swallowed
 			System.err.println("Initial SessionFactory creation failed." + ex);
@@ -84,11 +85,11 @@ public class RootConfig {
 		prop.setProperty("hibernate.connection.url", "jdbc:h2:./database/kirjanystaevaet");
 		// prop.setProperty("hibernate.connection.username", "");
 		// prop.setProperty("hibernate.connection.password", "");
-		// prop.setProperty("hibernate.c3p0.min_size", "5");
-		// prop.setProperty("hibernate.c3p0.max_size", "20");
-		// prop.setProperty("hibernate.c3p0.timeout", "300");
-		// prop.setProperty("hibernate.c3p0.max_statements", "50");
-		// prop.setProperty("hibernate.c3p0.idle_test_period", "3000");
+		prop.setProperty("hibernate.c3p0.min_size", "5");
+		prop.setProperty("hibernate.c3p0.max_size", "20");
+		prop.setProperty("hibernate.c3p0.timeout", "300");
+		prop.setProperty("hibernate.c3p0.max_statements", "50");
+		prop.setProperty("hibernate.c3p0.idle_test_period", "3000");
 		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 		prop.setProperty("hibernate.current_session_context_class",
 				"org.springframework.orm.hibernate5.SpringSessionContext");
