@@ -3,12 +3,9 @@ package appl.logic.service;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
-
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 
-@Service
 public interface BookService {
 
 	public List<Book> getAllBooks();

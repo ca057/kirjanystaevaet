@@ -23,7 +23,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan({ "appl.data.dao", "appl.data.items" })
+@ComponentScan({ "appl.logic.service", "appl.data.dao", "appl.data.items" })
 @EnableTransactionManagement
 public class RootConfig {
 
@@ -68,14 +68,9 @@ public class RootConfig {
 			if (Files.notExists(Paths.get("./database/kirjanystaevaet.mv.db"))) {
 				cfg.setProperty("hibernate.hbm2ddl.auto", "create");
 				cfg.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
-				// cfg.setProperty(propertyName, value);
 			}
-			cfg.setProperties(createProperties());
-			SessionFactory sf = cfg
-					.buildSessionFactory(new StandardServiceRegistryBuilder().applySettings(cfg.getProperties())
-							// here you apply the custom dataSource
-							.applySetting(Environment.DATASOURCE, getDataSource()).build());
-			return sf;
+			return cfg.setProperties(createProperties()).buildSessionFactory(new StandardServiceRegistryBuilder()
+					.applySettings(cfg.getProperties()).applySetting(Environment.DATASOURCE, getDataSource()).build());
 		} catch (Throwable ex) {
 			// Make sure you log the exception, as it might be swallowed
 			System.err.println("Initial SessionFactory creation failed." + ex);
