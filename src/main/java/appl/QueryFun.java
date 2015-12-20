@@ -26,14 +26,14 @@ public class QueryFun {
 	public void doSomeTesting2(ApplicationContext ctx) {
 		BookService service = ctx.getBean(BookService.class);
 		CategoryService ct = ctx.getBean(CategoryService.class);
+		System.out.println("Kategorien: " + ct.getAllCategoryNames());
 		HashMap<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.categoryName, "php");
 		// map.put(Searchfields.title, "Architecture");
 		// map.put(Searchfields.nameF, "Thomas");
-		System.out.println("Kategorien: " + ct.getAllCategoryNames());
 		List result = service.getBooksByMetadata(map);
-		System.out.println(result);
-		System.out.println(service.getAllBooks());
+		System.out.println("Criteria:" + result);
+		System.out.println("Alle Bücher: " + service.getAllBooks());
 
 		System.out.println();
 		System.exit(0);

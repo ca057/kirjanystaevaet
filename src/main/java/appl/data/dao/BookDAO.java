@@ -27,4 +27,6 @@ public interface BookDAO {
 
 	public Book executeQuery(String query);
 
+	public List<Book> getAllBooks();
+
 }

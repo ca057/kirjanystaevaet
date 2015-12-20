@@ -22,13 +22,22 @@ public class BookDAOImpl implements BookDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	private Session getSession() {
+		return sessionFactory.getCurrentSession();
+	}
+
 	private Criteria setupAndGetCriteria() {
 		if (sessionFactory == null) {
 			throw new RuntimeException("[Error] SessionFactory is null");
 		}
-		Session s = sessionFactory.getCurrentSession();
+		Session s = getSession();
 		Criteria cr = s.createCriteria(Book.class);
 		return cr.createAlias("categories", "c").createAlias("authors", "a");
+	}
+
+	@Override
+	public List<Book> getAllBooks() {
+		return getSession().createCriteria(Book.class).list();
 	}
 
 	@Override
@@ -39,7 +48,7 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public Book getBookByIsbn(int isbn) {
-		return (Book) sessionFactory.getCurrentSession().createQuery("from Book where isbn=" + isbn).uniqueResult();
+		return (Book) getSession().createQuery("from Book where isbn=" + isbn).uniqueResult();
 	}
 
 	@Override
@@ -58,15 +67,7 @@ public class BookDAOImpl implements BookDAO {
 												// equals, wollen wir das
 												// wirklich zulassen?
 				cr.add(Restrictions.ilike("c." + key, "%" + entry.getValue() + "%"));
-			} else if (key.contains("name") || key.contains("author")) { // Wieso
-																			// verodert?
-																			// Wieso
-																			// legen
-																			// wir
-																			// nicht
-																			// feste
-																			// keys
-																			// fest?
+			} else if (key.contains("name") || key.contains("author")) { // Wieso verodert? Wieso legen wir nicht feste keys fest?
 				cr.add(Restrictions.ilike("a." + key, "%" + entry.getValue() + "%"));
 			} else {
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
@@ -82,7 +83,7 @@ public class BookDAOImpl implements BookDAO {
 		try {
 			// TODO save gibt identifier zurück, aber das ist vermutlich auch
 			// nicht so überragend gelöst
-			return sessionFactory.getCurrentSession().save(book) != null;
+			return getSession().save(book) != null;
 		} catch (HibernateException e) {
 			// TODO falls das bleibt, sinnvolles Exceptionhandling
 			return false;
@@ -93,7 +94,7 @@ public class BookDAOImpl implements BookDAO {
 	public boolean deleteBook(Book book) {
 		// TODO siehe insertBook
 		try {
-			sessionFactory.getCurrentSession().delete(book);
+			getSession().delete(book);
 			return true;
 		} catch (HibernateException e) {
 			return false;
@@ -108,7 +109,7 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public Book executeQuery(String query) {
-		sessionFactory.getCurrentSession().createQuery(query).uniqueResult();
+		getSession().createQuery(query).uniqueResult();
 		return null;
 	}
 
