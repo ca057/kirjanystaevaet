@@ -48,17 +48,25 @@ public class BookDAOImpl implements BookDAO {
 		return null;
 	}
 
-	
-	
 	@Override
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) {
 		// sessionFactory.getCurrentSession().beginTransaction();
 		Criteria cr = setupAndGetCriteria();
 		for (Entry<Searchfields, String> entry : map.entrySet()) {
 			String key = entry.getKey().toString();
-			if ((key.contains("category"))) { // Wieso contains und nicht equals, wollen wir das wirklich zulassen?
+			if ((key.contains("category"))) { // Wieso contains und nicht
+												// equals, wollen wir das
+												// wirklich zulassen?
 				cr.add(Restrictions.ilike("c." + key, "%" + entry.getValue() + "%"));
-			} else if (key.contains("name") || key.contains("author")) { // Wieso verodert? Wieso legen wir nicht feste keys fest?
+			} else if (key.contains("name") || key.contains("author")) { // Wieso
+																			// verodert?
+																			// Wieso
+																			// legen
+																			// wir
+																			// nicht
+																			// feste
+																			// keys
+																			// fest?
 				cr.add(Restrictions.ilike("a." + key, "%" + entry.getValue() + "%"));
 			} else {
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));

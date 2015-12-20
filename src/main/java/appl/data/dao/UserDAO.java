@@ -3,9 +3,12 @@ package appl.data.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import appl.data.enums.Searchfields;
 import appl.data.items.User;
 
+@Transactional
 public interface UserDAO {
 
 	List<User> getUsers();

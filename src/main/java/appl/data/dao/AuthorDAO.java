@@ -2,8 +2,11 @@ package appl.data.dao;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import appl.data.items.Author;
 
+@Transactional
 public interface AuthorDAO {
 
 	public List<Author> getAuthors();

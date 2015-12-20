@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "BOOKDESCRIPTIONS", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "isbn") })
+@Table(name = "bookdescriptions", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "isbn") })
 public class Book {
 	private String isbn;
 	private String title;
@@ -100,7 +100,7 @@ public class Book {
 	public Set<Author> getAuthors() {
 		return authors;
 	}
-	
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "bookorder", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "orderId") )
 	public Set<Order> getOrders() {
@@ -146,12 +146,11 @@ public class Book {
 	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
+
 	public void setAuthors(Set<Author> authors) {
 		this.authors = authors;
 	}
 
-
-	
 	@Override
 	public String toString() {
 		return "Book [isbn=" + isbn + ", title=" + title + ", description=" + description + ", price=" + price

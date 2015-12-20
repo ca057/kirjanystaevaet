@@ -15,12 +15,8 @@ import appl.data.items.Category;
 @Repository
 public class CategoryDAOImpl implements CategoryDAO {
 
-	private SessionFactory sessionFactory;
-
 	@Autowired
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
+	private SessionFactory sessionFactory;
 
 	@Override
 	public List<Category> getCategories() {

@@ -19,17 +19,23 @@ import appl.data.items.Order;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.BookService;
+import appl.logic.service.CategoryService;
 
 public class QueryFun {
 
 	public void doSomeTesting2(ApplicationContext ctx) {
 		BookService service = ctx.getBean(BookService.class);
+		CategoryService ct = ctx.getBean(CategoryService.class);
 		HashMap<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.categoryName, "php");
-		map.put(Searchfields.title, "Architecture");
-		map.put(Searchfields.nameF, "Thomas");
+		// map.put(Searchfields.title, "Architecture");
+		// map.put(Searchfields.nameF, "Thomas");
+		System.out.println("Kategorien: " + ct.getAllCategoryNames());
 		List result = service.getBooksByMetadata(map);
 		System.out.println(result);
+		System.out.println(service.getAllBooks());
+
+		System.out.println();
 		System.exit(0);
 	}
 
