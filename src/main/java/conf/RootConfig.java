@@ -20,6 +20,7 @@ import appl.data.items.Category;
 import appl.data.items.Order;
 import appl.data.items.PLZ;
 import appl.data.items.User;
+import exceptions.data.DatabaseInitializationException;
 
 @Configuration
 @ComponentScan({ "appl.logic.service", "appl.data.dao" })
@@ -27,23 +28,19 @@ import appl.data.items.User;
 public class RootConfig {
 
 	@Bean
-	public PlatformTransactionManager txManager() throws HibernateException, SQLException {
+	public PlatformTransactionManager txManager()
+			throws HibernateException, SQLException, DatabaseInitializationException {
 		return new HibernateTransactionManager(getSessionFactory());
 	}
 
 	@Bean
-	public SessionFactory getSessionFactory() {
+	public SessionFactory getSessionFactory() throws DatabaseInitializationException {
 		return buildSessionFactory();
 	}
 
-	private SessionFactory buildSessionFactory() {
+	private SessionFactory buildSessionFactory() throws DatabaseInitializationException {
 		try {
 			org.hibernate.cfg.Configuration cfg = new org.hibernate.cfg.Configuration();
-			// FIXME Pfad für Server anpassen
-			if (Files.notExists(Paths.get("./database/kirjanystaevaet.mv.db"))) {
-				cfg.setProperty("hibernate.hbm2ddl.auto", "create");
-				cfg.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
-			}
 			cfg.addPackage("appl.data.items");
 			cfg.addAnnotatedClass(Author.class);
 			cfg.addAnnotatedClass(Book.class);
@@ -52,16 +49,20 @@ public class RootConfig {
 			cfg.addAnnotatedClass(PLZ.class);
 			cfg.addAnnotatedClass(User.class);
 			return cfg.setProperties(createProperties()).buildSessionFactory();
-		} catch (Throwable ex) {
-			// Make sure you log the exception, as it might be swallowed
-			System.err.println("Initial SessionFactory creation failed." + ex);
-			throw new ExceptionInInitializerError(ex);
+		} catch (HibernateException e) {
+			System.err.println("Initial SessionFactory creation failed." + e.getMessage());
+			throw new DatabaseInitializationException(e.getMessage());
 		}
 	}
 
 	private Properties createProperties() {
 		Properties prop = new Properties();
+		if (Files.notExists(Paths.get("database/kirjanystaevaet.mv.db"))) {
+			prop.setProperty("hibernate.hbm2ddl.auto", "create");
+			prop.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
+		}
 		prop.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
+		// FIXME Pfad für Server anpassen
 		prop.setProperty("hibernate.connection.url", "jdbc:h2:./database/kirjanystaevaet");
 		// prop.setProperty("hibernate.connection.username", "");
 		// prop.setProperty("hibernate.connection.password", "");
