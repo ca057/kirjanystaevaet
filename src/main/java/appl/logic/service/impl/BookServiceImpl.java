@@ -1,7 +1,6 @@
 package appl.logic.service.impl;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,13 +24,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<String> getBooksByCategory(String category) {
-		List<Book> list = dao.getBooksByCategory(category);
-		List<String> bookTitles = new LinkedList<String>();
-		for (Book book : list) {
-			bookTitles.add(book.getTitle());
-		}
-		return bookTitles;
+	public List<Book> getBooksByCategory(String category) {
+		return dao.getBooksByCategory(category);
 	}
 
 	@Override
