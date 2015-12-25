@@ -35,6 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// alles andere muss authentifiziert werden und geht über unsere
 				// standard-login seite
 				.anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll();
+		// FIXME siehe link unten für bessere Konfiguration, z.B. eigener
+		// Logout-Handler und cookies löschen und sowas
+		http.logout().logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(true);
 	}
 
 	@Override
