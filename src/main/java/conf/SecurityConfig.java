@@ -26,13 +26,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll();
+		// Zugriff erlauben auf Homepage ("/"), alle Kategorien
+		// ("/kategorie/..."), Suche ("/suche"), Kontakt/Impressum ("/kontakt")
+		http.authorizeRequests().antMatchers("/", "/kategorie/**", "/suche", "/kontakt").permitAll()
+				// TODO falls wir einen admin-Bereich haben, können wir das zum
+				// Beispiel so steuern
+				.antMatchers("/admin/**").hasRole("ADMIN")
+				// alles andere muss authentifiziert werden und geht über unsere
+				// standard-login seite
+				.anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll();
 	}
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// allow access to all requests which start with css, js or img
-		web.ignoring().antMatchers("/css/**").antMatchers("/js/**").antMatchers("/img/**");
+		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
 	}
 
+	// TODO mehr Infos hier:
+	// http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#abstractsecuritywebapplicationinitializer-with-spring-mvc
 }
