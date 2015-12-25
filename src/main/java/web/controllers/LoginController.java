@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(value = "/login")
 public class LoginController {
 
+	// TODO welche Methoden brauchen wir hier wirklich? Parameter wie error an
+	// das Model übergeben?
+
 	@RequestMapping(method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public String login(@RequestParam(value = "name") String name, @RequestParam(value = "pwd") String pwd) {
+	public String login(@RequestParam(value = "username") String name, @RequestParam(value = "password") String pwd) {
 		System.out.println("Name: [" + name + "] -- Passwort: [" + pwd + "]");
 		return "redirect:/meinkonto";
 	}
