@@ -14,6 +14,26 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+/**
+ * Book is a POJO marked as persistent entity with table name
+ * "bookdescriptions". It represents a book object with different variables:
+ * <ul>
+ * <li>isbn</li>
+ * <li>title</li>
+ * <li>description</li>
+ * <li>price</li>
+ * <li>publisher</li>
+ * <li>pubdate</li>
+ * <li>edition</li>
+ * <li>pages</li>
+ * </ul>
+ * Lists of {@link Author} and {@link Category} are joined via many-to-many
+ * connections.
+ * 
+ * @author Johannes
+ * @author Madeleine
+ *
+ */
 @Entity
 @Table(name = "bookdescriptions", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "isbn") })
 public class Book {
@@ -28,14 +48,28 @@ public class Book {
 
 	private Set<Category> categories = new HashSet<Category>(0);
 	private Set<Author> authors = new HashSet<Author>(0);
+	// TODO In Javadoc erwähnen.
 	private Set<Order> orders = new HashSet<Order>(0);
 
 	public Book() {
 	}
 
+	/**
+	 * Constructor to set all variables of an instance of {@link Book}.
+	 * 
+	 * @param isbn
+	 * @param title
+	 * @param description
+	 * @param price
+	 * @param publisher
+	 * @param pubdate
+	 * @param edition
+	 * @param pages
+	 * @param categories
+	 * @param authors
+	 */
 	public Book(String isbn, String title, String description, double price, String publisher, String pubdate,
 			String edition, int pages, Set<Category> categories, Set<Author> authors) {
-		super();
 		this.isbn = isbn;
 		this.title = title;
 		this.description = description;
