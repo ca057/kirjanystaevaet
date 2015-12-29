@@ -32,6 +32,8 @@ public class BookDAOImpl implements BookDAO {
 		}
 		Session s = getSession();
 		Criteria cr = s.createCriteria(Book.class);
+	    cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); 
+
 		return cr.createAlias("categories", "c").createAlias("authors", "a");
 	}
 
@@ -77,11 +79,10 @@ public class BookDAOImpl implements BookDAO {
 			}
 		}
 		// Um keine Duplikate (die durch Joins entstehen) im Resultset zu haben
-	    cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); 
-		System.out.println("Criteria to String " + cr.toString());
+		//System.out.println("Criteria to String " + cr.toString());
 		List result = (List<Book>) cr.list();
 		// sessionFactory.getCurrentSession().getTransaction().commit();
-		System.out.println("In DAO: Resultsize: " + result.size());
+		//System.out.println("In DAO: Resultsize: " + result.size());
 		return result;
 	}
 

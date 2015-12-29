@@ -3,6 +3,7 @@ package appl;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Query;
@@ -182,7 +183,7 @@ public class QueryFun {
 		System.out.println("GetBookByIsbn-------------------------------\n\n\n");
 		System.out.println(book.toString());
 		
-		List<Book> booksByCat = bookService.getBooksByCategory("PHP");
+		List<Book> booksByCat = bookService.getBooksByCategory("");
 
 		System.out.println("Get books by Category------------------------------\n\n\n");
 		for (Book b : booksByCat){
@@ -193,7 +194,17 @@ public class QueryFun {
 		for (Book b : allBooks){
 			System.out.println(b.toString());
 		}
+		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
+		List<Book> results = bookService.getBooksByMetadata(map);
+		System.out.println("GetBooksByMetadata _-------------------------------------\n\n\n");
+		System.out.println("Size: " + results.size());
+		for(Book b : results){
+			System.out.println(b.toString());
+		}
 		
+		
+		System.out.println("Test OpenSearch------------------\n\n\n");
+		bookService.getBooksByOpenSearch("I love my cat");
 	}
 
 	public Set<Book> createTestData() {

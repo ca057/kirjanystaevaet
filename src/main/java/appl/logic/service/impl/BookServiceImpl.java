@@ -1,8 +1,11 @@
 package appl.logic.service.impl;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,13 +57,24 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<Book> getBooksByOpenSearch(String searchTerm) {
-		// TODO Auto-generated method stub
+		// Erstmal String splitten
+		Set<String> searchTerms = splitTermByWhitespaces(searchTerm);
+		
 		return null;
 	}
 
 	@Override
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) {
 		return dao.getBooksByMetadata(map);
+	}
+	
+	private Set<String> splitTermByWhitespaces (String term){
+		Set<String> terms = new HashSet<String>(Arrays.asList(term.split("\\s+")));
+		System.out.println("Search Terms\n");
+		for (String s : terms){
+			System.out.println(s);
+		}
+		return terms;
 	}
 
 }
