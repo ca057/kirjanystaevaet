@@ -29,6 +29,13 @@ p {
 	color: red;
 }
 
+.good-bye {
+	text-align: center;
+	font-style: italic;
+	font-weight: bold;
+	animation:rainbow 1s infinite;
+}
+
 h1 {
 	font-size: 2em;
 	margin: 1em 0 1em 0;
@@ -187,6 +194,26 @@ div#searchfield form input[type=submit] {
 
 form * {
 	display: block;
+}
+
+/* animations */
+/* rainbow stolen from http://codepen.io/beben-koben/pen/gfuvc */
+.rainbow {
+  animation:rainbow 1s infinite;
+}
+
+@keyframes rainbow {
+  0% {color: #ff0000;}
+  10% {color: #ff8000;}
+  20% {color: #ffff00;}
+  30% {color: #80ff00;}
+  40% {color: #00ff00;}
+  50% {color: #00ff80;}
+  60% {color: #00ffff;}
+  70% {color: #0080ff;}
+  80% {color: #0000ff;}
+  90% {color: #8000ff;}
+  100% {color: #ff0080;}
 }
 
 /* media queries */

@@ -6,7 +6,6 @@
 	<form action="<c:url value="/login" />" method="post">
 		<fieldset>
 			<legend>Login</legend>
-			<!-- Brauchen wir das? Woher kommen die Parameter? -->
 			<c:if test="${param.error != null}">
 			    <p class="login-error">Ungültiger Benutzername oder Passwort.</p>
 			</c:if>
