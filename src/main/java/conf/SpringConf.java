@@ -1,5 +1,7 @@
 package conf;
 
+// TODO für was brauchen wir die?
+
 //@Configuration
 //@EnableTransactionManagement
 //@ComponentScan({ "appl.data.dao.impl", "appl.logic.service.impl" })

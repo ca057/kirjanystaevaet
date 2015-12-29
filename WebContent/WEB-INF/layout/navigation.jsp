@@ -2,12 +2,17 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <ul class="navigation-content list-inline">
-	<!-- das sollte hier eigentlich dynamisch generiert werden -->
 	<li><a href="<c:url value='/kategorie/php'/>">PHP</a></li>
 	<li><a href="<c:url value='/kategorie/java'/>">Java</a></li>
-	<!-- Und diesen Menüpunkt gibt es immer -->
+
 	<li><a href="<c:url value='/suche' />" title="Suche">Suche</a></li>
 	<li><a href="<c:url value='/kontakt'/>" title="Kontakt und Impressum">Kontakt/Impressum</a></li>
-	<!-- diesen Menüpunkt gibt es auch immer und der ist ganz rechts und ändert sich in "Mein Konto" wenn man eingeloggt ist -->
-	<li class="float-right"><a href="<c:url value='/login'/>" title="">Login</a></li>
+
+	<li class="float-right"><a href="<c:url value='/login'/>" title="In Mein Konto einloggen">Anmelden</a></li>
+	<li class="float-right">
+		<form class="form-inline" action="<c:url value="/logout" />" method="post">
+			<button type="submit" value="Aus Mein Konto abmelden">Abmelden</button>
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		</form>
+	</li>
 </ul>
