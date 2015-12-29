@@ -188,8 +188,11 @@ public class QueryFun {
 		for (Book b : booksByCat){
 			System.out.println(b.toString());
 		}
-		
-
+		List<Book> allBooks = bookService.getAllBooks();
+		System.out.println("Get all books --------------------\n\n\n");
+		for (Book b : allBooks){
+			System.out.println(b.toString());
+		}
 		
 	}
 

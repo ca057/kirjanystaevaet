@@ -73,8 +73,12 @@ public class BookDAOImpl implements BookDAO {
 				cr.add(Restrictions.ilike("a." + key, "%" + entry.getValue() + "%"));
 			} else {
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
+				System.out.println("in Dao: else-case, Searchfield = " + key);
 			}
 		}
+		// Um keine Duplikate (die durch Joins entstehen) im Resultset zu haben
+	    cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); 
+		System.out.println("Criteria to String " + cr.toString());
 		List result = (List<Book>) cr.list();
 		// sessionFactory.getCurrentSession().getTransaction().commit();
 		System.out.println("In DAO: Resultsize: " + result.size());
