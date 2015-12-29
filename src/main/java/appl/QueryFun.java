@@ -178,9 +178,17 @@ public class QueryFun {
 		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
 		BookService bookService = ctx.getBean(BookService.class);
 		CategoryService categoryService = ctx.getBean(CategoryService.class);
-		Book book = bookService.getBookByIsbn("0131428985");
+		Book book = bookService.getBookByIsbn("0201433362");
 		System.out.println("GetBookByIsbn-------------------------------\n\n\n");
 		System.out.println(book.toString());
+		
+		List<Book> booksByCat = bookService.getBooksByCategory("PHP");
+
+		System.out.println("Get books by Category------------------------------\n\n\n");
+		for (Book b : booksByCat){
+			System.out.println(b.toString());
+		}
+		
 
 		
 	}

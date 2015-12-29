@@ -187,9 +187,14 @@ public class Book {
 
 	@Override
 	public String toString() {
+		String categoryString = "";
+		/*for (Category c : categories){
+			categoryString = categoryString + " " + c.toString();
+		}
+		*/
 		return "Book [isbn=" + isbn + ", title=" + title + ", description=" + description + ", price=" + price
 				+ ", publisher=" + publisher + ", pubdate=" + pubdate + ", edition=" + edition + ", pages=" + pages
-				+ "]";
+				+ ", category= "+ categoryString +  "]";
 	}
 
 }

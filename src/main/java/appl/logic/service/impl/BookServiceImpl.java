@@ -23,12 +23,14 @@ public class BookServiceImpl implements BookService {
 		return dao.getAllBooks();
 	}
 
+	// ToDo die MEthode funktioniert nur darüber, dass man über CategoryNAme bekommt, nicht über die ID, -> Umbenennen!
 	@Override
 	public List<Book> getBooksByCategory(String category) {
 		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
-		map.put(Searchfields.categroyName, category);
+		map.put(Searchfields.categoryName, category);
+		return dao.getBooksByMetadata(map);
 		//return dao.getBooksByCategory(category);
-		return null;
+		//return null;
 	}
 
 	@Override
@@ -40,6 +42,12 @@ public class BookServiceImpl implements BookService {
 		if (bookList.size() > 1){
 			// todo Fehlerbehandlung
 			System.out.println("Something went totally wrong");
+			System.out.println("Listsize is: " + bookList.size());
+			System.out.println("See whole content:");
+			
+			for (Book b : bookList){
+				System.out.println(b.toString());
+			}
 		}
 		return bookList.get(0);
 	}

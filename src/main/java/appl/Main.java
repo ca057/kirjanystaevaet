@@ -17,7 +17,7 @@ public class Main {
 		// new QueryFun().jdbcStuff(jdbc);
 		
 		// OrderTesting
-		new QueryFun().doSomeOrderTesting(ctx);
+		//new QueryFun().doSomeOrderTesting(ctx);
 		
 		new QueryFun().testDao(ctx);
 	}

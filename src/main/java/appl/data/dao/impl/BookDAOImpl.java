@@ -77,6 +77,7 @@ public class BookDAOImpl implements BookDAO {
 		}
 		List result = (List<Book>) cr.list();
 		// sessionFactory.getCurrentSession().getTransaction().commit();
+		System.out.println("In DAO: Resultsize: " + result.size());
 		return result;
 	}
 
