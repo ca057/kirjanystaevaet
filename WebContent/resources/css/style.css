@@ -25,6 +25,10 @@ p {
 	text-align: justify;
 }
 
+.login-error {
+	color: red;
+}
+
 h1 {
 	font-size: 2em;
 	margin: 1em 0 1em 0;

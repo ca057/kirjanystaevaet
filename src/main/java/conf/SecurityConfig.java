@@ -28,16 +28,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// Zugriff erlauben auf Homepage ("/"), alle Kategorien
 		// ("/kategorie/..."), Suche ("/suche"), Kontakt/Impressum ("/kontakt")
-		http.authorizeRequests().antMatchers("/", "/kategorie/**", "/suche", "/kontakt").permitAll()
-				// TODO falls wir einen admin-Bereich haben, können wir das zum
-				// Beispiel so steuern
-				.antMatchers("/admin/**").hasRole("ADMIN")
-				// alles andere muss authentifiziert werden und geht über unsere
-				// standard-login seite
-				.anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll();
+		http.authorizeRequests().antMatchers("/", "/kategorie/**", "/suche", "/kontakt").permitAll();
+		// Zugriff auf alle anderen Seiten beschränken
+		http.authorizeRequests().anyRequest().authenticated().and().formLogin().loginPage("/login")
+				.failureUrl("/login?error").permitAll();
 		// FIXME siehe link unten für bessere Konfiguration, z.B. eigener
 		// Logout-Handler und cookies löschen und sowas
-		http.logout().logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(true);
+		// http.logout().logoutUrl("/logout").logoutSuccessUrl("/?logout").invalidateHttpSession(true);
 	}
 
 	@Override

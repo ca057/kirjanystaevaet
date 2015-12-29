@@ -7,9 +7,9 @@
 		<fieldset>
 			<legend>Login</legend>
 			<!-- Brauchen wir das? Woher kommen die Parameter? -->
-			<div class="alert alert-error">    
-			    <p>Ungültiger Benutzername oder Passwort.</p>
-			</div>
+			<c:if test="${param.error != null}">
+			    <p class="login-error">Ungültiger Benutzername oder Passwort.</p>
+			</c:if>
 			<label for="username">Benutzername</label>
 			<input type="text" id="username" name="username"/>        
 			<label for="password">Passwort</label>
