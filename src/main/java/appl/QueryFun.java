@@ -46,8 +46,8 @@ public class QueryFun {
 		OrderDAO oDao = ctx.getBean(OrderDAO.class);
 		oDao.insertOrder(order);
 
-		// Orderabfragen
-
+		//ToDo Orderabfragen
+		
 	}
 
 	public Order createOrderTestData() {
@@ -172,6 +172,17 @@ public class QueryFun {
 		// }
 		// System.out.println(jdbc.queryForObject("select count(*) FROM
 		// PUBLIC.bookauthors", Integer.class));
+	}
+	
+	public void testDao(ApplicationContext ctx){
+		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
+		BookService bookService = ctx.getBean(BookService.class);
+		CategoryService categoryService = ctx.getBean(CategoryService.class);
+		Book book = bookService.getBookByIsbn("0131428985");
+		System.out.println("GetBookByIsbn-------------------------------\n\n\n");
+		System.out.println(book.toString());
+
+		
 	}
 
 	public Set<Book> createTestData() {

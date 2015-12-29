@@ -40,6 +40,7 @@ public class BookDAOImpl implements BookDAO {
 		return getSession().createCriteria(Book.class).list();
 	}
 
+	// MEthode theoretisch auch unnötig, egtht auch über getBooksByMetadata
 	@Override
 	public List<Book> getBooksByCategory(String categoryName) {
 		// TODO implement this
@@ -47,6 +48,7 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
+	// Methode eigentlich nicht notwendig. Außen wird nur der Service aufgerufen und der verwendet die getBooksByMetadata
 	public Book getBookByIsbn(int isbn) {
 		return (Book) getSession().createQuery("from Book where isbn=" + isbn).uniqueResult();
 	}

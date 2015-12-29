@@ -25,6 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
 			System.out.println(ct.getCategoryName());
 		}
 		if (names.isEmpty()) {
+			// ToDo ???
 			throw new RuntimeException("aösdlkfj");
 		}
 		return names;

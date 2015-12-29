@@ -25,16 +25,23 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<Book> getBooksByCategory(String category) {
-		return dao.getBooksByCategory(category);
+		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
+		map.put(Searchfields.categroyName, category);
+		//return dao.getBooksByCategory(category);
+		return null;
 	}
 
 	@Override
 	public Book getBookByIsbn(String isbn) {
-		Map map = new HashMap<Searchfields, String>();
+		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.isbn, isbn);
 
 		List<Book> bookList = dao.getBooksByMetadata(map);
-		return null;
+		if (bookList.size() > 1){
+			// todo Fehlerbehandlung
+			System.out.println("Something went totally wrong");
+		}
+		return bookList.get(0);
 	}
 
 	@Override
