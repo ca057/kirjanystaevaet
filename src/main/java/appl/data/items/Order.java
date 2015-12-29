@@ -23,9 +23,7 @@ public class Order {
 	// Date: Java.utils.Date oder eigene Klasse?
 	private Calendar date;
 
-	public Order(String orderId, Set<Book> orderItems, User user, int year, int month, int day, int hourOfDay,
-			int minute, int second) {
-		this.orderId = orderId;
+	public Order(Set<Book> orderItems, User user, int year, int month, int day, int hourOfDay, int minute, int second) {
 		this.orderItems = orderItems;
 		this.user = user;
 		this.payed = false;

@@ -53,7 +53,7 @@ public class QueryFun {
 	public Order createOrderTestData() {
 		Set<Book> book = createTestData();
 		User user = createUserTestData();
-		Order order = new Order("id012", book, user, 1990, 8, 6, 0, 4, 12);
+		Order order = new Order(book, user, 1990, 8, 6, 0, 4, 12);
 		return order;
 
 	}
@@ -219,7 +219,7 @@ public class QueryFun {
 		plz.setPlace("Buxtehude");
 		plz.setPostcode("000000");
 
-		User user1 = new User(1, "krabbe", "Rosenhagen", "Madeleine", "xyz@ihp.de", "streetstrett", "23a", plz);
+		User user1 = new User("krabbe", "Rosenhagen", "Madeleine", "xyz@ihp.de", "streetstrett", "23a", plz);
 		return user1;
 
 	}

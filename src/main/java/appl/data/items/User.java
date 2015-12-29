@@ -1,5 +1,8 @@
 package appl.data.items;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,10 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
-import java.util.HashSet;
-
-import java.util.Set;
 
 @Entity
 @Table(name = "user", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "userID") })
@@ -29,9 +28,8 @@ public class User {
 	private Set<Order> orders;
 	// TODO Bankverbindung = Rechnung
 
-
-	public User (int userID, String nickname, String name, String surname, String email, String street, String streetnumber, PLZ plz ){
-		this.userID = userID;
+	public User(String nickname, String name, String surname, String email, String street, String streetnumber,
+			PLZ plz) {
 		this.nickname = nickname;
 		this.name = name;
 		this.surname = surname;
@@ -39,9 +37,10 @@ public class User {
 		this.street = street;
 		this.streetnumber = streetnumber;
 		this.plz = plz;
-		
+
 		this.orders = new HashSet<Order>();
 	}
+
 	@Id
 	@GeneratedValue
 	@Column(name = "USERID", unique = true, nullable = false)
@@ -84,6 +83,7 @@ public class User {
 	public PLZ getPlz() {
 		return plz;
 	}
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	public Set<Order> getOrders() {
 		return this.orders;
@@ -120,8 +120,8 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	public void setOrders(Set<Order> orders){
+
+	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
 
