@@ -14,7 +14,7 @@
 			<input type="text" id="username" name="username"/>        
 			<label for="password">Passwort</label>
 			<input type="password" id="password" name="password"/>
-			<input type="submit" value="Einloggen">
+			<button type="submit" value="In Mein Konto anmelden">Anmelden</button>
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		</fieldset>
 	</form>

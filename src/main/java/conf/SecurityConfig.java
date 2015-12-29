@@ -26,15 +26,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// Zugriff erlauben auf Homepage ("/"), alle Kategorien
-		// ("/kategorie/..."), Suche ("/suche"), Kontakt/Impressum ("/kontakt")
-		http.authorizeRequests().antMatchers("/", "/kategorie/**", "/suche", "/kontakt").permitAll();
-		// Zugriff auf alle anderen Seiten beschränken
-		http.authorizeRequests().anyRequest().authenticated().and().formLogin().loginPage("/login")
-				.failureUrl("/login?error").permitAll();
-		// FIXME siehe link unten für bessere Konfiguration, z.B. eigener
-		// Logout-Handler und cookies löschen und sowas
-		// http.logout().logoutUrl("/logout").logoutSuccessUrl("/?logout").invalidateHttpSession(true);
+		http.authorizeRequests().antMatchers("/", "/kategorie/**", "/suche", "/kontakt", "/login", "/logout")
+				.permitAll().antMatchers("/meinkonto").hasRole("USER").anyRequest().authenticated().and().formLogin()
+				.loginPage("/login").failureUrl("/login?error").and().logout().deleteCookies("remove")
+				.invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/?logout").permitAll();
 	}
 
 	@Override
@@ -42,7 +37,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// allow access to all requests which start with css, js or img
 		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
 	}
-
-	// TODO mehr Infos hier:
-	// http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#abstractsecuritywebapplicationinitializer-with-spring-mvc
 }
