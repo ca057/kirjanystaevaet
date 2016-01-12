@@ -12,19 +12,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Store;
-
 @Entity
 @Table(name = "bookauthors", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "authorId") })
 public class Author {
 	private int authorId;
-	//@Field
 	private String nameF;
-	//@Field
 	private String nameL;
 
 	private Set<Book> books = new HashSet<Book>(0);

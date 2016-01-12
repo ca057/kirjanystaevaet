@@ -59,12 +59,6 @@ public class BookServiceImpl implements BookService {
 	public List<Book> getBooksByOpenSearch(String searchTerm) {
 		// Erstmal String splitten
 		Set<String> searchTerms = splitTermByWhitespaces(searchTerm);
-		// Alle Felder mit dem gesamten Suchbegriff abfragen
-		
-		// Alle Felder mit den einzelnen Suchbegriffen abfragen
-		
-		// Strings konkatenieren -> Ergebnisse, die den gesamten Begriff enthalten sind vorne in der Liste
-		
 		
 		return null;
 	}

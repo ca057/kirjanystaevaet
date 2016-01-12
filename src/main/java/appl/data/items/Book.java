@@ -8,21 +8,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-//import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-//import org.hibernate.search.annotations.*;
-/*
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.Store;
-*/
 /**
  * Book is a POJO marked as persistent entity with table name
  * "bookdescriptions". It represents a book object with different variables:
@@ -45,33 +36,18 @@ import org.hibernate.search.annotations.Store;
  */
 @Entity
 @Table(name = "bookdescriptions", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "isbn") })
-//@Indexed
 public class Book {
-	
-	//@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	private String isbn;
-	
-	//@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	private String title;
-	
 	private String description;
-	
 	private double price;
-	
 	private String publisher;
-	
 	private String pubdate;
-	
 	private String edition;
-	
 	private int pages;
-	
-	//@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+
 	private Set<Category> categories = new HashSet<Category>(0);
-	
-	//@IndexedEmbedded
 	private Set<Author> authors = new HashSet<Author>(0);
-	
 	// TODO In Javadoc erwähnen.
 	private Set<Order> orders = new HashSet<Order>(0);
 
