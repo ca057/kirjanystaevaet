@@ -21,6 +21,11 @@ public class CategoriesController {
 	@Autowired
 	private CategoryService service;
 
+	/**
+	 * Setter injection for the {@link CategoryService} bean.
+	 * 
+	 * @param service
+	 */
 	public void setService(CategoryService service) {
 		this.service = service;
 	}
@@ -35,6 +40,12 @@ public class CategoriesController {
 		}
 	}
 
+	/**
+	 * Checks if the passed category is existing, upper/lower cases are ignored.
+	 * 
+	 * @param category
+	 * @return {@code true} if the category exists, {@code false} otherwise
+	 */
 	private boolean checkIfExistingCategory(String category) {
 		if (service == null) {
 			System.out.println("Servie is null");
@@ -43,6 +54,15 @@ public class CategoriesController {
 				.contains(category.toUpperCase());
 	}
 
+	/**
+	 * Returns the correct formatted category name for displaying it in the
+	 * views.
+	 * 
+	 * @param category
+	 * @return the correct formatted category as {@code String}
+	 * @throws CategoryNotFoundException
+	 *             if the given category does not exist
+	 */
 	private String getCorrectCategoryName(String category) throws CategoryNotFoundException {
 		for (String c : service.getAllCategoryNames()) {
 			if (category.toUpperCase().equals(c.toUpperCase())) {
