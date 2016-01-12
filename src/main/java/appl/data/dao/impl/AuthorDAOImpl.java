@@ -17,41 +17,41 @@ public class AuthorDAOImpl implements AuthorDAO {
 
 	@Override
 	public List<Author> getAuthors() {
-		return sessionFactory.getCurrentSession().createQuery("from Author").list();
+		// TODO implement this!
+		return null;
 	}
 
 	@Override
 	public List<Author> getAuthorsByNameF(String nameF) {
-		return sessionFactory.getCurrentSession().createQuery("from Author where nameF like %" + nameF + "%").list();
+		// TODO implement this!
+		return null;
 	}
 
 	@Override
 	public List<Author> getAuthorsByNameL(String nameL) {
-		return sessionFactory.getCurrentSession().createQuery("from Author where nameL like %" + nameL + "%").list();
+		// TODO implement this!
+		return null;
 	}
 
 	@Override
 	public Author getAuthorByID(int authorID) {
-		return (Author) sessionFactory.getCurrentSession().createQuery("from Author where authorID = " + authorID)
-				.uniqueResult();
+		// TODO implement this!
+		return null;
 	}
 
 	@Override
-	public boolean insertAuthor(Author author) {
+	public void insertAuthor(Author author) {
 		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
-	public boolean deleteAuthor(Author author) {
+	public void deleteAuthor(Author author) {
 		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
-	public boolean updateAuthor(Author author) {
+	public void updateAuthor(Author author) {
 		// TODO Auto-generated method stub
-		return false;
 	}
 
 }

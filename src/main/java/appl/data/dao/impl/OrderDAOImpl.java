@@ -1,7 +1,7 @@
 package appl.data.dao.impl;
+
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,14 +18,8 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override
 	@Transactional
-	public boolean insertOrder(Order order) {
-		try {
-			return sessionFactory.getCurrentSession().save(order) != null;
-		} catch (HibernateException e) {
-			return false;
-		}
-		
-		
+	public void insertOrder(Order order) {
+		// TODO implement this!
 	}
 
 	@Override
@@ -35,10 +29,8 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public boolean updateOrder() {
+	public void updateOrder() {
 		// TODO Auto-generated method stub
-		return false;
 	}
-	
 
 }

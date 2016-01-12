@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -32,7 +31,7 @@ public class BookDAOImpl implements BookDAO {
 		}
 		Session s = getSession();
 		Criteria cr = s.createCriteria(Book.class);
-	    cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); 
+		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 		return cr.createAlias("categories", "c").createAlias("authors", "a");
 	}
@@ -40,19 +39,6 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public List<Book> getAllBooks() {
 		return getSession().createCriteria(Book.class).list();
-	}
-
-	// MEthode theoretisch auch unnötig, egtht auch über getBooksByMetadata
-	@Override
-	public List<Book> getBooksByCategory(String categoryName) {
-		// TODO implement this
-		return null;
-	}
-
-	@Override
-	// Methode eigentlich nicht notwendig. Außen wird nur der Service aufgerufen und der verwendet die getBooksByMetadata
-	public Book getBookByIsbn(int isbn) {
-		return (Book) getSession().createQuery("from Book where isbn=" + isbn).uniqueResult();
 	}
 
 	@Override
@@ -67,11 +53,30 @@ public class BookDAOImpl implements BookDAO {
 		Criteria cr = setupAndGetCriteria();
 		for (Entry<Searchfields, String> entry : map.entrySet()) {
 			String key = entry.getKey().toString();
+
+			switch (entry.getKey()) {
+			case authorId:
+				// Do something
+				break;
+			case categoryId:
+				// Do something
+				break;
+
+			}
+
 			if ((key.contains("category"))) { // Wieso contains und nicht
 												// equals, wollen wir das
 												// wirklich zulassen?
 				cr.add(Restrictions.ilike("c." + key, "%" + entry.getValue() + "%"));
-			} else if (key.contains("name") || key.contains("author")) { // Wieso verodert? Wieso legen wir nicht feste keys fest?
+			} else if (key.contains("name") || key.contains("author")) { // Wieso
+																			// verodert?
+																			// Wieso
+																			// legen
+																			// wir
+																			// nicht
+																			// feste
+																			// keys
+																			// fest?
 				cr.add(Restrictions.ilike("a." + key, "%" + entry.getValue() + "%"));
 			} else {
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
@@ -79,46 +84,26 @@ public class BookDAOImpl implements BookDAO {
 			}
 		}
 		// Um keine Duplikate (die durch Joins entstehen) im Resultset zu haben
-		//System.out.println("Criteria to String " + cr.toString());
+		// System.out.println("Criteria to String " + cr.toString());
 		List result = (List<Book>) cr.list();
 		// sessionFactory.getCurrentSession().getTransaction().commit();
-		//System.out.println("In DAO: Resultsize: " + result.size());
+		// System.out.println("In DAO: Resultsize: " + result.size());
 		return result;
 	}
 
 	@Override
-	public boolean insertBook(Book book) {
-		try {
-			// TODO save gibt identifier zurück, aber das ist vermutlich auch
-			// nicht so überragend gelöst
-			return getSession().save(book) != null;
-		} catch (HibernateException e) {
-			// TODO falls das bleibt, sinnvolles Exceptionhandling
-			return false;
-		}
+	public void insertBook(Book book) {
+		// TODO implement this
 	}
 
 	@Override
-	public boolean deleteBook(Book book) {
-		// TODO siehe insertBook
-		try {
-			getSession().delete(book);
-			return true;
-		} catch (HibernateException e) {
-			return false;
-		}
+	public void deleteBook(Book book) {
+		// TODO implement this
 	}
 
 	@Override
-	public boolean updateBook(Book book, Map<Searchfields, String> map) {
-		// TODO session.merge()? session.saveOrUpdate()?
-		return false;
-	}
-
-	@Override
-	public Book executeQuery(String query) {
-		getSession().createQuery(query).uniqueResult();
-		return null;
+	public void updateBook(Book book, Map<Searchfields, String> map) {
+		// TODO implement this
 	}
 
 }

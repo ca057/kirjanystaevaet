@@ -20,7 +20,8 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public List<Category> getCategories() {
-		return sessionFactory.getCurrentSession().createQuery("from Category").list();
+		// TODO implement this!
+		return null;
 	}
 
 	@Override
@@ -30,15 +31,13 @@ public class CategoryDAOImpl implements CategoryDAO {
 	}
 
 	@Override
-	public boolean insertCategory(Category category) {
-		// TODO Auto-generated method stub
-		return false;
+	public void insertCategory(Category category) {
+		// TODO implement this!
 	}
 
 	@Override
-	public boolean updateCategory(Book book, Map<Searchfields, String> map) {
+	public void updateCategory(Book book, Map<Searchfields, String> map) {
 		// TODO Auto-generated method stub
-		return false;
 	}
 
 }

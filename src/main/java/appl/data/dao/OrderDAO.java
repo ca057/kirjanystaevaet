@@ -8,11 +8,11 @@ import appl.data.items.Order;
 
 @Transactional
 public interface OrderDAO {
-	public boolean insertOrder(Order order);
+	public void insertOrder(Order order);
 
 	public List<Order> getOrdersByUserId(int userId);
 
-	public boolean updateOrder(); // Wie sieht Signatur genau aus?
+	public void updateOrder(); // TODO Wie sieht Signatur genau aus?
 
 }
 /*

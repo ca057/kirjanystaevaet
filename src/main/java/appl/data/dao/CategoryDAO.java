@@ -16,8 +16,8 @@ public interface CategoryDAO {
 
 	public List<Category> getCategoriesByName(String categoryName);
 
-	public boolean insertCategory(Category category);
+	public void insertCategory(Category category);
 
-	public boolean updateCategory(Book book, Map<Searchfields, String> map);
+	public void updateCategory(Book book, Map<Searchfields, String> map);
 
 }
