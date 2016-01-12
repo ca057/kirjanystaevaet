@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.data.items.Author;
 import appl.data.items.Book;
+import appl.logic.service.BookService;
 import appl.logic.service.CategoryService;
 
 @Controller
@@ -22,10 +23,17 @@ public class SearchController {
 	private String queryTerm = "";
 
 	@Autowired
-	private CategoryService service;
+	private CategoryService categoryService;
 
-	public void setService(CategoryService service) {
-		this.service = service;
+	@Autowired
+	private BookService bookService;
+
+	public void setCategoryService(CategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
+
+	public void setBookService(BookService bookService) {
+		this.bookService = bookService;
 	}
 
 	@RequestMapping(value = "/suche", method = RequestMethod.GET)
