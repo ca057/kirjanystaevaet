@@ -11,12 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public SecurityConfig() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public SecurityConfig(boolean disableDefaults) {
 		super(disableDefaults);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Autowired
