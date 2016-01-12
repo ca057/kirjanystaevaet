@@ -22,6 +22,19 @@ import appl.data.items.PLZ;
 import appl.data.items.User;
 import exceptions.data.DatabaseInitializationException;
 
+/**
+ * This class is responsible for the configuration of several beans. Mainly, it
+ * ensures the availability of beans which help to handle database connections
+ * and transactions.
+ * 
+ * In this class, the packages {@code appl.logic.service} and
+ * {@code appl.data.dao} are scanned for components which are supposed to be
+ * available as bean.
+ * 
+ * @author Johannes
+ * @author Madeleine
+ *
+ */
 @Configuration
 @ComponentScan({ "appl.logic.service", "appl.data.dao" })
 @EnableTransactionManagement
