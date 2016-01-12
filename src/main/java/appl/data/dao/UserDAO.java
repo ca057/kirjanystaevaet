@@ -21,10 +21,10 @@ public interface UserDAO {
 
 	List<User> getUserByEMail(String email);
 
-	boolean insertUser(User user);
+	void insertUser(User user);
 
-	boolean deleteUser(User user);
+	void deleteUser(User user);
 
-	boolean updateUser(User user, Map<Searchfields, String> map);
+	void updateUser(User user, Map<Searchfields, String> map);
 
 }

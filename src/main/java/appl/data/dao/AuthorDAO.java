@@ -17,10 +17,10 @@ public interface AuthorDAO {
 
 	public Author getAuthorByID(int authorID);
 
-	public boolean insertAuthor(Author author);
+	public void insertAuthor(Author author);
 
-	public boolean deleteAuthor(Author author);
+	public void deleteAuthor(Author author);
 
-	public boolean updateAuthor(Author author);
+	public void updateAuthor(Author author);
 
 }
