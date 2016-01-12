@@ -7,6 +7,10 @@ import java.util.Properties;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.hibernate.Session;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +28,7 @@ import exceptions.data.DatabaseInitializationException;
 
 @Configuration
 @ComponentScan({ "appl.logic.service", "appl.data.dao" })
+//@ComponentScan({ "appl.logic.service.impl", "appl.data.dao.impl" , "appl.logic.service", "appl.data.dao" })
 @EnableTransactionManagement
 public class RootConfig {
 
@@ -75,9 +80,16 @@ public class RootConfig {
 		prop.setProperty("hibernate.current_session_context_class",
 				"org.springframework.orm.hibernate5.SpringSessionContext");
 		prop.setProperty("show_sql", "true");
+		
+		// Properties für Lucene Index für Open Search
+		//prop.setProperty("hibernate.search.default.directory_provider", "filesystem");
+		//prop.setProperty("hibernate.search.default.indexBase", "database/indexes" ); 
+		
 		return prop;
 	}
-
+	
+	
+	
 	// @Bean
 	// public EntityManager entityManagerFactory() {
 	// return entityManagerFactoryBean().getObject().createEntityManager();
