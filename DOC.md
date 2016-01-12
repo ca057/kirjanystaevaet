@@ -8,6 +8,8 @@
 
 ### Verwendung der Spring Security Tag Library
 
+Die Bibliothek ist über die `pom.xml` aus irgendwelchen Gründen nicht verfügbar, kann aber [hier](http://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs/4.0.3.RELEASE) heruntergeladen werden und in den Build Path eingebunden werden. Trotzdem muss sie als dependency in die `pom.xml` eingetragen werden.
+
 #### Links
 - [Spring Docs: 27. JSP Tag Libraries](https://docs.spring.io/spring-security/site/docs/current/reference/html/taglibs.html)
 - [Spring Security part V : Security tags](https://doanduyhai.wordpress.com/2012/02/26/spring-security-part-v-security-tags/)
