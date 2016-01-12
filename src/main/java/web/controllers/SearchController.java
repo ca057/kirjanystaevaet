@@ -1,9 +1,8 @@
 package web.controllers;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import appl.data.items.Author;
+import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 import appl.logic.service.BookService;
-import appl.logic.service.CategoryService;
 
 @Controller
 public class SearchController {
@@ -23,14 +21,7 @@ public class SearchController {
 	private String queryTerm = "";
 
 	@Autowired
-	private CategoryService categoryService;
-
-	@Autowired
 	private BookService bookService;
-
-	public void setCategoryService(CategoryService categoryService) {
-		this.categoryService = categoryService;
-	}
 
 	public void setBookService(BookService bookService) {
 		this.bookService = bookService;
@@ -44,9 +35,7 @@ public class SearchController {
 			@RequestParam(value = "year", required = false) String year,
 			@RequestParam(value = "category", required = false) String category, Model m) {
 		queryTerm = "";
-		// m.addAttribute("results", processSearchTerms(all, title, author,
-		// isbn, year, category));
-		m.addAttribute("results", returnDummyBooks());
+		m.addAttribute("results", processSearchTerms(all, title, author, isbn, year, category));
 		m.addAttribute("query", queryTerm);
 		return "search";
 	}
@@ -55,58 +44,42 @@ public class SearchController {
 			String category) {
 		if (all != null && !all.isEmpty()) {
 			queryTerm = all;
-			// return service.getBooksByOpenSearch(all);
+			return bookService.getBooksByOpenSearch(all);
 		} else {
 			String searchTitle = "";
 			String searchAuthor = "";
 			String searchYear = "";
 			String searchIsbn = "";
 			String searchCategory = "";
+			Map<Searchfields, String> searchMap = new HashMap<Searchfields, String>();
 			if (title != null && !title.isEmpty()) {
 				searchTitle = title;
+				searchMap.put(Searchfields.title, searchTitle);
 				queryTerm += " Titel: " + title;
 			}
 			if (author != null && !author.isEmpty()) {
+				// TODO how to set the author?
 				searchAuthor = author;
+				// searchMap.put(Searchfields, searchAuthor);
 				queryTerm += " Autor: " + author;
 			}
 			if (isbn != null && !isbn.isEmpty()) {
 				searchIsbn = isbn;
-				queryTerm += " isbn: " + isbn;
+				searchMap.put(Searchfields.isbn, searchIsbn);
+				queryTerm += " ISBN: " + isbn;
 			}
 			if (year != null && !year.isEmpty()) {
+				// TODO correct use?
 				searchYear = year;
+				searchMap.put(Searchfields.pubdate, searchYear);
 				queryTerm += " Jahr: " + year;
 			}
 			if (category != null && !category.isEmpty()) {
 				searchCategory = category;
+				searchMap.put(Searchfields.categoryName, searchCategory);
 				queryTerm += " Kategorie: " + category;
 			}
-			// return service.getBooksByMetadata(searchTitle, searchAuthor,
-			// searchYear, searchIsbn, searchCategory);
+			return bookService.getBooksByMetadata(searchMap);
 		}
-		// FIXME !!!!!
-		return null;
-	}
-
-	private List<Book> returnDummyBooks() {
-		List<Book> books = new ArrayList<Book>();
-		for (int i = 0; i < 10; i++) {
-			Book tmp = new Book();
-			Author author = new Author();
-			author.setNameF("Chabo");
-			author.setNameL("Babo");
-			Set<Author> set = new HashSet<>();
-			set.add(author);
-			tmp.setAuthors(set);
-			tmp.setDescription("Lorem ipsum text");
-			tmp.setEdition("v" + i);
-			tmp.setIsbn(i + "45674567");
-			tmp.setPages(666);
-			tmp.setPrice(i + 0.99);
-			tmp.setTitle("Der Titel des wunderbaren Buches " + i);
-			books.add(tmp);
-		}
-		return books;
 	}
 }
