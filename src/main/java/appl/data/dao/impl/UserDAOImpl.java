@@ -3,7 +3,6 @@ package appl.data.dao.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,63 +19,48 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<User> getUsers() {
-		return sessionFactory.getCurrentSession().createQuery("from User").list();
+		// TODO implement this!
+		return null;
 	}
 
 	@Override
 	public List<User> getUsersByName(String name) {
-		return sessionFactory.getCurrentSession().createQuery("from User where name like %" + name + "%").list();
+		// TODO implement this!
+		return null;
 	}
 
 	@Override
 	public List<User> getUsersBySurname(String surname) {
-		return sessionFactory.getCurrentSession().createQuery("from User where surname like %" + surname + "%").list();
+		// TODO implement this!
+		return null;
 	}
 
 	@Override
 	public List<User> getUserByNickname(String nickname) {
-		return sessionFactory.getCurrentSession().createQuery("from User where nickname like %" + nickname + "%")
-				.list();
+		// TODO implement this!
+		return null;
 	}
 
 	@Override
 	public List<User> getUserByEMail(String email) {
-		return sessionFactory.getCurrentSession().createQuery("from User where email = %" + email + "%").list();
+		// TODO implement this!
+		return null;
 	}
 
 	@Override
-	public boolean insertUser(User user) {
-		try {
-			sessionFactory.getCurrentSession().save(user);
-			return true;
-		} catch (HibernateException e) {
-			// TODO Fehlerbehandlung
-			return false;
-		}
+	public void insertUser(User user) {
+		// TODO implement this!
 	}
 
 	@Override
-	public boolean deleteUser(User user) {
-		try {
-			sessionFactory.getCurrentSession().delete(user);
-			return true;
-		} catch (HibernateException e) {
-			// TODO Fehlerbehandlung
-			return false;
-		}
+	public void deleteUser(User user) {
+		// TODO implement this!
 	}
 
 	@Override
-	public boolean updateUser(User user, Map<Searchfields, String> map) {
-		// TODO checken, ob das so richtig ist. Eine Ebene drüber müsste das
+	public void updateUser(User user, Map<Searchfields, String> map) {
+		// TODO update(user)? Eine Ebene drüber müsste das
 		// jeweilige zu ändernde Feld via user.set() geändert werden
-		try {
-			sessionFactory.getCurrentSession().update(user);
-			return true;
-		} catch (HibernateException e) {
-			// TODO Fehlerbehandlung
-			return false;
-		}
 	}
 
 }

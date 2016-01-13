@@ -11,21 +11,15 @@ import appl.data.items.Book;
 @Transactional
 public interface BookDAO {
 
-	public List<Book> getBooksByCategory(String categoryName);
-
-	public Book getBookByIsbn(int isbn);
-
 	public List<Book> getBooksByOpenSearch(String searchTerm);
 
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map);
 
-	public boolean insertBook(Book book);
+	public void insertBook(Book book);
 
-	public boolean deleteBook(Book book);
+	public void deleteBook(Book book);
 
-	public boolean updateBook(Book book, Map<Searchfields, String> map);
-
-	public Book executeQuery(String query);
+	public void updateBook(Book book, Map<Searchfields, String> map);
 
 	public List<Book> getAllBooks();
 
