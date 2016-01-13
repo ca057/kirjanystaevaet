@@ -1,8 +1,10 @@
 package appl.data.builder.impl;
 
+import org.springframework.stereotype.Component;
+
 import appl.data.builder.UserBuilder;
 import appl.data.items.User;
-
+@Component
 public class UserBuilderImpl implements UserBuilder {
 
 	@Override

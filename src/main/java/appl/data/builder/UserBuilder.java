@@ -2,6 +2,7 @@ package appl.data.builder;
 
 import appl.data.items.User;
 
+
 public interface UserBuilder {
 
 	public User setNickname(String nickname);
