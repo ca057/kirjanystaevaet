@@ -22,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
 		List<String> names = new LinkedList<String>();
 		for (Category ct : categories) {
 			names.add(ct.getCategoryName());
-			System.out.println(ct.getCategoryName());
+			//System.out.println(ct.getCategoryName());
 		}
 		if (names.isEmpty()) {
 			// ToDo ???
@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public List<String> getAllCategories() {
-		// TODO Auto-generated method stub
+		// TODO Siehe Issue #15
 		return null;
 	}
 
