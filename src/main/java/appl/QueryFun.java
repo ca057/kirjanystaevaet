@@ -47,8 +47,8 @@ public class QueryFun {
 		OrderDAO oDao = ctx.getBean(OrderDAO.class);
 		oDao.insertOrder(order);
 
-		//ToDo Orderabfragen
-		
+		// ToDo Orderabfragen
+
 	}
 
 	public Order createOrderTestData() {
@@ -174,46 +174,44 @@ public class QueryFun {
 		// System.out.println(jdbc.queryForObject("select count(*) FROM
 		// PUBLIC.bookauthors", Integer.class));
 	}
-	
-	public void testDao(ApplicationContext ctx){
+
+	public void testDao(ApplicationContext ctx) {
 		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
 		BookService bookService = ctx.getBean(BookService.class);
 		CategoryService categoryService = ctx.getBean(CategoryService.class);
-		
+
 		List<String> allCategories = categoryService.getAllCategoryNames();
 		System.out.println("GetAllCategories-----------------------\n\n\n");
-		for (String s : allCategories){
+		for (String s : allCategories) {
 			System.out.println(s);
 		}
-		
-		
+
 		Book book = bookService.getBookByIsbn("0201-433 3-62");
 		System.out.println("GetBookByIsbn-------------------------------\n\n\n");
 		System.out.println(book.toString());
-		
+
 		List<Book> booksByCat = bookService.getBooksByCategory("PHP");
 
 		System.out.println("Get books by Category------------------------------\n\n\n");
-		for (Book b : booksByCat){
+		for (Book b : booksByCat) {
 			System.out.println(b.toString());
 		}
 		List<Book> allBooks = bookService.getAllBooks();
 		System.out.println("Get all books --------------------\n\n\n");
-		for (Book b : allBooks){
+		for (Book b : allBooks) {
 			System.out.println(b.toString());
 		}
 		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
-		
+
 		map.put(Searchfields.categoryName, "PHP");
 		map.put(Searchfields.title, "Learning PHP");
 		List<Book> results = bookService.getBooksByMetadata(map);
 		System.out.println("GetBooksByMetadata _-------------------------------------\n\n\n");
 		System.out.println("Size: " + results.size());
-		for(Book b : results){
+		for (Book b : results) {
 			System.out.println(b.toString());
 		}
-		
-		
+
 		System.out.println("Test OpenSearch------------------\n\n\n");
 		bookService.getBooksByOpenSearch("I love my cat");
 	}
@@ -252,9 +250,10 @@ public class QueryFun {
 		plz.setPlace("Buxtehude");
 		plz.setPostcode("000000");
 
-		User user1 = new User("krabbe", "Rosenhagen", "Madeleine", "xyz@ihp.de", "streetstrett", "23a", plz);
-		return user1;
-
+		// User user1 = new User("krabbe", "Rosenhagen", "Madeleine",
+		// "xyz@ihp.de", "streetstrett", "23a", plz);
+		// return user1;
+		return null;
 	}
 
 }
