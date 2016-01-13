@@ -187,7 +187,7 @@ public class QueryFun {
 		}
 		
 		
-		Book book = bookService.getBookByIsbn("0201433362");
+		Book book = bookService.getBookByIsbn("0201-433 3-62");
 		System.out.println("GetBookByIsbn-------------------------------\n\n\n");
 		System.out.println(book.toString());
 		
