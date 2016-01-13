@@ -18,6 +18,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "user", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "userID") })
 public class User {
 	private int userID;
+	private String password;
 	private String nickname;
 	private String name;
 	private String surname;
@@ -28,9 +29,10 @@ public class User {
 	private Set<Order> orders;
 	// TODO Bankverbindung = Rechnung
 
-	public User(String nickname, String name, String surname, String email, String street, String streetnumber,
-			PLZ plz) {
+	public User(String nickname, String password, String name, String surname, String email, String street,
+			String streetnumber, PLZ plz) {
 		this.nickname = nickname;
+		this.password = password;
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
@@ -46,6 +48,11 @@ public class User {
 	@Column(name = "USERID", unique = true, nullable = false)
 	public int getUserID() {
 		return userID;
+	}
+
+	@Column(name = "PASSWORD", unique = false, nullable = false)
+	public String getPassword() {
+		return password;
 	}
 
 	@Column(name = "NICKNAME", unique = true, nullable = false)
@@ -107,6 +114,10 @@ public class User {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setName(String name) {
