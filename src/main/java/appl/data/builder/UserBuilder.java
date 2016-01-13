@@ -1,21 +1,26 @@
 package appl.data.builder;
 
+import appl.data.items.PLZ;
 import appl.data.items.User;
 
 public interface UserBuilder {
 
-	public User setNickname(String nickname);
+	public UserBuilder setNickname(String nickname);
 
-	public User setName(String name);
+	public UserBuilder setPassword(String password);
 
-	public User setSurname(String surname);
+	public UserBuilder setName(String name);
 
-	public User setMail(String mail);
+	public UserBuilder setSurname(String surname);
 
-	public User setStreet(String street);
+	public UserBuilder setEmail(String eMail);
 
-	public User setStreeNumber(int number);
+	public UserBuilder setStreet(String street);
 
-	public User setPLZ(String plz);
+	public UserBuilder setStreetnumber(String number);
+
+	public UserBuilder setPLZ(PLZ plz);
+
+	public User createUser();
 
 }
