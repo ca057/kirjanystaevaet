@@ -35,8 +35,8 @@
 				<c:otherwise>
 				
 					<c:forEach var="book" items="${results}">
-						<p><c:out value="${book.getTitle()}"/></p>
-						<p><c:out value="${book.getDescription()}"/></p>
+						<h4><c:out value="${book.getTitle()}"/></h4>
+						<p><c:out value="${book.getDescription()}" escapeXml="false"/></p>
 						<p><c:out value="${book.getPages()}"/></p>
 						<p><c:out value="${book.getPublisher()}"/></p>
 						<p><c:out value="${book.getIsbn()}"/></p>
