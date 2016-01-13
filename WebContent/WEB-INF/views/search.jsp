@@ -7,14 +7,16 @@
 	<form>
 		<label for="title">Titel</label>
 		<input type="text" id="title" name="title">
-		<label for="title">AutorIn</label>
-		<input type="text" name="author">
+		<label for="authorFirst">Vorname</label>
+		<input type="text" id="authorFirst" name="authorFirst">
+		<label for="authorLast">Nachname</label>
+		<input type="text" id="authorLast" name="authorLast">
 		<label for="isbn">ISBN</label>
-		<input type="text" name="isbn">
+		<input type="text" id="isbn" name="isbn">
 		<label for="year">Erscheinungsjahr</label>
-		<input type="text" name="year">
+		<input type="text" id="year" name="year">
 		<label for="category">Kategorie</label>
-		<input type="text" name="category">
+		<input type="text" id="category" name="category">
 		<input type="submit" value="Los gehts :)">
 	</form>
 	

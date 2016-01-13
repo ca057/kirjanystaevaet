@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Controller for the route to home.
+ * 
  */
 @Controller
 @RequestMapping(value = "/")

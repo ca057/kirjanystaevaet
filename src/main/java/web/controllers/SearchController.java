@@ -30,24 +30,26 @@ public class SearchController {
 	@RequestMapping(value = "/suche", method = RequestMethod.GET)
 	public String query(@RequestParam(value = "all", required = false) String all,
 			@RequestParam(value = "title", required = false) String title,
-			@RequestParam(value = "author", required = false) String author,
+			@RequestParam(value = "authorFirst", required = false) String authorFirst,
+			@RequestParam(value = "authorLast", required = false) String authorLast,
 			@RequestParam(value = "isbn", required = false) String isbn,
 			@RequestParam(value = "year", required = false) String year,
 			@RequestParam(value = "category", required = false) String category, Model m) {
 		queryTerm = "";
-		m.addAttribute("results", processSearchTerms(all, title, author, isbn, year, category));
+		m.addAttribute("results", processSearchTerms(all, title, authorFirst, authorLast, isbn, year, category));
 		m.addAttribute("query", queryTerm);
 		return "search";
 	}
 
-	private List<Book> processSearchTerms(String all, String title, String author, String isbn, String year,
-			String category) {
+	private List<Book> processSearchTerms(String all, String title, String authorFirst, String authorLast, String isbn,
+			String year, String category) {
 		if (all != null && !all.isEmpty()) {
 			queryTerm = all;
 			return bookService.getBooksByOpenSearch(all);
 		} else {
 			String searchTitle = "";
-			String searchAuthor = "";
+			String searchAuthorFirst = "";
+			String searchAuthorLast = "";
 			String searchYear = "";
 			String searchIsbn = "";
 			String searchCategory = "";
@@ -57,11 +59,15 @@ public class SearchController {
 				searchMap.put(Searchfields.title, searchTitle);
 				queryTerm += " Titel: " + title;
 			}
-			if (author != null && !author.isEmpty()) {
-				// TODO how to set the author?
-				searchAuthor = author;
-				// searchMap.put(Searchfields, searchAuthor);
-				queryTerm += " Autor: " + author;
+			if (authorFirst != null && !authorFirst.isEmpty()) {
+				searchAuthorFirst = authorFirst;
+				searchMap.put(Searchfields.nameF, searchAuthorFirst);
+				queryTerm += " Vorname: " + authorFirst;
+			}
+			if (authorLast != null && !authorLast.isEmpty()) {
+				searchAuthorLast = authorLast;
+				searchMap.put(Searchfields.nameL, searchAuthorLast);
+				queryTerm += " Nachname: " + authorLast;
 			}
 			if (isbn != null && !isbn.isEmpty()) {
 				searchIsbn = isbn;
@@ -69,7 +75,6 @@ public class SearchController {
 				queryTerm += " ISBN: " + isbn;
 			}
 			if (year != null && !year.isEmpty()) {
-				// TODO correct use?
 				searchYear = year;
 				searchMap.put(Searchfields.pubdate, searchYear);
 				queryTerm += " Jahr: " + year;

@@ -55,15 +55,52 @@ public class BookDAOImpl implements BookDAO {
 			String key = entry.getKey().toString();
 
 			switch (entry.getKey()) {
+			case nameF:
+				cr.add(Restrictions.ilike("a." + key, "%" + entry.getValue() + "%"));
+				break;
+			case nameL:
+				cr.add(Restrictions.ilike("a." + key, "%" + entry.getValue() + "%"));
+				break;
+			case title:
+				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
+				break;
+			case isbn:
+				cr.add(Restrictions.eq(key, entry.getValue()));
+				break;
+			case categoryName:
+				cr.add(Restrictions.ilike("c." + key, "%" + entry.getValue() + "%"));
+				break;
 			case authorId:
-				// Do something
+				cr.add(Restrictions.eq("a." + key, entry.getValue()));
 				break;
 			case categoryId:
-				// Do something
+				cr.add(Restrictions.eq("c." + key, entry.getValue()));
+				break;
+			case description:
+				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
+				break;
+			case price:
+				// TODO
+				// Siehe Issue #14
+				break;
+			case publisher:
+				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
+				break;
+			case pubdate:
+				//TODO
+				// Siehe Issue #13
+				break;
+			case edition:
+				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
+				break;
+			case pages:
+				// TODO
+				// Range? Überhaupt in der Suche?
 				break;
 
 			}
-
+		}
+			/*
 			if ((key.contains("category"))) { // Wieso contains und nicht
 												// equals, wollen wir das
 												// wirklich zulassen?
@@ -83,9 +120,9 @@ public class BookDAOImpl implements BookDAO {
 				System.out.println("in Dao: else-case, Searchfield = " + key);
 			}
 		}
-		// Um keine Duplikate (die durch Joins entstehen) im Resultset zu haben
+		*/
 		// System.out.println("Criteria to String " + cr.toString());
-		List result = (List<Book>) cr.list();
+		List<Book> result = (List<Book>) cr.list();
 		// sessionFactory.getCurrentSession().getTransaction().commit();
 		// System.out.println("In DAO: Resultsize: " + result.size());
 		return result;
