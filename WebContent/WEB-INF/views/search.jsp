@@ -7,8 +7,10 @@
 	<form>
 		<label for="title">Titel</label>
 		<input type="text" id="title" name="title">
-		<label for="author">AutorIn</label>
-		<input type="text" id="author" name="author">
+		<label for="authorFirst">Vorname</label>
+		<input type="text" id="authorFirst" name="authorFirst">
+		<label for="authorLast">Nachname</label>
+		<input type="text" id="authorLast" name="authorLast">
 		<label for="isbn">ISBN</label>
 		<input type="text" id="isbn" name="isbn">
 		<label for="year">Erscheinungsjahr</label>
