@@ -179,11 +179,19 @@ public class QueryFun {
 		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
 		BookService bookService = ctx.getBean(BookService.class);
 		CategoryService categoryService = ctx.getBean(CategoryService.class);
+		
+		List<String> allCategories = categoryService.getAllCategoryNames();
+		System.out.println("GetAllCategories-----------------------\n\n\n");
+		for (String s : allCategories){
+			System.out.println(s);
+		}
+		
+		
 		Book book = bookService.getBookByIsbn("0201433362");
 		System.out.println("GetBookByIsbn-------------------------------\n\n\n");
 		System.out.println(book.toString());
 		
-		List<Book> booksByCat = bookService.getBooksByCategory("");
+		List<Book> booksByCat = bookService.getBooksByCategory("PHP");
 
 		System.out.println("Get books by Category------------------------------\n\n\n");
 		for (Book b : booksByCat){
@@ -195,6 +203,9 @@ public class QueryFun {
 			System.out.println(b.toString());
 		}
 		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
+		
+		map.put(Searchfields.categoryName, "PHP");
+		map.put(Searchfields.title, "Learning PHP");
 		List<Book> results = bookService.getBooksByMetadata(map);
 		System.out.println("GetBooksByMetadata _-------------------------------------\n\n\n");
 		System.out.println("Size: " + results.size());
