@@ -1,8 +1,7 @@
-package appl.logic.users;
+package appl.logic.admin;
 
 import appl.data.dao.impl.UserDAOImpl;
 
-// TODO remove this class --> admin gets its own package
 public interface UserAdmin {
 
 	public void createUser();
