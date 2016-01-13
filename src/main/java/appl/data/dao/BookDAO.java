@@ -15,7 +15,7 @@ public interface BookDAO {
 
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map);
 
-	public void insertBook(Book book);
+	public String insertBook(Book book);
 
 	public void deleteBook(Book book);
 

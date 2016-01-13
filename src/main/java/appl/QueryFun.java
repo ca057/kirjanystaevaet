@@ -191,7 +191,7 @@ public class QueryFun {
 		System.out.println("GetBookByIsbn-------------------------------\n\n\n");
 		System.out.println(book.toString());
 		
-		List<Book> booksByCat = bookService.getBooksByCategory("PHP");
+		List<Book> booksByCat = bookService.getBooksByCategory("Linguistik");
 
 		System.out.println("Get books by Category------------------------------\n\n\n");
 		for (Book b : booksByCat){
@@ -204,7 +204,7 @@ public class QueryFun {
 		}
 		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
 		
-		map.put(Searchfields.categoryName, "PHP");
+		map.put(Searchfields.categoryName, "Linguistik");
 		map.put(Searchfields.title, "Learning PHP");
 		List<Book> results = bookService.getBooksByMetadata(map);
 		System.out.println("GetBooksByMetadata _-------------------------------------\n\n\n");
