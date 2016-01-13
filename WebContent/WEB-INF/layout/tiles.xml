@@ -41,6 +41,12 @@
 		<put-attribute name="content" value="/WEB-INF/views/cart.jsp"></put-attribute>
 	</definition>
 	
+	<!-- views for the backend -->
+	<definition name="backend" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/backend/backend.jsp"></put-attribute>
+	</definition>
+	
+	<!-- all views for displaying errors -->
 	<definition name="404" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/error/404.jsp"></put-attribute>
 	</definition>
