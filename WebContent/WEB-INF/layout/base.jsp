@@ -27,7 +27,7 @@
 			</header>
 	
 			<!-- Navigation (gleichbleibend auf allen Seiten, wird dynamisch anhand der Kategorien generiert) -->
-			<nav>
+			<nav class="shadow-1">
 				<t:insertAttribute name="navigation"></t:insertAttribute>
 			</nav>
 		

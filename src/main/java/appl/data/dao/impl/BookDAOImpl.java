@@ -87,7 +87,7 @@ public class BookDAOImpl implements BookDAO {
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
 				break;
 			case pubdate:
-				//TODO
+				//TODO Nur das Jahr
 				// Siehe Issue #13
 				break;
 			case edition:
@@ -129,7 +129,13 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public void insertBook(Book book) {
+	public String insertBook(Book book) {
+		Object id = getSession().save(book);
+		if (id instanceof String){
+			return (String) id;
+		} else {
+			return null;
+		}
 		// TODO implement this
 	}
 
