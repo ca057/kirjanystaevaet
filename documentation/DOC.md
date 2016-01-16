@@ -3,6 +3,13 @@
 
 # kirjanystaevaet
 
+## Abschlussbericht
+Laut Guide der Vorlage benötigen wir die folgenden Dateien:
+	
+	lni.bst
+	lni.cls
+
+Alle anderen setze ich auf die `.gitignore` (auch das PDF, damit es keine Probleme gibt, kann sich ja jeder selber kompilieren). Die `latin1.sty` ist glaube ich nicht so wichtig, ich lasse die aber mal mit drin.
 
 ## Views
 
