@@ -19,8 +19,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("user").password("password").roles("USER").and().withUser("admin")
-				.password("password").roles("ADMIN");
+		auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
+		auth.inMemoryAuthentication().withUser("chabo").password("password").roles("ADMIN");
 	}
 
 	@Override
@@ -31,6 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage("/login").defaultSuccessUrl("/meinkonto").failureUrl("/login?error").and().logout()
 				.deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/?logout")
 				.permitAll();
+		http.authorizeRequests().antMatchers("/backend/login", "/backend/logout").permitAll().antMatchers("/backend")
+				.hasRole("ADMIN").anyRequest().authenticated().and().formLogin().loginPage("/backend/login")
+				.defaultSuccessUrl("/backend").failureUrl("/backend/login?error").permitAll();
 	}
 
 	@Override
