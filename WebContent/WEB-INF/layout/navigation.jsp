@@ -24,3 +24,10 @@
 		<li class="float-right"><a href="<c:url value='/login'/>" title="In Mein Konto einloggen">Anmelden</a></li>
 	</sec:authorize>
 </ul>
+
+<sec:authorize access="hasRole('ADMIN')">
+	<!-- die für den Admin benötigte Konfiguration folgt hier -->
+	<ul class="navigation-content list-inline">
+		<li>Admin-spezifische Navigation folgt hier...</li>
+	</ul>
+</sec:authorize>
