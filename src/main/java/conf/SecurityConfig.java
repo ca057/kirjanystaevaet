@@ -41,8 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// for admin access
 		http.authorizeRequests().antMatchers("/backend/login", "/backend/logout").permitAll()
 				.antMatchers("/backend", "/backend/**").hasRole("ADMIN").anyRequest().authenticated().and().formLogin()
-				.loginPage("/backend/login").defaultSuccessUrl("/backend").failureUrl("/backend/login?error")
-				.permitAll();
+				.loginPage("/backend/login").defaultSuccessUrl("/backend").failureUrl("/backend/login?error").and()
+				.logout().deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout")
+				.logoutSuccessUrl("/?logout-admin").permitAll();
 	}
 
 	@Override
