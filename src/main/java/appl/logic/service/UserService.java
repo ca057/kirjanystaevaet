@@ -2,10 +2,13 @@ package appl.logic.service;
 
 import java.util.Map;
 
-import appl.data.enums.User;
+import org.springframework.stereotype.Service;
 
+import appl.data.enums.Userfields;
+
+@Service
 public interface UserService {
 
-	int registerNewUserAccount(Map<User, String> data);
+	int registerNewUserAccount(Map<Userfields, String> data);
 
 }

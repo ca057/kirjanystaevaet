@@ -250,7 +250,7 @@ public class QueryFun {
 		plz.setPlace("Buxtehude");
 		plz.setPostcode("000000");
 
-		// User user1 = new User("krabbe", "Rosenhagen", "Madeleine",
+		// Userfields user1 = new Userfields("krabbe", "Rosenhagen", "Madeleine",
 		// "xyz@ihp.de", "streetstrett", "23a", plz);
 		// return user1;
 		return null;
