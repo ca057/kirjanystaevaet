@@ -12,8 +12,12 @@ import appl.logic.service.UserService;
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	@Autowired(required = false)
-	private UserService userService;
+	UserService userService;
+
+	@Autowired // Using setter injection
+	public void setUserRepository(UserService userService) {
+		this.userService = userService;
+	}
 
 	public UserDetailsServiceImpl() {
 		super();

@@ -1,13 +1,15 @@
 package appl.data.builder.impl;
 
+import org.springframework.stereotype.Component;
+
 import appl.data.builder.UserBuilder;
 import appl.data.enums.UserRoles;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 
+@Component
 public class UserBuilderImpl implements UserBuilder {
 	private String password;
-	private String nickname;
 	private String name;
 	private String surname;
 	private String email;

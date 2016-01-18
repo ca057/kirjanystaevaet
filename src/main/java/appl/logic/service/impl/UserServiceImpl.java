@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import appl.data.builder.UserBuilder;
 import appl.data.dao.UserDAO;
@@ -12,6 +13,7 @@ import appl.data.enums.Userfields;
 import appl.data.items.User;
 import appl.logic.service.UserService;
 
+@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
