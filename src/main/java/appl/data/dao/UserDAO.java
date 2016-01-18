@@ -17,9 +17,7 @@ public interface UserDAO {
 
 	List<User> getUsersBySurname(String surname);
 
-	List<User> getUserByNickname(String nickname);
-
-	List<User> getUserByEMail(String email);
+	User getUserByEMail(String email);
 
 	void insertUser(User user);
 

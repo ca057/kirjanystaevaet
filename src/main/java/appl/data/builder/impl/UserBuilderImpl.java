@@ -1,10 +1,7 @@
 package appl.data.builder.impl;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import appl.data.builder.UserBuilder;
-import appl.data.items.Order;
+import appl.data.enums.UserRoles;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 
@@ -17,7 +14,7 @@ public class UserBuilderImpl implements UserBuilder {
 	private String street;
 	private String streetnumber;
 	private PLZ plz;
-	private Set<Order> orders = new HashSet<>();
+	private String role;
 
 	@Override
 	public UserBuilder setPassword(String password) {
@@ -26,8 +23,8 @@ public class UserBuilderImpl implements UserBuilder {
 	}
 
 	@Override
-	public UserBuilder setNickname(String nickname) {
-		this.nickname = nickname;
+	public UserBuilder setRole(UserRoles role) {
+		this.role = role.toString();
 		return this;
 	}
 
@@ -69,7 +66,7 @@ public class UserBuilderImpl implements UserBuilder {
 
 	@Override
 	public User createUser() {
-		User user = new User(nickname, password, name, surname, email, street, streetnumber, plz);
+		User user = new User(password, name, surname, email, street, streetnumber, plz, role);
 		// TODO remove old variables?
 		return user;
 	}

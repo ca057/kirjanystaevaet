@@ -107,3 +107,5 @@ INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (6, '0596528124'
 INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (6, '0764574892');
 INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (7, '0131428985');
 INSERT INTO `bookcategoriesbooks` (`CategoryID`, `ISBN`) VALUES (7, '0782142796');
+
+INSERT INTO `user` (`userID`,`password`,`name`,`surname`,`email`,`street`,`streetnumber`) VALUES ('admin', 'admin', 'name', 'surname', 'a@b.de', 'street', 18);

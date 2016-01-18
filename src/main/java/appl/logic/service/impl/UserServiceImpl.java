@@ -7,7 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import appl.data.builder.UserBuilder;
 import appl.data.dao.UserDAO;
+import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
+import appl.data.items.User;
 import appl.logic.service.UserService;
 
 public class UserServiceImpl implements UserService {
@@ -23,18 +25,49 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int registerNewUserAccount(Map<Userfields, String> data) {
-		data.forEach((userfield, string) -> {
-			switch ((Userfields) userfield) {
-
-			}
+		data.forEach((userfield, information) -> {
+			userBuilder = getData(userfield, information);
 		});
-		String psw = pswEncoder.encode("");
 		return 0;
 	}
 
-	private UserBuilder getData() {
+	private UserBuilder getData(Userfields userfield, String information) {
+		switch (userfield) {
+		case role:
+			if (UserRoles.admin.toString().equals(information)) {
+				userBuilder.setRole(UserRoles.admin);
+			} else {
+				userBuilder.setRole(UserRoles.user);
+			}
+			break;
+		case name:
+			userBuilder.setName(information);
+			break;
+		case surname:
+			userBuilder.setSurname(information);
+			break;
+		case email:
+			userBuilder.setEmail(information);
+			break;
+		case street:
+			userBuilder.setStreet(information);
+			break;
+		case streetnumber:
+			userBuilder.setStreetnumber(information);
+			break;
+		case plz:
+			// TODO implement this
+			break;
+		case password:
+			userBuilder.setPassword(pswEncoder.encode(information));
+			break;
+		}
 		return userBuilder;
+	}
 
+	@Override
+	public User findbyMail(String eMail) {
+		return userDao.getUserByEMail(eMail);
 	}
 
 }

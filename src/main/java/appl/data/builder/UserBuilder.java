@@ -1,11 +1,12 @@
 package appl.data.builder;
 
+import appl.data.enums.UserRoles;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 
 public interface UserBuilder {
 
-	public UserBuilder setNickname(String nickname);
+	public UserBuilder setRole(UserRoles role);
 
 	public UserBuilder setPassword(String password);
 
