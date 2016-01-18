@@ -14,9 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "USER", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "email") })
+@Table(name = "user", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "email") })
 public class User {
-	private int userID;
 	private String password;
 	private String name;
 	private String surname;
@@ -42,37 +41,37 @@ public class User {
 	}
 
 	@Id
-	@Column(name = "EMAIL", unique = true, nullable = false)
+	@Column(name = "email", unique = true, nullable = false)
 	public String getEmail() {
 		return email;
 	}
 
-	@Column(name = "PASSWORD", unique = false, nullable = false)
+	@Column(name = "password", unique = false, nullable = false)
 	public String getPassword() {
 		return password;
 	}
 
-	@Column(name = "NAME", nullable = false)
+	@Column(name = "name", nullable = false)
 	public String getName() {
 		return name;
 	}
 
-	@Column(name = "SURNAME", nullable = false)
+	@Column(name = "surname", nullable = false)
 	public String getSurname() {
 		return surname;
 	}
 
-	@Column(name = "STREET", nullable = true)
+	@Column(name = "street", nullable = true)
 	public String getStreet() {
 		return street;
 	}
 
-	@Column(name = "STREETNUMBER", nullable = true)
+	@Column(name = "streetnumber", nullable = true)
 	public String getStreetnumber() {
 		return streetnumber;
 	}
 
-	@Column(name = "ROLE", nullable = false)
+	@Column(name = "role", nullable = false)
 	public String getRole() {
 		return role;
 	}
