@@ -38,8 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// FIXME this does not work properly: If I configure it this way, I can
 		// use the normal customer login form to log into the admin area, but
-		// this should not be the case. they should be separated
-		// for admin access
+		// this should not be the case. it should be a separate one
+		// for the admin access
 		http.authorizeRequests().antMatchers("/backend/login", "/backend/logout").permitAll()
 				.antMatchers("/backend", "/backend/**").hasRole("ADMIN").anyRequest().authenticated().and().formLogin()
 				.loginPage("/backend/login").defaultSuccessUrl("/backend").failureUrl("/backend/login?error").and()
