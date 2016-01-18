@@ -11,6 +11,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import appl.data.builder.UserBuilder;
+import appl.data.builder.impl.UserBuilderImpl;
 import appl.data.dao.OrderDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Author;
@@ -250,10 +252,10 @@ public class QueryFun {
 		plz.setPlace("Buxtehude");
 		plz.setPostcode("000000");
 
-		// Userfields user1 = new Userfields("krabbe", "Rosenhagen",
-		// "Madeleine",
-		// "xyz@ihp.de", "streetstrett", "23a", plz);
-		// return user1;
+		UserBuilder b = new UserBuilderImpl();
+		b.setEmail("admin@kirjanystaevaet.de");
+		b.setName("admin");
+		b.setPassword("admin");
 		return null;
 	}
 

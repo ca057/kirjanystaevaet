@@ -27,7 +27,7 @@ public class User {
 	private Set<Order> orders;
 
 	public User(String password, String name, String surname, String email, String street, String streetnumber, PLZ plz,
-			String role) {
+			String role, HashSet<Order> orders) {
 		this.password = password;
 		this.name = name;
 		this.surname = surname;
@@ -37,7 +37,7 @@ public class User {
 		this.plz = plz;
 		this.role = role;
 
-		this.orders = new HashSet<Order>(0);
+		this.orders = orders;
 	}
 
 	@Id

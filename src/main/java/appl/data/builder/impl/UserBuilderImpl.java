@@ -68,7 +68,7 @@ public class UserBuilderImpl implements UserBuilder {
 
 	@Override
 	public User createUser() {
-		User user = new User(password, name, surname, email, street, streetnumber, plz, role);
+		User user = new User(password, name, surname, email, street, streetnumber, plz, role, null);
 		// TODO remove old variables?
 		return user;
 	}
