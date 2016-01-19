@@ -38,12 +38,14 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Book getBookByIsbn(String isbn) {
+		// TODO alles entfernen, was nicht Zahl oder Buchstabe ist
+		isbn = onlyLeaveLettersAndNumbers(isbn);
 		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.isbn, isbn);
 
 		List<Book> bookList = dao.getBooksByMetadata(map);
 		if (bookList.size() > 1){
-			// todo Fehlerbehandlung
+			// TODO Fehlerbehandlung
 			System.out.println("Something went totally wrong");
 			System.out.println("Listsize is: " + bookList.size());
 			System.out.println("See whole content:");
@@ -75,6 +77,12 @@ public class BookServiceImpl implements BookService {
 			System.out.println(s);
 		}
 		return terms;
+	}
+	private String onlyLeaveLettersAndNumbers(String s){
+		//System.out.println(s);
+		s = s.replaceAll("[^a-zA-Z0-9]", "");
+		//System.out.println(s);
+		return s;
 	}
 
 }
