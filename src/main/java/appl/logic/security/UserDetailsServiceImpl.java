@@ -34,9 +34,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		try {
 			final User user = userService.findbyMail(email);
 			if (user == null) {
-				throw new UsernameNotFoundException("No user found with username: " + email);
+				throw new UsernameNotFoundException("No user found with email: " + email);
 			}
-
+			// new org.springframework.security.core.userdetails.User
+			// FIXME mail wird nicht richtig verarbeitet
 			return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true,
 					true, true, true, null);
 		} catch (final Exception e) {

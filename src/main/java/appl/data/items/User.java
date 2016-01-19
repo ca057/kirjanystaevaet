@@ -40,6 +40,9 @@ public class User {
 		this.orders = orders;
 	}
 
+	private User() {
+	}
+
 	@Id
 	@Column(name = "email", unique = true, nullable = false)
 	public String getEmail() {

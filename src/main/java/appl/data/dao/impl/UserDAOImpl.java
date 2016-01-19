@@ -39,7 +39,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public List<User> getUsers() {
 		// TODO implement this!
-		return null;
+		return getSession().createCriteria(User.class).list();
 	}
 
 	@Override
@@ -58,7 +58,11 @@ public class UserDAOImpl implements UserDAO {
 	public User getUserByEMail(String email) {
 		// TODO Passt das?
 		Criteria cr = setupAndGetCriteria().add(Restrictions.ilike(Userfields.email.toString(), email));
-		return (User) cr.uniqueResult();
+		User user = (User) cr.uniqueResult();
+		if (user == null) {
+			System.err.println("no user found with this email: " + email);
+		}
+		return user;
 	}
 
 	@Override
