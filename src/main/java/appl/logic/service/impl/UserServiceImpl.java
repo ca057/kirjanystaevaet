@@ -16,6 +16,14 @@ import appl.logic.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
+	// @Autowired
+	// UserDAO userDao;
+	//
+	// @Autowired
+	//
+	//
+	// @Autowired
+	// PasswordEncoder pswEncoder;
 	@Autowired
 	UserDAO userDao;
 
@@ -30,6 +38,7 @@ public class UserServiceImpl implements UserService {
 		data.forEach((userfield, information) -> {
 			userBuilder = getData(userfield, information);
 		});
+		// TODO Return value!
 		return 0;
 	}
 

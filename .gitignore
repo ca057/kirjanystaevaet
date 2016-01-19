@@ -20,3 +20,10 @@ db
 *.classpath
 *.project
 /target/
+
+# alles für den Abschlussbericht
+
+documentation/abschlussbericht/*.pdf
+documentation/abschlussbericht/*.aux
+documentation/abschlussbericht/*.log
+documentation/abschlussbericht/*.synctex.gz

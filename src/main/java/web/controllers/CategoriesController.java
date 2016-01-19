@@ -30,13 +30,19 @@ public class CategoriesController {
 		this.service = service;
 	}
 
+	@RequestMapping(value = "/kategorien", method = RequestMethod.GET)
+	public String getCategoryOverview(Model m) {
+		m.addAttribute("allCategories", service.getAllCategoryNames());
+		return "categories";
+	}
+
 	@RequestMapping(value = "/kategorie/{category}", method = RequestMethod.GET)
-	public String categories(@PathVariable("category") String category, Model m) throws CategoryNotFoundException {
-		if (checkIfExistingCategory(category)) {
+	public String getCategory(@PathVariable("category") String category, Model m) {
+		try {
 			m.addAttribute("name", getCorrectCategoryName(category));
 			return "categories";
-		} else {
-			throw new CategoryNotFoundException("Die Kategorie " + category + " wurde nicht gefunden.");
+		} catch (CategoryNotFoundException e) {
+			return "redirect:/kategorien";
 		}
 	}
 
@@ -48,7 +54,7 @@ public class CategoriesController {
 	 */
 	private boolean checkIfExistingCategory(String category) {
 		if (service == null) {
-			System.out.println("Servie is null");
+			throw new IllegalArgumentException("Service is null");
 		}
 		return service.getAllCategoryNames().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
 				.contains(category.toUpperCase());
@@ -64,9 +70,11 @@ public class CategoriesController {
 	 *             if the given category does not exist
 	 */
 	private String getCorrectCategoryName(String category) throws CategoryNotFoundException {
-		for (String c : service.getAllCategoryNames()) {
-			if (category.toUpperCase().equals(c.toUpperCase())) {
-				return c;
+		if (checkIfExistingCategory(category)) {
+			for (String c : service.getAllCategoryNames()) {
+				if (category.toUpperCase().equals(c.toUpperCase())) {
+					return c;
+				}
 			}
 		}
 		throw new CategoryNotFoundException("Die Kategorie " + category + " wurde nicht gefunden.");
