@@ -69,6 +69,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findbyMail(String eMail) {
+		// TODO rausnehmen
+		// userDao.insertUser(new
+		// UserBuilderImpl().setName("admin").setSurname("admin").setEmail("a@b.de")
+		// .setRole(UserRoles.admin).setPassword("admin").createUser());
 		return userDao.getUserByEMail(eMail);
 	}
 

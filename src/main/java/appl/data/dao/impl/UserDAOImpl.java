@@ -63,7 +63,8 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void insertUser(User user) {
-		// TODO implement this!
+		// TODO ausbessern
+		getSession().save(user);
 	}
 
 	@Override

@@ -1,7 +1,5 @@
 package conf;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -70,13 +68,15 @@ public class RootConfig {
 
 	private Properties createProperties() {
 		Properties prop = new Properties();
-		if (Files.notExists(Paths.get("database/kirjanystaevaet.mv.db"))) {
-			prop.setProperty("hibernate.hbm2ddl.auto", "create");
+		// FIXME Wie kann man das besser behandeln?
+		boolean createDatabase = false;
+		if (createDatabase) {
+			prop.setProperty("hibernate.hbm2ddl.auto", "udpate");
 			prop.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
 		}
 		prop.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
-		// FIXME Pfad für Server anpassen
 		prop.setProperty("hibernate.connection.url", "jdbc:h2:./database/kirjanystaevaet");
+		// TODO Brauchen wir das?
 		// prop.setProperty("hibernate.connection.username", "");
 		// prop.setProperty("hibernate.connection.password", "");
 		prop.setProperty("hibernate.c3p0.min_size", "5");
