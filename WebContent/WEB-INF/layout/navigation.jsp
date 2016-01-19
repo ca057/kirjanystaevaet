@@ -8,6 +8,7 @@
 
 	<li><a href="<c:url value='/suche' />" title="Suche">Suche</a></li>
 	<li><a href="<c:url value='/kontakt'/>" title="Kontakt und Impressum">Kontakt/Impressum</a></li>
+	<li><a href="<c:url value='/warenkorb'/>" title="Warenkorb">Warenkorb</a></li>
 
 	<sec:authorize access="hasRole('USER')">
 		<li class="float-right"><a href="<c:url value='/meinkonto'/>" title="Mein Konto anzeigen">Mein Konto</a></li>
