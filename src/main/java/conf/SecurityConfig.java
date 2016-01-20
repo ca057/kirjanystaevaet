@@ -30,10 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#authorize-requests
 		http.authorizeRequests()
-				.antMatchers("/", "/kategorie/**", "/kategorien", "/suche", "/kontakt", "/login", "/logout").permitAll()
-				.antMatchers("/meinkonto*").hasRole("USER").antMatchers("/backend*").hasRole("ADMIN").anyRequest()
-				.authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/")
-				.failureUrl("/login?error");
+				.antMatchers("/", "/kategorien", "/kategorie/**", "/suche", "/kontakt", "/login", "/logout",
+						"/warenkorb")
+				.permitAll().antMatchers("/meinkonto", "/meinkonto/**").hasRole("USER")
+				.antMatchers("/backend", "/backend/**").hasRole("ADMIN").anyRequest().authenticated().and().formLogin()
+				.loginPage("/login").defaultSuccessUrl("/").failureUrl("/login?error").and().logout()
+				.deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/?logout")
+				.permitAll();
 	}
 
 	@Override
