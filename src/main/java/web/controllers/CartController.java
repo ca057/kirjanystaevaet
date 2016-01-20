@@ -28,4 +28,5 @@ public class CartController {
 	// TODO: cart-logic erstellen. Nutzerspezifika implementieren, Methode:
 	// showCart: holt sich User aus Datenbank, Items im Cart und zeigt sie an
 	// Preisrechner, Liste mit Büchern
+
 }
