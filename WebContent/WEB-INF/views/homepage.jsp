@@ -5,7 +5,7 @@
 	<c:if test="${param.logout != null}">
 	    <p class="good-bye">Danke für deinen Besuch &ndash; bis zum nächsten Mal!</p>
 	</c:if>
-	<c:if test="${param.logout-admin != null}">
+	<c:if test="${param.logoutadmin != null}">
 	    <p>Admin-Bereich verlassen.</p>
 	</c:if>
 	<div id="searchfield">

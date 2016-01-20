@@ -11,13 +11,13 @@ public class BackendLogoutController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String logoutGet() {
 		System.out.println("BackendLogout GET was called");
-		return "redirect:/";
+		return "redirect:/?logoutadmin";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String logoutPost() {
 		System.out.println("BackendLogout POST was called");
-		return "redirect:/";
+		return "redirect:/?logoutadmin";
 	}
 
 }
