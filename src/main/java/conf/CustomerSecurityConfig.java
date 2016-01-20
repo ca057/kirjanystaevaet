@@ -11,20 +11,21 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class CustomerSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	public CustomerSecurityConfig() {
+	}
 
 	public CustomerSecurityConfig(boolean disableDefaults) {
 		super(disableDefaults);
 	}
 
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("user").password("password").roles("USER").and().withUser("chabo")
-				.password("password").roles("ADMIN");
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
 		// for public requests and customers
 		http.authorizeRequests()
 				.antMatchers("/", "/kategorie/**", "/kategorien", "/suche", "/kontakt", "/login", "/logout").permitAll()
@@ -37,11 +38,11 @@ public class CustomerSecurityConfig extends WebSecurityConfigurerAdapter {
 		// use the normal customer login form to log into the admin area, but
 		// this should not be the case. it should be a separate one
 		// for the admin access
-		http.authorizeRequests().antMatchers("/backend/login", "/backend/logout").permitAll()
-				.antMatchers("/backend", "/backend/**").hasRole("ADMIN").anyRequest().authenticated().and().formLogin()
-				.loginPage("/backend/login").defaultSuccessUrl("/backend").failureUrl("/backend/login?error").and()
-				.logout().deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout")
-				.logoutSuccessUrl("/?logout-admin").permitAll();
+//		http.authorizeRequests().antMatchers("/backend/login", "/backend/logout").permitAll()
+//				.antMatchers("/backend", "/backend/**").hasRole("ADMIN").anyRequest().authenticated().and().formLogin()
+//				.loginPage("/backend/login").defaultSuccessUrl("/backend").failureUrl("/backend/login?error").and()
+//				.logout().deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout")
+//				.logoutSuccessUrl("/?logout-admin").permitAll();
 	}
 
 	@Override
