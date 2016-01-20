@@ -10,12 +10,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class CustomerSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	public SecurityConfig() {
-	}
-
-	public SecurityConfig(boolean disableDefaults) {
+	public CustomerSecurityConfig(boolean disableDefaults) {
 		super(disableDefaults);
 	}
 
