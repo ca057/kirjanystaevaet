@@ -1,5 +1,7 @@
 package appl.logic.security;
 
+import java.util.LinkedList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -37,9 +39,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				throw new UsernameNotFoundException("No user found with email: " + email);
 			}
 			// new org.springframework.security.core.userdetails.User
-			// FIXME mail wird nicht richtig verarbeitet
-			return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true,
-					true, true, true, null);
+			// FIXME authorities & anderer Konstruktor
+			// TODO UserRole Enum / String überlegen
+			LinkedList<GrantedAuthorityImpl> list = new LinkedList();
+			list.add(new GrantedAuthorityImpl(user.getRole()));
+			return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), list);
 		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}

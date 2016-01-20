@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import appl.data.builder.UserBuilder;
+import appl.data.builder.impl.UserBuilderImpl;
 import appl.data.dao.UserDAO;
 import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
@@ -45,10 +46,10 @@ public class UserServiceImpl implements UserService {
 	private UserBuilder getData(Userfields userfield, String information) {
 		switch (userfield) {
 		case role:
-			if (UserRoles.admin.toString().equals(information)) {
-				userBuilder.setRole(UserRoles.admin);
+			if (UserRoles.ADMIN.toString().equals(information)) {
+				userBuilder.setRole(UserRoles.ADMIN);
 			} else {
-				userBuilder.setRole(UserRoles.user);
+				userBuilder.setRole(UserRoles.USER);
 			}
 			break;
 		case name:
@@ -79,9 +80,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findbyMail(String eMail) {
 		// // TODO rausnehmen
-		// userDao.insertUser(new
-		// UserBuilderImpl().setName("admin").setSurname("admin").setEmail("a@b.de")
-		// .setRole(UserRoles.admin).setPassword("admin").createUser());
+		userDao.insertUser(new UserBuilderImpl().setName("admin").setSurname("admin").setEmail("a@b.de")
+				.setRole(UserRoles.ADMIN).setPassword(pswEncoder.encode("admin")).createUser());
+		userDao.insertUser(new UserBuilderImpl().setName("user").setSurname("user").setEmail("user@b.de")
+				.setRole(UserRoles.ADMIN).setPassword(pswEncoder.encode("user")).createUser());
 		System.out.println("Test");
 		userDao.getUsers().forEach(user -> System.out.println("usermail: " + user.getEmail()));
 		return userDao.getUserByEMail(eMail);

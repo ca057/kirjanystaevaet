@@ -29,17 +29,14 @@ public class UserDAOImpl implements UserDAO {
 		if (sessionFactory == null) {
 			throw new RuntimeException("[Error] SessionFactory is null");
 		}
-		Session s = getSession();
-		Criteria cr = s.createCriteria(User.class);
-		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-
-		return cr.createAlias("plz", "p");
+		return getSession().createCriteria(User.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+				.createAlias("plz", "p");
 	}
 
 	@Override
 	public List<User> getUsers() {
 		// TODO implement this!
-		return getSession().createCriteria(User.class).list();
+		return setupAndGetCriteria().list();
 	}
 
 	@Override
@@ -57,8 +54,11 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User getUserByEMail(String email) {
 		// TODO Passt das?
-		Criteria cr = setupAndGetCriteria().add(Restrictions.ilike(Userfields.email.toString(), email));
-		User user = (User) cr.uniqueResult();
+		Criteria cr = setupAndGetCriteria();
+		cr.add(Restrictions.eq(Userfields.email.toString(), email));
+		// FIXME Criteria wieder einführen
+		User user = (User) getSession().createQuery("from User where email = '" + email + "'").uniqueResult();
+		// User USER = (User) cr.uniqueResult();
 		if (user == null) {
 			System.err.println("no user found with this email: " + email);
 		}
@@ -78,8 +78,8 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void updateUser(User user, Map<Searchfields, String> map) {
-		// TODO update(user)? Eine Ebene drüber müsste das
-		// jeweilige zu ändernde Feld via user.set() geändert werden
+		// TODO update(USER)? Eine Ebene drüber müsste das
+		// jeweilige zu ändernde Feld via USER.set() geändert werden
 	}
 
 }
