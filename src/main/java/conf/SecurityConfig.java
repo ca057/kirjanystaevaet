@@ -25,9 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		// TODO: remove warenkorb-url from .permitAll when finished
 		http.authorizeRequests()
-				.antMatchers("/", "/kategorie/**", "/kategorien", "/suche", "/kontakt", "/login", "/logout").permitAll()
-				.antMatchers("/meinkonto").hasRole("USER").anyRequest().authenticated().and().formLogin()
+				.antMatchers("/", "/kategorie/**", "/kategorien", "/suche", "/kontakt", "/login", "/logout",
+						"/warenkorb")
+				.permitAll().antMatchers("/meinkonto").hasRole("USER").anyRequest().authenticated().and().formLogin()
 				.loginPage("/login").defaultSuccessUrl("/meinkonto").failureUrl("/login?error").and().logout()
 				.deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/?logout")
 				.permitAll();
