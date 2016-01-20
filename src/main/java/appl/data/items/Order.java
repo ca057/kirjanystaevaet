@@ -49,7 +49,7 @@ public class Order {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "email", nullable = false)
+	@JoinColumn(name = "USERID", nullable = false)
 	public User getUser() {
 		return this.user;
 	}

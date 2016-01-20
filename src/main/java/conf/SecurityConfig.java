@@ -14,8 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import appl.data.enums.UserRoles;
-
 @Configuration
 @ComponentScan(basePackages = { "appl.logic.security" })
 @EnableWebSecurity
@@ -34,16 +32,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authProvider());
-		// auth.inMemoryAuthentication().withUser("USER").password("password").roles("USER");
+		// TODO ggf configure(...) { ... }
+		// auth.inMemoryAuthentication().withUser("user").password("password").roles("USER").and().withUser("admin")
+		// .password("password").roles("ADMIN");
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		// http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#authorize-requests
 		http.authorizeRequests()
-				.antMatchers("/", "/kategorie/**", "/kategorien", "/suche", "/kontakt", "/login", "/logout").permitAll()
-				.antMatchers("/meinkonto").hasRole((UserRoles.USER.toString())).and().formLogin().loginPage("/login")
-				.defaultSuccessUrl("/meinkonto").failureUrl("/login?error").and().logout().deleteCookies("remove")
-				.invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/?logout").permitAll();
+				.antMatchers("/", "/kategorien", "/kategorie/**", "/suche", "/kontakt", "/login", "/logout",
+						"/warenkorb")
+				.permitAll().antMatchers("/meinkonto", "/meinkonto/**").hasRole("USER")
+				.antMatchers("/backend", "/backend/**").hasRole("ADMIN").anyRequest().authenticated().and().formLogin()
+				.loginPage("/login").defaultSuccessUrl("/").failureUrl("/login?error").and().logout()
+				.deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/?logout")
+				.permitAll();
 	}
 
 	@Override

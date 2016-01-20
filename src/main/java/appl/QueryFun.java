@@ -11,8 +11,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import appl.data.builder.UserBuilder;
-import appl.data.builder.impl.UserBuilderImpl;
 import appl.data.dao.OrderDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Author;
@@ -192,9 +190,7 @@ public class QueryFun {
 		System.out.println("GetBookByIsbn-------------------------------\n\n\n");
 		System.out.println(book.toString());
 
-		List<Book> booksByCat = bookService.getBooksByCategory("PHP");
-
-		// List<Book> booksByCat = bookService.getBooksByCategory("Linguistik");
+		List<Book> booksByCat = bookService.getBooksByCategory("Linguistik");
 
 		System.out.println("Get books by Category------------------------------\n\n\n");
 		for (Book b : booksByCat) {
@@ -206,8 +202,6 @@ public class QueryFun {
 			System.out.println(b.toString());
 		}
 		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
-
-		map.put(Searchfields.categoryName, "PHP");
 
 		map.put(Searchfields.categoryName, "Linguistik");
 		map.put(Searchfields.title, "Learning PHP");
@@ -256,10 +250,9 @@ public class QueryFun {
 		plz.setPlace("Buxtehude");
 		plz.setPostcode("000000");
 
-		UserBuilder b = new UserBuilderImpl();
-		b.setEmail("admin@kirjanystaevaet.de");
-		b.setName("admin");
-		b.setPassword("admin");
+		// User user1 = new User("krabbe", "Rosenhagen", "Madeleine",
+		// "xyz@ihp.de", "streetstrett", "23a", plz);
+		// return user1;
 		return null;
 	}
 
