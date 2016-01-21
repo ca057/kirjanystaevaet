@@ -9,6 +9,7 @@
 <form id="register-form">
 	<fieldset>
 		<legend>Neu registrieren</legend>
+		<p>Alle Felder müssen ausgefüllt sein.</p>
 		<label for="name">Vorname</label>
 		<input type="text" id="name" name="name" required/>
 		<label for="surname">Nachname</label>
@@ -19,5 +20,6 @@
 		<input type="password" id="password" name="password" required/>
 		<button type="submit" id="register-submit" title="Registrieren">Registrieren</button>
 		<sec:csrfInput/>
+		<p id="info-message" style="display:none;font-style:italic">&nbsp;</p>
 	</fieldset>
 </form>

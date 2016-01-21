@@ -3,26 +3,27 @@
  * No ADMIN logic here to hide the administration logic from public.
  */
 
-// AJAX handler for register page
 function handleRegistration () {
 	var userData = {};
-	
 	$("#register-submit").on("click", function (e) {
 		e.preventDefault();
-		$(this).prop("disabled", true);
+		if (!allInputsAreValid()) {
+			return;
+		}
+		toggleInputs(true);
 		userData = {
-			name: $('#name').prop("disabled", true).val(),
-			surname: $('#surname').prop("disabled", true).val(),
-			email: $('#email').prop("disabled", true).val(),
-			password: $('#password').prop("disabled", true).val()
+			name: $('#name').val(),
+			surname: $('#surname').val(),
+			email: $('#email').val(),
+			password: $('#password').val()
 		};
 
 		var CSRF_TOKEN = $('[name=_csrf]').val();
 		var CSRF_HEADER = "X-CSRF-TOKEN";
 		
-		// POST data to server, if response is error, check which data is wrong and display it to the user and give him a second try
+		showMessage("Ihre Eingabe wird verarbeitet.", false);
 		$.ajax({
-			url: "/registrierung",
+			url: "/kirjanystaevaet/registrierung",
 			type: "POST",
 			data: userData,
 			beforeSend: function (xhr) {
@@ -34,12 +35,37 @@ function handleRegistration () {
 			// if response is success, redirect the user (should be done by server, if we end up here, something is wrong
 		})
 		.fail(function (jqXHR, status, err) {
-			// an error occurred, hopefully because the user already exists. no one can know...
-			console.log(jqXHR, status, err);
+			if (jqXHR.status === 404) {
+				console.log("Houston, we have a problem.");
+			}
+			$("#password").val("");
+			showMessage("Der Account konnte nicht angelegt werden, versuchen Sie es mit einer anderen Email-Adresse.", true)
+			toggleInputs(false);
 		});
 	});
 	
+	function toggleInputs (status) {
+		$("#register-submit").prop("disabled", status);
+		$("#name").prop("disabled", status);
+		$("#surname").prop("disabled", status);
+		$("#email").prop("disabled", status);
+		$("#password").prop("disabled", status);
+	}
 	
+	function showMessage (text, error) {
+		$("#info-message").show().text(text);
+		if (error) {
+			$("#info-message").css("color", "red");
+		}
+	}
+	
+	function allInputsAreValid () {
+		// TODO add regex to check if email is valid
+		return $("#name").val().trim() !== "" && 
+			$("#surname").val().trim() !== "" && 
+			$("#email").val().trim() !== "" && 
+			$("#password").val().trim() !== "";
+	}
 }
 
 $(document).ready(function () {
