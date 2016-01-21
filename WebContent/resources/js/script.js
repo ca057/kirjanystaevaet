@@ -56,6 +56,8 @@ function handleRegistration () {
 		$("#info-message").show().text(text);
 		if (error) {
 			$("#info-message").css("color", "red");
+		} else {
+			$("#info-message").css("color", "#727272");
 		}
 	}
 	
