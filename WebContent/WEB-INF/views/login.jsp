@@ -10,8 +10,8 @@
 			<c:if test="${param.error != null}">
 			    <p class="login-error">Ungültiger Benutzername oder Passwort.</p>
 			</c:if>
-			<label for="username">Benutzername</label>
-			<input type="text" id="username" name="username"/>        
+			<label for="username">E-Mail</label>
+			<input type="email" id="username" name="username"/>        
 			<label for="password">Passwort</label>
 			<input type="password" id="password" name="password"/>
 			<button type="submit" value="In Mein Konto anmelden">Anmelden</button>
