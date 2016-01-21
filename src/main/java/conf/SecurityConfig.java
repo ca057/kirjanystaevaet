@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	// TODO brauchen wir den?
 	@Autowired
 	private UserService userService;
 
@@ -38,8 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authProvider());
 		// TODO ggf configure(...) { ... }
-		// auth.inMemoryAuthentication().withUser("user").password("password").roles("USER").and().withUser("admin")
-		// .password("password").roles("ADMIN");
 	}
 
 	@Override
