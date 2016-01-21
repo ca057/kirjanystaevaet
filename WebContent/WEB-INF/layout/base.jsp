@@ -13,6 +13,7 @@
 
 	<link rel="stylesheet" href="<s:url value='/css/style.css'/>">
 	
+	<script type="text/javascript" src="<s:url value='https://code.jquery.com/jquery-1.12.0.min.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/js/script.js'/>"></script>
 </head>
 

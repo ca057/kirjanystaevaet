@@ -18,4 +18,5 @@
 			<sec:csrfInput/>
 		</fieldset>
 	</form>
+	<p>Noch kein Konto? Hier kommst du zur <a href="<c:url value='/registrierung' />" title="Zur Registrierung">Registrierung</a>.</p>
 </section>

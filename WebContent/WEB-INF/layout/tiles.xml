@@ -33,6 +33,10 @@
 		<put-attribute name="content" value="/WEB-INF/views/login.jsp"></put-attribute>
 	</definition>
 
+	<definition name="register" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/register.jsp"></put-attribute>
+	</definition>
+
 	<definition name="user" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/user.jsp"></put-attribute>
 	</definition>
