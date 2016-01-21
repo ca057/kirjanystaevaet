@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(path = "/registrierung")
 public class RegisterController {
 
+	public static class USER {
+		// TODO use inside class?
+	}
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String registerGet() {
 		return "register";

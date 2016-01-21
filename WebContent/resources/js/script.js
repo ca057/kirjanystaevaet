@@ -26,6 +26,8 @@ function handleRegistration () {
 			url: "/kirjanystaevaet/registrierung",
 			type: "POST",
 			data: userData,
+			contentType: 'application/json',
+		    mimeType: 'application/json',
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader(CSRF_HEADER, CSRF_TOKEN);
 			}

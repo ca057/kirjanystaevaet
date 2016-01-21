@@ -166,6 +166,13 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>4.0.3.RELEASE</version>
 		</dependency>
+		
+		<!-- jackson for working with JSON -->
+		<dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.4.2</version>
+        </dependency>
 	</dependencies>
 
 	<build>
