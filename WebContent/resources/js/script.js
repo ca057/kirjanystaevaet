@@ -64,10 +64,11 @@ function handleRegistration () {
 	}
 	
 	function allInputsAreValid () {
-		// TODO add regex to check if email is valid
+		var regex = /[A-Za-z0-9\.\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]+\@[A-Za-z0-9\_\-]+\.[A-Za-z]{2,3}/g;
 		return $("#name").val().trim() !== "" && 
 			$("#surname").val().trim() !== "" && 
 			$("#email").val().trim() !== "" && 
+			regex.test($("#email").val().trim()) &&
 			$("#password").val().trim() !== "";
 	}
 }
