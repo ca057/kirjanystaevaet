@@ -50,6 +50,7 @@ public class RegisterController {
 		req.setPassword("");
 
 		if (success == 0) {
+			// TODO try to redirect the user
 			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
