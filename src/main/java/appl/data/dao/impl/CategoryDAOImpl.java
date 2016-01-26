@@ -6,6 +6,7 @@ import java.util.Map;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,10 +31,10 @@ public class CategoryDAOImpl implements CategoryDAO {
 			throw new RuntimeException("[Error] SessionFactory is null");
 		}
 		Session s = getSession();
-		Criteria cr = s.createCriteria(Book.class);
+		Criteria cr = s.createCriteria(Category.class);
 		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
-		return cr.createAlias("categories", "c").createAlias("authors", "a");
+		return cr.createAlias("books", "b").createAlias("authors", "a");
 	}
 
 
@@ -47,8 +48,10 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public List<Category> getCategoriesByName(String categoryName) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Criteria cr = setupAndGetCriteria();
+		cr.add(Restrictions.ilike("categoryName", "%" + categoryName + "%" ));
+		return (List<Category>) cr.list();
 	}
 
 	@Override

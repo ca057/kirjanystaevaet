@@ -3,6 +3,7 @@ package appl.data.builder;
 import java.util.Set;
 
 import appl.data.items.Author;
+import appl.data.items.Book;
 import appl.data.items.Category;
 
 public interface BookBuilder {
@@ -26,4 +27,5 @@ public interface BookBuilder {
 	
 	public BookBuilder setCategories (Set<Category> categories);
 	
+	public Book createBook();
 }

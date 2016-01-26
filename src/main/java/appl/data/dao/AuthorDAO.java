@@ -14,6 +14,8 @@ public interface AuthorDAO {
 	public List<Author> getAuthorsByNameF(String nameF);
 
 	public List<Author> getAuthorsByNameL(String nameL);
+	
+	public List<Author> getAuthorByExactNames (String nameF, String nameL);
 
 	public Author getAuthorByID(int authorID);
 

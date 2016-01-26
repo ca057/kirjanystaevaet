@@ -20,6 +20,11 @@ public class Author {
 	private String nameL;
 
 	private Set<Book> books = new HashSet<Book>(0);
+	
+	public Author (String nameF, String nameL){
+		this.nameF = nameF;
+		this.nameL = nameL;
+	}
 
 	@Id
 	@GeneratedValue

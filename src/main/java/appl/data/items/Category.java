@@ -20,15 +20,17 @@ public class Category {
 
 	private Set<Book> books = new HashSet<Book>(0);
 
-	private Category() {
-
+	public Category(String categoryName) {
+		this.categoryName = categoryName;
 	}
+	/**
 
 	public Category(String categoryName, Set<Book> books) {
 		super();
 		this.categoryName = categoryName;
 		this.books = books;
 	}
+	**/
 
 	@Id
 	// @GeneratedValue
