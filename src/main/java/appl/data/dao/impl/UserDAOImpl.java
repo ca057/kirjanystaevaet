@@ -52,14 +52,8 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User getUserByEMail(String email) {
-		// TODO Passt das?
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq(Userfields.email.toString(), email));
-		// FIXME Criteria wieder einführen
-		// User user = (User) getSession().createQuery("from User where email
-		// ='" + email + "'").uniqueResult();
-		// System.out.println("\n\n\n\nUser-Inhalt:" +
-		// getSession().createCriteria(User.class) + "\n\n\n\n\n");
 		User user = (User) cr.uniqueResult();
 		if (user == null) {
 			System.err.println("no user found with this email: " + email);

@@ -75,16 +75,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findbyMail(String eMail) {
-		// // TODO rausnehmen
-		// userDao.insertUser(new
-		// UserBuilderImpl().setName("admin").setSurname("admin").setEmail("a@b.de")
-		// .setRole(UserRoles.ADMIN).setPassword(pswEncoder.encode("admin")).createUser());
-		// userDao.insertUser(new
-		// UserBuilderImpl().setName("user").setSurname("user").setEmail("user@b.de")
-		// .setRole(UserRoles.ADMIN).setPassword(pswEncoder.encode("user")).createUser());
-		// System.out.println("Test");
-		// userDao.getUsers().forEach(user -> System.out.println("usermail: " +
-		// user.getEmail()));
 		return userDao.getUserByEMail(eMail);
 	}
 
