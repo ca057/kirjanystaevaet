@@ -16,14 +16,6 @@ import appl.logic.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
-	// @Autowired
-	// UserDAO userDao;
-	//
-	// @Autowired
-	//
-	//
-	// @Autowired
-	// PasswordEncoder pswEncoder;
 	@Autowired
 	UserDAO userDao;
 
@@ -39,8 +31,7 @@ public class UserServiceImpl implements UserService {
 			userBuilder = getData(userfield, information);
 		});
 		userDao.insertUser(userBuilder.createUser());
-		// TODO Return value!
-		return 0;
+		return userDao.insertUser(userBuilder.createUser());
 	}
 
 	private UserBuilder getData(Userfields userfield, String information) {
@@ -73,6 +64,11 @@ public class UserServiceImpl implements UserService {
 		case password:
 			userBuilder.setPassword(pswEncoder.encode(information));
 			break;
+		case id:
+			// TODO implement this
+			break;
+		default:
+			break;
 		}
 		return userBuilder;
 	}
@@ -90,6 +86,11 @@ public class UserServiceImpl implements UserService {
 		// userDao.getUsers().forEach(user -> System.out.println("usermail: " +
 		// user.getEmail()));
 		return userDao.getUserByEMail(eMail);
+	}
+
+	@Override
+	public User findByID(int id) {
+		return userDao.getUserByID(id);
 	}
 
 }
