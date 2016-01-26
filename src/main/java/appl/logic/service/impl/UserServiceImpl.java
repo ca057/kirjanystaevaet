@@ -1,5 +1,6 @@
 package appl.logic.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,6 @@ public class UserServiceImpl implements UserService {
 		data.forEach((userfield, information) -> {
 			userBuilder = getData(userfield, information);
 		});
-		userDao.insertUser(userBuilder.createUser());
 		return userDao.insertUser(userBuilder.createUser());
 	}
 
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 		case password:
 			userBuilder.setPassword(pswEncoder.encode(information));
 			break;
-		case id:
+		case userId:
 			// TODO implement this
 			break;
 		default:
@@ -91,6 +91,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findByID(int id) {
 		return userDao.getUserByID(id);
+	}
+
+	@Override
+	public List<User> getUsers() {
+		return userDao.getUsers();
 	}
 
 }

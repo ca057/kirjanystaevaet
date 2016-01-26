@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,6 +17,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "user", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "email") })
 public class User {
+	private int userId;
 	private String password;
 	private String name;
 	private String surname;
@@ -44,6 +46,12 @@ public class User {
 	}
 
 	@Id
+	@GeneratedValue
+	@Column(name = "userId", unique = true, nullable = false)
+	public int getUserId() {
+		return userId;
+	}
+
 	@Column(name = "email", unique = true, nullable = false)
 	public String getEmail() {
 		return email;
@@ -124,6 +132,15 @@ public class User {
 
 	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
+	}
+
+	public void setUserId(int id) {
+		this.userId = id;
+	}
+
+	@Override
+	public String toString() {
+		return "[User " + userId + ": " + name + ", " + surname + ", " + email + "]";
 	}
 
 }

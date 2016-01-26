@@ -36,15 +36,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		// if (loginAttemptService.isBlocked(ip)) {
 		// throw new RuntimeException("blocked");
 		// }
-		try {
-			final User user = userService.findbyMail(email);
-			// new org.springframework.security.core.userdetails.User
-			// TODO UserRole Enum / String überlegen
-			LinkedList<GrantedAuthorityImpl> list = new LinkedList();
-			list.add(new GrantedAuthorityImpl(user.getRole()));
-			return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), list);
-		} catch (final Exception e) {
-			// TODO Das hier rausnehmen
+		// try {
+		// TODO final User?
+		User user = userService.findbyMail(email);
+		// new org.springframework.security.core.userdetails.User
+		// TODO UserRole Enum / String überlegen
+		if (user == null) {
+			System.out.println("eingegebene mail: " + email);
 			if ("admin@kirjanystaevaet.de".equals(email)) {
 				HashMap<Userfields, String> data = new HashMap<>();
 				data.put(Userfields.email, "admin@kirjanystaevaet.de");
@@ -52,7 +50,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				data.put(Userfields.name, "admin");
 				data.put(Userfields.surname, "admin");
 				data.put(Userfields.role, UserRoles.ADMIN.toString());
-				userService.registerNewUserAccount(data);
+				user = userService.findByID(userService.registerNewUserAccount(data));
+				System.out.println("user neu: " + user);
+				System.out.println("Alle user: " + userService.getUsers());
 			} else if ("user@kirjanystaevaet.de".equals(email)) {
 				HashMap<Userfields, String> data = new HashMap<>();
 				data.put(Userfields.email, "user@kirjanystaevaet.de");
@@ -61,9 +61,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				data.put(Userfields.surname, "user");
 				data.put(Userfields.role, UserRoles.USER.toString());
 				userService.registerNewUserAccount(data);
+				user = userService.findByID(userService.registerNewUserAccount(data));
 			}
-			throw new UsernameNotFoundException("No user found with email: " + email);
 		}
+		LinkedList<GrantedAuthorityImpl> list = new LinkedList<GrantedAuthorityImpl>();
+		// Zu Testzwecken ausformuliert:
+		String role = user.getRole();
+		list.add(new GrantedAuthorityImpl(role));
+		return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), list);
+		// } catch (final Exception e) {
+		// // TODO Das hier rausnehmen
+
+		// throw new UsernameNotFoundException("No user found with email: " +
+		// email + " " + e.getMessage());
+		// }
 	}
 
 	// UTIL
