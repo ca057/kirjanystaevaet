@@ -17,19 +17,20 @@ function handleRegistration () {
 			email: $('#email').val(),
 			password: $('#password').val()
 		};
-
-		var CSRF_TOKEN = $('[name=_csrf]').val();
-		var CSRF_HEADER = "X-CSRF-TOKEN";
-		
 		showMessage("Ihre Eingabe wird verarbeitet.", false);
 		$.ajax({
 			url: "/kirjanystaevaet/registrierung",
 			type: "POST",
-			data: userData,
+			data: JSON.stringify(userData),
+			dataType: 'json',
 			contentType: 'application/json',
-		    mimeType: 'application/json',
+		    processData: false,
+			headers: { 
+		        'Accept': 'application/json',
+		        'Content-Type': 'application/json' 
+		    },
 			beforeSend: function (xhr) {
-				xhr.setRequestHeader(CSRF_HEADER, CSRF_TOKEN);
+				xhr.setRequestHeader("X-CSRF-TOKEN", $('[name=_csrf]').val());
 			}
 		})
 		.done(function (response) {
