@@ -6,6 +6,9 @@ public class UserRegisterWrapper {
 	private String surname;
 	private String email;
 	private String password;
+	private String street;
+	private String streetnumber;
+	private String plz;
 
 	public UserRegisterWrapper() {
 
@@ -42,4 +45,29 @@ public class UserRegisterWrapper {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getStreetnumber() {
+		return streetnumber;
+	}
+
+	public void setStreetnumber(String streetnumber) {
+		this.streetnumber = streetnumber;
+	}
+
+	public String getPlz() {
+		return plz;
+	}
+
+	public void setPlz(String plz) {
+		this.plz = plz;
+	}
+
 }

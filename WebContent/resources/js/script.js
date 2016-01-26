@@ -14,6 +14,9 @@ function handleRegistration () {
 		userData = {
 			name: $('#name').val(),
 			surname: $('#surname').val(),
+			street: $('#street').val(),
+			streetnumber: $('#streetnumber').val(),
+			plz: $('#plz').val(),
 			email: $('#email').val(),
 			password: $('#password').val()
 		};
@@ -41,6 +44,7 @@ function handleRegistration () {
 			if (jqXHR.status === 404) {
 				console.log("Houston, we have a problem.");
 			}
+			console.log(jqXHR, status, err);
 			$("#password").val("");
 			showMessage("Der Account konnte nicht angelegt werden, versuchen Sie es mit einer anderen Email-Adresse.", true)
 			toggleInputs(false);
@@ -51,6 +55,9 @@ function handleRegistration () {
 		$("#register-submit").prop("disabled", status);
 		$("#name").prop("disabled", status);
 		$("#surname").prop("disabled", status);
+		$('#street').prop("disabled", status);
+		$('#streetnumber').prop("disabled", status);
+		$('#plz').prop("disabled", status);
 		$("#email").prop("disabled", status);
 		$("#password").prop("disabled", status);
 	}
@@ -68,6 +75,9 @@ function handleRegistration () {
 		var regex = /[A-Za-z0-9\.\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]+\@[A-Za-z0-9\_\-]+\.[A-Za-z]{2,3}/g;
 		return $("#name").val().trim() !== "" && 
 			$("#surname").val().trim() !== "" && 
+			$("#street").val().trim() !== "" && 
+			$("#streetnumber").val().trim() !== "" && 
+			$("#plz").val().trim() !== "" && 
 			$("#email").val().trim() !== "" && 
 			regex.test($("#email").val().trim()) &&
 			$("#password").val().trim() !== "";
