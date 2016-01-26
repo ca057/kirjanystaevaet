@@ -1,13 +1,13 @@
 package appl.data.items;
 
-public class RequestWrapper {
+public class UserRegisterWrapper {
 
 	private String name;
 	private String surname;
 	private String email;
 	private String password;
 
-	public RequestWrapper() {
+	public UserRegisterWrapper() {
 
 	}
 

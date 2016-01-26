@@ -6,9 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import appl.data.items.RequestWrapper;
+import appl.data.items.UserRegisterWrapper;
 
 @Controller
 @RequestMapping(path = "/registrierung")
@@ -20,10 +19,9 @@ public class RegisterController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-	public ResponseEntity<RequestWrapper> add(@RequestBody RequestWrapper req, UriComponentsBuilder ucBuilder) {
-		System.out.println("I got data!" + req.toString());
+	public ResponseEntity<UserRegisterWrapper> add(@RequestBody UserRegisterWrapper req) {
+		System.out.println("I got data!" + req.getName());
 
-		RequestWrapper r = new RequestWrapper();
-		return new ResponseEntity<RequestWrapper>(r, HttpStatus.OK);
+		return new ResponseEntity<UserRegisterWrapper>(req, HttpStatus.OK);
 	}
 }
