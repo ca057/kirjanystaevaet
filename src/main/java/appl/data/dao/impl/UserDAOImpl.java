@@ -89,6 +89,7 @@ public class UserDAOImpl implements UserDAO {
 		// cr.add(Restrictions.idEq(id));
 		// System.out.println(cr);
 		// User user = (User) cr.uniqueResult();
+		// FIXME criteria einbauen
 		User user = (User) getSession().createQuery("from User where userId ='" + id + "'").uniqueResult();
 		if (user == null) {
 			System.err.println("no user found with this ID: " + id);

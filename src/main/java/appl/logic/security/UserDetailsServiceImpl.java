@@ -39,7 +39,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		// try {
 		// TODO final User?
 		User user = userService.findbyMail(email);
-		// new org.springframework.security.core.userdetails.User
 		// TODO UserRole Enum / String überlegen
 		if (user == null) {
 			System.out.println("eingegebene mail: " + email);
@@ -60,14 +59,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				data.put(Userfields.name, "user");
 				data.put(Userfields.surname, "user");
 				data.put(Userfields.role, UserRoles.USER.toString());
-				userService.registerNewUserAccount(data);
 				user = userService.findByID(userService.registerNewUserAccount(data));
 			}
 		}
 		LinkedList<GrantedAuthorityImpl> list = new LinkedList<GrantedAuthorityImpl>();
-		// Zu Testzwecken ausformuliert:
-		String role = user.getRole();
-		list.add(new GrantedAuthorityImpl(role));
+		list.add(new GrantedAuthorityImpl(user.getRole()));
 		return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), list);
 		// } catch (final Exception e) {
 		// // TODO Das hier rausnehmen

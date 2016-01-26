@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "user", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "email") })
+@Table(name = "user", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = { "userId", "email" }) })
 public class User {
 	private int userId;
 	private String password;
@@ -46,7 +47,7 @@ public class User {
 	}
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	@Column(name = "userId", unique = true, nullable = false)
 	public int getUserId() {
 		return userId;
