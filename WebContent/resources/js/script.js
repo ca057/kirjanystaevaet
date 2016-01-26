@@ -37,17 +37,18 @@ function handleRegistration () {
 			}
 		})
 		.done(function (response) {
-			console.log(response)
-			// if response is success, redirect the user (should be done by server, if we end up here, something is wrong
+			// TODO add success handling
+			console.log("We shouldn´t end up her.");
+			window.navigator.replace("/kirjanystaevaet/login");
 		})
 		.fail(function (jqXHR, status, err) {
-			if (jqXHR.status === 404) {
-				console.log("Houston, we have a problem.");
+			if (jqXHR.status === 422) {				
+				$("#password").val("");
+				showMessage("Der Account konnte nicht angelegt werden, versuchen Sie es mit einer anderen Email-Adresse.", true)
+				toggleInputs(false);
+			} else {
+				window.navigator.replace("/kirjanystaevaet/registrierung");
 			}
-			console.log(jqXHR, status, err);
-			$("#password").val("");
-			showMessage("Der Account konnte nicht angelegt werden, versuchen Sie es mit einer anderen Email-Adresse.", true)
-			toggleInputs(false);
 		});
 	});
 	
