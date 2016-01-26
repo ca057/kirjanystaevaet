@@ -19,7 +19,9 @@ public interface UserDAO {
 
 	User getUserByEMail(String email);
 
-	void insertUser(User user);
+	User getUserByID(int id);
+
+	int insertUser(User user);
 
 	void deleteUser(User user);
 
