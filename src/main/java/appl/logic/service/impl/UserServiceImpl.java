@@ -32,7 +32,11 @@ public class UserServiceImpl implements UserService {
 		data.forEach((userfield, information) -> {
 			userBuilder = getData(userfield, information);
 		});
-		return userDao.insertUser(userBuilder.createUser());
+		try {
+			return userDao.insertUser(userBuilder.createUser());
+		} catch (Exception e) {
+			throw new PrimaryKeyViolation("Object could not be saved to database: " + e.getMessage());
+		}
 	}
 
 	private UserBuilder getData(Userfields userfield, String information) {

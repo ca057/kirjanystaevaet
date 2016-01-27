@@ -64,12 +64,9 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public int insertUser(User user) throws PrimaryKeyViolation {
-		// try {
-		return (Integer) getSession().save(user);
-		// } catch (Exception e) {
-		// throw new PrimaryKeyViolation("Object could not be saved to database:
-		// " + e.getMessage());
-		// }
+		Integer id = (Integer) getSession().save(user);
+		System.out.println("Alle user: " + getUsers());
+		return id;
 	}
 
 	@Override
