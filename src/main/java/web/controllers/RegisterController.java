@@ -130,6 +130,7 @@ public class RegisterController {
 		try {
 			int id = userService.registerNewUserAccount(userMap);
 			User user = userService.findByID(id);
+			// TODO log user in and redirect to /meinkonto
 			// authProvider.authenticate(new
 			// UsernamePasswordAuthenticationToken(user.getEmail(),
 			// user.getPassword()));
