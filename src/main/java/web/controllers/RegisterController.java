@@ -15,6 +15,7 @@ import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
 import appl.data.items.UserRegisterWrapper;
 import appl.logic.service.UserService;
+import exceptions.data.PrimaryKeyViolation;
 
 @Controller
 @RequestMapping(path = "/registrierung")
@@ -45,7 +46,13 @@ public class RegisterController {
 		userMap.put(Userfields.streetnumber, req.getStreetnumber());
 
 		// TODO don´t handle the success in this way, work with exceptions
-		int returnedID = userService.registerNewUserAccount(userMap);
+		int returnedID = 0;
+		try {
+			returnedID = userService.registerNewUserAccount(userMap);
+		} catch (PrimaryKeyViolation e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		UserRegisterWrapper returnWrapper = req;
 		req.setPassword("");
 		System.err.println("return-value: " + returnedID);

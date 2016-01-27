@@ -14,6 +14,7 @@ import appl.data.dao.UserDAO;
 import appl.data.enums.Searchfields;
 import appl.data.enums.Userfields;
 import appl.data.items.User;
+import exceptions.data.PrimaryKeyViolation;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -62,8 +63,13 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public int insertUser(User user) {
+	public int insertUser(User user) throws PrimaryKeyViolation {
+		// try {
 		return (Integer) getSession().save(user);
+		// } catch (Exception e) {
+		// throw new PrimaryKeyViolation("Object could not be saved to database:
+		// " + e.getMessage());
+		// }
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
 import appl.data.items.User;
 import appl.logic.service.UserService;
+import exceptions.data.PrimaryKeyViolation;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
 	PasswordEncoder pswEncoder;
 
 	@Override
-	public int registerNewUserAccount(Map<Userfields, String> data) {
+	public int registerNewUserAccount(Map<Userfields, String> data) throws PrimaryKeyViolation {
 		data.forEach((userfield, information) -> {
 			userBuilder = getData(userfield, information);
 		});

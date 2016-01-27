@@ -13,6 +13,7 @@ import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
 import appl.data.items.User;
 import appl.logic.service.UserService;
+import exceptions.data.PrimaryKeyViolation;
 
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -49,7 +50,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				data.put(Userfields.name, "admin");
 				data.put(Userfields.surname, "admin");
 				data.put(Userfields.role, UserRoles.ADMIN.toString());
-				user = userService.findByID(userService.registerNewUserAccount(data));
+				try {
+					user = userService.findByID(userService.registerNewUserAccount(data));
+				} catch (PrimaryKeyViolation e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				System.out.println("user neu: " + user);
 				System.out.println("Alle user: " + userService.getUsers());
 			} else if ("user@kirjanystaevaet.de".equals(email)) {
@@ -59,7 +65,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				data.put(Userfields.name, "user");
 				data.put(Userfields.surname, "user");
 				data.put(Userfields.role, UserRoles.USER.toString());
-				user = userService.findByID(userService.registerNewUserAccount(data));
+				try {
+					user = userService.findByID(userService.registerNewUserAccount(data));
+				} catch (PrimaryKeyViolation e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		LinkedList<GrantedAuthorityImpl> list = new LinkedList<GrantedAuthorityImpl>();

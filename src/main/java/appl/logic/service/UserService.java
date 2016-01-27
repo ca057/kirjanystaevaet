@@ -7,11 +7,12 @@ import org.springframework.stereotype.Service;
 
 import appl.data.enums.Userfields;
 import appl.data.items.User;
+import exceptions.data.PrimaryKeyViolation;
 
 @Service
 public interface UserService {
 
-	int registerNewUserAccount(Map<Userfields, String> data);
+	int registerNewUserAccount(Map<Userfields, String> data) throws PrimaryKeyViolation;
 
 	User findbyMail(String eMail);
 
