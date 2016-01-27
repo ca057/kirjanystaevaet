@@ -39,7 +39,6 @@ public class User {
 		this.streetnumber = streetnumber;
 		this.plz = plz;
 		this.role = role;
-
 		this.orders = orders;
 	}
 

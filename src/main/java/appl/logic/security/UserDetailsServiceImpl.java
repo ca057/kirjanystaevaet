@@ -33,6 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		// TODO check if exists / Fehler fangen
 		// TODO UserRole Enum / String überlegen
 		LinkedList<GrantedAuthorityImpl> list = new LinkedList<GrantedAuthorityImpl>();
+		System.out.println("Rolle: " + user.getRole());
 		list.add(new GrantedAuthorityImpl("ROLE_" + user.getRole()));
 		return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), list);
 	}

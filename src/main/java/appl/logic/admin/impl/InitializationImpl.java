@@ -29,7 +29,7 @@ public class InitializationImpl implements Initialization, InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		if (userService.findbyMail("admin@kirjanystaevaet.de") == null) {
+		if (userService.findbyMail("admin@ky.de") == null) {
 			createAdmin();
 			createUser();
 			addData();
@@ -46,7 +46,7 @@ public class InitializationImpl implements Initialization, InitializingBean {
 		Map<Userfields, String> data = new HashMap<>();
 		data.put(Userfields.name, "user");
 		data.put(Userfields.surname, "user");
-		data.put(Userfields.email, "user@kirjanystaevaet.de");
+		data.put(Userfields.email, "user@ky.de");
 		data.put(Userfields.password, "user");
 		data.put(Userfields.role, UserRoles.USER.toString());
 		try {
@@ -61,7 +61,7 @@ public class InitializationImpl implements Initialization, InitializingBean {
 		Map<Userfields, String> data = new HashMap<>();
 		data.put(Userfields.name, "admin");
 		data.put(Userfields.surname, "admin");
-		data.put(Userfields.email, "admin@kirjanystaevaet.de");
+		data.put(Userfields.email, "admin@ky.de");
 		data.put(Userfields.password, "admin");
 		data.put(Userfields.role, UserRoles.ADMIN.toString());
 		try {
