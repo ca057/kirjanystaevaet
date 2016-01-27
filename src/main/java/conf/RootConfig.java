@@ -75,8 +75,8 @@ public class RootConfig {
 		// property = update
 		// boolean createDatabase = true;
 		// if (createDatabase) {
-		prop.setProperty("hibernate.hbm2ddl.auto", "create");
-		prop.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
+		// prop.setProperty("hibernate.hbm2ddl.auto", "create");
+		// prop.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
 		// }
 		prop.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
 		prop.setProperty("hibernate.connection.url", "jdbc:h2:./database/kirjanystaevaet");
