@@ -27,8 +27,11 @@
 </ul>
 
 <sec:authorize access="hasRole('ADMIN')">
-	<!-- die für den Admin benötigte Konfiguration folgt hier -->
 	<ul class="navigation-content list-inline">
-		<li>Admin-spezifische Navigation folgt hier...</li>
+		<li><a href="<c:url value='/backend' />" title="Admin-Bereich">Admin-Bereich</a></li>
+		<li><a href="<c:url value='/backend/bestand' />" title="Bestand verwalten">Bestand verwalten</a></li>
+		<li><a href="<c:url value='/backend/kundinnen' />" title="Kund:innen verwalten">Kund:innen verwalten</a></li>
+		<li><a href="<c:url value='/backend/nutzungsstatistiken' />" title="Nutzungsstatistiken">Nutzungsstatistiken</a></li>
+		<li><a href="<c:url value='/backend/einstellungen' />" title="Einstellungen">Einstellungen</a></li>
 	</ul>
 </sec:authorize>
