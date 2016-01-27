@@ -45,11 +45,12 @@ public class RegisterController {
 		userMap.put(Userfields.streetnumber, req.getStreetnumber());
 
 		// TODO don´t handle the success in this way, work with exceptions
-		int success = userService.registerNewUserAccount(userMap);
+		int returnedID = userService.registerNewUserAccount(userMap);
 		UserRegisterWrapper returnWrapper = req;
 		req.setPassword("");
+		System.err.println("return-value: " + returnedID);
 
-		if (success == 0) {
+		if (returnedID >= 0) {
 			// TODO try to redirect the user
 			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.OK);
 		} else {

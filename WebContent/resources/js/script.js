@@ -10,7 +10,7 @@ function handleRegistration () {
 		if (!allInputsAreValid()) {
 			return;
 		}
-		toggleInputs(true);
+		clearOrDisableInputs("disable", true);
 		userData = {
 			name: $('#name').val(),
 			surname: $('#surname').val(),
@@ -36,31 +36,29 @@ function handleRegistration () {
 				xhr.setRequestHeader("X-CSRF-TOKEN", $('[name=_csrf]').val());
 			}
 		})
-		.done(function (response) {
-			// TODO add success handling
-			console.log("We shouldn´t end up her.");
-			window.navigator.replace("/kirjanystaevaet/login");
+		.done(function (data, status, jqXHR) {
+			clearOrDisableInputs("clear");
+			window.location.replace("/kirjanystaevaet/login");
 		})
 		.fail(function (jqXHR, status, err) {
-			if (jqXHR.status === 422) {				
-				$("#password").val("");
-				showMessage("Der Account konnte nicht angelegt werden, versuchen Sie es mit einer anderen Email-Adresse.", true)
-				toggleInputs(false);
-			} else {
-				window.navigator.replace("/kirjanystaevaet/registrierung");
-			}
+			$("#password").val("");
+			showMessage("Der Account konnte nicht angelegt werden, versuchen Sie es mit einer anderen Email-Adresse.", true)
+			clearOrDisableInputs("disable", false);
 		});
 	});
 	
-	function toggleInputs (status) {
-		$("#register-submit").prop("disabled", status);
-		$("#name").prop("disabled", status);
-		$("#surname").prop("disabled", status);
-		$('#street').prop("disabled", status);
-		$('#streetnumber').prop("disabled", status);
-		$('#plz').prop("disabled", status);
-		$("#email").prop("disabled", status);
-		$("#password").prop("disabled", status);
+	function clearOrDisableInputs (task, disable) {
+		var inputs = ["#name", "#surname", "#street", "#streetnumber", "#plz", "#email", "#password"];
+		if (task === "clear") {
+			for (var i = 0; i < inputs.length; i++) {
+				$(inputs[i]).val("");
+			}
+		} else if (task === "disable") {
+			$("#register-submit").prop("disabled", disable);
+			for (var i = 0; i < inputs.length; i++) {
+				$(inputs[i]).prop("disabled", disable);
+			}
+		}
 	}
 	
 	function showMessage (text, error) {
