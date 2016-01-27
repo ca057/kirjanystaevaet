@@ -84,7 +84,7 @@ public class RootConfig {
 		// prop.setProperty("hibernate.c3p0.max_size", "20");
 		// prop.setProperty("hibernate.c3p0.timeout", "300");
 		// prop.setProperty("hibernate.c3p0.max_statements", "50");
-		// prop.setProperty("hibernate.c3p0.idle_test_period", "3000");
+		prop.setProperty("hibernate.c3p0.idle_test_period", "3000");
 		// TODO: Theoretisch auch max_connection_age /
 		// max_idle_time_excess_connections
 		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
