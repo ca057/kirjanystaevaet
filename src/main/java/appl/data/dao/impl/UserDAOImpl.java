@@ -29,8 +29,8 @@ public class UserDAOImpl implements UserDAO {
 		if (sessionFactory == null) {
 			throw new RuntimeException("[Error] SessionFactory is null");
 		}
-		return getSession().createCriteria(User.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-				.createAlias("plz", "p");
+		Criteria cr = getSession().createCriteria(User.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return cr.createAlias("plz", "p");
 	}
 
 	@Override

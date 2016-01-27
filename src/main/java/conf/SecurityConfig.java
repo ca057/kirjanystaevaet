@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import appl.data.enums.UserRoles;
-import appl.logic.service.UserService;
 
 @Configuration
 @ComponentScan(basePackages = { "appl.logic.security" })
@@ -31,10 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-
-	// TODO brauchen wir den?
-	@Autowired
-	private UserService userService;
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
