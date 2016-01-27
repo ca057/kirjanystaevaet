@@ -37,7 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authProvider());
+		// FIXME nächste Zeile löschen
+		auth.inMemoryAuthentication().withUser("user").password("p").roles("USER");
+		// auth.authenticationProvider(authProvider());
 		// TODO ggf configure(...) { ... }
 	}
 
