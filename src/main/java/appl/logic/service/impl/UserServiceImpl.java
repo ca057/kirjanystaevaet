@@ -1,5 +1,6 @@
 package appl.logic.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +13,11 @@ import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
 import appl.data.items.User;
 import appl.logic.service.UserService;
+import exceptions.data.PrimaryKeyViolation;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-	// @Autowired
-	// UserDAO userDao;
-	//
-	// @Autowired
-	//
-	//
-	// @Autowired
-	// PasswordEncoder pswEncoder;
 	@Autowired
 	UserDAO userDao;
 
@@ -34,13 +28,15 @@ public class UserServiceImpl implements UserService {
 	PasswordEncoder pswEncoder;
 
 	@Override
-	public int registerNewUserAccount(Map<Userfields, String> data) {
+	public int registerNewUserAccount(Map<Userfields, String> data) throws PrimaryKeyViolation {
 		data.forEach((userfield, information) -> {
 			userBuilder = getData(userfield, information);
 		});
-		userDao.insertUser(userBuilder.createUser());
-		// TODO Return value!
-		return 0;
+		try {
+			return userDao.insertUser(userBuilder.createUser());
+		} catch (Exception e) {
+			throw new PrimaryKeyViolation("Object could not be saved to database: " + e.getMessage());
+		}
 	}
 
 	private UserBuilder getData(Userfields userfield, String information) {
@@ -73,23 +69,28 @@ public class UserServiceImpl implements UserService {
 		case password:
 			userBuilder.setPassword(pswEncoder.encode(information));
 			break;
+		case userId:
+			// TODO implement this
+			break;
+		default:
+			break;
 		}
 		return userBuilder;
 	}
 
 	@Override
 	public User findbyMail(String eMail) {
-		// // TODO rausnehmen
-		// userDao.insertUser(new
-		// UserBuilderImpl().setName("admin").setSurname("admin").setEmail("a@b.de")
-		// .setRole(UserRoles.ADMIN).setPassword(pswEncoder.encode("admin")).createUser());
-		// userDao.insertUser(new
-		// UserBuilderImpl().setName("user").setSurname("user").setEmail("user@b.de")
-		// .setRole(UserRoles.ADMIN).setPassword(pswEncoder.encode("user")).createUser());
-		// System.out.println("Test");
-		// userDao.getUsers().forEach(user -> System.out.println("usermail: " +
-		// user.getEmail()));
 		return userDao.getUserByEMail(eMail);
+	}
+
+	@Override
+	public User findByID(int id) {
+		return userDao.getUserByID(id);
+	}
+
+	@Override
+	public List<User> getUsers() {
+		return userDao.getUsers();
 	}
 
 }

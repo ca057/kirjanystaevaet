@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#authorize-requests
 		http.authorizeRequests()
 				.antMatchers("/", "/kategorien", "/kategorie/**", "/suche", "/kontakt", "/login", "/logout",
-						"/warenkorb")
+						"/warenkorb", "/registrierung")
 				.permitAll().antMatchers("/meinkonto", "/meinkonto/**").hasRole("USER")
 				.antMatchers("/backend", "/backend/**").hasRole("ADMIN").anyRequest().authenticated().and().formLogin()
 				.loginPage("/login").defaultSuccessUrl("/").failureUrl("/login?error").and().logout()
