@@ -69,7 +69,7 @@ public class RootConfig {
 	private Properties createProperties() {
 		Properties prop = new Properties();
 		// FIXME Wie kann man das besser behandeln?
-		boolean createDatabase = true;
+		boolean createDatabase = false;
 		if (createDatabase) {
 			prop.setProperty("hibernate.hbm2ddl.auto", "create");
 			prop.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
