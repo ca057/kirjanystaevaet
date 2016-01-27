@@ -34,7 +34,7 @@ import exceptions.data.DatabaseInitializationException;
  *
  */
 @Configuration
-@ComponentScan({ "appl.logic.service", "appl.data.dao", "appl.data.builder" })
+@ComponentScan({ "appl.logic.service", "appl.data.dao", "appl.data.builder", "appl.data.items" })
 @EnableTransactionManagement
 public class RootConfig {
 
