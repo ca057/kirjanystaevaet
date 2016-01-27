@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import appl.data.enums.UserRoles;
 import appl.logic.service.UserService;
 
 @Configuration
@@ -38,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authProvider());
+		// auth.inMemoryAuthentication().withUser("user").password("user").roles(UserRoles.USER.toString());
 		// TODO ggf configure(...) { ... }
 	}
 
@@ -47,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/", "/kategorien", "/kategorie/**", "/suche", "/kontakt", "/login", "/logout",
 						"/warenkorb", "/registrierung")
-				.permitAll().antMatchers("/meinkonto", "/meinkonto/**").hasRole("USER")
+				.permitAll().antMatchers("/meinkonto", "/meinkonto/**").hasRole(UserRoles.USER.toString())
 				.antMatchers("/backend", "/backend/**").hasRole("ADMIN").anyRequest().authenticated().and().formLogin()
 				.loginPage("/login").defaultSuccessUrl("/").failureUrl("/login?error").and().logout()
 				.deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/?logout")
