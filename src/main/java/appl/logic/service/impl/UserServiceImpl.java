@@ -39,13 +39,19 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	/**
+	 * Default role = user
+	 * 
+	 * @param userfield
+	 * @param information
+	 * @return
+	 */
 	private UserBuilder getData(Userfields userfield, String information) {
+		userBuilder.setRole(UserRoles.USER);
 		switch (userfield) {
 		case role:
 			if (UserRoles.ADMIN.toString().equals(information)) {
 				userBuilder.setRole(UserRoles.ADMIN);
-			} else {
-				userBuilder.setRole(UserRoles.USER);
 			}
 			break;
 		case name:

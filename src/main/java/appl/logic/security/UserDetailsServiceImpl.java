@@ -30,6 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
 		final User user = userService.findbyMail(email);
+		// TODO check if exists / Fehler fangen
 		// TODO UserRole Enum / String überlegen
 		LinkedList<GrantedAuthorityImpl> list = new LinkedList<GrantedAuthorityImpl>();
 		list.add(new GrantedAuthorityImpl("ROLE_" + user.getRole()));
