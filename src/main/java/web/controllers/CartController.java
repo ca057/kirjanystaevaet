@@ -32,6 +32,9 @@ public class CartController {
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.POST)
 	public String addToCart(@RequestParam(value = "isbn") String isbn) {
 		System.out.println(isbn);
+		if (isbn != null && !isbn.isEmpty()) {
+			cart.addBook(bookService.getBookByIsbn(isbn));
+		}
 		return "redirect:/warenkorb";
 	}
 

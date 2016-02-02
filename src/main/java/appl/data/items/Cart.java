@@ -13,6 +13,10 @@ public class Cart {
 	private List<Book> books = new ArrayList<Book>();
 
 	public void addBook(Book book) {
+		if (book == null) {
+			throw new IllegalArgumentException("added book is null");
+		}
+		books.add(book);
 		// TODO implement me
 	}
 
