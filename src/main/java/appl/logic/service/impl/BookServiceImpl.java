@@ -1,4 +1,4 @@
-package appl.logic.service.impl;
+ package appl.logic.service.impl;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -101,8 +101,9 @@ public class BookServiceImpl implements BookService {
 		return s;
 	}
 
+	/*
 	@Override
-	public void insertBook(Map<Searchfields, String> map, boolean newAuthor) throws AuthorMayExistException {
+	public void insertBook(Map<Searchfields, String> map, boolean newAuthor)  {
 		BookBuilder bb = new BookBuilderImpl();
 		double price = Double.parseDouble(map.get(Searchfields.price));
 		int pages = Integer.parseInt(map.get(Searchfields.pages));
@@ -147,5 +148,88 @@ public class BookServiceImpl implements BookService {
 		dao.insertBook(newBook);
 		
 	}
+	*/
+
+	@Override
+	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws AuthorMayExistException {
+		
+		// Wenn noch kein bestimmter Autor ausgewählt wurde
+		if(!newAuthor){
+			List<Author> authors = authorDao.getAuthorByExactNames(nameF, nameL);
+			// Testen ob es schon Autoren mit dem Namen gibt
+			if(authors.size() > 0){
+				throw new AuthorMayExistException("This Author " + nameF + " " + nameL + " may already exist");
+			}
+		}
+
+		// Wenn ein neuer Autor eingefügt werden soll
+		AuthorBuilder ab = new AuthorBuilderImpl();
+		Author author = ab.setNameF(nameF).setNameL(nameL).createAuthor();
+		System.out.println("\n\nEinmal den Autor checken\n\n" + author.toString());
+		int id = authorDao.insertAuthor(author);
+		// TODO in der Datenbank speichern? -> Ja und dann nur die ID zurück geben
+		System.out.println("BookserviceImpl. insert Book nach insertAuthor\n\n\n id = " + id);
+		return id;
+		
+	}
+
+	@Override
+	public List<Author> getAuthorByExactName(String NameF, String NameL) {
+		
+		return null;
+	}
+
+	@Override
+	public void insertCategory(String name) {
+		
+		
+	}
+
+	@Override
+	public List<String> getAllCategoryNames() {
+		
+		
+		return null;
+	}
+
+	@Override
+	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) {
+		BookBuilder bb = new BookBuilderImpl();
+		double price = Double.parseDouble(map.get(Searchfields.price));
+		int pages = Integer.parseInt(map.get(Searchfields.pages));
+		
+		Set<Category> categories = new HashSet<Category>();
+		for (int i : categoryIds){
+			categories.add(categoryDao.getCategoryById(i));
+		}
+		
+		Set<Author> authors = new HashSet<Author>();
+		System.out.println("Bevor Autoren abgefragt werden \n");
+		for (int i : authorIds){
+			System.out.println("Author: " + authorDao.getAuthorByID(i) + "\n" );
+			authors.add(authorDao.getAuthorByID(i));
+			
+		}
+		Book newBook = bb.setAuthors(authors).setIsbn(map.get(Searchfields.isbn)).setTitle(map.get(Searchfields.title)).setDescription(map.get(Searchfields.description)).setPrice(price).setPublisher(map.get(Searchfields.publisher)).setPubdate(map.get(Searchfields.pubdate)).setEdition(map.get(Searchfields.edition)).setPages(pages).setCategories(categories).createBook();
+
+		dao.insertBook(newBook);
+		
+		
+		
+	}
+
+	@Override
+	public Author getAuthorById(int id) {
+		Author author = authorDao.getAuthorByID(id);
+		return author;
+	}
+
+	@Override
+	public Category getCategoryByExactName(String name) {
+		Category category = categoryDao.getCategoriesByExactName(name);
+		return category;
+	}
+
+	
 
 }

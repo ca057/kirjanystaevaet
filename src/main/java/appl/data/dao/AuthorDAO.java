@@ -19,7 +19,7 @@ public interface AuthorDAO {
 
 	public Author getAuthorByID(int authorID);
 
-	public void insertAuthor(Author author);
+	public int insertAuthor(Author author);
 
 	public void deleteAuthor(Author author);
 

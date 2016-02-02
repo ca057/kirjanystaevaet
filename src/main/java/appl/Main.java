@@ -19,7 +19,8 @@ public class Main {
 		// OrderTesting
 		//new QueryFun().doSomeOrderTesting(ctx);
 		
-		new QueryFun().testDao(ctx);
+		//new QueryFun().testDao(ctx);
+		new QueryFun().testBookInsert(ctx);
 	}
 
 }

@@ -34,7 +34,8 @@ public class CategoryDAOImpl implements CategoryDAO {
 		Criteria cr = s.createCriteria(Category.class);
 		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
-		return cr.createAlias("books", "b").createAlias("authors", "a");
+		//return cr.createAlias("books", "b").createAlias("authors", "a");
+		return cr.createAlias("books", "b"); // Category hat keinen Author -> kein Alias dafür angeben
 	}
 
 
@@ -45,6 +46,21 @@ public class CategoryDAOImpl implements CategoryDAO {
 		//cr.add
 		return getSession().createCriteria(Category.class).list();
 	}
+	@Override
+	public Category getCategoriesByExactName(String name) {
+		Criteria cr = setupAndGetCriteria();
+		cr.add(Restrictions.eq("categoryName", name));
+		Object result = cr.uniqueResult();
+		if ( result != null){
+			Category cat = (Category) result;
+			return cat;
+		} else {
+			//TODO Fehlerbehandlung -> Category does not exist exception
+		}
+		
+		return null;
+	}
+
 
 	@Override
 	public List<Category> getCategoriesByName(String categoryName) {
@@ -64,4 +80,21 @@ public class CategoryDAOImpl implements CategoryDAO {
 		// TODO Auto-generated method stub
 	}
 
+
+	@Override
+	public Category getCategoryById(int id) {
+		Criteria cr = setupAndGetCriteria();
+		cr.add(Restrictions.eq("categoryID", id));
+		Object result = cr.uniqueResult();
+		if ( result != null){
+			Category cat = (Category) result;
+			return cat;
+		} else {
+			//TODO Fehlerbehandlung -> Category does not exist exception
+		}
+		return null;
+	}
+
+
+	
 }

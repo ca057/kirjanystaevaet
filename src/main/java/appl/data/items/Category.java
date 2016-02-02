@@ -19,6 +19,8 @@ public class Category {
 	private String categoryName;
 
 	private Set<Book> books = new HashSet<Book>(0);
+	
+	public Category(){} // Default Konstruktor
 
 	public Category(String categoryName) {
 		this.categoryName = categoryName;
@@ -39,7 +41,7 @@ public class Category {
 		return categoryID;
 	}
 
-	@Column(name = "categoryName", nullable = false)
+	@Column(name = "categoryName", unique = true, nullable = false)
 	public String getCategoryName() {
 		return categoryName;
 	}

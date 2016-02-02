@@ -21,6 +21,7 @@ import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.BookService;
 import appl.logic.service.CategoryService;
+import exceptions.data.AuthorMayExistException;
 
 public class QueryFun {
 
@@ -39,7 +40,7 @@ public class QueryFun {
 		System.out.println();
 		System.exit(0);
 	}
-
+/*
 	public void doSomeOrderTesting(ApplicationContext ctx) {
 		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
 		sessionFactory.getCurrentSession().beginTransaction();
@@ -50,7 +51,8 @@ public class QueryFun {
 		//ToDo Orderabfragen
 		
 	}
-
+	*/
+/*
 	public Order createOrderTestData() {
 		Set<Book> book = createTestData();
 		User user = createUserTestData();
@@ -58,6 +60,7 @@ public class QueryFun {
 		return order;
 
 	}
+	*/
 
 	public void doSomeTesting(SessionFactory sessionFactory) {
 		// Transaction: "Allows the application to define units of work, while
@@ -217,6 +220,44 @@ public class QueryFun {
 		System.out.println("Test OpenSearch------------------\n\n\n");
 		bookService.getBooksByOpenSearch("I love my cat");
 	}
+	public void testBookInsert (ApplicationContext ctx){
+		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
+		BookService bookService = ctx.getBean(BookService.class);
+		
+		// Testen, wenn ich weiß, dass es ein neuer Autor ist
+		try {
+			int authorId = bookService.insertAuthor("Someone", "Anyone", true);
+			System.out.println("QueryFun nach bookService.insertAuthor");
+			Set<Integer> authors = new HashSet<Integer>();
+			authors.add(authorId);
+			
+			Set<Integer> categories = new HashSet<Integer>();
+			
+			Category category = bookService.getCategoryByExactName("PHP");
+			categories.add(category.getCategoryID());
+			
+			Map<Searchfields, String> dataMap = new HashMap<Searchfields, String>();
+			dataMap.put(Searchfields.isbn, "000000000");
+			dataMap.put(Searchfields.description, "This is a TestTextBook");
+			dataMap.put(Searchfields.edition, "1");
+			dataMap.put(Searchfields.pages, "555");
+			dataMap.put(Searchfields.price, "9.99");
+			dataMap.put(Searchfields.pubdate, "January 2016");
+			dataMap.put(Searchfields.publisher, "Springer");
+			dataMap.put(Searchfields.title, "PHP fuer Dummies");
+			
+			bookService.insertBook(dataMap, authors, categories);
+			
+			
+		} catch (AuthorMayExistException e) {
+			// HIer nochmal Exception in try catch Block -> ignore
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	/*
 
 	public Set<Book> createTestData() {
 		Set<Book> books = new HashSet<>();
@@ -246,7 +287,8 @@ public class QueryFun {
 		book.setCategories(categories);
 		return books;
 	}
-
+	*/
+/*
 	public User createUserTestData() {
 		PLZ plz = new PLZ();
 		plz.setPlace("Buxtehude");
@@ -256,5 +298,6 @@ public class QueryFun {
 		return user1;
 
 	}
+	*/
 
 }
