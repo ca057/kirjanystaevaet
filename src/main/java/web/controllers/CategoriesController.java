@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import appl.logic.service.CategoryService;
+import appl.logic.service.BookService;
 import exceptions.controller.CategoryNotFoundException;
 
 /**
@@ -19,14 +19,14 @@ import exceptions.controller.CategoryNotFoundException;
 public class CategoriesController {
 
 	@Autowired
-	private CategoryService service;
+	private BookService service;
 
 	/**
 	 * Setter injection for the {@link CategoryService} bean.
 	 * 
 	 * @param service
 	 */
-	public void setService(CategoryService service) {
+	public void setService(BookService service) {
 		this.service = service;
 	}
 

@@ -20,15 +20,14 @@ import appl.data.items.Order;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.BookService;
-import appl.logic.service.CategoryService;
 import exceptions.data.AuthorMayExistException;
 
 public class QueryFun {
 
 	public void doSomeTesting2(ApplicationContext ctx) {
 		BookService service = ctx.getBean(BookService.class);
-		CategoryService ct = ctx.getBean(CategoryService.class);
-		System.out.println("Kategorien: " + ct.getAllCategoryNames());
+		//CategoryService ct = ctx.getBean(CategoryService.class);
+		//System.out.println("Kategorien: " + ct.getAllCategoryNames());
 		HashMap<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.categoryName, "php");
 		// map.put(Searchfields.title, "Architecture");
@@ -177,7 +176,7 @@ public class QueryFun {
 		// System.out.println(jdbc.queryForObject("select count(*) FROM
 		// PUBLIC.bookauthors", Integer.class));
 	}
-	
+	/*
 	public void testDao(ApplicationContext ctx){
 		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
 		BookService bookService = ctx.getBean(BookService.class);
@@ -220,6 +219,7 @@ public class QueryFun {
 		System.out.println("Test OpenSearch------------------\n\n\n");
 		bookService.getBooksByOpenSearch("I love my cat");
 	}
+	*/
 	public void testBookInsert (ApplicationContext ctx){
 		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
 		BookService bookService = ctx.getBean(BookService.class);

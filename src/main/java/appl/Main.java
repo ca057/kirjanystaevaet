@@ -20,7 +20,7 @@ public class Main {
 		//new QueryFun().doSomeOrderTesting(ctx);
 		
 		//new QueryFun().testDao(ctx);
-		new QueryFun().testBookInsert(ctx);
+		//new QueryFun().testBookInsert(ctx);
 
 	}
 
