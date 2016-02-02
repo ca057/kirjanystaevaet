@@ -34,9 +34,12 @@ import exceptions.data.DatabaseInitializationException;
  *
  */
 @Configuration
-@ComponentScan({ "appl.logic.service", "appl.data.dao", "appl.data.builder", "appl.data.items" })
+@ComponentScan({ "appl.logic.service", "appl.data.dao", "appl.data.builder", "appl.logic.admin" })
 @EnableTransactionManagement
 public class RootConfig {
+
+	// @Autowired
+	// Initialization init;
 
 	@Bean
 	public PlatformTransactionManager txManager()
@@ -69,11 +72,12 @@ public class RootConfig {
 	private Properties createProperties() {
 		Properties prop = new Properties();
 		// FIXME Wie kann man das besser behandeln?
-		boolean createDatabase = true;
-		if (createDatabase) {
-			prop.setProperty("hibernate.hbm2ddl.auto", "create");
-			prop.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
-		}
+		// property = update
+		// boolean createDatabase = true;
+		// if (createDatabase) {
+		// prop.setProperty("hibernate.hbm2ddl.auto", "create");
+		// prop.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
+		// }
 		prop.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
 		prop.setProperty("hibernate.connection.url", "jdbc:h2:./database/kirjanystaevaet");
 		// TODO Brauchen wir das?

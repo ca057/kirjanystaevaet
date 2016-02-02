@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import appl.logic.service.UserService;
+import appl.data.enums.UserRoles;
 
 @Configuration
 @ComponentScan(basePackages = { "appl.logic.security" })
@@ -31,15 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
-	// TODO brauchen wir den?
-	@Autowired
-	private UserService userService;
-
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		// FIXME nächste Zeile löschen
-		auth.inMemoryAuthentication().withUser("user").password("p").roles("USER");
-		// auth.authenticationProvider(authProvider());
+		auth.authenticationProvider(authProvider());
+		// auth.inMemoryAuthentication().withUser("user").password("user").roles(UserRoles.USER.toString());
 		// TODO ggf configure(...) { ... }
 	}
 
@@ -49,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/", "/kategorien", "/kategorie/**", "/suche", "/kontakt", "/login", "/logout",
 						"/warenkorb", "/registrierung")
-				.permitAll().antMatchers("/meinkonto", "/meinkonto/**").hasRole("USER")
+				.permitAll().antMatchers("/meinkonto", "/meinkonto/**").hasRole(UserRoles.USER.toString())
 				.antMatchers("/backend", "/backend/**").hasRole("ADMIN").anyRequest().authenticated().and().formLogin()
 				.loginPage("/login").defaultSuccessUrl("/").failureUrl("/login?error").and().logout()
 				.deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/?logout")

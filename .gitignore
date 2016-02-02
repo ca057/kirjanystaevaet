@@ -19,6 +19,7 @@ target/test-classes
 db
 *.classpath
 *.project
+*.tmp
 /target/
 
 # alles für den Abschlussbericht

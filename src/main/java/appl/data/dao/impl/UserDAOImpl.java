@@ -6,7 +6,6 @@ import java.util.Map;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,8 +29,8 @@ public class UserDAOImpl implements UserDAO {
 		if (sessionFactory == null) {
 			throw new RuntimeException("[Error] SessionFactory is null");
 		}
-		return getSession().createCriteria(User.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-				.createAlias("plz", "p");
+		Criteria cr = getSession().createCriteria(User.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return cr.createAlias("plz", "p");
 	}
 
 	@Override
@@ -53,9 +52,11 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User getUserByEMail(String email) {
-		Criteria cr = setupAndGetCriteria();
-		cr.add(Restrictions.eq(Userfields.email.toString(), email));
-		User user = (User) cr.uniqueResult();
+		// Criteria cr = setupAndGetCriteria();
+		// cr.add(Restrictions.eq(Userfields.email.toString(), email));
+		// User user = (User) cr.uniqueResult();
+		User user = (User) getSession()
+				.createQuery("from User where " + Userfields.email.toString() + "='" + email + "'").uniqueResult();
 		if (user == null) {
 			System.err.println("no user found with this email: " + email);
 		}
