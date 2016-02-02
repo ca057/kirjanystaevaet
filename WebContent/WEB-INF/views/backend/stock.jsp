@@ -4,7 +4,35 @@
 
 <section>
 	<h2>Bestandsverwaltung</h2>
-	<article>
-		<p>Hier kann der Bestand verwaltet werden.</p>
-	</article>
+	<div id="stockmgmt">
+		<div class="nav-sub">
+			<ul>
+				<li>Kategorien
+					<ul>
+						<li>Anlegen</li>
+						<li>Ändern</li>
+						<li>Löschen</li>
+					</ul>
+				</li>
+				<li>Autor:innen
+					<ul>
+						<li>Anlegen</li>
+						<li>Ändern</li>
+						<li>Löschen</li>
+					</ul>
+				</li>
+				<li>Bücher
+					<ul>
+						<li>Anlegen</li>
+						<li>Ändern</li>
+						<li>Löschen</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<section>
+			<p>Bevor ein neues Buch angelegt werden kann, müssen Kategorie und alle Autoren bereits existieren.</p>
+			<p>Löschvorgänge sind nur möglich, wenn alle abhängigen Einträge nicht mehr existieren.</p>
+		</section>
+	</div>
 </section>
