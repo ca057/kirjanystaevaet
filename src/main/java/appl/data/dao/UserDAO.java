@@ -22,6 +22,13 @@ public interface UserDAO {
 
 	User getUserByID(int id);
 
+	/**
+	 * Password encryption is supposed to happen in a service.
+	 * 
+	 * @param user
+	 * @return
+	 * @throws PrimaryKeyViolation
+	 */
 	int insertUser(User user) throws PrimaryKeyViolation;
 
 	void deleteUser(User user);
