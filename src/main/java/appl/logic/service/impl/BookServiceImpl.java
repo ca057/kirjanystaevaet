@@ -3,6 +3,7 @@
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +26,7 @@ import appl.data.items.Book;
 import appl.data.items.Category;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
+import exceptions.data.AuthorNotFoundException;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -188,8 +190,17 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<String> getAllCategoryNames() {
 		
-		
-		return null;
+		List<Category> categories = categoryDao.getCategories();
+		List<String> names = new LinkedList<String>();
+		for (Category ct : categories) {
+			names.add(ct.getCategoryName());
+			//System.out.println(ct.getCategoryName());
+		}
+		if (names.isEmpty()) {
+			// ToDo ???
+			throw new RuntimeException("aösdlkfj");
+		}
+		return names;
 	}
 
 	@Override
@@ -202,14 +213,31 @@ public class BookServiceImpl implements BookService {
 		for (int i : categoryIds){
 			categories.add(categoryDao.getCategoryById(i));
 		}
+		System.out.println("in service.insertBook bevor die Autoren zusammen gesammelt werden\n\n" );
 		
 		Set<Author> authors = new HashSet<Author>();
-		System.out.println("Bevor Autoren abgefragt werden \n");
-		for (int i : authorIds){
-			System.out.println("Author: " + authorDao.getAuthorByID(i) + "\n" );
-			authors.add(authorDao.getAuthorByID(i));
-			
+		System.out.println("Bevor Autoren abgefragt werden \n ");
+		try {
+			System.out.println(authorDao.getAuthorByID(12).toString());
+		} catch (AuthorNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			System.exit(1);
 		}
+		for (int i : authorIds)
+			try {
+				{
+					System.out.println("In Schleife in = " + i + "\n");
+					//System.out.println("Author: " + authorDao.getAuthorByID(i) + "\n\n\n\n" );
+					
+					authors.add(authorDao.getAuthorByID(i));
+					
+				}
+			} catch (AuthorNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.exit(1);
+			}
 		Book newBook = bb.setAuthors(authors).setIsbn(map.get(Searchfields.isbn)).setTitle(map.get(Searchfields.title)).setDescription(map.get(Searchfields.description)).setPrice(price).setPublisher(map.get(Searchfields.publisher)).setPubdate(map.get(Searchfields.pubdate)).setEdition(map.get(Searchfields.edition)).setPages(pages).setCategories(categories).createBook();
 
 		dao.insertBook(newBook);
@@ -220,14 +248,29 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Author getAuthorById(int id) {
-		Author author = authorDao.getAuthorByID(id);
-		return author;
+		Author author;
+		try {
+			author = authorDao.getAuthorByID(id);
+			return author;
+
+		} catch (AuthorNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			//System.exit(1);
+		}
+		return null;
 	}
 
 	@Override
 	public Category getCategoryByExactName(String name) {
 		Category category = categoryDao.getCategoriesByExactName(name);
 		return category;
+	}
+
+	@Override
+	public List<Author> getAllAuthors() {
+
+		return authorDao.getAuthors();
 	}
 
 	

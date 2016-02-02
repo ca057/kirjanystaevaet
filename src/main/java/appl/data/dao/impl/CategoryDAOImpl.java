@@ -33,9 +33,9 @@ public class CategoryDAOImpl implements CategoryDAO {
 		Session s = getSession();
 		Criteria cr = s.createCriteria(Category.class);
 		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-
+		return cr;
 		//return cr.createAlias("books", "b").createAlias("authors", "a");
-		return cr.createAlias("books", "b"); // Category hat keinen Author -> kein Alias dafür angeben
+		//return cr.createAlias("books", "b"); // Category hat keinen Author -> kein Alias dafür angeben
 	}
 
 
@@ -49,7 +49,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 	@Override
 	public Category getCategoriesByExactName(String name) {
 		Criteria cr = setupAndGetCriteria();
-		cr.add(Restrictions.eq("categoryName", name));
+		cr.add(Restrictions.eq("categoryName", name).ignoreCase());
 		Object result = cr.uniqueResult();
 		if ( result != null){
 			Category cat = (Category) result;

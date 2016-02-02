@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import appl.data.items.Author;
+import exceptions.data.AuthorNotFoundException;
 
 @Transactional
 public interface AuthorDAO {
@@ -17,7 +18,7 @@ public interface AuthorDAO {
 	
 	public List<Author> getAuthorByExactNames (String nameF, String nameL);
 
-	public Author getAuthorByID(int authorID);
+	public Author getAuthorByID(int authorID) throws AuthorNotFoundException;
 
 	public int insertAuthor(Author author);
 

@@ -223,7 +223,22 @@ public class QueryFun {
 	public void testBookInsert (ApplicationContext ctx){
 		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
 		BookService bookService = ctx.getBean(BookService.class);
+		/*List<String> allCats = bookService.getAllCategoryNames();
+		for (String s : allCats){
+			System.out.println(allCats);
+		}
+		System.exit(1);
+		*/
+		/*List<Author> allauthors = bookService.getAllAuthors();
+		for (Author a : allauthors){
+			
+			System.out.println(a.toString());
+		}
 		
+		Author singleAuthor = bookService.getAuthorById(42);
+		System.out.println(singleAuthor.toString());
+		System.exit(1);
+		*/
 		// Testen, wenn ich weiß, dass es ein neuer Autor ist
 		try {
 			int authorId = bookService.insertAuthor("Someone", "Anyone", true);
@@ -234,10 +249,11 @@ public class QueryFun {
 			Set<Integer> categories = new HashSet<Integer>();
 			
 			Category category = bookService.getCategoryByExactName("PHP");
+			System.out.println("Got Category: " + category.toString() + "\n\n");
 			categories.add(category.getCategoryID());
 			
 			Map<Searchfields, String> dataMap = new HashMap<Searchfields, String>();
-			dataMap.put(Searchfields.isbn, "000000000");
+			dataMap.put(Searchfields.isbn, "00006700");
 			dataMap.put(Searchfields.description, "This is a TestTextBook");
 			dataMap.put(Searchfields.edition, "1");
 			dataMap.put(Searchfields.pages, "555");
@@ -246,8 +262,17 @@ public class QueryFun {
 			dataMap.put(Searchfields.publisher, "Springer");
 			dataMap.put(Searchfields.title, "PHP fuer Dummies");
 			
+			System.out.println("QueryFun, bevor service.insertBook\n Gib die Author Ids aus dem Set aus");
+			for (int s : authors){
+				System.out.println("Author id : " + s + "\n");
+			}
 			bookService.insertBook(dataMap, authors, categories);
 			
+			System.out.println("Get all Books\n\n");
+			List<Book> allBook = bookService.getAllBooks();
+			for (Book b: allBook){
+				System.out.println(b.toString());
+			}
 			
 		} catch (AuthorMayExistException e) {
 			// HIer nochmal Exception in try catch Block -> ignore

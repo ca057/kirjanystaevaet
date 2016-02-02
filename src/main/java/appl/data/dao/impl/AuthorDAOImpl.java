@@ -14,6 +14,7 @@ import appl.data.dao.AuthorDAO;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import exceptions.data.AuthorNotFoundException;
 
 @Repository
 public class AuthorDAOImpl implements AuthorDAO {
@@ -32,15 +33,18 @@ public class AuthorDAOImpl implements AuthorDAO {
 		Session s = getSession();
 		Criteria cr = s.createCriteria(Author.class);
 		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		
+		return cr;
 
-		return cr.createAlias("books", "b");
+//		return cr.createAlias("books", "b");
 	}
 
 
 	@Override
 	public List<Author> getAuthors() {
 		// TODO implement this!
-		return null;
+		return getSession().createCriteria(Author.class).list();
+
 	}
 
 	@Override
@@ -56,21 +60,23 @@ public class AuthorDAOImpl implements AuthorDAO {
 	}
 
 	@Override
-	public Author getAuthorByID(int authorID) {
-		System.out.println("in getAuthorByID\n");
+	public Author getAuthorByID(int authorID) throws AuthorNotFoundException {
+		//System.out.println("in getAuthorByID \n id = " + authorID + "\n");
 		Criteria cr = setupAndGetCriteria();
-		System.out.println("Got the criteria\n");
+		//System.out.println("Got the criteria\n");
 		cr.add(Restrictions.eq("authorId", authorID));
-		System.out.println("added restrictions\n");
+		//System.out.println("added restrictions\n");
 		Object result = cr.uniqueResult();
-		System.out.println("Got result\n");
+		//System.out.println("Got result\n");
+		//System.out.println(result.toString()); // NullPointer
 		if ( result != null){
 			Author author = (Author) result;
-			System.out.println("in getAuthorById, got Author: " + author.toString()+ "\n");
+		//	System.out.println("in getAuthorById, got Author: " + author.toString()+ "\n");
 			return author;
 		} else {
+			throw new AuthorNotFoundException();
 			//TODO Fehlerbehandlung -> Author does not exist exception
-			System.out.println("Author wurde nicht in der DB gefunden\n\n");
+			//System.out.println("Author wurde nicht in der DB gefunden\n\n");
 		}
 		/*
 		System.out.println("Versuch über hql\n\n");
@@ -83,9 +89,9 @@ public class AuthorDAOImpl implements AuthorDAO {
 			
 		}
 		*/
-		System.out.println("BEfore I return null\n\n");
+		//System.out.println("BEfore I return null\n\n");
 		
-		return null;
+		//return null;
 	}
 
 	@Override

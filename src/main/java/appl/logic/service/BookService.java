@@ -37,6 +37,8 @@ public interface BookService {
 	
 	public Author getAuthorById (int id);
 	
+	public List<Author> getAllAuthors();
+	
 	// Book Methoden
 	
 	public List<Book> getAllBooks();
