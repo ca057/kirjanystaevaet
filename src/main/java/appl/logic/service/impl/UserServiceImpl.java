@@ -29,8 +29,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int registerNewUserAccount(Map<Userfields, String> data) throws PrimaryKeyViolation {
+		// TODO geht das schöner? Momentan hier, um admin im foreach nicht
+		// ständig zu überschreiben.
+		userBuilder.setRole(UserRoles.USER);
 		data.forEach((userfield, information) -> {
-			userBuilder = getData(userfield, information);
+			System.out.println("field: " + userfield + " " + information);
+			getData(userfield, information);
 		});
 		try {
 			return userDao.insertUser(userBuilder.createUser());
@@ -40,17 +44,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * Default role = user
+	 *
 	 * 
 	 * @param userfield
 	 * @param information
 	 * @return
 	 */
 	private UserBuilder getData(Userfields userfield, String information) {
-		userBuilder.setRole(UserRoles.USER);
 		switch (userfield) {
 		case role:
 			if (UserRoles.ADMIN.toString().equals(information)) {
+				System.out.println("Ein Admin wurde angelegt");
 				userBuilder.setRole(UserRoles.ADMIN);
 			}
 			break;
