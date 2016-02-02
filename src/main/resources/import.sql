@@ -1,30 +1,30 @@
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (1, 'Jason', 'Gilmore'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (2, 'David', 'Sklar'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (3, 'Luke', 'Welling'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (4, 'Laura', 'Thomson'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (5, 'Steve', 'Krug'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (6, 'Ben', 'Forta'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (8, 'Jakob', 'Nielsen'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (9, 'Hoa', 'Loranger'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (11, 'Alan', 'Beaulieu'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (12, 'Jesse', 'Liberty'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (13, 'Dan', 'Hurwitz'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (14, 'Michele E.', 'Davis'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (15, 'John A.', 'Phillips'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (16, 'Jeffrey', 'Friedl'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (17, 'Michael J.', 'Hernandez'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (18, 'John L.', 'Viescas'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (22, 'Stephan', 'Walther'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (23, 'Andrew', 'Watt'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (24, 'Eric', 'Rosebrok'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (25, 'Kevin', 'Tatroe'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (26, 'Rasmus', 'Lerdorf'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (27, 'Peter', 'MacIntyre'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (29, 'Matthew', 'MacDonald'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (30, 'Julian', 'Templeman'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (31, 'Thomas', 'Erl'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (32, 'Hugh E.', 'Williams'),
-INSERT INTO `bookauthors` (`AuthorID`, `nameF`, `nameL`) VALUES (33, 'David', 'Lane');
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ('Jason', 'Gilmore'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ('David', 'Sklar'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ('Luke', 'Welling'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ('Laura', 'Thomson'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ('Steve', 'Krug'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ('Ben', 'Forta'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ('Jakob', 'Nielsen'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ('Hoa', 'Loranger'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Alan', 'Beaulieu'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Jesse', 'Liberty'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Dan', 'Hurwitz'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Michele E.', 'Davis'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'John A.', 'Phillips'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Jeffrey', 'Friedl'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Michael J.', 'Hernandez'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'John L.', 'Viescas'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Stephan', 'Walther'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Andrew', 'Watt'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Eric', 'Rosebrok'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Kevin', 'Tatroe'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Rasmus', 'Lerdorf'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Peter', 'MacIntyre'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Matthew', 'MacDonald'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Julian', 'Templeman'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Thomas', 'Erl'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'Hugh E.', 'Williams'),
+INSERT INTO `bookauthors` (`nameF`, `nameL`) VALUES ( 'David', 'Lane');
 
 
 INSERT INTO `bookdescriptions` (`ISBN`, `DESCRIPTION`, `EDITION`, `PAGES`, `PRICE`, `PUBLISHER`, `PUBDATE`, `TITLE`) VALUES ('0131428985',  '<p>The emergence of key second-generation Web  services standards has positioned service-oriented architecture (SOA)  as the foremost platform for contemporary business automation  solutions. The integration of SOA principles and technology is  empowering organizations to build applications with unprecedented  levels of flexibility, agility, and sophistication (while also allowing  them to leverage existing legacy environments).</p><p>This  guide will help you dramatically reduce the risk, complexity, and cost  of integrating the many new concepts and technologies introduced by the  SOA platform. It brings together the first comprehensive collection of  field-proven strategies, guidelines, and best practices for making the  transition toward the service-oriented enterprise.</p><p>Writing  for architects, analysts, managers, and developers, Thomas Erl offers  expert advice for making strategic decisions about both immediate and  long-term integration issues. Erl addresses a broad spectrum of  integration challenges, covering technical and design issues, as well  as strategic planning.</p><ul>  <li>Covers crucial second-generation  (WS-*) Web services standards: BPEL4WS, WS-Security, S-Coordination,  WS-Transaction, WS-Policy, WS-ReliableMessaging, and WS-Attachments </li>  <li>Includes  hundreds of individual integration strategies and more than 60 best  practices for both XML and Web services technologies </li>  <li>Includes a complete tutorial on service-oriented design principles for business and technical modeling </li>  <li>Explores  design issues related to a wide variety of service-oriented integration  architectures that integrate XML and Web services into legacy and EAI  environments </li>  <li>Provides a clear roadmap for planning a long-term migration toward a standardized service-oriented enterprise</li></ul><p>Service-oriented  architecture is no longer an exclusive discipline practiced only by  expensive consultants. With this book''s help, you can plan, architect,  and implement your own service-oriented environments-efficiently and  cost-effectively.</p>', '1', '560', '44.95','April 16, 2004', 'Prentice Hall', 'Service-Oriented Architecture : A Field Guide to Integrating XML and Web Services');
@@ -46,14 +46,14 @@ INSERT INTO `bookdescriptions` (`ISBN`, `DESCRIPTION`, `EDITION`, `PAGES`, `PRIC
 INSERT INTO `bookdescriptions` (`ISBN`, `DESCRIPTION`, `EDITION`, `PAGES`, `PRICE`, `PUBLISHER`, `PUBDATE`, `TITLE`) VALUES ('1590595521',  '<p> <em>Beginning PHP 5 and MYSQL: From Novice to Professional</em> offers a comprehensive introduction to two of the most popular Web  application building technologies on the planet: the scripting language  PHP and the MySQL database server. This book will not only expose you  to the core aspects of both technologies, but will provide valuable  insight into how they are used in unison to create dynamic data-driven  Web applications.</p><p><em>Beginning PHP 5 and MYSQL</em> explains the  new features of the latest releases of the world&rsquo;s most popular Open  Source Web development technologies: MySQL 4 database server and PHP 5  scripting language. This book explores the benefits, extensive new  features, and advantages of the object-oriented PHP 5, and how it can  be used in conjunction with MySQL 4 to create powerful dynamic Web  sites. </p><p> This is the perfect book for the Web designer,  programmer, hobbyist, or novice that wants to learn how to create  applications with PHP 5 and MySQL 4, and is a great entrance point for  Apress&rsquo;s extensive spectrum of PHP books planned for 2004.</p>','1', '952', '44.99', 'January 23, 2006', 'Apress', 'Beginning PHP and MySQL 5');
 INSERT INTO `bookdescriptions` (`ISBN`, `DESCRIPTION`, `EDITION`, `PAGES`, `PRICE`, `PUBLISHER`, `PUBDATE`, `TITLE`) VALUES ('1590595726', '<p><em>Beginning ASP.NET 2.0 in C# 2005: From Novice to Professional</em> steers you through the maze of ASP.NET web programming concepts. You  will learn language and theory simultaneously, mastering the core  techniques necessary to develop good coding practices and enhance your  skill set.</p><p>This book provides thorough coverage of ASP.NET,  guiding you from beginning to advanced techniques, such as querying  databases from within a web page and performance-tuning your site.  You''ll find tips for best practices and comprehensive discussions of  key database and XML principles.</p><p>The book also emphasizes the  invaluable coding techniques of object orientation and code-behind,  which will enable you to build real-world websites instead of just  scraping by with simplified coding practices. By the time you finish  this book, you will have mastered the core techniques essential to  professional ASP.NET developers.</p>', '1', '1184', '49.99', 'January 27, 2006', 'Apress', 'Beginning ASP.NET 2.0 in C#');
 
-INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (1, 'PHP');
-INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (2, 'MySQL');
-INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (3, 'Web Usability');
-INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (4, 'SQL');
-INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (5, 'ASP.NET');
-INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (6, 'Regular Expressions');
-INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (7, 'Web Services');
-INSERT INTO `bookcategories` (`CategoryID`, `CategoryName`) VALUES (8, 'Morse Code');
+INSERT INTO `bookcategories` (`CategoryName`) VALUES ('PHP');
+INSERT INTO `bookcategories` (`CategoryName`) VALUES ('MySQL');
+INSERT INTO `bookcategories` (`CategoryName`) VALUES ('Web Usability');
+INSERT INTO `bookcategories` (`CategoryName`) VALUES ('SQL');
+INSERT INTO `bookcategories` (`CategoryName`) VALUES ('ASP.NET');
+INSERT INTO `bookcategories` (`CategoryName`) VALUES ('Regular Expressions');
+INSERT INTO `bookcategories` (`CategoryName`) VALUES ('Web Services');
+INSERT INTO `bookcategories` (`CategoryName`) VALUES ('Morse Code');
 
 
 INSERT INTO `bookauthorsbooks` VALUES ('0131428985', 31);

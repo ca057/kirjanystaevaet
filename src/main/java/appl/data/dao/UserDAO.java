@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import appl.data.enums.Searchfields;
 import appl.data.items.User;
+import exceptions.data.PrimaryKeyViolation;
 
 @Transactional
 public interface UserDAO {
@@ -17,11 +18,18 @@ public interface UserDAO {
 
 	List<User> getUsersBySurname(String surname);
 
-	List<User> getUserByNickname(String nickname);
+	User getUserByEMail(String email);
 
-	List<User> getUserByEMail(String email);
+	User getUserByID(int id);
 
-	void insertUser(User user);
+	/**
+	 * Password encryption is supposed to happen in a service.
+	 * 
+	 * @param user
+	 * @return
+	 * @throws PrimaryKeyViolation
+	 */
+	int insertUser(User user) throws PrimaryKeyViolation;
 
 	void deleteUser(User user);
 

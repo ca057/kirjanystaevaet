@@ -3,13 +3,18 @@ package appl.data.dao.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import appl.data.dao.UserDAO;
 import appl.data.enums.Searchfields;
+import appl.data.enums.Userfields;
 import appl.data.items.User;
+import exceptions.data.PrimaryKeyViolation;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -17,10 +22,22 @@ public class UserDAOImpl implements UserDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	private Session getSession() {
+		return sessionFactory.getCurrentSession();
+	}
+
+	private Criteria setupAndGetCriteria() {
+		if (sessionFactory == null) {
+			throw new RuntimeException("[Error] SessionFactory is null");
+		}
+		Criteria cr = getSession().createCriteria(User.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		// return cr.createAlias("plz", "p");
+		return cr;
+	}
+
 	@Override
 	public List<User> getUsers() {
-		// TODO implement this!
-		return null;
+		return getSession().createCriteria(User.class).list();
 	}
 
 	@Override
@@ -36,20 +53,24 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<User> getUserByNickname(String nickname) {
-		// TODO implement this!
-		return null;
+	public User getUserByEMail(String email) {
+		Criteria cr = setupAndGetCriteria();
+		cr.add(Restrictions.eq(Userfields.email.toString(), email));
+		User user = (User) cr.uniqueResult();
+		// User user = (User) getSession()
+		// .createQuery("from User where " + Userfields.email.toString() + "='"
+		// + email + "'").uniqueResult();
+		if (user == null) {
+			System.err.println("no user found with this email: " + email);
+		}
+		return user;
 	}
 
 	@Override
-	public List<User> getUserByEMail(String email) {
-		// TODO implement this!
-		return null;
-	}
-
-	@Override
-	public void insertUser(User user) {
-		// TODO implement this!
+	public int insertUser(User user) throws PrimaryKeyViolation {
+		Integer id = (Integer) getSession().save(user);
+		System.out.println("Alle user: " + getUsers());
+		return id;
 	}
 
 	@Override
@@ -59,8 +80,22 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void updateUser(User user, Map<Searchfields, String> map) {
-		// TODO update(user)? Eine Ebene drüber müsste das
-		// jeweilige zu ändernde Feld via user.set() geändert werden
+		// TODO update(USER)? Eine Ebene drüber müsste das
+		// jeweilige zu ändernde Feld via USER.set() geändert werden
+	}
+
+	@Override
+	public User getUserByID(int id) {
+		// Criteria cr = setupAndGetCriteria();
+		// cr.add(Restrictions.idEq(id));
+		// System.out.println(cr);
+		// User user = (User) cr.uniqueResult();
+		// FIXME criteria einbauen
+		User user = (User) getSession().createQuery("from User where userId ='" + id + "'").uniqueResult();
+		if (user == null) {
+			System.err.println("no user found with this ID: " + id);
+		}
+		return user;
 	}
 
 }

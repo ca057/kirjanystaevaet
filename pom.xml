@@ -29,6 +29,9 @@
 
 		<!-- DB -->
 		<dbh2.version>1.4.187</dbh2.version>
+		
+		<!-- Jackson -->
+		<jackson.version>2.5.1</jackson.version>
 	</properties>
 
 	<dependencies>
@@ -165,6 +168,18 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>4.0.3.RELEASE</version>
+		</dependency>
+		
+		<!-- jackson for working with JSON -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>${jackson.version}</version>
 		</dependency>
 	</dependencies>
 

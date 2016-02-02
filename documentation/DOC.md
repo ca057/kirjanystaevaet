@@ -3,6 +3,37 @@
 
 # kirjanystaevaet
 
+## Abschlussbericht
+Laut Guide der Vorlage benÃ¶tigen wir die folgenden Dateien:
+	
+	lni.bst
+	lni.cls
+
+Alle anderen setze ich auf die `.gitignore` (auch das PDF, damit es keine Probleme gibt, kann sich ja jeder selber kompilieren). Die `latin1.sty` ist glaube ich nicht so wichtig, ich lasse die aber mal mit drin.
+
+## Initialisierung
+
+### Standard-Admin?
+
+kommt noch.
+
+### Data-Dump?
+
+kommt noch.
+
+## Sicherheit
+
+### HTTPS
+
+Wäre produktiv gut, kann man im Bericht erwähnen.
+
+### Passwörter
+
+Sind mit BCrypt verschlüsselt. FunFact: Wird bei Login nicht entschlüsselt, sondern Usereingabe verschlüsselt und dann verglichen.
+
+## Code-Interaktion
+
+Wir verwenden keine Message-Objekte, sondern Maps. Wäre bei großen Sachen zwar schöner, aber uns gerade zu umständlich.
 
 ## Views
 

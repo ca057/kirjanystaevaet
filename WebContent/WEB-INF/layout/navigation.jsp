@@ -8,6 +8,7 @@
 
 	<li><a href="<c:url value='/suche' />" title="Suche">Suche</a></li>
 	<li><a href="<c:url value='/kontakt'/>" title="Kontakt und Impressum">Kontakt/Impressum</a></li>
+	<li><button type="button" formaction="<c:url value='/warenkorb'/>" title="Warenkorb">Warenkorb</button></li>
 
 	<sec:authorize access="hasRole('USER')">
 		<li class="float-right"><a href="<c:url value='/meinkonto'/>" title="Mein Konto anzeigen">Mein Konto</a></li>
@@ -24,3 +25,10 @@
 		<li class="float-right"><a href="<c:url value='/login'/>" title="In Mein Konto einloggen">Anmelden</a></li>
 	</sec:authorize>
 </ul>
+
+<sec:authorize access="hasRole('ADMIN')">
+	<!-- die für den Admin benötigte Konfiguration folgt hier -->
+	<ul class="navigation-content list-inline">
+		<li>Admin-spezifische Navigation folgt hier...</li>
+	</ul>
+</sec:authorize>

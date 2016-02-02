@@ -15,67 +15,75 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "user", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "userID") })
+@Table(name = "user", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = { "userId", "email" }) })
 public class User {
-	private int userID;
-	private String nickname;
+	private int userId;
+	private String password;
 	private String name;
 	private String surname;
 	private String email;
 	private String street;
 	private String streetnumber;
 	private PLZ plz;
+	private String role;
 	private Set<Order> orders;
-	// TODO Bankverbindung = Rechnung
 
-	public User(String nickname, String name, String surname, String email, String street, String streetnumber,
-			PLZ plz) {
-		this.nickname = nickname;
+	public User(String password, String name, String surname, String email, String street, String streetnumber, PLZ plz,
+			String role, HashSet<Order> orders) {
+		this.password = password;
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
 		this.street = street;
 		this.streetnumber = streetnumber;
 		this.plz = plz;
+		this.role = role;
+		this.orders = orders;
+	}
 
-		this.orders = new HashSet<Order>();
+	private User() {
 	}
 
 	@Id
 	@GeneratedValue
-	@Column(name = "USERID", unique = true, nullable = false)
-	public int getUserID() {
-		return userID;
+	@Column(name = "userId", unique = true, nullable = false)
+	public int getUserId() {
+		return userId;
 	}
 
-	@Column(name = "NICKNAME", unique = true, nullable = false)
-	public String getNickname() {
-		return nickname;
-	}
-
-	@Column(name = "NAME", nullable = false)
-	public String getName() {
-		return name;
-	}
-
-	@Column(name = "SURNAME", nullable = false)
-	public String getSurname() {
-		return surname;
-	}
-
-	@Column(name = "EMAIL", unique = true, nullable = false)
+	@Column(name = "email", unique = true, nullable = false)
 	public String getEmail() {
 		return email;
 	}
 
-	@Column(name = "STREET", nullable = false)
+	@Column(name = "password", unique = false, nullable = false)
+	public String getPassword() {
+		return password;
+	}
+
+	@Column(name = "name", nullable = false)
+	public String getName() {
+		return name;
+	}
+
+	@Column(name = "surname", nullable = false)
+	public String getSurname() {
+		return surname;
+	}
+
+	@Column(name = "street", nullable = true)
 	public String getStreet() {
 		return street;
 	}
 
-	@Column(name = "STREETNUMBER", nullable = false)
+	@Column(name = "streetnumber", nullable = true)
 	public String getStreetnumber() {
 		return streetnumber;
+	}
+
+	@Column(name = "role", nullable = false)
+	public String getRole() {
+		return role;
 	}
 
 	@ManyToOne
@@ -101,12 +109,8 @@ public class User {
 		this.plz = plz;
 	}
 
-	public void setUserID(int userID) {
-		this.userID = userID;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setName(String name) {
@@ -121,8 +125,21 @@ public class User {
 		this.email = email;
 	}
 
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
+	}
+
+	public void setUserId(int id) {
+		this.userId = id;
+	}
+
+	@Override
+	public String toString() {
+		return "[User " + userId + ": " + name + ", " + surname + ", " + email + "]";
 	}
 
 }

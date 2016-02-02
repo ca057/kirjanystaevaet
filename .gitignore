@@ -19,4 +19,12 @@ target/test-classes
 db
 *.classpath
 *.project
+*.tmp
 /target/
+
+# alles für den Abschlussbericht
+
+documentation/abschlussbericht/*.pdf
+documentation/abschlussbericht/*.aux
+documentation/abschlussbericht/*.log
+documentation/abschlussbericht/*.synctex.gz

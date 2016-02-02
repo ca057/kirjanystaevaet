@@ -8,7 +8,7 @@
 			<h2>Verfügbare Kategorien</h2>
 			<ul>			
 				<c:forEach var="category" items="${allCategories}">
-					<li><a href="" title=""><c:out value="${category}" /></a></li>
+					<li><a href='kategorie/<c:out value="${category}"/>' title="Zur Kategorie <c:out value="${category}"/>"><c:out value="${category}" /></a></li>
 				</c:forEach>		
 			</ul>
 		</c:when>

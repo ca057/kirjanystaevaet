@@ -1,7 +1,5 @@
 package conf;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -36,9 +34,12 @@ import exceptions.data.DatabaseInitializationException;
  *
  */
 @Configuration
-@ComponentScan({ "appl.logic.service", "appl.data.dao", "appl.data.builder" })
+@ComponentScan({ "appl.logic.service", "appl.data.dao", "appl.data.builder", "appl.logic.admin" })
 @EnableTransactionManagement
 public class RootConfig {
+
+	// @Autowired
+	// Initialization init;
 
 	@Bean
 	public PlatformTransactionManager txManager()
@@ -70,20 +71,26 @@ public class RootConfig {
 
 	private Properties createProperties() {
 		Properties prop = new Properties();
-		if (Files.notExists(Paths.get("database/kirjanystaevaet.mv.db"))) {
-			prop.setProperty("hibernate.hbm2ddl.auto", "create");
-			prop.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
-		}
+		// FIXME Wie kann man das besser behandeln?
+		// property = update
+		// boolean createDatabase = true;
+		// if (createDatabase) {
+		prop.setProperty("hibernate.hbm2ddl.auto", "create");
+		// prop.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
+		// }
 		prop.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
-		// FIXME Pfad für Server anpassen
 		prop.setProperty("hibernate.connection.url", "jdbc:h2:./database/kirjanystaevaet");
+		// TODO Brauchen wir das?
 		// prop.setProperty("hibernate.connection.username", "");
 		// prop.setProperty("hibernate.connection.password", "");
-		prop.setProperty("hibernate.c3p0.min_size", "5");
-		prop.setProperty("hibernate.c3p0.max_size", "20");
-		prop.setProperty("hibernate.c3p0.timeout", "300");
-		prop.setProperty("hibernate.c3p0.max_statements", "50");
+		// TODO ausgeklammert, um default-Werte zu verwenden
+		// prop.setProperty("hibernate.c3p0.min_size", "5");
+		// prop.setProperty("hibernate.c3p0.max_size", "20");
+		// prop.setProperty("hibernate.c3p0.timeout", "300");
+		// prop.setProperty("hibernate.c3p0.max_statements", "50");
 		prop.setProperty("hibernate.c3p0.idle_test_period", "3000");
+		// TODO: Theoretisch auch max_connection_age /
+		// max_idle_time_excess_connections
 		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 		prop.setProperty("hibernate.current_session_context_class",
 				"org.springframework.orm.hibernate5.SpringSessionContext");
