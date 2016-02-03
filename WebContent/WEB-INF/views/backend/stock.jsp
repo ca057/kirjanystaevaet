@@ -5,34 +5,27 @@
 <section>
 	<h2>Bestandsverwaltung</h2>
 	<div id="stockmgmt">
-		<div class="nav-sub">
-			<ul>
-				<li>Kategorien
-					<ul>
-						<li>Anlegen</li>
-						<li>Ändern</li>
-						<li>Löschen</li>
-					</ul>
-				</li>
-				<li>Autor:innen
-					<ul>
-						<li>Anlegen</li>
-						<li>Ändern</li>
-						<li>Löschen</li>
-					</ul>
-				</li>
-				<li>Bücher
-					<ul>
-						<li>Anlegen</li>
-						<li>Ändern</li>
-						<li>Löschen</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-		<section>
-			<p>Bevor ein neues Buch angelegt werden kann, müssen Kategorie und alle Autoren bereits existieren.</p>
-			<p>Löschvorgänge sind nur möglich, wenn alle abhängigen Einträge nicht mehr existieren.</p>
+		<section id="kategorien">
+			<h3>Kategorien verwalten</h3>
+			<h4 id="kategorien-anlegen">Neue Kategorie anlegen</h4>
+				<form action="bestand/kategorien/add" method="POST">
+					<label for="kategorien-anlegen-input">Neue Kategorie:</label>
+					<input type="text" placeholder="Name der Kategorie" id="kategorien-anlegen-input" required />
+					<button type="submit" value="add-category">Katgorie anlegen</button>
+					<sec:csrfInput/>
+				</form>
+			<h4 id="kategorien-aendern">Bestehende Kategorie ändern</h4>
+			<h4 id="kategorien-loeschen">Bestehende Kategorien löschen</h4>
+		</section>
+		
+		<section id="autorinnen">
+			<h3>Autor:innen verwalten</h3>
+			<h4></h4>
+		</section>
+		
+		<section id="buecher">
+			<h3>Bücher verwalten</h3>
+			<p><em>Hinweis:</em> Vor dem Anlegen neuer Bücher müssen Kategorien und Autor:innen bereits existieren.</p>
 		</section>
 	</div>
 </section>
