@@ -12,10 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+
+import appl.data.enums.UserRoles;
 
 @Entity
-@Table(name = "user", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = { "userId", "email" }) })
+@Table(name = "user", schema = "public")
 public class User {
 	private int userId;
 	private String password;
@@ -28,25 +29,25 @@ public class User {
 	private String role;
 	private Set<Order> orders;
 
-	public User(String password, String name, String surname, String email, String street, String streetnumber, PLZ plz,
-			String role, HashSet<Order> orders) {
-		this.password = password;
-		this.name = name;
-		this.surname = surname;
-		this.email = email;
-		this.street = street;
-		this.streetnumber = streetnumber;
-		this.plz = plz;
-		this.role = role;
-		this.orders = orders;
+	private User() {
 	}
 
-	private User() {
+	public User(String password, String name, String surname, String email, String street, String streetnumber, PLZ plz,
+			UserRoles role, HashSet<Order> orders) {
+		setPassword(password);
+		setName(surname);
+		setSurname(surname);
+		setEmail(email);
+		setStreet(street);
+		setStreetnumber(streetnumber);
+		setPlz(plz);
+		setRole(role);
+		setOrders(orders);
 	}
 
 	@Id
 	@GeneratedValue
-	@Column(name = "userId", unique = true, nullable = false)
+	@Column(name = "userId")
 	public int getUserId() {
 		return userId;
 	}
@@ -97,49 +98,66 @@ public class User {
 		return this.orders;
 	}
 
-	public void setStreet(String street) {
+	private void setStreet(String street) {
 		this.street = street;
 	}
 
-	public void setStreetnumber(String streetnumber) {
+	private void setStreetnumber(String streetnumber) {
 		this.streetnumber = streetnumber;
 	}
 
-	public void setPlz(PLZ plz) {
+	private void setPlz(PLZ plz) {
 		this.plz = plz;
 	}
 
-	public void setPassword(String password) {
+	private void setPassword(String password) {
+		if (role == null) {
+			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("Password"));
+		}
 		this.password = password;
 	}
 
-	public void setName(String name) {
+	private void setName(String name) {
+		if (role == null) {
+			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("Name"));
+		}
 		this.name = name;
 	}
 
-	public void setSurname(String surname) {
+	private void setSurname(String surname) {
+		if (role == null) {
+			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("Surname"));
+		}
 		this.surname = surname;
 	}
 
-	public void setEmail(String email) {
+	private void setEmail(String email) {
+		if (role == null) {
+			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("E-Mail"));
+		}
 		this.email = email;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	private void setRole(UserRoles role) {
+		if (role == null) {
+			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("UserRole"));
+		}
+		this.role = role.toString();
 	}
 
-	public void setOrders(Set<Order> orders) {
+	private void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
 
-	public void setUserId(int id) {
+	private void setUserId(int id) {
 		this.userId = id;
 	}
 
 	@Override
 	public String toString() {
-		return "[User " + userId + ": " + name + ", " + surname + ", " + email + "]";
+		return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", surname=" + surname
+				+ ", email=" + email + ", street=" + street + ", streetnumber=" + streetnumber + ", plz=" + plz
+				+ ", role=" + role + "]";
 	}
 
 }

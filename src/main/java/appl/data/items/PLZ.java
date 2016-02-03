@@ -10,6 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * Entity class representing (German) postcode and place.
+ * 
+ * @author Johannes
+ *
+ */
 @Entity
 @Table(name = "plz", schema = "public")
 public class PLZ {
@@ -19,6 +25,25 @@ public class PLZ {
 
 	@OneToMany(mappedBy = "plz")
 	private Set<User> users;
+
+	private PLZ() {
+
+	}
+
+	/**
+	 * Constructor to initiate PLZ. The id of the entity is a generated value.
+	 * 
+	 * Both parameters must not be null.
+	 * 
+	 * @param postcode
+	 *            the postal code of the place
+	 * @param place
+	 *            the name of the place
+	 */
+	public PLZ(String postcode, String place) {
+		setPostcode(postcode);
+		setPlace(place);
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,15 +62,21 @@ public class PLZ {
 		return place;
 	}
 
-	public void setPlzId(int plzId) {
+	private void setPlzId(int plzId) {
 		this.plzId = plzId;
 	}
 
-	public void setPostcode(String postcode) {
+	private void setPostcode(String postcode) {
+		if (postcode == null || "".equals(postcode)) {
+			throw new IllegalArgumentException("Postcode must not be null or empty string.");
+		}
 		this.postcode = postcode;
 	}
 
-	public void setPlace(String place) {
+	private void setPlace(String place) {
+		if (place == null || "".equals(place)) {
+			throw new IllegalArgumentException("Place must not be null or empty string.");
+		}
 		this.place = place;
 	}
 
