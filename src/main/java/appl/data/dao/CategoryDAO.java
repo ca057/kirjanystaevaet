@@ -15,6 +15,10 @@ public interface CategoryDAO {
 	public List<Category> getCategories();
 
 	public List<Category> getCategoriesByName(String categoryName);
+	
+	public Category getCategoriesByExactName(String name);
+	
+	public Category getCategoryById(int id);
 
 	public void insertCategory(Category category);
 

@@ -8,12 +8,14 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import appl.data.dao.BookDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
+import exceptions.data.IsbnAlreadyExistsException;
 
 @Repository
 public class BookDAOImpl implements BookDAO {
@@ -32,8 +34,8 @@ public class BookDAOImpl implements BookDAO {
 		Session s = getSession();
 		Criteria cr = s.createCriteria(Book.class);
 		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-
-		return cr.createAlias("categories", "c").createAlias("authors", "a");
+		return cr;
+		//return cr.createAlias("categories", "c").createAlias("authors", "a");
 	}
 
 	@Override
@@ -51,6 +53,7 @@ public class BookDAOImpl implements BookDAO {
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) {
 		// sessionFactory.getCurrentSession().beginTransaction();
 		Criteria cr = setupAndGetCriteria();
+		cr.createAlias("categories", "c").createAlias("authors", "a");
 		for (Entry<Searchfields, String> entry : map.entrySet()) {
 			String key = entry.getKey().toString();
 
@@ -129,11 +132,17 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public String insertBook(Book book) {
+	//public String insertBook(Book book) throws IsbnAlreadyExistsException {
+	public String insertBook(Book book){
 		Object id = getSession().save(book);
-		if (id instanceof String){
+			
+		
+		//if (id instanceof String){
+		if (id != null && id instanceof String ){	
 			return (String) id;
 		} else {
+			// TODO Fehlerbehandlung, wenn Insert Book nicht funktioniert
+			//throw new IsbnAlreadyExistsException();
 			return null;
 		}
 		// TODO implement this
