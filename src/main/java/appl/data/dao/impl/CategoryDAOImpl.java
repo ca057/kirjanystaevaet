@@ -14,6 +14,7 @@ import appl.data.dao.CategoryDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import exceptions.data.EntityDoesNotExistException;
 
 @Repository
 public class CategoryDAOImpl implements CategoryDAO {
@@ -47,7 +48,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 		return getSession().createCriteria(Category.class).list();
 	}
 	@Override
-	public Category getCategoriesByExactName(String name) {
+	public Category getCategoriesByExactName(String name) throws EntityDoesNotExistException {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq("categoryName", name).ignoreCase());
 		Object result = cr.uniqueResult();
@@ -55,10 +56,9 @@ public class CategoryDAOImpl implements CategoryDAO {
 			Category cat = (Category) result;
 			return cat;
 		} else {
-			//TODO Fehlerbehandlung -> Category does not exist exception
+			throw new EntityDoesNotExistException();
 		}
 		
-		return null;
 	}
 
 
@@ -82,7 +82,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 
 	@Override
-	public Category getCategoryById(int id) {
+	public Category getCategoryById(int id) throws EntityDoesNotExistException {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq("categoryID", id));
 		Object result = cr.uniqueResult();
@@ -90,9 +90,8 @@ public class CategoryDAOImpl implements CategoryDAO {
 			Category cat = (Category) result;
 			return cat;
 		} else {
-			//TODO Fehlerbehandlung -> Category does not exist exception
+			throw new EntityDoesNotExistException();
 		}
-		return null;
 	}
 
 

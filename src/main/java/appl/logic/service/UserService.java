@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 import appl.data.enums.Userfields;
 import appl.data.items.User;
-import exceptions.data.PrimaryKeyViolation;
+import exceptions.data.PrimaryKeyViolationException;
 
 @Service
 public interface UserService {
 
-	int registerNewUserAccount(Map<Userfields, String> data) throws PrimaryKeyViolation;
+	int registerNewUserAccount(Map<Userfields, String> data) throws PrimaryKeyViolationException;
 
 	/**
 	 * Returns null (better Exception?) if User not found.

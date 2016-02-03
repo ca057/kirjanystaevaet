@@ -13,7 +13,7 @@ import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
 import appl.data.items.User;
 import appl.logic.service.UserService;
-import exceptions.data.PrimaryKeyViolation;
+import exceptions.data.PrimaryKeyViolationException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 //	PasswordEncoder pswEncoder;
 
 	@Override
-	public int registerNewUserAccount(Map<Userfields, String> data) throws PrimaryKeyViolation {
+	public int registerNewUserAccount(Map<Userfields, String> data) throws PrimaryKeyViolationException {
 		// TODO geht das schöner? Momentan hier, um admin im foreach nicht
 		// ständig zu überschreiben.
 		userBuilder.setRole(UserRoles.USER);
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			return userDao.insertUser(userBuilder.createUser());
 		} catch (Exception e) {
-			throw new PrimaryKeyViolation("Object could not be saved to database: " + e.getMessage());
+			throw new PrimaryKeyViolationException("Object could not be saved to database: " + e.getMessage());
 		}
 	}
 

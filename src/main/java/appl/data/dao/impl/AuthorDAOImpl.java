@@ -2,6 +2,7 @@ package appl.data.dao.impl;
 
 import java.util.List;
 
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -15,6 +16,7 @@ import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
 import exceptions.data.AuthorNotFoundException;
+import exceptions.data.EntityDoesNotExistException;
 
 @Repository
 public class AuthorDAOImpl implements AuthorDAO {
@@ -60,38 +62,18 @@ public class AuthorDAOImpl implements AuthorDAO {
 	}
 
 	@Override
-	public Author getAuthorByID(int authorID) throws AuthorNotFoundException {
-		//System.out.println("in getAuthorByID \n id = " + authorID + "\n");
+	public Author getAuthorByID(int authorID) throws EntityDoesNotExistException {
 		Criteria cr = setupAndGetCriteria();
-		//System.out.println("Got the criteria\n");
 		cr.add(Restrictions.eq("authorId", authorID));
-		//System.out.println("added restrictions\n");
 		Object result = cr.uniqueResult();
-		//System.out.println("Got result\n");
-		//System.out.println(result.toString()); // NullPointer
 		if ( result != null){
 			Author author = (Author) result;
-		//	System.out.println("in getAuthorById, got Author: " + author.toString()+ "\n");
 			return author;
 		} else {
-			throw new AuthorNotFoundException();
-			//TODO Fehlerbehandlung -> Author does not exist exception
-			//System.out.println("Author wurde nicht in der DB gefunden\n\n");
-		}
-		/*
-		System.out.println("Versuch über hql\n\n");
-		Query query = getSession().createQuery("select nameL from Author where authorId='15'");
-		List<String> fromDB = query.list();
-		System.out.println("got book from db\n\nsize is : " + fromDB.size());
+			throw new EntityDoesNotExistException();
 		
-		for (String a : fromDB){
-			System.out.println("Authors printen\n" + a);
-			
 		}
-		*/
-		//System.out.println("BEfore I return null\n\n");
-		
-		//return null;
+
 	}
 
 	@Override
