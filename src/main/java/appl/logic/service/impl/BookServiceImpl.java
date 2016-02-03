@@ -27,12 +27,13 @@ import appl.data.items.Category;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.AuthorNotFoundException;
+import exceptions.data.IsbnAlreadyExistsException;
 
 @Service
 public class BookServiceImpl implements BookService {
 
 	@Autowired
-	BookDAO dao; // TODO umbennen in bookDao
+	BookDAO bookDao; 
 	@Autowired
 	AuthorDAO authorDao;
 	@Autowired 
@@ -41,7 +42,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<Book> getAllBooks() {
-		return dao.getAllBooks();
+		return bookDao.getAllBooks();
 	}
 
 	// ToDo die MEthode funktioniert nur darüber, dass man über CategoryNAme bekommt, nicht über die ID, -> Umbenennen!
@@ -49,7 +50,7 @@ public class BookServiceImpl implements BookService {
 	public List<Book> getBooksByCategory(String category) {
 		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.categoryName, category);
-		return dao.getBooksByMetadata(map);
+		return bookDao.getBooksByMetadata(map);
 		//return dao.getBooksByCategory(category);
 		//return null;
 	}
@@ -61,7 +62,7 @@ public class BookServiceImpl implements BookService {
 		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.isbn, isbn);
 
-		List<Book> bookList = dao.getBooksByMetadata(map);
+		List<Book> bookList = bookDao.getBooksByMetadata(map);
 		if (bookList.size() > 1){
 			// TODO Fehlerbehandlung
 			System.out.println("Something went totally wrong");
@@ -85,7 +86,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) {
-		return dao.getBooksByMetadata(map);
+		return bookDao.getBooksByMetadata(map);
 	}
 	
 	private Set<String> splitTermByWhitespaces (String term){
@@ -204,7 +205,9 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	//public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) throws IsbnAlreadyExistsException {
 	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) {
+	
 		BookBuilder bb = new BookBuilderImpl();
 		double price = Double.parseDouble(map.get(Searchfields.price));
 		int pages = Integer.parseInt(map.get(Searchfields.pages));
@@ -240,7 +243,7 @@ public class BookServiceImpl implements BookService {
 			}
 		Book newBook = bb.setAuthors(authors).setIsbn(map.get(Searchfields.isbn)).setTitle(map.get(Searchfields.title)).setDescription(map.get(Searchfields.description)).setPrice(price).setPublisher(map.get(Searchfields.publisher)).setPubdate(map.get(Searchfields.pubdate)).setEdition(map.get(Searchfields.edition)).setPages(pages).setCategories(categories).createBook();
 
-		dao.insertBook(newBook);
+		bookDao.insertBook(newBook);
 		
 		
 		

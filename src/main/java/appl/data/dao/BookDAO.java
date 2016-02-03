@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
+import exceptions.data.IsbnAlreadyExistsException;
 
 @Transactional
 public interface BookDAO {
@@ -15,7 +16,9 @@ public interface BookDAO {
 
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map);
 
+	//public String insertBook(Book book)throws IsbnAlreadyExistsException;
 	public String insertBook(Book book);
+
 
 	public void deleteBook(Book book);
 

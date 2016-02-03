@@ -9,6 +9,7 @@ import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
 import exceptions.data.AuthorMayExistException;
+import exceptions.data.IsbnAlreadyExistsException;
 
 public interface BookService {
 	//Category Methoden
@@ -59,6 +60,6 @@ public interface BookService {
 	 * @param authorIds
 	 * @param categoryNames Es dürfen nur Kategories verwendet werden, die es schon gibt. Will man eine Category angeben, die es noch nicht gibt, muss diese Vorher extra angelegt werden
 	 */
-	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) ;
-
+	//public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds)throws IsbnAlreadyExistsException ;
+	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds);
 }
