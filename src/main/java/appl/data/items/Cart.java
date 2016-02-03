@@ -3,10 +3,9 @@ package appl.data.items;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Scope("session")
+//@Scope("session")
 @Component
 public class Cart {
 
