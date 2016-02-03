@@ -40,8 +40,8 @@ import exceptions.data.DatabaseInitializationException;
 @EnableTransactionManagement
 public class RootConfig {
 
-	 @Autowired
-	 Initialization init;
+	@Autowired
+	Initialization init;
 
 	@Bean
 	public PlatformTransactionManager txManager()
@@ -73,37 +73,15 @@ public class RootConfig {
 
 	private Properties createProperties() {
 		Properties prop = new Properties();
-		// FIXME Wie kann man das besser behandeln?
-		// property = update
-		// boolean createDatabase = true;
-		// if (createDatabase) {
-
 		prop.setProperty("hibernate.hbm2ddl.auto", "create");
-		// prop.setProperty("hibernate.hbm2ddl.import_files", "/import.sql");
-		// }
 		prop.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
 		prop.setProperty("hibernate.connection.url", "jdbc:h2:./database/kirjanystaevaet");
-		// TODO Brauchen wir das?
-		// prop.setProperty("hibernate.connection.username", "");
-		// prop.setProperty("hibernate.connection.password", "");
-		// TODO ausgeklammert, um default-Werte zu verwenden
-		// prop.setProperty("hibernate.c3p0.min_size", "5");
-		// prop.setProperty("hibernate.c3p0.max_size", "20");
-		// prop.setProperty("hibernate.c3p0.timeout", "300");
-		// prop.setProperty("hibernate.c3p0.max_statements", "50");
 		prop.setProperty("hibernate.c3p0.idle_test_period", "3000");
-		// TODO: Theoretisch auch max_connection_age /
-		// max_idle_time_excess_connections
 		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 		prop.setProperty("hibernate.current_session_context_class",
 				"org.springframework.orm.hibernate5.SpringSessionContext");
 		prop.setProperty("show_sql", "true");
 		return prop;
 	}
-
-	// @Bean
-	// public EntityManager entityManagerFactory() {
-	// return entityManagerFactoryBean().getObject().createEntityManager();
-	// }
 
 }
