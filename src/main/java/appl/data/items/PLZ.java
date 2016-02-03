@@ -5,14 +5,15 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "plz", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "postcode") })
+@Table(name = "plz", schema = "public")
 public class PLZ {
+	private int plzId;
 	private String postcode;
 	private String place;
 
@@ -20,15 +21,24 @@ public class PLZ {
 	private Set<User> users;
 
 	@Id
-	@GeneratedValue
-	@Column(name = "POSTCODE", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "PLZID")
+	public int getPlzId() {
+		return plzId;
+	}
+
+	@Column(name = "postcode", unique = false, nullable = false)
 	public String getPostcode() {
 		return postcode;
 	}
 
-	@Column(name = "PLACE", unique = true, nullable = false)
+	@Column(name = "place", unique = false, nullable = false)
 	public String getPlace() {
 		return place;
+	}
+
+	public void setPlzId(int plzId) {
+		this.plzId = plzId;
 	}
 
 	public void setPostcode(String postcode) {
