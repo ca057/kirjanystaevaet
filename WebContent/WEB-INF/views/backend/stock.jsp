@@ -11,7 +11,7 @@
 				<form action="bestand/kategorien/add" method="POST">
 					<label for="kategorien-anlegen-input">Neue Kategorie:</label>
 					<input type="text" placeholder="Name der Kategorie" id="kategorien-anlegen-input" required />
-					<button type="submit" value="add-category">Katgorie anlegen</button>
+					<button type="submit" value="newCategory">Katgorie anlegen</button>
 					<sec:csrfInput/>
 				</form>
 			<h4 id="kategorien-aendern">Bestehende Kategorie ändern</h4>
