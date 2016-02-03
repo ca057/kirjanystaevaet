@@ -11,7 +11,7 @@ public interface BookBuilder {
 	
 	public BookBuilder setTitle (String title);
 	
-	public BookBuilder setDescription (String descriptiont);
+	public BookBuilder setDescription (String description);
 	
 	public BookBuilder setPrice (double price );
 	

@@ -253,7 +253,7 @@ public class QueryFun {
 			categories.add(category.getCategoryID());
 			
 			Map<Searchfields, String> dataMap = new HashMap<Searchfields, String>();
-			dataMap.put(Searchfields.isbn, "00006700");
+			dataMap.put(Searchfields.isbn, "08006700");
 			dataMap.put(Searchfields.description, "This is a TestTextBook");
 			dataMap.put(Searchfields.edition, "1");
 			dataMap.put(Searchfields.pages, "555");
