@@ -19,7 +19,7 @@ Im Initialization-Bean
 
 ### Data-Dump?
 
-kommt noch. Zu beachten: PLZ eingefügt und Anpassung, da Hibernate die Spalten alphabetisch ordnet.
+kommt noch. Zu beachten: PLZ eingefügt und Anpassung, da Hibernate die Spalten alphabetisch ordnet. Muss in den Properties von Hibernate nicht extra angegeben werden, da automatisch nach import.sql an spezieller Stelle gesucht wird.
 
 ### ID / GeneratedValues
 
