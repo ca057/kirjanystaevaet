@@ -9,6 +9,7 @@ import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
 import exceptions.data.AuthorMayExistException;
+import exceptions.data.CategoryExistsException;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
 import exceptions.data.IsbnAlreadyExistsException;
@@ -28,7 +29,13 @@ public interface BookService {
 	public List<Category> getAllCategories();
 
 	// Insert
-	public void insertCategory(String name);
+	/**
+	 * 
+	 * @param name
+	 * @return Die neu erzeugte ID
+	 * @throws CategoryExistsException Wenn es eine Category mit exakt demselben Namen schon gibt. Das darf nicht sein.
+	 */
+	public int insertCategory(String name) throws CategoryExistsException;
 	
 	// Update
 	

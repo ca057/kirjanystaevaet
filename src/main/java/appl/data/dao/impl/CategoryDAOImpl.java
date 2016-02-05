@@ -71,8 +71,9 @@ public class CategoryDAOImpl implements CategoryDAO {
 	}
 
 	@Override
-	public void insertCategory(Category category) {
-		// TODO implement this!
+	public int insertCategory(Category category) {
+		int id = (int) getSession().save(category);
+		return id;
 	}
 
 	@Override

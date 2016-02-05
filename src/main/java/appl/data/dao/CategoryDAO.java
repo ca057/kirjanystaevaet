@@ -21,7 +21,7 @@ public interface CategoryDAO {
 	
 	public Category getCategoryById(int id) throws EntityDoesNotExistException;
 
-	public void insertCategory(Category category);
+	public int insertCategory(Category category);
 
 	public void updateCategory(Book book, Map<Searchfields, String> map);
 

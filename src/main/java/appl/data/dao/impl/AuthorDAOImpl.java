@@ -44,21 +44,26 @@ public class AuthorDAOImpl implements AuthorDAO {
 
 	@Override
 	public List<Author> getAuthors() {
-		// TODO implement this!
 		return getSession().createCriteria(Author.class).list();
 
 	}
 
 	@Override
 	public List<Author> getAuthorsByNameF(String nameF) {
-		// TODO implement this!
-		return null;
+		Criteria cr = setupAndGetCriteria();
+		cr.add(Restrictions.ilike("nameF", nameF));
+		List<Author> authors = (List<Author>) cr.list();
+		
+		return authors;
 	}
 
 	@Override
 	public List<Author> getAuthorsByNameL(String nameL) {
-		// TODO implement this!
-		return null;
+		Criteria cr = setupAndGetCriteria();
+		cr.add(Restrictions.ilike("nameL", nameL));
+		List<Author> authors = (List<Author>) cr.list();
+		
+		return authors;
 	}
 
 	@Override
@@ -82,12 +87,8 @@ public class AuthorDAOImpl implements AuthorDAO {
 		int id = (int) getSession().save(author);
 		System.out.println("\n\n authorDao,´.insertAuthor nach dem save \n\n id = " + id);
 		System.out.println("\nNochmal den Author checken\n" + author.toString());
-		
-		// Hier ne Abfrage machen, um zu sehen, ob der in der Datenbank ist
-		//Author fromDB = getAuthorByID(id);
-		//System.out.println("\n\n author nochmal aus DB geholt\n" + fromDB.toString() );
+
 		return id;
-		// TODO Auto-generated method stub
 	}
 
 	@Override

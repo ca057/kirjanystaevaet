@@ -29,6 +29,7 @@ import appl.data.items.Category;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.AuthorNotFoundException;
+import exceptions.data.CategoryExistsException;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
 import exceptions.data.IsbnAlreadyExistsException;
@@ -79,9 +80,21 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void insertCategory(String name) {
+	public int insertCategory(String name) throws CategoryExistsException {
+		// Prüfen, ob es Category schon gibt
 		
-		
+		try{
+			Category cat = categoryDao.getCategoriesByExactName(name);
+		} catch(EntityDoesNotExistException e){
+			System.out.println("Service.inserCategory im catch-Block");
+			CategoryBuilder cb = new CategoryBuilderImpl();
+			Category cat = cb.setCategoryName(name).createCatgory();
+			int id = categoryDao.insertCategory(cat);
+			return id;
+			
+		}
+		throw new CategoryExistsException();
+
 	}
 
 	/*
@@ -183,9 +196,10 @@ public class BookServiceImpl implements BookService {
 	*/
 	
 	@Override
-	public List<Author> getAuthorByExactName(String NameF, String NameL) {
+	public List<Author> getAuthorByExactName(String nameF, String nameL) {
+		List<Author> authors = authorDao.getAuthorByExactNames(nameF, nameL);
 		
-		return null;
+		return authors;
 	}
 
 	@Override

@@ -21,6 +21,7 @@ import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
+import exceptions.data.CategoryExistsException;
 import exceptions.data.EntityDoesNotExistException;
 import exceptions.data.PrimaryKeyViolationException;
 
@@ -46,6 +47,14 @@ public class QueryFun {
 		BookService service = ctx.getBean(BookService.class);
 		
 		service.getCategoryByExactName("Some Shit");
+	}
+	public void testCategoryInsert(ApplicationContext ctx) throws CategoryExistsException{
+		BookService service = ctx.getBean(BookService.class);
+		service.insertCategory("knitting");
+		List<String> categoryNames = service.getAllCategoryNames();
+		for (String s : categoryNames){
+			System.out.println(s);
+		}
 	}
 /*
 	public void doSomeOrderTesting(ApplicationContext ctx) {
