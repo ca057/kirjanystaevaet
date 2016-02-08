@@ -41,11 +41,27 @@ public class SearchController {
 		return "search";
 	}
 
+	/**
+	 * Processes the given list of search terms. Checks each term, if it is not
+	 * null or empty and proceeds with the trimmed {@code String}. If the
+	 * {@code all} is passed with an non-empty string, an open search is started
+	 * and all other terms are ignored. Otherwise a specific search is started
+	 * with the passed parameters except {@code all}.
+	 * 
+	 * @param all
+	 * @param title
+	 * @param authorFirst
+	 * @param authorLast
+	 * @param isbn
+	 * @param year
+	 * @param category
+	 * @return the result of the open or specific search
+	 */
 	private List<Book> processSearchTerms(String all, String title, String authorFirst, String authorLast, String isbn,
 			String year, String category) {
 		if (all != null && !all.isEmpty()) {
-			queryTerm = all;
-			return bookService.getBooksByOpenSearch(all);
+			queryTerm = all.trim();
+			return bookService.getBooksByOpenSearch(all.trim());
 		} else {
 			Map<Searchfields, String> searchMap = new HashMap<Searchfields, String>();
 			if (title != null && !title.isEmpty()) {
