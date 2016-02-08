@@ -47,41 +47,29 @@ public class SearchController {
 			queryTerm = all;
 			return bookService.getBooksByOpenSearch(all);
 		} else {
-			String searchTitle = "";
-			String searchAuthorFirst = "";
-			String searchAuthorLast = "";
-			String searchYear = "";
-			String searchIsbn = "";
-			String searchCategory = "";
 			Map<Searchfields, String> searchMap = new HashMap<Searchfields, String>();
 			if (title != null && !title.isEmpty()) {
-				searchTitle = title;
-				searchMap.put(Searchfields.title, searchTitle);
-				queryTerm += " Titel: " + title;
+				searchMap.put(Searchfields.title, title.trim());
+				queryTerm += " Titel: " + title.trim();
 			}
 			if (authorFirst != null && !authorFirst.isEmpty()) {
-				searchAuthorFirst = authorFirst;
-				searchMap.put(Searchfields.nameF, searchAuthorFirst);
-				queryTerm += " Vorname: " + authorFirst;
+				searchMap.put(Searchfields.nameF, authorFirst.trim());
+				queryTerm += " Vorname: " + authorFirst.trim();
 			}
 			if (authorLast != null && !authorLast.isEmpty()) {
-				searchAuthorLast = authorLast;
-				searchMap.put(Searchfields.nameL, searchAuthorLast);
+				searchMap.put(Searchfields.nameL, authorLast.trim());
 				queryTerm += " Nachname: " + authorLast;
 			}
 			if (isbn != null && !isbn.isEmpty()) {
-				searchIsbn = isbn;
-				searchMap.put(Searchfields.isbn, searchIsbn);
+				searchMap.put(Searchfields.isbn, isbn.trim());
 				queryTerm += " ISBN: " + isbn;
 			}
 			if (year != null && !year.isEmpty()) {
-				searchYear = year;
-				searchMap.put(Searchfields.pubdate, searchYear);
+				searchMap.put(Searchfields.pubdate, year.trim());
 				queryTerm += " Jahr: " + year;
 			}
 			if (category != null && !category.isEmpty()) {
-				searchCategory = category;
-				searchMap.put(Searchfields.categoryName, searchCategory);
+				searchMap.put(Searchfields.categoryName, category.trim());
 				queryTerm += " Kategorie: " + category;
 			}
 			return bookService.getBooksByMetadata(searchMap);
