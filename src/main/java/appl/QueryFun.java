@@ -67,6 +67,31 @@ public class QueryFun {
 			System.out.println(s);
 		}
 	}
+	public void testAuthorInsert(ApplicationContext ctx){
+		BookService service = ctx.getBean(BookService.class);
+		try {
+			service.insertAuthor("Madeleine", "Rosenhagen", true);
+		} catch (AuthorMayExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(1);
+		}
+		List<Author> authorNames = service.getAllAuthors();
+		System.out.println("Inserted Author\n\n");
+		for (Author a : authorNames){
+			System.out.println(a.getNameF() + " " + a.getNameL());
+		}
+	}
+	public void testAuthorDelete(ApplicationContext ctx){
+		BookService service = ctx.getBean(BookService.class);
+		List<Author> author = service.getAuthorByExactName("Madeleine", "Rosenhagen");
+		service.deleteAuthor(author.get(0));
+		List<Author> authorNames = service.getAllAuthors();
+		System.out.println("Deleted Author\n\n");
+		for (Author a : authorNames){
+			System.out.println(a.getNameF() + " " + a.getNameL());
+		}
+	}
 /*
 	public void doSomeOrderTesting(ApplicationContext ctx) {
 		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);

@@ -42,9 +42,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public List<Category> getCategories() {
-		// TODO implement this!
-		//Criteria cr = setupAndGetCriteria();
-		//cr.add
 		return getSession().createCriteria(Category.class).list();
 	}
 	@Override

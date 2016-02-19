@@ -93,7 +93,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 
 	@Override
 	public void deleteAuthor(Author author) {
-		// TODO Auto-generated method stub
+		getSession().delete(author);
 	}
 
 	@Override

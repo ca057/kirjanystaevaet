@@ -28,6 +28,9 @@ public class Main {
 		QueryFun qf = new QueryFun();
 		qf.testCategoryInsert(ctx);
 		qf.testCategoryDelete(ctx);
+		
+		qf.testAuthorInsert(ctx);
+		qf.testAuthorDelete(ctx);
 	}
 
 }

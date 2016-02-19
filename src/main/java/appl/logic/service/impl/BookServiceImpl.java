@@ -262,6 +262,10 @@ public class BookServiceImpl implements BookService {
 		return id;
 		
 	}
+	@Override
+	public void deleteAuthor(Author author){
+		authorDao.deleteAuthor(author);
+	}
 
 	@Override
 	public List<Book> getAllBooks() {

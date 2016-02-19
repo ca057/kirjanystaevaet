@@ -71,6 +71,8 @@ public interface BookService {
 	// Update
 	
 	// Delete
+	//TODO Was soll hier angegeben werden?
+	public void deleteAuthor(Author author);
 	
 	// Book Methoden
 	
