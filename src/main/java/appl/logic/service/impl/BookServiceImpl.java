@@ -398,6 +398,12 @@ public class BookServiceImpl implements BookService {
 		
 		
 	}
+	@Override
+	public void deleteBook(String isbn){
+		Book book = getBookByIsbn(isbn);
+		
+		
+	}
 
 	private Set<String> splitTermByWhitespaces (String term){
 		Set<String> terms = new HashSet<String>(Arrays.asList(term.split("\\s+")));

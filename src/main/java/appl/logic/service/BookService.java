@@ -104,5 +104,6 @@ public interface BookService {
 	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) throws PrimaryKeyViolationException, EntityDoesNotExistException, DatabaseException;
 	// Update
 	// Delete
+	public void deleteBook(String isbn);
 	
 }

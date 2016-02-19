@@ -149,7 +149,9 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public void deleteBook(Book book) {
+	public void deleteBook(String isbn) {
+		Book book = (Book) getSession().get(Book.class, isbn);
+		getSession().delete(book);
 		// TODO implement this
 	}
 
