@@ -25,7 +25,9 @@ public class Main {
 		//new QueryFun().testDao(ctx);
 		//new QueryFun().testBookInsert(ctx);
 		//new QueryFun().testExceptions(ctx);
-		new QueryFun().testCategoryInsert(ctx);
+		QueryFun qf = new QueryFun();
+		qf.testCategoryInsert(ctx);
+		qf.testCategoryDelete(ctx);
 	}
 
 }

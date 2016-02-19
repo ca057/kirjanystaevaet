@@ -89,13 +89,37 @@ public class BookServiceImpl implements BookService {
 			System.out.println("Service.inserCategory im catch-Block");
 			CategoryBuilder cb = new CategoryBuilderImpl();
 			Category cat = cb.setCategoryName(name).createCatgory();
+			List<Category> categories = categoryDao.getCategories();
+			System.out.println("List of all Categories\n\n");
+			for (Category c : categories){
+				System.out.println(c.getCategoryName() + " " + c.getCategoryID());
+			}
 			int id = categoryDao.insertCategory(cat);
+			System.out.println("In Bookservice.insertCtaegory name = " + name + " id = " + id);
 			return id;
 			
 		}
 		throw new CategoryExistsException();
 
 	}
+	public void deleteCategory(String name){
+		// Prüfen, ob Category vorhanden
+		/*try {
+			categoryDao.getCategoriesByExactName(name);
+		}
+		*/
+		
+		// Kategorie holen
+		try {
+			Category category = categoryDao.getCategoriesByExactName(name);
+			categoryDao.deleteCategory(category.getCategoryID());
+		} catch (EntityDoesNotExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
 
 	/*
 	@Override

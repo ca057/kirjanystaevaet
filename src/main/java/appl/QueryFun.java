@@ -50,8 +50,19 @@ public class QueryFun {
 	}
 	public void testCategoryInsert(ApplicationContext ctx) throws CategoryExistsException{
 		BookService service = ctx.getBean(BookService.class);
-		service.insertCategory("knitting");
+		service.insertCategory("stricken");
+		service.insertCategory("häkeln");
 		List<String> categoryNames = service.getAllCategoryNames();
+		System.out.println("Nach insert");
+		for (String s : categoryNames){
+			System.out.println(s);
+		}
+	}
+	public void testCategoryDelete(ApplicationContext ctx){
+		BookService service = ctx.getBean(BookService.class);
+		service.deleteCategory("stricken");
+		List<String> categoryNames = service.getAllCategoryNames();
+		System.out.println("Nach Delete\n\n");
 		for (String s : categoryNames){
 			System.out.println(s);
 		}

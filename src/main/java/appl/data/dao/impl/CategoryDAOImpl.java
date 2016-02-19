@@ -73,6 +73,8 @@ public class CategoryDAOImpl implements CategoryDAO {
 	@Override
 	public int insertCategory(Category category) {
 		int id = (int) getSession().save(category);
+		System.out.println("In categoryDao.insertCtaegory name = " + category.getCategoryName() + " id = " + id);
+
 		return id;
 	}
 
@@ -94,6 +96,11 @@ public class CategoryDAOImpl implements CategoryDAO {
 			throw new EntityDoesNotExistException();
 		}
 	}
+	public void deleteCategory(int id){
+		Category category = (Category) getSession().get(Category.class, id);			             
+		getSession().delete(category);
+	}
+
 
 
 	

@@ -43,7 +43,7 @@ public interface BookService {
 	
 	// Delete
 	
-	
+	public void deleteCategory(String name);
 	
 	
 	// Author Methoden

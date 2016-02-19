@@ -24,5 +24,7 @@ public interface CategoryDAO {
 	public int insertCategory(Category category);
 
 	public void updateCategory(Book book, Map<Searchfields, String> map);
+	
+	public void deleteCategory(int id);
 
 }
