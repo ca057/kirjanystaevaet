@@ -27,7 +27,7 @@ public class BackendStockController {
 
 	/**
 	 * Adds a new category with the name passed as request parameter and returns
-	 * the updated, specific backend view. POST request is needed.
+	 * a redirect to the basic stock management url. POST request is needed.
 	 * 
 	 * @param name
 	 *            the name as {@code String} of the new category
@@ -40,12 +40,12 @@ public class BackendStockController {
 		}
 		// TODO handle empty string
 		// TODO add new category
-		return "backend/stock";
+		return "redirect:/backend/bestand";
 	}
 
 	/**
-	 * Deletes the passed category as request parameters and return the specific
-	 * backend view. DELETE request is needed.
+	 * Deletes the passed category as request parameters and returns a redirect
+	 * to the basic stock management url. DELETE request is needed.
 	 * 
 	 * @param name
 	 *            the name as {@code String} of the category to delete
@@ -58,7 +58,7 @@ public class BackendStockController {
 		}
 		// TODO handle empty string
 		// TODO delete category
-		return "backend/stock";
+		return "redirect:/backend/bestand";
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class BackendStockController {
 	@RequestMapping(value = "/backend/bestand/autorinnen/add", method = RequestMethod.POST)
 	public String addAuthor() {
 		// TODO implement me
-		return "backend/stock";
+		return "redirect:/backend/bestand";
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class BackendStockController {
 	@RequestMapping(value = "/backend/bestand/autorinnen/edit", method = RequestMethod.POST)
 	public String editAuthor() {
 		// TODO implement me
-		return "backend/stock";
+		return "redirect:/backend/bestand";
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class BackendStockController {
 	@RequestMapping(value = "/backend/bestand/autorinnen/delete", method = RequestMethod.DELETE)
 	public String deleteAuthor() {
 		// TODO implement me
-		return "backend/stock";
+		return "redirect:/backend/bestand";
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class BackendStockController {
 	@RequestMapping(value = "/backend/bestand/buecher/add", method = RequestMethod.POST)
 	public String addBook() {
 		// TODO implement me
-		return "backend/stock";
+		return "redirect:/backend/bestand";
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class BackendStockController {
 	@RequestMapping(value = "/backend/bestand/buecher/edit", method = RequestMethod.POST)
 	public String editBook() {
 		// TODO implement me
-		return "backend/stock";
+		return "redirect:/backend/bestand";
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class BackendStockController {
 	@RequestMapping(value = "/backend/bestand/buecher/delete", method = RequestMethod.DELETE)
 	public String deleteBook() {
 		// TODO implement me
-		return "backend/stock";
+		return "redirect:/backend/bestand";
 	}
 
 }
