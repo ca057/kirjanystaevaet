@@ -34,7 +34,6 @@
 				<li><a href="<c:url value='/backend/bestand#kategorien' />" title="Kategorien verwalten">Kategorien</a>
 					<ul>
 						<li><a href="<c:url value='/backend/bestand#kategorien-anlegen' />" title="Neue Kategorie anlegen">Anlegen</a></li>
-						<li><a href="<c:url value='/backend/bestand#kategorien-aendern' />" title="Bestehende Kategorie ändern">Ändern</a></li>
 						<li><a href="<c:url value='/backend/bestand#kategorien-loeschen' />" title="Bestehende Kategorie löschen">Löschen</a></li>
 					</ul>
 				</li>
