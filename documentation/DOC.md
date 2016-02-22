@@ -103,3 +103,6 @@ Alle anonymen Gäste bekommen die Möglichkeit, sich anzumelden. Wer nicht anony
 ### Books
 Dürfen Books gelöscht werden: Problem Abhängigkeiten mit der Orderhistorie
 Es gibt eine Methode zum löschen, sie sollte nur nicht standardmäßig verwendet werden. Stattdessen wird ein weiteres Feld `boolean available` eingeführt, dass angibt, ob ein Buch verkauft werden kann oder nicht. Hierbei gilt zu beachten, dass das ein Unterschied zu `int stock = 0 ` ist, was nur bedeutet, dass das Buch gerade nicht auf Lager ist, aber prinzipiell schon verkauft werden würde.
+
+## Builder
+Im create die Variablen wieder leeren, falls der Builder nochmal verwendet wird.
