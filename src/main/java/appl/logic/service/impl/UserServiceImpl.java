@@ -24,8 +24,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserBuilder userBuilder;
 
-//	@Autowired
-//	PasswordEncoder pswEncoder;
+	@Autowired
+	PasswordEncoder pswEncoder;
 
 	@Override
 	public int registerNewUserAccount(Map<Userfields, String> data) throws PrimaryKeyViolation {
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
 			// TODO implement this
 			break;
 		case password:
-			// userBuilder.setPassword(pswEncoder.encode(information));
+			userBuilder.setPassword(pswEncoder.encode(information));
 			break;
 		case userId:
 			// TODO implement this

@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import appl.data.builder.UserBuilder;
-import appl.data.enums.UserRoles;
 import exceptions.data.ErrorMessageHelper;
 
 /**
@@ -88,7 +87,7 @@ public class User {
 	 * @see {@link PLZ}
 	 */
 	public User(String password, String name, String surname, String email, String street, String streetnumber, PLZ plz,
-			UserRoles role, HashSet<Order> orders) {
+			String role, HashSet<Order> orders) {
 		setPassword(password);
 		setName(surname);
 		setSurname(surname);
@@ -166,34 +165,34 @@ public class User {
 	}
 
 	private void setPassword(String password) {
-		if (role == null) {
+		if (password == null) {
 			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("Password"));
 		}
 		this.password = password;
 	}
 
 	private void setName(String name) {
-		if (role == null) {
+		if (name == null) {
 			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("First Name"));
 		}
 		this.name = name;
 	}
 
 	private void setSurname(String surname) {
-		if (role == null) {
+		if (surname == null) {
 			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("Surname"));
 		}
 		this.surname = surname;
 	}
 
 	private void setEmail(String email) {
-		if (role == null) {
+		if (email == null) {
 			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("E-Mail"));
 		}
 		this.email = email;
 	}
 
-	private void setRole(UserRoles role) {
+	private void setRole(String role) {
 		if (role == null) {
 			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("UserRole"));
 		}

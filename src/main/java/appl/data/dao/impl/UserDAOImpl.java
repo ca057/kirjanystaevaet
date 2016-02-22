@@ -54,12 +54,12 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User getUserByEMail(String email) {
-		Criteria cr = setupAndGetCriteria();
-		cr.add(Restrictions.eq(Userfields.email.toString(), email));
-		User user = (User) cr.uniqueResult();
-		// User user = (User) getSession()
-		// .createQuery("from User where " + Userfields.email.toString() + "='"
-		// + email + "'").uniqueResult();
+//		Criteria cr = setupAndGetCriteria();
+//		cr.add(Restrictions.eq(Userfields.email.toString(), email));
+//		User user = (User) cr.uniqueResult();
+		 User user = (User) getSession()
+		 .createQuery("from User where " + Userfields.email.toString() + "='"
+		 + email + "'").uniqueResult();
 		if (user == null) {
 			System.err.println("no user found with this email: " + email);
 		}
@@ -68,9 +68,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public int insertUser(User user) throws PrimaryKeyViolation {
-		Integer id = (Integer) getSession().save(user);
-		System.out.println("Alle user: " + getUsers());
-		return id;
+		return (Integer) getSession().save(user);
 	}
 
 	@Override
