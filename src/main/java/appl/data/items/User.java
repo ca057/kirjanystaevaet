@@ -13,9 +13,34 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import appl.data.builder.UserBuilder;
 import appl.data.enums.UserRoles;
 import exceptions.data.ErrorMessageHelper;
 
+/**
+ * This class represents users of any kind (for example user as well as
+ * administrators).
+ * 
+ * User is a POJO marked as persistent entity with table name "user". It
+ * represents a user object with different variables:
+ * <ul>
+ * <li>password</li>
+ * <li>name</li>
+ * <li>surname</li>
+ * <li>email</li>
+ * <li>street</li>
+ * <li>streetnumber</li>
+ * <li>role</li>
+ * </ul>
+ * Lists of {@link Order}s are joined via many-to-many connections. {@link PLZ}
+ * is joined via many-to-one connections.
+ * 
+ * The {@code password} will not be encrypted, so a prior handling of this issue
+ * is necessary!
+ * 
+ * @author Johannes
+ *
+ */
 @Entity
 @Table(name = "user", schema = "public")
 public class User {
@@ -33,6 +58,35 @@ public class User {
 	private User() {
 	}
 
+	/**
+	 * Constructor to instantiate an object of the type {@code User}. It is
+	 * highly recommended to use it only in conjunction with an
+	 * {@code UserBuilder}.
+	 * 
+	 * The password will not be encrypted by this constructor.
+	 * 
+	 * @param password
+	 *            The password to access the account - must not be empty
+	 * @param name
+	 *            the first name of the person - must not be empty
+	 * @param surname
+	 *            the surname of the person - must not be empty
+	 * @param email
+	 *            the email of the person - must not be empty
+	 * @param street
+	 *            the street name
+	 * @param streetnumber
+	 *            the street number
+	 * @param plz
+	 *            the post code as object
+	 * @param role
+	 *            the role of the person
+	 * @param orders
+	 *            orders made by the person
+	 * 
+	 * @see {@link UserBuilder}
+	 * @see {@link PLZ}
+	 */
 	public User(String password, String name, String surname, String email, String street, String streetnumber, PLZ plz,
 			UserRoles role, HashSet<Order> orders) {
 		setPassword(password);
@@ -120,7 +174,7 @@ public class User {
 
 	private void setName(String name) {
 		if (role == null) {
-			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("Name"));
+			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("First Name"));
 		}
 		this.name = name;
 	}
