@@ -1,9 +1,12 @@
 package web.controllers.backend;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import appl.logic.service.BookService;
 
 /**
  * 
@@ -13,6 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class BackendStockController {
+
+	private BookService service;
+
+	@Autowired
+	private void setBookService(BookService service) {
+		this.service = service;
+	}
 
 	/**
 	 * Handles a simple GET request and returns the name of the backend view for
