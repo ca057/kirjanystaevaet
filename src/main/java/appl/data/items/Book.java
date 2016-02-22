@@ -44,7 +44,7 @@ public class Book {
 	private String publisher;
 	private String pubdate;
 	private String edition;
-	private int pages;
+	private String pages;
 
 	private Set<Category> categories = new HashSet<Category>(0);
 	private Set<Author> authors = new HashSet<Author>(0);
@@ -69,7 +69,7 @@ public class Book {
 	 * @param authors
 	 */
 	public Book(String isbn, String title, String description, double price, String publisher, String pubdate,
-			String edition, int pages, Set<Category> categories, Set<Author> authors) {
+			String edition, String pages, Set<Category> categories, Set<Author> authors) {
 		this.isbn = isbn;
 		this.title = title;
 		this.description = description;
@@ -119,7 +119,7 @@ public class Book {
 	}
 
 	@Column(name = "pages", nullable = true, length = 8)
-	public int getPages() {
+	public String getPages() {
 		return pages;
 	}
 
@@ -170,7 +170,7 @@ public class Book {
 		this.edition = edition;
 	}
 
-	public void setPages(int pages) {
+	public void setPages(String pages) {
 		this.pages = pages;
 	}
 

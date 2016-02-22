@@ -93,15 +93,13 @@ public interface BookService {
 	// Insert
 	/**
 	 * 
-	 * @param map
-	 * @param authorIds
-	 * @param categoryNames Es dürfen nur Kategories verwendet werden, die es schon gibt. Will man eine Category angeben, die es noch nicht gibt, muss diese Vorher extra angelegt werden
-	 * @throws PrimaryKeyViolationException 
-	 * @throws EntityDoesNotExistException Wird geworfen, wenn AuthorIds und CategoryIds übrgeben werden, die nicht existieren
-	 * @throws DatabaseException Bei allgemeinen Datenbankfehlern
+	 * @param map contains information about simple fields
+	 * @param authorIds may only contain ids of existing authors
+	 * @param categoryIds may only contain ids of existing categories
+	 * @throws DatabaseException thrown when categories or authors do not exist in the Database, also thrown in case of general Database Errors. Errormessage gives more Details.
 	 */
 	//public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds)throws IsbnAlreadyExistsException ;
-	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) throws PrimaryKeyViolationException, EntityDoesNotExistException, DatabaseException;
+	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) throws DatabaseException;
 	// Update
 	// Delete
 	public void deleteBook(String isbn);

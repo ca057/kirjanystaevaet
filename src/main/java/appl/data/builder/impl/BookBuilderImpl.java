@@ -17,7 +17,7 @@ public class BookBuilderImpl implements BookBuilder{
 	private String publisher;
 	private String pubdate;
 	private String edition;
-	private int pages;
+	private String pages;
 	private Set<Author> authors;
 	private Set<Category> categories;
 
@@ -68,7 +68,7 @@ public class BookBuilderImpl implements BookBuilder{
 	}
 
 	@Override
-	public BookBuilder setPages(int pages) {
+	public BookBuilder setPages(String pages) {
 		this.pages = pages;
 		return this;
 	}

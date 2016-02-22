@@ -129,11 +129,7 @@ public class QueryFun {
 				e.printStackTrace();
 				System.exit(1);
 
-			} catch (PrimaryKeyViolationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.exit(1);
-
+			
 			} catch (DatabaseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

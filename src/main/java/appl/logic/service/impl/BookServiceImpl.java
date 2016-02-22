@@ -32,6 +32,7 @@ import exceptions.data.AuthorNotFoundException;
 import exceptions.data.CategoryExistsException;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
+import exceptions.data.ErrorMessageHelper;
 import exceptions.data.IsbnAlreadyExistsException;
 import exceptions.data.PrimaryKeyViolationException;
 
@@ -369,41 +370,63 @@ public class BookServiceImpl implements BookService {
 	
 	@Override
 	//public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) throws IsbnAlreadyExistsException {
-	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) throws PrimaryKeyViolationException, EntityDoesNotExistException, DatabaseException {
+	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) throws DatabaseException {
 	
 		// Map abfragen, ob alle obligatorischen Angaben vorhanden sind
 		if(map.get(Searchfields.isbn) == null){
-			//TODO Fehlerbehandlung, Errorcode?
+			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("Isbn"));
 		}
 		if(map.get(Searchfields.title) == null){
-			//TODO Fehlerbehandlung, Errorcode?
+			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("Title"));
+		}
+		if(map.get(Searchfields.price) == null){
+			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("Price"));
+		}
+		if(authorIds == null || authorIds.size() == 0){
+			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("AuthorIds"));
+
+		}
+		if(categoryIds == null || categoryIds.size() == 0){
+			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("CategoryIds"));
+
 		}
 		
-		
+		if (map.get(Searchfields.pages) != null){
+			if (!containsOnlyNumbers(map.get(Searchfields.pages))){
+				throw new IllegalArgumentException(ErrorMessageHelper.mayContainOnlyNumbers("Pages"));
+			}
+		}
 		
 		BookBuilder bb = new BookBuilderImpl();
 		double price = Double.parseDouble(map.get(Searchfields.price));
-		int pages = Integer.parseInt(map.get(Searchfields.pages));
+
 		
 		Set<Category> categories = new HashSet<Category>();
 		for (int i : categoryIds){
-			categories.add(categoryDao.getCategoryById(i));
+			try{
+				categories.add(categoryDao.getCategoryById(i));
+			}catch(EntityDoesNotExistException e){
+				throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category" ));
+			}
 		}
-		//System.out.println("in service.insertBook bevor die Autoren zusammen gesammelt werden\n\n" );
 		
 		Set<Author> authors = new HashSet<Author>();
 	
 		for (int i : authorIds){
-			authors.add(authorDao.getAuthorByID(i));
+			try{
+				authors.add(authorDao.getAuthorByID(i));
+			} catch(EntityDoesNotExistException e){
+				throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Author"));
+			}
 		}
-		Book newBook = bb.setAuthors(authors).setIsbn(map.get(Searchfields.isbn)).setTitle(map.get(Searchfields.title)).setDescription(map.get(Searchfields.description)).setPrice(price).setPublisher(map.get(Searchfields.publisher)).setPubdate(map.get(Searchfields.pubdate)).setEdition(map.get(Searchfields.edition)).setPages(pages).setCategories(categories).createBook();
+		Book newBook = bb.setAuthors(authors).setIsbn(map.get(Searchfields.isbn)).setTitle(map.get(Searchfields.title)).setDescription(map.get(Searchfields.description)).setPrice(price).setPublisher(map.get(Searchfields.publisher)).setPubdate(map.get(Searchfields.pubdate)).setEdition(map.get(Searchfields.edition)).setPages(map.get(Searchfields.pages)).setCategories(categories).createBook();
 	
 		try {
 			bookDao.insertBook(newBook);
 		} catch (ConstraintViolationException e){
-			throw new PrimaryKeyViolationException();
+			throw new DatabaseException(ErrorMessageHelper.primaryKeyViolation());
 		} catch (HibernateException e){
-			throw new DatabaseException();
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError("Book could not be inserted"));
 		}
 		
 		
@@ -429,6 +452,13 @@ public class BookServiceImpl implements BookService {
 		s = s.replaceAll("[^a-zA-Z0-9]", "");
 		//System.out.println(s);
 		return s;
+	}
+	
+	private boolean containsOnlyNumbers(String s){
+		if (s.matches("[0-9]+")){
+			return true;
+		}
+		return false;
 	}
 
 	/*

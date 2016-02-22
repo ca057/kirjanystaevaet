@@ -21,7 +21,7 @@ public interface BookBuilder {
 	
 	public BookBuilder setEdition (String edition);
 	
-	public BookBuilder setPages (int pages);
+	public BookBuilder setPages (String pages);
 	
 	public BookBuilder setAuthors (Set<Author> authors);
 	
