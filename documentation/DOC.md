@@ -15,25 +15,29 @@ Alle anderen setze ich auf die `.gitignore` (auch das PDF, damit es keine Proble
 
 ### Standard-Admin?
 
-kommt noch.
+Im Initialization-Bean
 
 ### Data-Dump?
 
-kommt noch.
+kommt noch. Zu beachten: PLZ eingefÃ¼gt und Anpassung, da Hibernate die Spalten alphabetisch ordnet. Muss in den Properties von Hibernate nicht extra angegeben werden, da automatisch nach import.sql an spezieller Stelle gesucht wird.
+
+### ID / GeneratedValues
+
+Strategy = Identity, weil Table etc. nicht geht bei Dump
 
 ## Sicherheit
 
 ### HTTPS
 
-Wäre produktiv gut, kann man im Bericht erwähnen.
+Wï¿½re produktiv gut, kann man im Bericht erwï¿½hnen.
 
-### Passwörter
+### Passwï¿½rter
 
-Sind mit BCrypt verschlüsselt. FunFact: Wird bei Login nicht entschlüsselt, sondern Usereingabe verschlüsselt und dann verglichen.
+Sind mit BCrypt verschlï¿½sselt. FunFact: Wird bei Login nicht entschlï¿½sselt, sondern Usereingabe verschlï¿½sselt und dann verglichen.
 
 ## Code-Interaktion
 
-Wir verwenden keine Message-Objekte, sondern Maps. Wäre bei großen Sachen zwar schöner, aber uns gerade zu umständlich.
+Wir verwenden keine Message-Objekte, sondern Maps. Wï¿½re bei groï¿½en Sachen zwar schï¿½ner, aber uns gerade zu umstï¿½ndlich.
 
 ## Views
 

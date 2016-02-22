@@ -20,14 +20,14 @@ import appl.data.items.Order;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.BookService;
-import appl.logic.service.CategoryService;
+import exceptions.data.AuthorMayExistException;
 
 public class QueryFun {
 
 	public void doSomeTesting2(ApplicationContext ctx) {
 		BookService service = ctx.getBean(BookService.class);
-		CategoryService ct = ctx.getBean(CategoryService.class);
-		System.out.println("Kategorien: " + ct.getAllCategoryNames());
+		//CategoryService ct = ctx.getBean(CategoryService.class);
+		//System.out.println("Kategorien: " + ct.getAllCategoryNames());
 		HashMap<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.categoryName, "php");
 		// map.put(Searchfields.title, "Architecture");
@@ -39,7 +39,7 @@ public class QueryFun {
 		System.out.println();
 		System.exit(0);
 	}
-
+/*
 	public void doSomeOrderTesting(ApplicationContext ctx) {
 		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
 		sessionFactory.getCurrentSession().beginTransaction();
@@ -47,10 +47,11 @@ public class QueryFun {
 		OrderDAO oDao = ctx.getBean(OrderDAO.class);
 		oDao.insertOrder(order);
 
-		// ToDo Orderabfragen
-
+		//ToDo Orderabfragen
+		
 	}
-
+	*/
+/*
 	public Order createOrderTestData() {
 		Set<Book> book = createTestData();
 		User user = createUserTestData();
@@ -58,6 +59,7 @@ public class QueryFun {
 		return order;
 
 	}
+	*/
 
 	public void doSomeTesting(SessionFactory sessionFactory) {
 		// Transaction: "Allows the application to define units of work, while
@@ -174,47 +176,113 @@ public class QueryFun {
 		// System.out.println(jdbc.queryForObject("select count(*) FROM
 		// PUBLIC.bookauthors", Integer.class));
 	}
-
-	public void testDao(ApplicationContext ctx) {
+	/*
+	public void testDao(ApplicationContext ctx){
 		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
 		BookService bookService = ctx.getBean(BookService.class);
 		CategoryService categoryService = ctx.getBean(CategoryService.class);
-
+		
 		List<String> allCategories = categoryService.getAllCategoryNames();
 		System.out.println("GetAllCategories-----------------------\n\n\n");
-		for (String s : allCategories) {
+		for (String s : allCategories){
 			System.out.println(s);
 		}
-
+		
+		
 		Book book = bookService.getBookByIsbn("0201-433 3-62");
 		System.out.println("GetBookByIsbn-------------------------------\n\n\n");
 		System.out.println(book.toString());
-
+		
 		List<Book> booksByCat = bookService.getBooksByCategory("Linguistik");
 
 		System.out.println("Get books by Category------------------------------\n\n\n");
-		for (Book b : booksByCat) {
+		for (Book b : booksByCat){
 			System.out.println(b.toString());
 		}
 		List<Book> allBooks = bookService.getAllBooks();
 		System.out.println("Get all books --------------------\n\n\n");
-		for (Book b : allBooks) {
+		for (Book b : allBooks){
 			System.out.println(b.toString());
 		}
 		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
-
+		
 		map.put(Searchfields.categoryName, "Linguistik");
 		map.put(Searchfields.title, "Learning PHP");
 		List<Book> results = bookService.getBooksByMetadata(map);
 		System.out.println("GetBooksByMetadata _-------------------------------------\n\n\n");
 		System.out.println("Size: " + results.size());
-		for (Book b : results) {
+		for(Book b : results){
 			System.out.println(b.toString());
 		}
-
+		
+		
 		System.out.println("Test OpenSearch------------------\n\n\n");
 		bookService.getBooksByOpenSearch("I love my cat");
 	}
+	*/
+	public void testBookInsert (ApplicationContext ctx){
+		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
+		BookService bookService = ctx.getBean(BookService.class);
+		/*List<String> allCats = bookService.getAllCategoryNames();
+		for (String s : allCats){
+			System.out.println(allCats);
+		}
+		System.exit(1);
+		*/
+		/*List<Author> allauthors = bookService.getAllAuthors();
+		for (Author a : allauthors){
+			
+			System.out.println(a.toString());
+		}
+		
+		Author singleAuthor = bookService.getAuthorById(42);
+		System.out.println(singleAuthor.toString());
+		System.exit(1);
+		*/
+		// Testen, wenn ich weiß, dass es ein neuer Autor ist
+		try {
+			int authorId = bookService.insertAuthor("Someone", "Anyone", true);
+			System.out.println("QueryFun nach bookService.insertAuthor");
+			Set<Integer> authors = new HashSet<Integer>();
+			authors.add(authorId);
+			
+			Set<Integer> categories = new HashSet<Integer>();
+			
+			Category category = bookService.getCategoryByExactName("PHP");
+			System.out.println("Got Category: " + category.toString() + "\n\n");
+			categories.add(category.getCategoryID());
+			
+			Map<Searchfields, String> dataMap = new HashMap<Searchfields, String>();
+			dataMap.put(Searchfields.isbn, "08006700");
+			dataMap.put(Searchfields.description, "This is a TestTextBook");
+			dataMap.put(Searchfields.edition, "1");
+			dataMap.put(Searchfields.pages, "555");
+			dataMap.put(Searchfields.price, "9.99");
+			dataMap.put(Searchfields.pubdate, "January 2016");
+			dataMap.put(Searchfields.publisher, "Springer");
+			dataMap.put(Searchfields.title, "PHP fuer Dummies");
+			
+			System.out.println("QueryFun, bevor service.insertBook\n Gib die Author Ids aus dem Set aus");
+			for (int s : authors){
+				System.out.println("Author id : " + s + "\n");
+			}
+			bookService.insertBook(dataMap, authors, categories);
+			
+			System.out.println("Get all Books\n\n");
+			List<Book> allBook = bookService.getAllBooks();
+			for (Book b: allBook){
+				System.out.println(b.toString());
+			}
+			
+		} catch (AuthorMayExistException e) {
+			// HIer nochmal Exception in try catch Block -> ignore
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	/*
 
 	public Set<Book> createTestData() {
 		Set<Book> books = new HashSet<>();
@@ -244,16 +312,17 @@ public class QueryFun {
 		book.setCategories(categories);
 		return books;
 	}
-
+	*/
+/*
 	public User createUserTestData() {
 		PLZ plz = new PLZ();
 		plz.setPlace("Buxtehude");
 		plz.setPostcode("000000");
 
-		// User user1 = new User("krabbe", "Rosenhagen", "Madeleine",
-		// "xyz@ihp.de", "streetstrett", "23a", plz);
-		// return user1;
-		return null;
+		User user1 = new User("krabbe", "Rosenhagen", "Madeleine", "xyz@ihp.de", "streetstrett", "23a", plz);
+		return user1;
+
 	}
+	*/
 
 }
