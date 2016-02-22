@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import appl.data.enums.UserRoles;
+import exceptions.data.ErrorMessageHelper;
 
 @Entity
 @Table(name = "user", schema = "public")
