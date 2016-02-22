@@ -371,6 +371,16 @@ public class BookServiceImpl implements BookService {
 	//public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) throws IsbnAlreadyExistsException {
 	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) throws PrimaryKeyViolationException, EntityDoesNotExistException, DatabaseException {
 	
+		// Map abfragen, ob alle obligatorischen Angaben vorhanden sind
+		if(map.get(Searchfields.isbn) == null){
+			//TODO Fehlerbehandlung, Errorcode?
+		}
+		if(map.get(Searchfields.title) == null){
+			//TODO Fehlerbehandlung, Errorcode?
+		}
+		
+		
+		
 		BookBuilder bb = new BookBuilderImpl();
 		double price = Double.parseDouble(map.get(Searchfields.price));
 		int pages = Integer.parseInt(map.get(Searchfields.pages));
@@ -379,7 +389,7 @@ public class BookServiceImpl implements BookService {
 		for (int i : categoryIds){
 			categories.add(categoryDao.getCategoryById(i));
 		}
-		System.out.println("in service.insertBook bevor die Autoren zusammen gesammelt werden\n\n" );
+		//System.out.println("in service.insertBook bevor die Autoren zusammen gesammelt werden\n\n" );
 		
 		Set<Author> authors = new HashSet<Author>();
 	
@@ -401,6 +411,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void deleteBook(String isbn){
 		Book book = getBookByIsbn(isbn);
+		bookDao.deleteBook(isbn);
 		
 		
 	}

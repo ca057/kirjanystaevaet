@@ -49,7 +49,7 @@ public class Book {
 	private Set<Category> categories = new HashSet<Category>(0);
 	private Set<Author> authors = new HashSet<Author>(0);
 	// TODO In Javadoc erwähnen.
-	private Set<Order> orders = new HashSet<Order>(0);
+	//private Set<Order> orders = new HashSet<Order>(0);
 
 	public Book() {
 	}
@@ -135,11 +135,12 @@ public class Book {
 		return authors;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	/*@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "bookorder", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "orderId") )
 	public Set<Order> getOrders() {
 		return orders;
 	}
+	*/
 
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
@@ -177,9 +178,9 @@ public class Book {
 		this.categories = categories;
 	}
 
-	public void setOrders(Set<Order> orders) {
+	/*public void setOrders(Set<Order> orders) {
 		this.orders = orders;
-	}
+	}*/
 
 	public void setAuthors(Set<Author> authors) {
 		this.authors = authors;

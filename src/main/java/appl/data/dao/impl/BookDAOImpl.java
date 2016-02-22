@@ -145,14 +145,12 @@ public class BookDAOImpl implements BookDAO {
 			//throw new IsbnAlreadyExistsException();
 			return null;
 		}
-		// TODO implement this
 	}
 
 	@Override
 	public void deleteBook(String isbn) {
 		Book book = (Book) getSession().get(Book.class, isbn);
 		getSession().delete(book);
-		// TODO implement this
 	}
 
 	@Override
