@@ -5,37 +5,78 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
+/**
+ * Entity class representing (German) postcode and place.
+ * 
+ * @author Johannes
+ *
+ */
 @Entity
-@Table(name = "plz", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "postcode") })
+@Table(name = "plz", schema = "public")
 public class PLZ {
+	private int plzId;
 	private String postcode;
 	private String place;
 
 	@OneToMany(mappedBy = "plz")
 	private Set<User> users;
 
+	private PLZ() {
+
+	}
+
+	/**
+	 * Constructor to initiate PLZ. The id of the entity is a generated value.
+	 * 
+	 * Both parameters must not be null.
+	 * 
+	 * @param postcode
+	 *            the postal code of the place
+	 * @param place
+	 *            the name of the place
+	 */
+	public PLZ(String postcode, String place) {
+		setPostcode(postcode);
+		setPlace(place);
+	}
+
 	@Id
-	@GeneratedValue
-	@Column(name = "POSTCODE", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "PLZID")
+	public int getPlzId() {
+		return plzId;
+	}
+
+	@Column(name = "postcode", unique = false, nullable = false)
 	public String getPostcode() {
 		return postcode;
 	}
 
-	@Column(name = "PLACE", unique = true, nullable = false)
+	@Column(name = "place", unique = false, nullable = false)
 	public String getPlace() {
 		return place;
 	}
 
-	public void setPostcode(String postcode) {
+	private void setPlzId(int plzId) {
+		this.plzId = plzId;
+	}
+
+	private void setPostcode(String postcode) {
+		if (postcode == null || "".equals(postcode)) {
+			throw new IllegalArgumentException("Postcode must not be null or empty string.");
+		}
 		this.postcode = postcode;
 	}
 
-	public void setPlace(String place) {
+	private void setPlace(String place) {
+		if (place == null || "".equals(place)) {
+			throw new IllegalArgumentException("Place must not be null or empty string.");
+		}
 		this.place = place;
 	}
 

@@ -16,7 +16,7 @@ public class UserBuilderImpl implements UserBuilder {
 	private String street;
 	private String streetnumber;
 	private PLZ plz;
-	private String role;
+	private UserRoles role;
 
 	@Override
 	public UserBuilder setPassword(String password) {
@@ -26,7 +26,7 @@ public class UserBuilderImpl implements UserBuilder {
 
 	@Override
 	public UserBuilder setRole(UserRoles role) {
-		this.role = role.toString();
+		this.role = role;
 		return this;
 	}
 
