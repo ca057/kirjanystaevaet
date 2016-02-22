@@ -45,10 +45,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/", "/kategorien", "/kategorie/**", "/suche", "/kontakt", "/login", "/logout",
 						"/warenkorb", "/registrierung")
 				.permitAll().antMatchers("/meinkonto", "/meinkonto/**").hasRole(UserRoles.USER.toString())
-				.antMatchers("/backend", "/backend/**").hasRole("ADMIN").anyRequest().authenticated().and().formLogin()
-				.loginPage("/login").defaultSuccessUrl("/").failureUrl("/login?error").and().logout()
-				.deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/?logout")
-				.permitAll();
+				.antMatchers("/backend", "/backend/**", "/resources/admin/**").hasRole("ADMIN").anyRequest()
+				.authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/").failureUrl("/login?error")
+				.and().logout().deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout")
+				.logoutSuccessUrl("/?logout").permitAll();
 	}
 
 	@Override

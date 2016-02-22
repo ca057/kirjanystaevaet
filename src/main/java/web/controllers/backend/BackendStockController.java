@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.logic.service.BookService;
+import exceptions.data.AuthorMayExistException;
 
 /**
  * 
@@ -49,7 +50,7 @@ public class BackendStockController {
 			throw new IllegalArgumentException("The passed name of the category is null and can not be added.");
 		}
 		// TODO handle empty string
-		// TODO add new category
+		service.insertCategory(name);
 		return "redirect:/backend/bestand";
 	}
 
@@ -78,16 +79,12 @@ public class BackendStockController {
 	@RequestMapping(value = "/backend/bestand/autorinnen/add", method = RequestMethod.POST)
 	public String addAuthor() {
 		// TODO implement me
-		return "redirect:/backend/bestand";
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/backend/bestand/autorinnen/edit", method = RequestMethod.POST)
-	public String editAuthor() {
-		// TODO implement me
+		try {
+			service.insertAuthor("", "", true);
+		} catch (AuthorMayExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "redirect:/backend/bestand";
 	}
 
@@ -118,7 +115,7 @@ public class BackendStockController {
 	@RequestMapping(value = "/backend/bestand/buecher/edit", method = RequestMethod.POST)
 	public String editBook() {
 		// TODO implement me
-		return "redirect:/backend/bestand";
+		return "redirect:/backend/bestand?deleted";
 	}
 
 	/**

@@ -15,6 +15,7 @@
 	
 	<script type="text/javascript" src="<s:url value='https://code.jquery.com/jquery-1.12.0.min.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/js/script.js'/>"></script>
+	<t:insertAttribute name="pagespecificscripts" ignore="true" />
 </head>
 
 <body>
