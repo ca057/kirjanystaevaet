@@ -11,6 +11,7 @@ import appl.data.builder.UserBuilder;
 import appl.data.dao.UserDAO;
 import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
+import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.UserService;
 import exceptions.data.PrimaryKeyViolation;
@@ -28,12 +29,15 @@ public class UserServiceImpl implements UserService {
 	PasswordEncoder pswEncoder;
 
 	@Override
-	public int registerNewUserAccount(Map<Userfields, String> data) throws PrimaryKeyViolation {
-		// TODO geht das schöner? Momentan hier, um admin im foreach nicht
-		// ständig zu überschreiben.
+	public int createAccount(Map<Userfields, String> data, PLZ plz) throws PrimaryKeyViolation {
 		userBuilder.setRole(UserRoles.USER);
+		userBuilder.setPLZ(plz);
+		return createAccount(data);
+	}
+
+	@Override
+	public int createAccount(Map<Userfields, String> data) throws PrimaryKeyViolation {
 		data.forEach((userfield, information) -> {
-			System.out.println("field: " + userfield + " " + information);
 			getData(userfield, information);
 		});
 		try {
@@ -73,14 +77,8 @@ public class UserServiceImpl implements UserService {
 		case streetnumber:
 			userBuilder.setStreetnumber(information);
 			break;
-		case plz:
-			// TODO implement this
-			break;
 		case password:
 			userBuilder.setPassword(pswEncoder.encode(information));
-			break;
-		case userId:
-			// TODO implement this
 			break;
 		default:
 			break;

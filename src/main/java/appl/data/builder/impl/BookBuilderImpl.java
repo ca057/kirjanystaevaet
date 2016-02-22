@@ -2,6 +2,7 @@
  * Created by Sunflower
  */
 package appl.data.builder.impl;
+
 import java.util.Set;
 
 import appl.data.builder.BookBuilder;
@@ -9,7 +10,7 @@ import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
 
-public class BookBuilderImpl implements BookBuilder{
+public class BookBuilderImpl implements BookBuilder {
 	private String isbn;
 	private String title;
 	private String description;
@@ -22,7 +23,6 @@ public class BookBuilderImpl implements BookBuilder{
 	private Set<Category> categories;
 
 	public BookBuilderImpl() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -87,7 +87,8 @@ public class BookBuilderImpl implements BookBuilder{
 
 	@Override
 	public Book createBook() {
-		return new Book(this.isbn, this.title, this.description, this.price, this.publisher, this.pubdate, this.edition,this.pages, this.categories, this.authors);
+		return new Book(this.isbn, this.title, this.description, this.price, this.publisher, this.pubdate, this.edition,
+				this.pages, this.categories, this.authors);
 	}
 
 }
