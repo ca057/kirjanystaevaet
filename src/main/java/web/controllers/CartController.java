@@ -27,13 +27,19 @@ public class CartController {
 		this.bookService = bookService;
 	}
 
-	private final static String cartView = "cart";
-
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.POST)
 	public String addToCart(@RequestParam(value = "isbn") String isbn) {
 		System.out.println(isbn);
 		if (isbn != null && !isbn.isEmpty()) {
 			cart.addBook(bookService.getBookByIsbn(isbn));
+		}
+		return "redirect:/warenkorb";
+	}
+
+	@RequestMapping(value = "/warenkorb", method = RequestMethod.DELETE)
+	public String deleteFromCart(@RequestParam(value = "isbn") String isbn) {
+		if (isbn != null && !isbn.isEmpty()) {
+			cart.deleteBook(bookService.getBookByIsbn(isbn));
 		}
 		return "redirect:/warenkorb";
 	}
@@ -45,9 +51,7 @@ public class CartController {
 		return "cart";
 	}
 
-	// TODO: cart-logic erstellen. Nutzerspezifika implementieren, Methode:
-	// showCart: holt sich User aus Datenbank, Items im Cart und zeigt sie an
-	// Preisrechner, Liste mit Büchern
+	// TODO: cart-logic erstellen. Preisrechner, Liste mit Büchern
 	// eingeloggten Nutzer finden, Warenkorb holen getCart() --> Liste
 	// zurückgeben, Buch hinzufügen
 	// Buch über ISBN getBook();

@@ -27,9 +27,15 @@ public class Cart {
 		return books.stream().parallel().mapToDouble(book -> book.getPrice()).sum();
 	}
 
-	// Warenbestand prüfen
-
 	// Item aus Warenkorb entfernen
+	public void deleteBook(Book book) {
+		if (book == null) {
+			throw new IllegalArgumentException("added book is null");
+		}
+		books.remove(book);
+	}
+
+	// Warenbestand prüfen
 
 	// "Zur Kasse"
 }

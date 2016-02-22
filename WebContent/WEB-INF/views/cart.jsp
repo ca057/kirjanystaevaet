@@ -1,12 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %> 
+
 
 <section>
 	<h2>Warenkorb</h2>
 	<article>
 		<p>Hallo <c:out value="${name}" />, ich bin dein Warenkorb. Schau mal, was schon in mir liegt :)</p>
 	</article>
-	<!-- Bücher im Warenkorb -->
+ Bücher im Warenkorb 
 		<c:choose>
 			<c:when test="${bookItems.isEmpty()}">
 				<p>Keine Bücher im Warenkorb</p>
@@ -25,4 +26,4 @@
 		</c:choose>
 	
 	<a href="<c:url value='/bestellen'/>">bestellen</a>
-</section>
+</section>  
