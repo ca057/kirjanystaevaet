@@ -20,10 +20,25 @@ import exceptions.data.PrimaryKeyViolation;
 @Service
 public interface UserService {
 
+	/**
+	 * Method to save a new user without postal code.
+	 * 
+	 * For further information on the fields available and/or necessary, see the
+	 * documentation of {@link User} or the available {@link Userfields}.
+	 * 
+	 * @param data
+	 *            A map with the field name as key and the belonging information
+	 *            as value
+	 * @return the {@code id} of the user
+	 * @throws PrimaryKeyViolation
+	 * 
+	 * @see {@link Userfields}
+	 * @see {@link User}
+	 */
 	int createAccount(Map<Userfields, String> data) throws PrimaryKeyViolation;
 
 	/**
-	 * Method to save a new user.
+	 * Method to save a new user with postal code.
 	 * 
 	 * For further information on the fields available and/or necessary, see the
 	 * documentation of {@link User} or the available {@link Userfields}.
@@ -32,7 +47,7 @@ public interface UserService {
 	 *            A map with the field name as key and the belonging information
 	 *            as value
 	 * @param plz
-	 *            the post code of the user's address as {@link PLZ} object
+	 *            the postal code of the user's address as {@link PLZ} object
 	 * @return the {@code id} of the user
 	 * @throws PrimaryKeyViolation
 	 * 

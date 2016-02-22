@@ -14,6 +14,7 @@ import appl.data.enums.Userfields;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.UserService;
+import exceptions.data.ErrorMessageHelper;
 import exceptions.data.PrimaryKeyViolation;
 
 @Service
@@ -43,17 +44,25 @@ public class UserServiceImpl implements UserService {
 		try {
 			return userDao.insertUser(userBuilder.createUser());
 		} catch (Exception e) {
-			throw new PrimaryKeyViolation("Object could not be saved to database: " + e.getMessage());
+			throw new PrimaryKeyViolation(ErrorMessageHelper.couldNotBeSaved("User") + e.getMessage());
 		}
 	}
 
-	/**
-	 *
-	 * 
-	 * @param userfield
-	 * @param information
-	 * @return
-	 */
+	@Override
+	public User findbyMail(String eMail) {
+		return userDao.getUserByEMail(eMail);
+	}
+
+	@Override
+	public User findByID(int id) {
+		return userDao.getUserByID(id);
+	}
+
+	@Override
+	public List<User> getUsers() {
+		return userDao.getUsers();
+	}
+
 	private UserBuilder getData(Userfields userfield, String information) {
 		switch (userfield) {
 		case role:
@@ -84,21 +93,6 @@ public class UserServiceImpl implements UserService {
 			break;
 		}
 		return userBuilder;
-	}
-
-	@Override
-	public User findbyMail(String eMail) {
-		return userDao.getUserByEMail(eMail);
-	}
-
-	@Override
-	public User findByID(int id) {
-		return userDao.getUserByID(id);
-	}
-
-	@Override
-	public List<User> getUsers() {
-		return userDao.getUsers();
 	}
 
 }
