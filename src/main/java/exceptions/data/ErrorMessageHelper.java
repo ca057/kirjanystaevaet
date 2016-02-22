@@ -1,8 +1,8 @@
-package appl.data.items;
+package exceptions.data;
 
 public abstract class ErrorMessageHelper {
 
-	static String nullOrEmptyMessage(String field) {
+	public static String nullOrEmptyMessage(String field) {
 		return String.format("%s must not be null or empty string.", field);
 	}
 
