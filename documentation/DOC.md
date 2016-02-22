@@ -104,5 +104,9 @@ Alle anonymen Gäste bekommen die Möglichkeit, sich anzumelden. Wer nicht anony
 Dürfen Books gelöscht werden: Problem Abhängigkeiten mit der Orderhistorie
 Es gibt eine Methode zum löschen, sie sollte nur nicht standardmäßig verwendet werden. Stattdessen wird ein weiteres Feld `boolean available` eingeführt, dass angibt, ob ein Buch verkauft werden kann oder nicht. Hierbei gilt zu beachten, dass das ein Unterschied zu `int stock = 0 ` ist, was nur bedeutet, dass das Buch gerade nicht auf Lager ist, aber prinzipiell schon verkauft werden würde.
 
+### Author
+Darf nicht heiraten. Wenn Namen geändert werden, werden sie auch (durch die Verknüpfung von Buch und Autor) bei allen Büchern geändert. Das darf nicht sein, weil sich bei einer bestimmten Ausgabe von einem Buch nicht der Autorname ändern kann.
+Andererseits darf (laut Johannes) ein und diesselbe Person nicht zwei Einträge in der Datenbank haben.
+
 ## Builder
 Im create die Variablen wieder leeren, falls der Builder nochmal verwendet wird.
