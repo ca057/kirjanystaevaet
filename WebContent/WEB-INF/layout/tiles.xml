@@ -48,7 +48,6 @@
 	<!-- views for the backend -->
 	<definition name="backend" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/backend/backend.jsp"></put-attribute>
-		<put-attribute name="pagespecificscripts" value="/resources/admin/js/adminscript.js"></put-attribute>
 	</definition>
 	
 	<definition name="backend/login" extends="base">

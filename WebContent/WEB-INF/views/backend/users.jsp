@@ -5,7 +5,7 @@
 <div>
 	<h2>Kund:innenverwaltung</h2>
 	<h4 id="anlegen">Kunde:in anlegen</h4>
-	<form>
+	<form action="kundinnen/add" method="POST">
 		<label for="name">Vorname</label>
 		<input type="text" id="name" name="name" required/>
 		<label for="surname">Nachname</label>
