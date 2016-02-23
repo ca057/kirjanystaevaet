@@ -30,7 +30,7 @@ const request = function(url) {
 const handle = function() {
 	const user = function () {
 		// implement the user management here
-		const inputs = ["name", "surname", "street", "streetnumber", "plz", "email", "password"];
+		const inputs = ["name", "surname", "street", "streetnumber", "plz", "email", 'role'];
 		
 		
 	};

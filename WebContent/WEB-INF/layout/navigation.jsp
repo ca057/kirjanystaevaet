@@ -53,11 +53,11 @@
 				</li>
 			</ul>
 		</li>
-		<li><a href="<c:url value='/backend/kundinnen' />" title="Kund:innen verwalten">Kund:innen verwalten</a>
+		<li><a href="<c:url value='/backend/nutzerinnen' />" title="Kund:innen verwalten">Nutzer:in verwalten</a>
 			<ul class="navigation-content-sub">
-				<li><a href="<c:url value='/backend/kundinnen#anlegen' />" title="Neue:n Kund:innen anlegen">Anlegen</a></li>
-				<li><a href="<c:url value='/backend/kundinnen#aendern' />" title="Bestehende Kund:innen ändern">Ändern</a></li>
-				<li><a href="<c:url value='/backend/kundinnen#loeschen' />" title="Bestehende Kund:innen löschen">Löschen</a></li>
+				<li><a href="<c:url value='/backend/nutzerinnen#anlegen' />" title="Neue:n Nutzer:in anlegen">Anlegen</a></li>
+				<li><a href="<c:url value='/backend/nutzerinnen#aendern' />" title="Bestehende Nutzer:in ändern">Ändern</a></li>
+				<li><a href="<c:url value='/backend/nutzerinnen#loeschen' />" title="Bestehende Nutzer:in löschen">Löschen</a></li>
 			</ul>
 		</li>
 		<li><a href="<c:url value='/backend/nutzungsstatistiken' />" title="Nutzungsstatistiken">Nutzungsstatistiken</a></li>
