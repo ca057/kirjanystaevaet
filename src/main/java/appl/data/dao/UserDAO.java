@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.transaction.annotation.Transactional;
 
 import appl.data.enums.Searchfields;
+import appl.data.enums.Userfields;
 import appl.data.items.User;
 import exceptions.data.PrimaryKeyViolation;
 
@@ -14,9 +15,7 @@ public interface UserDAO {
 
 	List<User> getUsers();
 
-	List<User> getUsersByName(String name);
-
-	List<User> getUsersBySurname(String surname);
+	List<User> getUserByMetadata(Map<Userfields, String> map);
 
 	User getUserByEMail(String email);
 

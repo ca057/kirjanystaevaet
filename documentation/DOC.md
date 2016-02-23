@@ -11,6 +11,23 @@ Laut Guide der Vorlage benötigen wir die folgenden Dateien:
 
 Alle anderen setze ich auf die `.gitignore` (auch das PDF, damit es keine Probleme gibt, kann sich ja jeder selber kompilieren). Die `latin1.sty` ist glaube ich nicht so wichtig, ich lasse die aber mal mit drin.
 
+## Allgemeines
+
+### Vorgehensweise
+
+- Verwendung von FeatureBranches
+- keine strikte Aufgabentrennung, Bearbeitung vieler Features gemeinsam
+- Viele Teamtreffen
+- Versuch, Conventions so gut wie möglich einzuhalten (Interfaces, Separation of concerns, Exception handling etc.)
+- Verwendung von github, da Probleme mit SVN+SSH+SVN (-> Probleme mit git? :D )
+- Verwendung von Beans etc.
+- Einschränkung der Sichtbarkeit so weit wie möglich (SoC etc.)
+
+### Reflektion
+- Späte Dokumentation
+- keine Mockups zu Beginn
+- Schwierigkeiten bei der Einarbeitung in Spring, Hibernate & co
+
 ## Initialisierung
 
 ### Standard-Admin?
@@ -100,6 +117,19 @@ Alle anonymen Gäste bekommen die Möglichkeit, sich anzumelden. Wer nicht anony
 
 ## Database
 
+### DAOs
+TODO: Im Grunde immutable -> Zugriff nur über Konstruktor.
+
 ### Books
 Dürfen Books gelöscht werden: Problem Abhängigkeiten mit der Orderhistorie
 Es gibt eine Methode zum löschen, sie sollte nur nicht standardmäßig verwendet werden. Stattdessen wird ein weiteres Feld `boolean available` eingeführt, dass angibt, ob ein Buch verkauft werden kann oder nicht. Hierbei gilt zu beachten, dass das ein Unterschied zu `int stock = 0 ` ist, was nur bedeutet, dass das Buch gerade nicht auf Lager ist, aber prinzipiell schon verkauft werden würde.
+
+### Author
+Darf nicht heiraten. Wenn Namen geändert werden, werden sie auch (durch die Verknüpfung von Buch und Autor) bei allen Büchern geändert. Das darf nicht sein, weil sich bei einer bestimmten Ausgabe von einem Buch nicht der Autorname ändern kann.
+Andererseits darf (laut Johannes) ein und diesselbe Person nicht zwei Einträge in der Datenbank haben.
+
+### User
+Für "herkömmliche" User und Admins selbe Tabelle, Trennung durch Spalte "Role".
+
+## Builder
+Im create die Variablen wieder leeren, falls der Builder nochmal verwendet wird.
