@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
 import appl.logic.service.UserService;
 import exceptions.data.PrimaryKeyViolation;
@@ -35,14 +34,16 @@ public class BackendUsersController {
 	@RequestMapping(value = "/backend/nutzerinnen/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<UserRegisterWrapper> addUser(@RequestBody final UserRegisterWrapper req) {
 		Map<Userfields, String> userMap = new HashMap<Userfields, String>();
+		// FIXME all values are null or an empty string
 		userMap.put(Userfields.email, req.getEmail());
 		userMap.put(Userfields.name, req.getName());
 		userMap.put(Userfields.surname, req.getSurname());
 		// FIXME we need some generated password here
 		userMap.put(Userfields.password, "magic");
 		userMap.put(Userfields.plz, req.getPlz());
-		userMap.put(Userfields.role,
-				req.getRole().equals("ADMIN") ? UserRoles.ADMIN.toString() : UserRoles.USER.toString());
+		// userMap.put(Userfields.role,
+		// req.getRole().equals("ADMIN") ? UserRoles.ADMIN.toString() :
+		// UserRoles.USER.toString());
 		userMap.put(Userfields.street, req.getStreet());
 		userMap.put(Userfields.streetnumber, req.getStreetnumber());
 
@@ -54,6 +55,7 @@ public class BackendUsersController {
 			// TODO check if registration was successfull
 			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.OK);
 		} catch (PrimaryKeyViolation e) {
+			System.err.println(e.getMessage());
 			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}
