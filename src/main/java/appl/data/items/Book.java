@@ -11,8 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import appl.data.dao.ArchiveBook;
 
 /**
  * Book is a POJO marked as persistent entity with table name
@@ -50,6 +53,7 @@ public class Book {
 	private Set<Author> authors = new HashSet<Author>(0);
 	// TODO In Javadoc erwähnen.
 	//private Set<Order> orders = new HashSet<Order>(0);
+	private Set<ArchiveBook> archiveItems;
 
 	public Book() {
 	}
@@ -135,6 +139,10 @@ public class Book {
 		return authors;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	public Set<ArchiveBook> getArchiveItems(){
+		return archiveItems;
+	}
 	/*@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "bookorder", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "orderId") )
 	public Set<Order> getOrders() {
@@ -184,6 +192,9 @@ public class Book {
 
 	public void setAuthors(Set<Author> authors) {
 		this.authors = authors;
+	}
+	public void setArchiveItems(Set<ArchiveBook> archiveItems){
+		this.archiveItems = archiveItems;
 	}
 
 	@Override
