@@ -31,15 +31,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int createAccount(Map<Userfields, String> data, PLZ plz) throws PrimaryKeyViolation {
-		userBuilder.setRole(UserRoles.USER);
 		userBuilder.setPLZ(plz);
 		return createAccount(data);
 	}
 
 	@Override
 	public int createAccount(Map<Userfields, String> data) throws PrimaryKeyViolation {
+		userBuilder.setRole(UserRoles.USER);
 		data.forEach((userfield, information) -> {
-			getData(userfield, information);
+			readData(userfield, information);
 		});
 		try {
 			return userDao.insertUser(userBuilder.createUser());
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUsers();
 	}
 
-	private UserBuilder getData(Userfields userfield, String information) {
+	private UserBuilder readData(Userfields userfield, String information) {
 		switch (userfield) {
 		case role:
 			if (UserRoles.ADMIN.toString().equals(information)) {

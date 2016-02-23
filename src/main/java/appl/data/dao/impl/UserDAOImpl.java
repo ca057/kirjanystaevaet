@@ -37,29 +37,27 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<User> getUsers() {
-		return getSession().createCriteria(User.class).list();
+		// return getSession().createCriteria(User.class).list();
+		return setupAndGetCriteria().list();
 	}
 
 	@Override
-	public List<User> getUsersByName(String name) {
-		// TODO implement this!
-		return null;
-	}
-
-	@Override
-	public List<User> getUsersBySurname(String surname) {
-		// TODO implement this!
-		return null;
+	public List<User> getUserByMetadata(Map<Userfields, String> map) {
+		Criteria cr = setupAndGetCriteria();
+		map.forEach((field, data) -> {
+			cr.add(Restrictions.ilike(field.toString(), data));
+		});
+		return cr.list();
 	}
 
 	@Override
 	public User getUserByEMail(String email) {
-//		Criteria cr = setupAndGetCriteria();
-//		cr.add(Restrictions.eq(Userfields.email.toString(), email));
-//		User user = (User) cr.uniqueResult();
-		 User user = (User) getSession()
-		 .createQuery("from User where " + Userfields.email.toString() + "='"
-		 + email + "'").uniqueResult();
+		Criteria cr = setupAndGetCriteria();
+		cr.add(Restrictions.eq(Userfields.email.toString(), email));
+		User user = (User) cr.uniqueResult();
+		// User user = (User) getSession()
+		// .createQuery("from User where " + Userfields.email.toString() + "='"
+		// + email + "'").uniqueResult();
 		if (user == null) {
 			System.err.println("no user found with this email: " + email);
 		}
@@ -84,16 +82,16 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User getUserByID(int id) {
-		// Criteria cr = setupAndGetCriteria();
+		return (User) setupAndGetCriteria().add(Restrictions.idEq(id)).uniqueResult();
 		// cr.add(Restrictions.idEq(id));
-		// System.out.println(cr);
 		// User user = (User) cr.uniqueResult();
-		// FIXME criteria einbauen
-		User user = (User) getSession().createQuery("from User where userId ='" + id + "'").uniqueResult();
-		if (user == null) {
-			System.err.println("no user found with this ID: " + id);
-		}
-		return user;
+		// // User user = (User) getSession().createQuery("from User where
+		// userId
+		// // ='" + id + "'").uniqueResult();
+		// if (user == null) {
+		// System.err.println("no user found with this ID: " + id);
+		// }
+		// return user;
 	}
 
 }

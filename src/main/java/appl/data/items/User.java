@@ -28,7 +28,7 @@ import exceptions.data.ErrorMessageHelper;
  * <li>surname</li>
  * <li>email</li>
  * <li>street</li>
- * <li>streetnumber</li>
+ * <li>street number</li>
  * <li>role</li>
  * </ul>
  * Lists of {@link Order}s are joined via many-to-many connections. {@link PLZ}
