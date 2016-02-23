@@ -11,9 +11,13 @@ import appl.data.builder.UserBuilder;
 import appl.data.dao.UserDAO;
 import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
+import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.UserService;
-import exceptions.data.PrimaryKeyViolationException;
+
+import exceptions.data.ErrorMessageHelper;
+import exceptions.data.PrimaryKeyViolation;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,32 +28,46 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserBuilder userBuilder;
 
-//	@Autowired
-//	PasswordEncoder pswEncoder;
+	@Autowired
+	PasswordEncoder pswEncoder;
 
 	@Override
-	public int registerNewUserAccount(Map<Userfields, String> data) throws PrimaryKeyViolationException {
-		// TODO geht das schöner? Momentan hier, um admin im foreach nicht
-		// ständig zu überschreiben.
+
+	public int createAccount(Map<Userfields, String> data, PLZ plz) throws PrimaryKeyViolation {
 		userBuilder.setRole(UserRoles.USER);
+		userBuilder.setPLZ(plz);
+		return createAccount(data);
+	}
+
+	@Override
+	public int createAccount(Map<Userfields, String> data) throws PrimaryKeyViolation {
 		data.forEach((userfield, information) -> {
-			System.out.println("field: " + userfield + " " + information);
 			getData(userfield, information);
 		});
 		try {
 			return userDao.insertUser(userBuilder.createUser());
 		} catch (Exception e) {
-			throw new PrimaryKeyViolationException("Object could not be saved to database: " + e.getMessage());
+
+			throw new PrimaryKeyViolation(ErrorMessageHelper.couldNotBeSaved("User") + e.getMessage());
+
 		}
 	}
 
-	/**
-	 *
-	 * 
-	 * @param userfield
-	 * @param information
-	 * @return
-	 */
+	@Override
+	public User findbyMail(String eMail) {
+		return userDao.getUserByEMail(eMail);
+	}
+
+	@Override
+	public User findByID(int id) {
+		return userDao.getUserByID(id);
+	}
+
+	@Override
+	public List<User> getUsers() {
+		return userDao.getUsers();
+	}
+
 	private UserBuilder getData(Userfields userfield, String information) {
 		switch (userfield) {
 		case role:
@@ -73,34 +91,13 @@ public class UserServiceImpl implements UserService {
 		case streetnumber:
 			userBuilder.setStreetnumber(information);
 			break;
-		case plz:
-			// TODO implement this
-			break;
 		case password:
-			// userBuilder.setPassword(pswEncoder.encode(information));
-			break;
-		case userId:
-			// TODO implement this
+			userBuilder.setPassword(pswEncoder.encode(information));
 			break;
 		default:
 			break;
 		}
 		return userBuilder;
-	}
-
-	@Override
-	public User findbyMail(String eMail) {
-		return userDao.getUserByEMail(eMail);
-	}
-
-	@Override
-	public User findByID(int id) {
-		return userDao.getUserByID(id);
-	}
-
-	@Override
-	public List<User> getUsers() {
-		return userDao.getUsers();
 	}
 
 }

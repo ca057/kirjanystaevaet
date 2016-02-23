@@ -11,10 +11,10 @@ import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
 import appl.logic.admin.Initialization;
 import appl.logic.service.UserService;
-import exceptions.data.PrimaryKeyViolationException;
+import exceptions.data.PrimaryKeyViolation;
 
 /**
- * @author Hannes
+ * @author Johannes
  *
  */
 @Component
@@ -24,22 +24,14 @@ public class InitializationImpl implements Initialization, InitializingBean {
 	UserService userService;
 
 	public InitializationImpl() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() {
 		if (userService.findbyMail("admin@ky.de") == null) {
 			createAdmin();
 			createUser();
-			addData();
 		}
-
-	}
-
-	private void addData() {
-		// TODO Auto-generated method stub
-
 	}
 
 	private void createUser() {
@@ -50,14 +42,15 @@ public class InitializationImpl implements Initialization, InitializingBean {
 		data.put(Userfields.password, "user");
 		data.put(Userfields.role, UserRoles.USER.toString());
 		try {
-			userService.registerNewUserAccount(data);
-		} catch (PrimaryKeyViolationException e) {
+			userService.createAccount(data, null);
+		} catch (PrimaryKeyViolation e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	private void createAdmin() {
+		System.out.println("createAdmin");
 		Map<Userfields, String> data = new HashMap<>();
 		data.put(Userfields.name, "admin");
 		data.put(Userfields.surname, "admin");
@@ -65,11 +58,12 @@ public class InitializationImpl implements Initialization, InitializingBean {
 		data.put(Userfields.password, "admin");
 		data.put(Userfields.role, UserRoles.ADMIN.toString());
 		try {
-			userService.registerNewUserAccount(data);
-		} catch (PrimaryKeyViolationException e) {
+			userService.createAccount(data, null);
+		} catch (PrimaryKeyViolation e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 }
+
