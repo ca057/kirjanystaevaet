@@ -72,15 +72,15 @@ public class Order {
 		return orderItems;
 	}
 
-	public void setId(int OrderId) {
+	private void setId(int OrderId) {
 		this.orderId = OrderId;
 	}
 
-	public void setOrderItems(Set<ArchiveBook> orderItems) {
+	private void setOrderItems(Set<ArchiveBook> orderItems) {
 		this.orderItems = orderItems;
 	}
 
-	public void setUser(User user) {
+	private void setUser(User user) {
 		this.user = user;
 	}
 
@@ -91,7 +91,7 @@ public class Order {
 	}*/
 	
 
-	public void setDate(Calendar date) {
+	private void setDate(Calendar date) {
 		this.date = date;
 	}
 

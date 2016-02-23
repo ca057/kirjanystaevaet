@@ -26,8 +26,7 @@ public class ArchiveBook {
 	Book book;
 	Set<Order> orders;
 	
-	public ArchiveBook() {
-		// TODO Auto-generated constructor stub
+	private ArchiveBook() {
 	}
 	
 	public ArchiveBook(Book book, double price, Set<Order> orders){
@@ -54,5 +53,17 @@ public class ArchiveBook {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "orderItems")
 	public Set<Order> getOrders(){
 		return orders;
+	}
+	private void setArchiveItemId (int archiveItemId){
+		this.archiveItemId = archiveItemId;
+	}
+	private void setPrice (double price){
+		this.price = price;
+	}
+	private void setBook(Book book){
+		this.book = book;
+	}
+	private void setOrders(Set<Order> orders){
+		this.orders = orders;
 	}
 }
