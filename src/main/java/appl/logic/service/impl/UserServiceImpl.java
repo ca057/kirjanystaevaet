@@ -12,8 +12,10 @@ import appl.data.builder.UserBuilder;
 import appl.data.dao.UserDAO;
 import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
+import appl.data.items.Book;
 import appl.data.items.PLZ;
 import appl.data.items.User;
+import appl.logic.service.BookService;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 import exceptions.data.ErrorMessageHelper;
@@ -23,6 +25,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserDAO userDao;
+
+	@Autowired
+	BookService bookService;
 
 	@Autowired
 	UserBuilder userBuilder;
@@ -80,6 +85,20 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getUsers() throws DatabaseException {
 		return userDao.getUsers();
+	}
+
+	@Override
+	public List<Book> getVisitedBooks(int userId) throws DatabaseException {
+		return userDao.getVisitedBooks(userId);
+	}
+
+	@Override
+	public boolean updateVisitedBooks(int userId, String isbn) throws DatabaseException {
+		Book book = bookService.getBookByIsbn(isbn);
+		if (book == null) {
+			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
+		}
+		return userDao.updateVisitedBooks(userId, book);
 	}
 
 	private UserBuilder readData(Userfields userfield, String information) {
