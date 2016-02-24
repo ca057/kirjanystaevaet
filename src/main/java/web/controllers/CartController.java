@@ -51,10 +51,10 @@ public class CartController {
 		return "cart";
 	}
 
-	// TODO: cart-logic erstellen. Preisrechner, Liste mit Büchern
-	// eingeloggten Nutzer finden, Warenkorb holen getCart() --> Liste
-	// zurückgeben, Buch hinzufügen
-	// Buch über ISBN getBook();
-	//
-
+	@RequestMapping(value = "/bestellen", method = RequestMethod.POST)
+	public String orderContent() {
+		// TODO implement order
+		cart.deleteContent();
+		return "";
+	}
 }

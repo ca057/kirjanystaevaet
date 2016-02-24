@@ -22,7 +22,7 @@
 					<p><c:out value="${book.getIsbn()}"/></p>
 					<p><c:out value="${book.getPrice()}"/></p>
 				</c:forEach> 
-				</c:otherwise>
+			</c:otherwise>
 		</c:choose>
 	
 	<a href="<c:url value='/bestellen'/>">bestellen</a>

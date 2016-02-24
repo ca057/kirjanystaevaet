@@ -30,12 +30,24 @@ public class Cart {
 	// Item aus Warenkorb entfernen
 	public void deleteBook(Book book) {
 		if (book == null) {
-			throw new IllegalArgumentException("added book is null");
+			throw new IllegalArgumentException("book to remove is null");
 		}
 		books.remove(book);
 	}
 
-	// Warenbestand prüfen
+	// post order
+	public void postOrder(Book book) {
+		if (book == null) {
+			throw new IllegalArgumentException("all books are null");
+		}
+
+	}
+
+	public void deleteContent() {
+		books.clear();
+	}
+	// Warenbestand prüfen Order-Service muss Liste mit Büchern gegeben werden.
+	// Soll prüfen, ob Bücher da sind und entsprechende Meldung rausgeben.
 
 	// "Zur Kasse"
 }
