@@ -34,7 +34,7 @@ public class UserDAOImpl implements UserDAO {
 			throw new RuntimeException("[Error] SessionFactory is null");
 		}
 		Criteria cr = getSession().createCriteria(User.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		// return cr.createAlias("plz", "p");
+		// return cr.createAlias("PLZ", "p");
 		return cr;
 	}
 
@@ -61,15 +61,22 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public Optional<User> getUserByEMail(String email) throws DatabaseException {
-		User user;
+	public Optional<User> getUserByUniqueField(Userfields field, String value) throws DatabaseException {
+		User user = null;
 		try {
-			user = (User) setupAndGetCriteria().add(Restrictions.eq(Userfields.email.toString(), email)).uniqueResult();
+			switch (field) {
+			case userId:
+				user = (User) setupAndGetCriteria().add(Restrictions.idEq(Integer.valueOf(value))).uniqueResult();
+				break;
+			case email:
+				user = (User) setupAndGetCriteria().add(Restrictions.eq(Userfields.email.toString(), value))
+						.uniqueResult();
+			default:
+				break;
+			}
+
 		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}
-		if (user == null) {
-			System.err.println("User with Email " + email + " not found.");
 		}
 		return Optional.ofNullable(user);
 	}
@@ -80,35 +87,26 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void deleteUser(User user) throws DatabaseException {
+	public boolean deleteUser(User user) throws DatabaseException {
 		try {
 			getSession().delete(user);
+			return true;
 		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
 
 	@Override
-	public void updateUser(User user, Map<Searchfields, String> map) throws DatabaseException {
+	public boolean updateUser(User user, Map<Searchfields, String> map) throws DatabaseException {
 		// TODO update(USER)? Eine Ebene drüber müsste das
 		// jeweilige zu ändernde Feld via USER.set() geändert werden
 		try {
 			// TODO implement this.
+			return true;
 		} catch (Exception e) {
 			throw new DatabaseException(
 					ErrorMessageHelper.updateError("User", String.valueOf(user.getUserId()), e.getMessage()));
 		}
-	}
-
-	@Override
-	public Optional<User> getUserByID(int id) throws DatabaseException {
-		User user;
-		try {
-			user = (User) setupAndGetCriteria().add(Restrictions.idEq(id)).uniqueResult();
-		} catch (Exception e) {
-			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}
-		return Optional.ofNullable(user);
 	}
 
 }

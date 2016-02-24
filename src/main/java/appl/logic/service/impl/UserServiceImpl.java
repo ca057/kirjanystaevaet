@@ -54,31 +54,24 @@ public class UserServiceImpl implements UserService {
 	public boolean updateAccount(int userId, Map<Userfields, String> map) throws DatabaseException {
 		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
 				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
-		try {
-			userDao.deleteUser(user);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-
+		return userDao.deleteUser(user);
 	}
 
 	@Override
 	public boolean deleteAccount(int userId) throws DatabaseException {
 		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
 				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
-		// TODO Implement this.
-		return false;
+		return userDao.deleteUser(user);
 	}
 
 	@Override
-	public Optional<User> findbyMail(String eMail) throws DatabaseException {
-		return userDao.getUserByEMail(eMail);
+	public Optional<User> findbyMail(String email) throws DatabaseException {
+		return userDao.getUserByUniqueField(Userfields.email, email);
 	}
 
 	@Override
 	public Optional<User> findByID(int id) throws DatabaseException {
-		return userDao.getUserByID(id);
+		return userDao.getUserByUniqueField(Userfields.userId, String.valueOf(id));
 	}
 
 	@Override

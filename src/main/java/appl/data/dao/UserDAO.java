@@ -11,16 +11,33 @@ import appl.data.enums.Userfields;
 import appl.data.items.User;
 import exceptions.data.DatabaseException;
 
+/**
+ * @author Johannes
+ *
+ */
 @Transactional
 public interface UserDAO {
 
+	/**
+	 * @return
+	 * @throws DatabaseException
+	 */
 	List<User> getUsers() throws DatabaseException;
 
+	/**
+	 * @param map
+	 * @return
+	 * @throws DatabaseException
+	 */
 	List<User> getUserByMetadata(Map<Userfields, String> map) throws DatabaseException;
 
-	Optional<User> getUserByEMail(String email) throws DatabaseException;
-
-	Optional<User> getUserByID(int id) throws DatabaseException;
+	/**
+	 * @param field
+	 * @param value
+	 * @return
+	 * @throws DatabaseException
+	 */
+	Optional<User> getUserByUniqueField(Userfields field, String value) throws DatabaseException;
 
 	/**
 	 * Password encryption is supposed to happen in a service.
@@ -31,8 +48,17 @@ public interface UserDAO {
 	 */
 	int insertUser(User user) throws DatabaseException;
 
-	void deleteUser(User user) throws DatabaseException;
+	/**
+	 * @param user
+	 * @throws DatabaseException
+	 */
+	boolean deleteUser(User user) throws DatabaseException;
 
-	void updateUser(User user, Map<Searchfields, String> map) throws DatabaseException;
+	/**
+	 * @param user
+	 * @param map
+	 * @throws DatabaseException
+	 */
+	boolean updateUser(User user, Map<Searchfields, String> map) throws DatabaseException;
 
 }

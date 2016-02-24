@@ -82,7 +82,7 @@ public interface UserService {
 	 * @return the user if existing
 	 * @throws DatabaseException
 	 */
-	Optional<User> findbyMail(String eMail) throws DatabaseException;
+	Optional<User> findbyMail(String email) throws DatabaseException;
 
 	/**
 	 * @param id
