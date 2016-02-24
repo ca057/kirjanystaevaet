@@ -112,11 +112,11 @@ public interface UserDAO {
 	boolean updateUser(int userId, User user) throws DatabaseException;
 
 	/**
-	 * Lists the last books an user was interested in.
+	 * Lists the books an user was interested in.
 	 * 
 	 * @param userId
 	 *            the {@code id} of the user
-	 * @return a list with the ten last seen books
+	 * @return a list with seen books
 	 * @throws DatabaseException
 	 *             if an error occurs while accessing the database or if the
 	 *             user cannot be found
@@ -124,8 +124,8 @@ public interface UserDAO {
 	List<Book> getVisitedBooks(int userId) throws DatabaseException;
 
 	/**
-	 * Updates the list of last visited books. Takes the ISBN of the recently
-	 * seen {@link Book}.
+	 * Updates the list of visited books. Takes the ISBN of the recently seen
+	 * {@link Book}.
 	 * 
 	 * @param userId
 	 *            the id of the user

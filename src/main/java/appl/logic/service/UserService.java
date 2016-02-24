@@ -121,11 +121,11 @@ public interface UserService {
 	List<User> getUsers() throws DatabaseException;
 
 	/**
-	 * Lists the last books an user was interested in.
+	 * Lists the books an user was interested in.
 	 * 
 	 * @param userId
 	 *            the {@code id} of the user
-	 * @return a list with the ten last seen books
+	 * @return a list with the seen books
 	 * @throws DatabaseException
 	 *             if an error occurs while interacting with the underlying DAO
 	 */
