@@ -9,20 +9,45 @@ import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
 import exceptions.data.AuthorMayExistException;
+import exceptions.data.CategoryExistsException;
+import exceptions.data.DatabaseException;
+import exceptions.data.EntityDoesNotExistException;
 import exceptions.data.IsbnAlreadyExistsException;
+import exceptions.data.PrimaryKeyViolationException;
 
 public interface BookService {
 	//Category Methoden
 	
-	public Category getCategoryByExactName (String name);
+	// Abfragen
 	
-	public void insertCategory(String name);
+	public Category getCategoryByExactName (String name) throws EntityDoesNotExistException;
+	
+	public Category getCategoryById(int id) throws EntityDoesNotExistException;
 	
 	public List<String> getAllCategoryNames();
 	
+	public List<Category> getAllCategories();
+
+	// Insert
+	/**
+	 * 
+	 * @param name
+	 * @return Die neu erzeugte ID
+	 * @throws CategoryExistsException Wenn es eine Category mit exakt demselben Namen schon gibt. Das darf nicht sein.
+	 */
+	public int insertCategory(String name) throws CategoryExistsException;
+	
+	// Update
+	
+	
+	
+	// Delete
+	
+	public void deleteCategory(String name);
 	
 	
 	// Author Methoden
+	//Abfragen
 
 	/**
 	 * 
@@ -30,18 +55,29 @@ public interface BookService {
 	 * @param nameL
 	 * @param newAuthor Wird auf TRUE gesetzt, wenn man auf jeden Fall einen neuen Autoren in die Datenbank einfügen will, auch wenn es schon einen mit diesem Namen gibt. In diesem Fall kann die Exception ignoriert werden, weil sie nie geworfen werden wird
 	 * @return Die ID des neu erstellten Eintrags
-	 * @throws AuthorMayExistException Wenn es schon mindestens einen Autoren mit Exakt dem angegeben Vor- und Nachnamen gibt
+	 * @throws AuthorMayExistException Wenn newAuthor = false und wenn es schon mindestens einen Autoren mit Exakt dem angegeben Vor- und Nachnamen gibt
 	 */
-	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws AuthorMayExistException;
 	
 	public List<Author> getAuthorByExactName(String NameF, String NameL);
 	
-	public Author getAuthorById (int id);
+	public Author getAuthorById (int id) throws EntityDoesNotExistException;
 	
 	public List<Author> getAllAuthors();
 	
+	// Insert
+	
+	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws AuthorMayExistException;
+
+	// Update
+	
+	// Delete
+	//TODO Was soll hier angegeben werden?
+	public void deleteAuthor(Author author);
+	
 	// Book Methoden
 	
+	
+	// Abfragen
 	public List<Book> getAllBooks();
 
 	public List<Book> getBooksByCategory(String category);
@@ -54,12 +90,18 @@ public interface BookService {
 	
 
 
+	// Insert
 	/**
 	 * 
-	 * @param map
-	 * @param authorIds
-	 * @param categoryNames Es dürfen nur Kategories verwendet werden, die es schon gibt. Will man eine Category angeben, die es noch nicht gibt, muss diese Vorher extra angelegt werden
+	 * @param map contains information about simple fields
+	 * @param authorIds may only contain ids of existing authors
+	 * @param categoryIds may only contain ids of existing categories
+	 * @throws DatabaseException thrown when categories or authors do not exist in the Database, also thrown in case of general Database Errors. Errormessage gives more Details.
 	 */
 	//public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds)throws IsbnAlreadyExistsException ;
-	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds);
+	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) throws DatabaseException;
+	// Update
+	// Delete
+	public void deleteBook(String isbn);
+	
 }

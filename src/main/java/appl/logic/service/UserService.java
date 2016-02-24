@@ -1,3 +1,4 @@
+
 package appl.logic.service;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 import appl.data.enums.Userfields;
 import appl.data.items.PLZ;
 import appl.data.items.User;
-import exceptions.data.PrimaryKeyViolation;
+import exceptions.data.PrimaryKeyViolationException;
 
 /**
  * An UserService manages all modifications on an user object. Therefore, it is
@@ -35,7 +36,7 @@ public interface UserService {
 	 * @see {@link Userfields}
 	 * @see {@link User}
 	 */
-	int createAccount(Map<Userfields, String> data) throws PrimaryKeyViolation;
+	int createAccount(Map<Userfields, String> data) throws PrimaryKeyViolationException;
 
 	/**
 	 * Method to save a new user with postal code.
@@ -55,7 +56,7 @@ public interface UserService {
 	 * @see {@link Userfields}
 	 * @see {@link User}
 	 */
-	int createAccount(Map<Userfields, String> data, PLZ plz) throws PrimaryKeyViolation;
+	int createAccount(Map<Userfields, String> data, PLZ plz) throws PrimaryKeyViolationException;
 
 	/**
 	 * @param eMail
@@ -77,3 +78,4 @@ public interface UserService {
 	List<User> getUsers();
 
 }
+

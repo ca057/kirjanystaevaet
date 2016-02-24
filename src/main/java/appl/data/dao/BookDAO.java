@@ -20,7 +20,7 @@ public interface BookDAO {
 	public String insertBook(Book book);
 
 
-	public void deleteBook(Book book);
+	public void deleteBook(String isbn);
 
 	public void updateBook(Book book, Map<Searchfields, String> map);
 

@@ -15,7 +15,8 @@ import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.UserService;
 import exceptions.data.ErrorMessageHelper;
-import exceptions.data.PrimaryKeyViolation;
+import exceptions.data.PrimaryKeyViolationException;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,13 +31,14 @@ public class UserServiceImpl implements UserService {
 	PasswordEncoder pswEncoder;
 
 	@Override
-	public int createAccount(Map<Userfields, String> data, PLZ plz) throws PrimaryKeyViolation {
+
+	public int createAccount(Map<Userfields, String> data, PLZ plz) throws PrimaryKeyViolationException {
 		userBuilder.setPLZ(plz);
 		return createAccount(data);
 	}
 
 	@Override
-	public int createAccount(Map<Userfields, String> data) throws PrimaryKeyViolation {
+	public int createAccount(Map<Userfields, String> data) throws PrimaryKeyViolationException {
 		userBuilder.setRole(UserRoles.USER);
 		data.forEach((userfield, information) -> {
 			readData(userfield, information);
@@ -44,7 +46,9 @@ public class UserServiceImpl implements UserService {
 		try {
 			return userDao.insertUser(userBuilder.createUser());
 		} catch (Exception e) {
-			throw new PrimaryKeyViolation(ErrorMessageHelper.couldNotBeSaved("User") + e.getMessage());
+
+			throw new PrimaryKeyViolationException(ErrorMessageHelper.couldNotBeSaved("User") + e.getMessage());
+
 		}
 	}
 

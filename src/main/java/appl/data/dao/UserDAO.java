@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import appl.data.enums.Searchfields;
 import appl.data.enums.Userfields;
 import appl.data.items.User;
-import exceptions.data.PrimaryKeyViolation;
+import exceptions.data.PrimaryKeyViolationException;
 
 @Transactional
 public interface UserDAO {
@@ -28,10 +28,11 @@ public interface UserDAO {
 	 * @return
 	 * @throws PrimaryKeyViolation
 	 */
-	int insertUser(User user) throws PrimaryKeyViolation;
+	int insertUser(User user) throws PrimaryKeyViolationException;
 
 	void deleteUser(User user);
 
 	void updateUser(User user, Map<Searchfields, String> map);
 
 }
+

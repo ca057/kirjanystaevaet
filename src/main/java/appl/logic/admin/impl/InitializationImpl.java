@@ -11,7 +11,7 @@ import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
 import appl.logic.admin.Initialization;
 import appl.logic.service.UserService;
-import exceptions.data.PrimaryKeyViolation;
+import exceptions.data.PrimaryKeyViolationException;
 
 /**
  * @author Johannes
@@ -43,7 +43,7 @@ public class InitializationImpl implements Initialization, InitializingBean {
 		data.put(Userfields.role, UserRoles.USER.toString());
 		try {
 			userService.createAccount(data, null);
-		} catch (PrimaryKeyViolation e) {
+		} catch (PrimaryKeyViolationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -59,10 +59,11 @@ public class InitializationImpl implements Initialization, InitializingBean {
 		data.put(Userfields.role, UserRoles.ADMIN.toString());
 		try {
 			userService.createAccount(data, null);
-		} catch (PrimaryKeyViolation e) {
+		} catch (PrimaryKeyViolationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 }
+

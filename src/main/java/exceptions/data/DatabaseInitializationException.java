@@ -1,6 +1,6 @@
 package exceptions.data;
 
-public class DatabaseInitializationException extends Exception {
+public class DatabaseInitializationException extends DatabaseException {
 
 	/**
 	 * 

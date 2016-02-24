@@ -1,3 +1,4 @@
+
 package appl.data.dao.impl;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import appl.data.dao.UserDAO;
 import appl.data.enums.Searchfields;
 import appl.data.enums.Userfields;
 import appl.data.items.User;
-import exceptions.data.PrimaryKeyViolation;
+import exceptions.data.PrimaryKeyViolationException;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -65,7 +66,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public int insertUser(User user) throws PrimaryKeyViolation {
+	public int insertUser(User user) throws PrimaryKeyViolationException {
 		return (Integer) getSession().save(user);
 	}
 
@@ -95,3 +96,4 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 }
+

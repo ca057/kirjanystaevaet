@@ -14,6 +14,7 @@ import appl.data.dao.CategoryDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import exceptions.data.EntityDoesNotExistException;
 
 @Repository
 public class CategoryDAOImpl implements CategoryDAO {
@@ -41,13 +42,10 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public List<Category> getCategories() {
-		// TODO implement this!
-		//Criteria cr = setupAndGetCriteria();
-		//cr.add
 		return getSession().createCriteria(Category.class).list();
 	}
 	@Override
-	public Category getCategoriesByExactName(String name) {
+	public Category getCategoriesByExactName(String name) throws EntityDoesNotExistException {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq("categoryName", name).ignoreCase());
 		Object result = cr.uniqueResult();
@@ -55,10 +53,9 @@ public class CategoryDAOImpl implements CategoryDAO {
 			Category cat = (Category) result;
 			return cat;
 		} else {
-			//TODO Fehlerbehandlung -> Category does not exist exception
+			throw new EntityDoesNotExistException();
 		}
 		
-		return null;
 	}
 
 
@@ -71,8 +68,11 @@ public class CategoryDAOImpl implements CategoryDAO {
 	}
 
 	@Override
-	public void insertCategory(Category category) {
-		// TODO implement this!
+	public int insertCategory(Category category) {
+		int id = (int) getSession().save(category);
+		System.out.println("In categoryDao.insertCtaegory name = " + category.getCategoryName() + " id = " + id);
+
+		return id;
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 
 	@Override
-	public Category getCategoryById(int id) {
+	public Category getCategoryById(int id) throws EntityDoesNotExistException {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq("categoryID", id));
 		Object result = cr.uniqueResult();
@@ -90,10 +90,14 @@ public class CategoryDAOImpl implements CategoryDAO {
 			Category cat = (Category) result;
 			return cat;
 		} else {
-			//TODO Fehlerbehandlung -> Category does not exist exception
+			throw new EntityDoesNotExistException();
 		}
-		return null;
 	}
+	public void deleteCategory(int id){
+		Category category = (Category) getSession().get(Category.class, id);			             
+		getSession().delete(category);
+	}
+
 
 
 	

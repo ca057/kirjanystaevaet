@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import exceptions.data.EntityDoesNotExistException;
 
 @Transactional
 public interface CategoryDAO {
@@ -16,12 +17,14 @@ public interface CategoryDAO {
 
 	public List<Category> getCategoriesByName(String categoryName);
 	
-	public Category getCategoriesByExactName(String name);
+	public Category getCategoriesByExactName(String name) throws EntityDoesNotExistException;
 	
-	public Category getCategoryById(int id);
+	public Category getCategoryById(int id) throws EntityDoesNotExistException;
 
-	public void insertCategory(Category category);
+	public int insertCategory(Category category);
 
 	public void updateCategory(Book book, Map<Searchfields, String> map);
+	
+	public void deleteCategory(int id);
 
 }
