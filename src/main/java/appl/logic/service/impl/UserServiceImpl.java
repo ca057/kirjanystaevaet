@@ -2,6 +2,7 @@ package appl.logic.service.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,8 +12,10 @@ import appl.data.builder.UserBuilder;
 import appl.data.dao.UserDAO;
 import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
+import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.UserService;
+import exceptions.data.ErrorMessageHelper;
 import exceptions.data.PrimaryKeyViolation;
 
 @Service
@@ -24,33 +27,56 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserBuilder userBuilder;
 
-//	@Autowired
-//	PasswordEncoder pswEncoder;
+	@Autowired
+	PasswordEncoder pswEncoder;
 
 	@Override
-	public int registerNewUserAccount(Map<Userfields, String> data) throws PrimaryKeyViolation {
-		// TODO geht das schöner? Momentan hier, um admin im foreach nicht
-		// ständig zu überschreiben.
+	public int createAccount(Map<Userfields, String> data, PLZ plz) throws PrimaryKeyViolation {
+		userBuilder.setPLZ(plz);
+		return createAccount(data);
+	}
+
+	@Override
+	public int createAccount(Map<Userfields, String> data) throws PrimaryKeyViolation {
 		userBuilder.setRole(UserRoles.USER);
 		data.forEach((userfield, information) -> {
-			System.out.println("field: " + userfield + " " + information);
-			getData(userfield, information);
+			readData(userfield, information);
 		});
 		try {
 			return userDao.insertUser(userBuilder.createUser());
 		} catch (Exception e) {
-			throw new PrimaryKeyViolation("Object could not be saved to database: " + e.getMessage());
+			throw new PrimaryKeyViolation(ErrorMessageHelper.couldNotBeSaved("User") + e.getMessage());
 		}
 	}
 
-	/**
-	 *
-	 * 
-	 * @param userfield
-	 * @param information
-	 * @return
-	 */
-	private UserBuilder getData(Userfields userfield, String information) {
+	@Override
+	public boolean deleteAccount(int userId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateAccount(int userId, Map<Userfields, String> map) {
+		Optional<User> user = userDao.getUserByID(userId);
+		return false;
+	}
+
+	@Override
+	public User findbyMail(String eMail) throws PrimaryKeyViolation {
+		return userDao.getUserByEMail(eMail).orElseThrow(() -> new PrimaryKeyViolation(""));
+	}
+
+	@Override
+	public User findByID(int id) throws PrimaryKeyViolation {
+		return userDao.getUserByID(id).orElseThrow(() -> new PrimaryKeyViolation(""));
+	}
+
+	@Override
+	public List<User> getUsers() {
+		return userDao.getUsers();
+	}
+
+	private UserBuilder readData(Userfields userfield, String information) {
 		switch (userfield) {
 		case role:
 			if (UserRoles.ADMIN.toString().equals(information)) {
@@ -73,34 +99,13 @@ public class UserServiceImpl implements UserService {
 		case streetnumber:
 			userBuilder.setStreetnumber(information);
 			break;
-		case plz:
-			// TODO implement this
-			break;
 		case password:
-			// userBuilder.setPassword(pswEncoder.encode(information));
-			break;
-		case userId:
-			// TODO implement this
+			userBuilder.setPassword(pswEncoder.encode(information));
 			break;
 		default:
 			break;
 		}
 		return userBuilder;
-	}
-
-	@Override
-	public User findbyMail(String eMail) {
-		return userDao.getUserByEMail(eMail);
-	}
-
-	@Override
-	public User findByID(int id) {
-		return userDao.getUserByID(id);
-	}
-
-	@Override
-	public List<User> getUsers() {
-		return userDao.getUsers();
 	}
 
 }

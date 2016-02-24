@@ -14,7 +14,7 @@ import appl.logic.service.UserService;
 import exceptions.data.PrimaryKeyViolation;
 
 /**
- * @author Hannes
+ * @author Johannes
  *
  */
 @Component
@@ -24,22 +24,20 @@ public class InitializationImpl implements Initialization, InitializingBean {
 	UserService userService;
 
 	public InitializationImpl() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void afterPropertiesSet() throws Exception {
-		if (userService.findbyMail("admin@ky.de") == null) {
-			createAdmin();
-			createUser();
-			addData();
+	public void afterPropertiesSet() {
+		// TODO Verbessern.
+		try {
+			if (userService.findbyMail("admin@ky.de") == null) {
+				createAdmin();
+				createUser();
+			}
+		} catch (PrimaryKeyViolation e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-	}
-
-	private void addData() {
-		// TODO Auto-generated method stub
-
 	}
 
 	private void createUser() {
@@ -50,7 +48,7 @@ public class InitializationImpl implements Initialization, InitializingBean {
 		data.put(Userfields.password, "user");
 		data.put(Userfields.role, UserRoles.USER.toString());
 		try {
-			userService.registerNewUserAccount(data);
+			userService.createAccount(data, null);
 		} catch (PrimaryKeyViolation e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,6 +56,7 @@ public class InitializationImpl implements Initialization, InitializingBean {
 	}
 
 	private void createAdmin() {
+		System.out.println("createAdmin");
 		Map<Userfields, String> data = new HashMap<>();
 		System.out.println("Admin anlegen.");
 		data.put(Userfields.name, "admin");
@@ -66,7 +65,7 @@ public class InitializationImpl implements Initialization, InitializingBean {
 		data.put(Userfields.password, "admin");
 		data.put(Userfields.role, UserRoles.ADMIN.toString());
 		try {
-			userService.registerNewUserAccount(data);
+			userService.createAccount(data, null);
 		} catch (PrimaryKeyViolation e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

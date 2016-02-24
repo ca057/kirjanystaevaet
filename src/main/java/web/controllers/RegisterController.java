@@ -128,7 +128,7 @@ public class RegisterController {
 		req.setPassword("");
 
 		try {
-			int id = userService.registerNewUserAccount(userMap);
+			int id = userService.createAccount(userMap);
 			User user = userService.findByID(id);
 			// TODO log user in and redirect to /meinkonto
 			// authProvider.authenticate(new

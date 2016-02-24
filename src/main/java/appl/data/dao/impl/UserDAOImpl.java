@@ -2,6 +2,7 @@ package appl.data.dao.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -37,40 +38,29 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<User> getUsers() {
-		return getSession().createCriteria(User.class).list();
+		// return getSession().createCriteria(User.class).list();
+		return setupAndGetCriteria().list();
 	}
 
 	@Override
-	public List<User> getUsersByName(String name) {
-		// TODO implement this!
-		return null;
+	public List<User> getUserByMetadata(Map<Userfields, String> map) {
+		Criteria cr = setupAndGetCriteria();
+		map.forEach((field, data) -> {
+			cr.add(Restrictions.ilike(field.toString(), data));
+		});
+		return cr.list();
 	}
 
 	@Override
-	public List<User> getUsersBySurname(String surname) {
-		// TODO implement this!
-		return null;
-	}
-
-	@Override
-	public User getUserByEMail(String email) {
+	public Optional<User> getUserByEMail(String email) {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq(Userfields.email.toString(), email));
-		User user = (User) cr.uniqueResult();
-		// User user = (User) getSession()
-		// .createQuery("from User where " + Userfields.email.toString() + "='"
-		// + email + "'").uniqueResult();
-		if (user == null) {
-			System.err.println("no user found with this email: " + email);
-		}
-		return user;
+		return Optional.ofNullable((User) cr.uniqueResult());
 	}
 
 	@Override
 	public int insertUser(User user) throws PrimaryKeyViolation {
-		Integer id = (Integer) getSession().save(user);
-		System.out.println("Alle user: " + getUsers());
-		return id;
+		return (Integer) getSession().save(user);
 	}
 
 	@Override
@@ -85,17 +75,17 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User getUserByID(int id) {
-		// Criteria cr = setupAndGetCriteria();
+	public Optional<User> getUserByID(int id) {
+		return Optional.ofNullable((User) setupAndGetCriteria().add(Restrictions.idEq(id)).uniqueResult());
 		// cr.add(Restrictions.idEq(id));
-		// System.out.println(cr);
 		// User user = (User) cr.uniqueResult();
-		// FIXME criteria einbauen
-		User user = (User) getSession().createQuery("from User where userId ='" + id + "'").uniqueResult();
-		if (user == null) {
-			System.err.println("no user found with this ID: " + id);
-		}
-		return user;
+		// // User user = (User) getSession().createQuery("from User where
+		// userId
+		// // ='" + id + "'").uniqueResult();
+		// if (user == null) {
+		// System.err.println("no user found with this ID: " + id);
+		// }
+		// return user;
 	}
 
 }
