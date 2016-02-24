@@ -39,22 +39,22 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public Optional<List<User>> getUsers() throws DatabaseException {
+	public List<User> getUsers() throws DatabaseException {
 		try {
-			return Optional.ofNullable(setupAndGetCriteria().list());
+			return setupAndGetCriteria().list();
 		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
 
 	@Override
-	public Optional<List<User>> getUserByMetadata(Map<Userfields, String> map) throws DatabaseException {
+	public List<User> getUserByMetadata(Map<Userfields, String> map) throws DatabaseException {
 		Criteria cr = setupAndGetCriteria();
 		map.forEach((field, data) -> {
 			cr.add(Restrictions.ilike(field.toString(), data));
 		});
 		try {
-			return Optional.ofNullable(cr.list());
+			return cr.list();
 		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}

@@ -96,6 +96,6 @@ public interface UserService {
 	 * @return A {@code list} with all users saved
 	 * @throws DatabaseException
 	 */
-	Optional<List<User>> getUsers() throws DatabaseException;
+	List<User> getUsers() throws DatabaseException;
 
 }

@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Optional<List<User>> getUsers() throws DatabaseException {
+	public List<User> getUsers() throws DatabaseException {
 		return userDao.getUsers();
 	}
 

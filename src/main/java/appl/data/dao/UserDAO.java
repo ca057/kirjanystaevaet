@@ -14,9 +14,9 @@ import exceptions.data.DatabaseException;
 @Transactional
 public interface UserDAO {
 
-	Optional<List<User>> getUsers() throws DatabaseException;
+	List<User> getUsers() throws DatabaseException;
 
-	Optional<List<User>> getUserByMetadata(Map<Userfields, String> map) throws DatabaseException;
+	List<User> getUserByMetadata(Map<Userfields, String> map) throws DatabaseException;
 
 	Optional<User> getUserByEMail(String email) throws DatabaseException;
 
