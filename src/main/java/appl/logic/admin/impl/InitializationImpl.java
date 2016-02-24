@@ -29,16 +29,12 @@ public class InitializationImpl implements Initialization, InitializingBean {
 	@Override
 	public void afterPropertiesSet() {
 		try {
-			userService.findbyMail("admin@ky.de");
-
-		} catch (DatabaseException e) {
-			System.err.println("No admin available. Creating default accounts (" + e.getMessage() + ")");
-			try {
+			if (!userService.findbyMail("admin@ky.de").isPresent()) {
 				createAdmin();
 				createUser();
-			} catch (DatabaseException e1) {
-				System.err.println("Problem while adding default accounts: " + e.getMessage());
 			}
+		} catch (DatabaseException e) {
+			System.err.println("Problem while adding default accounts: " + e.getMessage());
 		}
 	}
 

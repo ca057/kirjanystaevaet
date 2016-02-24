@@ -3,6 +3,7 @@ package appl.logic.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -81,7 +82,7 @@ public interface UserService {
 	 * @return the user if existing
 	 * @throws DatabaseException
 	 */
-	User findbyMail(String eMail) throws DatabaseException;
+	Optional<User> findbyMail(String eMail) throws DatabaseException;
 
 	/**
 	 * @param id
@@ -89,11 +90,12 @@ public interface UserService {
 	 * @return the user if existing
 	 * @throws DatabaseException
 	 */
-	User findByID(int id) throws DatabaseException;
+	Optional<User> findByID(int id) throws DatabaseException;
 
 	/**
 	 * @return A {@code list} with all users saved
+	 * @throws DatabaseException
 	 */
-	List<User> getUsers();
+	Optional<List<User>> getUsers() throws DatabaseException;
 
 }

@@ -9,18 +9,18 @@ import org.springframework.transaction.annotation.Transactional;
 import appl.data.enums.Searchfields;
 import appl.data.enums.Userfields;
 import appl.data.items.User;
-import exceptions.data.PrimaryKeyViolationException;
+import exceptions.data.DatabaseException;
 
 @Transactional
 public interface UserDAO {
 
-	List<User> getUsers();
+	Optional<List<User>> getUsers() throws DatabaseException;
 
-	List<User> getUserByMetadata(Map<Userfields, String> map);
+	Optional<List<User>> getUserByMetadata(Map<Userfields, String> map) throws DatabaseException;
 
-	Optional<User> getUserByEMail(String email);
+	Optional<User> getUserByEMail(String email) throws DatabaseException;
 
-	Optional<User> getUserByID(int id);
+	Optional<User> getUserByID(int id) throws DatabaseException;
 
 	/**
 	 * Password encryption is supposed to happen in a service.
@@ -29,10 +29,10 @@ public interface UserDAO {
 	 * @return
 	 * @throws PrimaryKeyViolation
 	 */
-	int insertUser(User user) throws PrimaryKeyViolationException;
+	int insertUser(User user) throws DatabaseException;
 
-	void deleteUser(User user);
+	void deleteUser(User user) throws DatabaseException;
 
-	void updateUser(User user, Map<Searchfields, String> map);
+	void updateUser(User user, Map<Searchfields, String> map) throws DatabaseException;
 
 }

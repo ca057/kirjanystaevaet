@@ -1,6 +1,7 @@
 package appl.logic.security;
 
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,16 +34,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		try {
 			// TODO check if exists / Fehler fangen
 			// TODO UserRole Enum / String überlegen
-			User user = userService.findbyMail(email);
+			User user = userService.findbyMail(email).get();
 			LinkedList<GrantedAuthorityImpl> list = new LinkedList<GrantedAuthorityImpl>();
 			System.out.println("Rolle: " + user.getRole());
 			list.add(new GrantedAuthorityImpl("ROLE_" + user.getRole()));
 			return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), list);
-		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (DatabaseException | NoSuchElementException e) {
+			// TODO Spring-Exception
+			throw new UsernameNotFoundException(e.getMessage());
 		}
-		return null;
 	}
 
 	// UTIL

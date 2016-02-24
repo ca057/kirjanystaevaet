@@ -16,7 +16,8 @@ import appl.data.dao.UserDAO;
 import appl.data.enums.Searchfields;
 import appl.data.enums.Userfields;
 import appl.data.items.User;
-import exceptions.data.PrimaryKeyViolationException;
+import exceptions.data.DatabaseException;
+import exceptions.data.ErrorMessageHelper;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -38,62 +39,76 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<User> getUsers() {
-		// return getSession().createCriteria(User.class).list();
-		return setupAndGetCriteria().list();
+	public Optional<List<User>> getUsers() throws DatabaseException {
+		try {
+			return Optional.ofNullable(setupAndGetCriteria().list());
+		} catch (Exception e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 
 	@Override
-	public List<User> getUserByMetadata(Map<Userfields, String> map) {
+	public Optional<List<User>> getUserByMetadata(Map<Userfields, String> map) throws DatabaseException {
 		Criteria cr = setupAndGetCriteria();
 		map.forEach((field, data) -> {
 			cr.add(Restrictions.ilike(field.toString(), data));
 		});
-		return cr.list();
+		try {
+			return Optional.ofNullable(cr.list());
+		} catch (Exception e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 
 	@Override
-	public Optional<User> getUserByEMail(String email) {
-		Criteria cr = setupAndGetCriteria();
-		cr.add(Restrictions.eq(Userfields.email.toString(), email));
-		User user = (User) cr.uniqueResult();
-		// User user = (User) getSession()
-		// .createQuery("from User where " + Userfields.email.toString() + "='"
-		// + email + "'").uniqueResult();
+	public Optional<User> getUserByEMail(String email) throws DatabaseException {
+		User user;
+		try {
+			user = (User) setupAndGetCriteria().add(Restrictions.eq(Userfields.email.toString(), email)).uniqueResult();
+		} catch (Exception e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 		if (user == null) {
-			System.err.println("no user found with this email: " + email);
+			System.err.println("User with Email " + email + " not found.");
 		}
 		return Optional.ofNullable(user);
 	}
 
 	@Override
-	public int insertUser(User user) throws PrimaryKeyViolationException {
+	public int insertUser(User user) {
 		return (Integer) getSession().save(user);
 	}
 
 	@Override
-	public void deleteUser(User user) {
-		// TODO implement this!
+	public void deleteUser(User user) throws DatabaseException {
+		try {
+			getSession().delete(user);
+		} catch (Exception e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 
 	@Override
-	public void updateUser(User user, Map<Searchfields, String> map) {
+	public void updateUser(User user, Map<Searchfields, String> map) throws DatabaseException {
 		// TODO update(USER)? Eine Ebene drüber müsste das
 		// jeweilige zu ändernde Feld via USER.set() geändert werden
+		try {
+			// TODO implement this.
+		} catch (Exception e) {
+			throw new DatabaseException(
+					ErrorMessageHelper.updateError("User", String.valueOf(user.getUserId()), e.getMessage()));
+		}
 	}
 
 	@Override
-	public Optional<User> getUserByID(int id) {
-		return Optional.ofNullable((User) setupAndGetCriteria().add(Restrictions.idEq(id)).uniqueResult());
-		// cr.add(Restrictions.idEq(id));
-		// User user = (User) cr.uniqueResult();
-		// // User user = (User) getSession().createQuery("from User where
-		// userId
-		// // ='" + id + "'").uniqueResult();
-		// if (user == null) {
-		// System.err.println("no user found with this ID: " + id);
-		// }
-		// return user;
+	public Optional<User> getUserByID(int id) throws DatabaseException {
+		User user;
+		try {
+			user = (User) setupAndGetCriteria().add(Restrictions.idEq(id)).uniqueResult();
+		} catch (Exception e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+		return Optional.ofNullable(user);
 	}
 
 }

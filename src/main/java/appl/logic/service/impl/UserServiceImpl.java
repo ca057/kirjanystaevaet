@@ -2,6 +2,7 @@ package appl.logic.service.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -51,30 +52,37 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean updateAccount(int userId, Map<Userfields, String> map) throws DatabaseException {
-		User user = findByID(userId);
-		return false;
+		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
+				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
+		try {
+			userDao.deleteUser(user);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
 	}
 
 	@Override
 	public boolean deleteAccount(int userId) throws DatabaseException {
-		User user = findByID(userId);
+		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
+				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
+		// TODO Implement this.
 		return false;
 	}
 
 	@Override
-	public User findbyMail(String eMail) throws DatabaseException {
-		return userDao.getUserByEMail(eMail)
-				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
+	public Optional<User> findbyMail(String eMail) throws DatabaseException {
+		return userDao.getUserByEMail(eMail);
 	}
 
 	@Override
-	public User findByID(int id) throws DatabaseException {
-		return userDao.getUserByID(id)
-				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
+	public Optional<User> findByID(int id) throws DatabaseException {
+		return userDao.getUserByID(id);
 	}
 
 	@Override
-	public List<User> getUsers() {
+	public Optional<List<User>> getUsers() throws DatabaseException {
 		return userDao.getUsers();
 	}
 

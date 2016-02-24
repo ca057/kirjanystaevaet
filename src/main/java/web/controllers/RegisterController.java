@@ -129,7 +129,9 @@ public class RegisterController {
 
 		try {
 			int id = userService.createAccount(userMap);
-			User user = userService.findByID(id);
+			// FIXME Habe ihr ein get() angehängt, das eine NoSuchElementE
+			// schmeißen würde, falls leer / Johannes
+			User user = userService.findByID(id).get();
 			// TODO log user in and redirect to /meinkonto
 			// authProvider.authenticate(new
 			// UsernamePasswordAuthenticationToken(user.getEmail(),
