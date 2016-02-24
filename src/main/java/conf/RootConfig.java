@@ -73,6 +73,7 @@ public class RootConfig {
 
 	private Properties createProperties() {
 		Properties prop = new Properties();
+		// FIXME Johannes, you know what to do!
 		prop.setProperty("hibernate.hbm2ddl.auto", "create");
 		prop.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
 		prop.setProperty("hibernate.connection.url", "jdbc:h2:./database/kirjanystaevaet");

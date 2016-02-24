@@ -1,4 +1,5 @@
 console.log('¯\\_(ツ)_/¯');
+console.info(2);
 
 const request = function(url) {
 	const ajax = function (type, data) {
@@ -20,7 +21,7 @@ const request = function(url) {
 	};
 	
 	return {
-		POST: (data) => ajax("POST", data),
+		POST: (data) => ajax('POST', data),
 		GET: () => ajax('GET'),
 		DELETE: (data) => ajax('DELETE', data),
 	};
@@ -30,7 +31,7 @@ const request = function(url) {
 const handle = function() {
 	const userManagement = function () {
 		// implement the user management here
-		console.log("INFO: USERS ARE MANAGED")
+		console.info("USERS ARE MANAGED");
 		const inputs = ["name", "surname", "street", "streetnumber", "plz", "email", "role"];
 		
 		$("#add-user-submit").on('click', (e) => {
@@ -40,17 +41,28 @@ const handle = function() {
 			e.preventDefault();
 			console.log('I WILL REGISTER THAT LOVELY HUMAN FOR YA.')
 			const data = {};
+			
 			inputs.forEach((e) => {
-				const id = "#" + e;
-				Object.defineProperty(data, e, {
-					value: $(id).val()
-				});
+				const id = '#' + e;
 				$(id).prop('disabled', true);
+				data[e] = $(id).val();
 			});
-			console.log(data);
 			request('/kirjanystaevaet/backend/nutzerinnen/add')
-				.POST(data).done(data => console.log(data))
-				.fail((jqXHR, status, err) => console.log(status, err));
+				.POST(data).done(() => {
+					console.info('USER IS REGISTERED');
+					inputs.forEach(e => {
+						const id = '#' + e;
+						$(id).prop('disabled', false).val('');
+					});
+				})
+				.fail((jqXHR, status, err) => {
+					// TODO show error message
+					alert('Nutzer:in konnte nicht angelegt werden.');
+					inputs.forEach(e => {
+						const id = '#' + e;
+						$(id).prop('disabled', false);
+					});
+				});
 		});
 		
 		// TODO make this function more abstract

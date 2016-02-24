@@ -44,6 +44,7 @@ public class RegisterController {
 
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<UserRegisterWrapper> add(@RequestBody final UserRegisterWrapper req) {
+		System.out.println(req.getName());
 		Map<Userfields, String> userMap = new HashMap<Userfields, String>();
 		userMap.put(Userfields.email, req.getEmail());
 		userMap.put(Userfields.name, req.getName());
