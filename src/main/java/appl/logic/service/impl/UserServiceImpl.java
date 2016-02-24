@@ -50,6 +50,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public boolean updateAccount(int userId, Map<Userfields, String> map) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteAccount(int userId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
 	public User findbyMail(String eMail) throws DatabaseException {
 		return userDao.getUserByEMail(eMail)
 				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));

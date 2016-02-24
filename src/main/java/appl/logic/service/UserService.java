@@ -61,6 +61,19 @@ public interface UserService {
 	int createAccount(Map<Userfields, String> data, PLZ plz) throws DatabaseException;
 
 	/**
+	 * @param userId
+	 * @param map
+	 * @return
+	 */
+	boolean updateAccount(int userId, Map<Userfields, String> map);
+
+	/**
+	 * @param userId
+	 * @return
+	 */
+	boolean deleteAccount(int userId);
+
+	/**
 	 * @param eMail
 	 *            the email address of the user
 	 * @return the user if existing
