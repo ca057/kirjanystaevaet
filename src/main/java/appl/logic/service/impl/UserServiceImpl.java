@@ -50,14 +50,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean updateAccount(int userId, Map<Userfields, String> map) {
-		// TODO Auto-generated method stub
+	public boolean updateAccount(int userId, Map<Userfields, String> map) throws DatabaseException {
+		User user = findByID(userId);
 		return false;
 	}
 
 	@Override
-	public boolean deleteAccount(int userId) {
-		// TODO Auto-generated method stub
+	public boolean deleteAccount(int userId) throws DatabaseException {
+		User user = findByID(userId);
 		return false;
 	}
 

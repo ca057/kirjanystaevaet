@@ -64,14 +64,16 @@ public interface UserService {
 	 * @param userId
 	 * @param map
 	 * @return
+	 * @throws DatabaseException
 	 */
-	boolean updateAccount(int userId, Map<Userfields, String> map);
+	boolean updateAccount(int userId, Map<Userfields, String> map) throws DatabaseException;
 
 	/**
 	 * @param userId
 	 * @return
+	 * @throws DatabaseException
 	 */
-	boolean deleteAccount(int userId);
+	boolean deleteAccount(int userId) throws DatabaseException;
 
 	/**
 	 * @param eMail
