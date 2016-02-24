@@ -2,7 +2,6 @@ package appl.logic.service.impl;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,25 +49,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean deleteAccount(int userId) {
-		// TODO Auto-generated method stub
-		return false;
+	public User findbyMail(String eMail) {
+		return userDao.getUserByEMail(eMail);
 	}
 
 	@Override
-	public boolean updateAccount(int userId, Map<Userfields, String> map) {
-		Optional<User> user = userDao.getUserByID(userId);
-		return false;
-	}
-
-	@Override
-	public User findbyMail(String eMail) throws PrimaryKeyViolation {
-		return userDao.getUserByEMail(eMail).orElseThrow(() -> new PrimaryKeyViolation(""));
-	}
-
-	@Override
-	public User findByID(int id) throws PrimaryKeyViolation {
-		return userDao.getUserByID(id).orElseThrow(() -> new PrimaryKeyViolation(""));
+	public User findByID(int id) {
+		return userDao.getUserByID(id);
 	}
 
 	@Override

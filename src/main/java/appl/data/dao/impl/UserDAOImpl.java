@@ -2,7 +2,6 @@ package appl.data.dao.impl;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -52,10 +51,17 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public Optional<User> getUserByEMail(String email) {
+	public User getUserByEMail(String email) {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq(Userfields.email.toString(), email));
-		return Optional.ofNullable((User) cr.uniqueResult());
+		User user = (User) cr.uniqueResult();
+		// User user = (User) getSession()
+		// .createQuery("from User where " + Userfields.email.toString() + "='"
+		// + email + "'").uniqueResult();
+		if (user == null) {
+			System.err.println("no user found with this email: " + email);
+		}
+		return user;
 	}
 
 	@Override
@@ -75,8 +81,8 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public Optional<User> getUserByID(int id) {
-		return Optional.ofNullable((User) setupAndGetCriteria().add(Restrictions.idEq(id)).uniqueResult());
+	public User getUserByID(int id) {
+		return (User) setupAndGetCriteria().add(Restrictions.idEq(id)).uniqueResult();
 		// cr.add(Restrictions.idEq(id));
 		// User user = (User) cr.uniqueResult();
 		// // User user = (User) getSession().createQuery("from User where
