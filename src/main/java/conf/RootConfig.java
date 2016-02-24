@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import appl.data.dao.ArchiveBook;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
@@ -36,7 +37,7 @@ import exceptions.data.DatabaseInitializationException;
  *
  */
 @Configuration
-@ComponentScan({ "appl.logic.service", "appl.data.dao", "appl.data.builder", "appl.logic.admin" })
+@ComponentScan({ "appl.logic.service.bookService", "appl.data.dao", "appl.data.builder", "appl.logic.admin" })
 @EnableTransactionManagement
 public class RootConfig {
 
@@ -64,6 +65,7 @@ public class RootConfig {
 			cfg.addAnnotatedClass(Order.class);
 			cfg.addAnnotatedClass(PLZ.class);
 			cfg.addAnnotatedClass(User.class);
+			cfg.addAnnotatedClass(ArchiveBook.class);
 			return cfg.setProperties(createProperties()).buildSessionFactory();
 		} catch (HibernateException e) {
 			System.err.println("Initial SessionFactory creation failed." + e.getMessage());

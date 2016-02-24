@@ -53,7 +53,7 @@ public class Book {
 	private Set<Author> authors = new HashSet<Author>(0);
 	// TODO In Javadoc erwähnen.
 	//private Set<Order> orders = new HashSet<Order>(0);
-	private Set<ArchiveBook> archiveItems;
+	private Set<ArchiveBook> archiveItems = new HashSet<ArchiveBook>(0);
 
 	public Book() {
 	}

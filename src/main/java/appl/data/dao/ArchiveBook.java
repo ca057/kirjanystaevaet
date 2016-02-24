@@ -19,7 +19,7 @@ import javax.persistence.UniqueConstraint;
 import appl.data.items.Book;
 import appl.data.items.Order;
 @Entity
-@Table(name = "archivebook", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "archiveId") })
+@Table(name = "archivebook", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "archiveItemId") })
 public class ArchiveBook {
 	private int archiveItemId;
 	double price;

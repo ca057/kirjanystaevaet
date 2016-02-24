@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import appl.data.enums.UserRoles;
 
-@Configuration
+// @Configuration
 @ComponentScan(basePackages = { "appl.logic.security" })
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

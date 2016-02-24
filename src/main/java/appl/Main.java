@@ -26,14 +26,14 @@ public class Main {
 		//new QueryFun().testBookInsert(ctx);
 		//new QueryFun().testExceptions(ctx);
 		QueryFun qf = new QueryFun();
-		qf.testCategoryInsert(ctx);
-		qf.testCategoryDelete(ctx);
+		//qf.testCategoryInsert(ctx);
+		//qf.testCategoryDelete(ctx);
 		
-		qf.testAuthorInsert(ctx);
-		qf.testAuthorDelete(ctx);
+		//qf.testAuthorInsert(ctx);
+		//qf.testAuthorDelete(ctx);
 		
 		qf.testInsertBook(ctx);
-		qf.testDeleteBook(ctx);
+		//qf.testDeleteBook(ctx);
 	}
 
 }
