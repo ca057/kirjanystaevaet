@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import appl.data.enums.Searchfields;
 import appl.data.enums.Userfields;
 import appl.data.items.User;
 import exceptions.data.DatabaseException;
@@ -55,10 +54,11 @@ public interface UserDAO {
 	boolean deleteUser(User user) throws DatabaseException;
 
 	/**
+	 * @param userId
 	 * @param user
 	 * @param map
 	 * @throws DatabaseException
 	 */
-	boolean updateUser(User user, Map<Searchfields, String> map) throws DatabaseException;
+	boolean updateUser(int userId, User user) throws DatabaseException;
 
 }

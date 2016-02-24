@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import appl.data.dao.UserDAO;
-import appl.data.enums.Searchfields;
 import appl.data.enums.Userfields;
 import appl.data.items.User;
 import exceptions.data.DatabaseException;
@@ -97,11 +96,12 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean updateUser(User user, Map<Searchfields, String> map) throws DatabaseException {
-		// TODO update(USER)? Eine Ebene drüber müsste das
-		// jeweilige zu ändernde Feld via USER.set() geändert werden
+	public boolean updateUser(int userId, User updatedUser) throws DatabaseException {
+		User user = getUserByUniqueField(Userfields.userId, String.valueOf(userId))
+				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
 		try {
-			// TODO implement this.
+			// TODO Funktioniert das so?
+			user = (User) getSession().merge(updatedUser);
 			return true;
 		} catch (Exception e) {
 			throw new DatabaseException(

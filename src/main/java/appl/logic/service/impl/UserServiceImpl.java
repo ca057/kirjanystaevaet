@@ -54,7 +54,10 @@ public class UserServiceImpl implements UserService {
 	public boolean updateAccount(int userId, Map<Userfields, String> map) throws DatabaseException {
 		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
 				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
-		return userDao.deleteUser(user);
+		map.forEach((userfield, information) -> {
+			readData(userfield, information);
+		});
+		return userDao.updateUser(userId, user);
 	}
 
 	@Override
