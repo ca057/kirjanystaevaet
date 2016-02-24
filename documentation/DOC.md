@@ -116,7 +116,9 @@ Alle anonymen Gäste bekommen die Möglichkeit, sich anzumelden. Wer nicht anony
 ```
 
 ## Database
-
+### Deleting
+Wenn z.B. das letzte Buch einer Kategorie gelöscht wird, wird auch die Kategorie gelöscht wird. Wir wissen, dass es so ist, es lässt sich darüber streiten, wie sinnvoll das ist.
+Es kann keine Kategorie gelöscht werden, wenn es noch ein Buch dazu gibt.
 ### DAOs
 TODO: Im Grunde immutable -> Zugriff nur über Konstruktor.
 
