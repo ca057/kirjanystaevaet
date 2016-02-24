@@ -1,7 +1,9 @@
+
 package appl.data.dao.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -14,7 +16,7 @@ import appl.data.dao.UserDAO;
 import appl.data.enums.Searchfields;
 import appl.data.enums.Userfields;
 import appl.data.items.User;
-import exceptions.data.PrimaryKeyViolation;
+import exceptions.data.PrimaryKeyViolationException;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -51,7 +53,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User getUserByEMail(String email) {
+	public Optional<User> getUserByEMail(String email) {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq(Userfields.email.toString(), email));
 		User user = (User) cr.uniqueResult();
@@ -61,11 +63,11 @@ public class UserDAOImpl implements UserDAO {
 		if (user == null) {
 			System.err.println("no user found with this email: " + email);
 		}
-		return user;
+		return Optional.ofNullable(user);
 	}
 
 	@Override
-	public int insertUser(User user) throws PrimaryKeyViolation {
+	public int insertUser(User user) throws PrimaryKeyViolationException {
 		return (Integer) getSession().save(user);
 	}
 
@@ -81,8 +83,8 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User getUserByID(int id) {
-		return (User) setupAndGetCriteria().add(Restrictions.idEq(id)).uniqueResult();
+	public Optional<User> getUserByID(int id) {
+		return Optional.ofNullable((User) setupAndGetCriteria().add(Restrictions.idEq(id)).uniqueResult());
 		// cr.add(Restrictions.idEq(id));
 		// User user = (User) cr.uniqueResult();
 		// // User user = (User) getSession().createQuery("from User where

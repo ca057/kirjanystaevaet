@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
 import appl.logic.service.UserService;
-import exceptions.data.PrimaryKeyViolation;
+import exceptions.data.DatabaseException;
 import web.jsonwrappers.UserRegisterWrapper;
 
 @Controller
@@ -51,7 +51,7 @@ public class BackendUsersController {
 		try {
 			int id = userService.createAccount(userMap);
 			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.OK);
-		} catch (PrimaryKeyViolation e) {
+		} catch (DatabaseException e) {
 			System.err.println(e.getMessage());
 			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
 		}

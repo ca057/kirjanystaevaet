@@ -2,6 +2,7 @@ package appl.data.dao.impl;
 
 import java.util.List;
 
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -15,6 +16,7 @@ import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
 import exceptions.data.AuthorNotFoundException;
+import exceptions.data.EntityDoesNotExistException;
 
 @Repository
 public class AuthorDAOImpl implements AuthorDAO {
@@ -42,56 +44,41 @@ public class AuthorDAOImpl implements AuthorDAO {
 
 	@Override
 	public List<Author> getAuthors() {
-		// TODO implement this!
 		return getSession().createCriteria(Author.class).list();
 
 	}
 
 	@Override
 	public List<Author> getAuthorsByNameF(String nameF) {
-		// TODO implement this!
-		return null;
+		Criteria cr = setupAndGetCriteria();
+		cr.add(Restrictions.ilike("nameF", nameF));
+		List<Author> authors = (List<Author>) cr.list();
+		
+		return authors;
 	}
 
 	@Override
 	public List<Author> getAuthorsByNameL(String nameL) {
-		// TODO implement this!
-		return null;
+		Criteria cr = setupAndGetCriteria();
+		cr.add(Restrictions.ilike("nameL", nameL));
+		List<Author> authors = (List<Author>) cr.list();
+		
+		return authors;
 	}
 
 	@Override
-	public Author getAuthorByID(int authorID) throws AuthorNotFoundException {
-		//System.out.println("in getAuthorByID \n id = " + authorID + "\n");
+	public Author getAuthorByID(int authorID) throws EntityDoesNotExistException {
 		Criteria cr = setupAndGetCriteria();
-		//System.out.println("Got the criteria\n");
 		cr.add(Restrictions.eq("authorId", authorID));
-		//System.out.println("added restrictions\n");
 		Object result = cr.uniqueResult();
-		//System.out.println("Got result\n");
-		//System.out.println(result.toString()); // NullPointer
 		if ( result != null){
 			Author author = (Author) result;
-		//	System.out.println("in getAuthorById, got Author: " + author.toString()+ "\n");
 			return author;
 		} else {
-			throw new AuthorNotFoundException();
-			//TODO Fehlerbehandlung -> Author does not exist exception
-			//System.out.println("Author wurde nicht in der DB gefunden\n\n");
-		}
-		/*
-		System.out.println("Versuch über hql\n\n");
-		Query query = getSession().createQuery("select nameL from Author where authorId='15'");
-		List<String> fromDB = query.list();
-		System.out.println("got book from db\n\nsize is : " + fromDB.size());
+			throw new EntityDoesNotExistException();
 		
-		for (String a : fromDB){
-			System.out.println("Authors printen\n" + a);
-			
 		}
-		*/
-		//System.out.println("BEfore I return null\n\n");
-		
-		//return null;
+
 	}
 
 	@Override
@@ -100,17 +87,13 @@ public class AuthorDAOImpl implements AuthorDAO {
 		int id = (int) getSession().save(author);
 		System.out.println("\n\n authorDao,´.insertAuthor nach dem save \n\n id = " + id);
 		System.out.println("\nNochmal den Author checken\n" + author.toString());
-		
-		// Hier ne Abfrage machen, um zu sehen, ob der in der Datenbank ist
-		//Author fromDB = getAuthorByID(id);
-		//System.out.println("\n\n author nochmal aus DB geholt\n" + fromDB.toString() );
+
 		return id;
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void deleteAuthor(Author author) {
-		// TODO Auto-generated method stub
+		getSession().delete(author);
 	}
 
 	@Override

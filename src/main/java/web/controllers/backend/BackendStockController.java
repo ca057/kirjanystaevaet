@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
+import exceptions.data.CategoryExistsException;
 
 /**
  * 
@@ -50,7 +51,12 @@ public class BackendStockController {
 			throw new IllegalArgumentException("The passed name of the category is null and can not be added.");
 		}
 		// TODO handle empty string
-		service.insertCategory(name);
+		try {
+			service.insertCategory(name);
+		} catch (CategoryExistsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "redirect:/backend/bestand";
 	}
 

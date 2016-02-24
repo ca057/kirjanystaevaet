@@ -14,8 +14,8 @@ import appl.data.enums.Userfields;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.UserService;
+import exceptions.data.DatabaseException;
 import exceptions.data.ErrorMessageHelper;
-import exceptions.data.PrimaryKeyViolation;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,13 +30,14 @@ public class UserServiceImpl implements UserService {
 	PasswordEncoder pswEncoder;
 
 	@Override
-	public int createAccount(Map<Userfields, String> data, PLZ plz) throws PrimaryKeyViolation {
+
+	public int createAccount(Map<Userfields, String> data, PLZ plz) throws DatabaseException {
 		userBuilder.setPLZ(plz);
 		return createAccount(data);
 	}
 
 	@Override
-	public int createAccount(Map<Userfields, String> data) throws PrimaryKeyViolation {
+	public int createAccount(Map<Userfields, String> data) throws DatabaseException {
 		userBuilder.setRole(UserRoles.USER);
 		data.forEach((userfield, information) -> {
 			readData(userfield, information);
@@ -44,18 +45,32 @@ public class UserServiceImpl implements UserService {
 		try {
 			return userDao.insertUser(userBuilder.createUser());
 		} catch (Exception e) {
-			throw new PrimaryKeyViolation(ErrorMessageHelper.couldNotBeSaved("User") + e.getMessage());
+			throw new DatabaseException(ErrorMessageHelper.couldNotBeSaved("User") + e.getMessage());
 		}
 	}
 
 	@Override
-	public User findbyMail(String eMail) {
-		return userDao.getUserByEMail(eMail);
+	public boolean updateAccount(int userId, Map<Userfields, String> map) throws DatabaseException {
+		User user = findByID(userId);
+		return false;
 	}
 
 	@Override
-	public User findByID(int id) {
-		return userDao.getUserByID(id);
+	public boolean deleteAccount(int userId) throws DatabaseException {
+		User user = findByID(userId);
+		return false;
+	}
+
+	@Override
+	public User findbyMail(String eMail) throws DatabaseException {
+		return userDao.getUserByEMail(eMail)
+				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
+	}
+
+	@Override
+	public User findByID(int id) throws DatabaseException {
+		return userDao.getUserByID(id)
+				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
 	}
 
 	@Override
