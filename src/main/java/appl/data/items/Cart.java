@@ -49,5 +49,4 @@ public class Cart {
 	// Warenbestand prüfen Order-Service muss Liste mit Büchern gegeben werden.
 	// Soll prüfen, ob Bücher da sind und entsprechende Meldung rausgeben.
 
-	// "Zur Kasse"
 }

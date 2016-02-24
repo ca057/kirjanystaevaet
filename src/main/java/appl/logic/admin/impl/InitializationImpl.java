@@ -59,6 +59,7 @@ public class InitializationImpl implements Initialization, InitializingBean {
 
 	private void createAdmin() {
 		Map<Userfields, String> data = new HashMap<>();
+		System.out.println("Admin anlegen.");
 		data.put(Userfields.name, "admin");
 		data.put(Userfields.surname, "admin");
 		data.put(Userfields.email, "admin@ky.de");
