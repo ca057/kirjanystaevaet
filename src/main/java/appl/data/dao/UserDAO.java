@@ -2,6 +2,7 @@ package appl.data.dao;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +18,9 @@ public interface UserDAO {
 
 	List<User> getUserByMetadata(Map<Userfields, String> map);
 
-	User getUserByEMail(String email);
+	Optional<User> getUserByEMail(String email);
 
-	User getUserByID(int id);
+	Optional<User> getUserByID(int id);
 
 	/**
 	 * Password encryption is supposed to happen in a service.
@@ -35,4 +36,3 @@ public interface UserDAO {
 	void updateUser(User user, Map<Searchfields, String> map);
 
 }
-

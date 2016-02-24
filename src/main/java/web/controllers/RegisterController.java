@@ -16,7 +16,7 @@ import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
 import appl.data.items.User;
 import appl.logic.service.UserService;
-import exceptions.data.PrimaryKeyViolationException;
+import exceptions.data.DatabaseException;
 
 @Controller
 @RequestMapping(path = "/registrierung")
@@ -136,8 +136,8 @@ public class RegisterController {
 			// user.getPassword()));
 
 			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.OK);
-		} catch (PrimaryKeyViolationException e) {
-		//} catch (PrimaryKeyViolationException e) {
+		} catch (DatabaseException e) {
+			// } catch (PrimaryKeyViolationException e) {
 			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}

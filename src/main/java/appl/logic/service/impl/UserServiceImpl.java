@@ -14,9 +14,8 @@ import appl.data.enums.Userfields;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.UserService;
+import exceptions.data.DatabaseException;
 import exceptions.data.ErrorMessageHelper;
-import exceptions.data.PrimaryKeyViolationException;
-
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -32,13 +31,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 
-	public int createAccount(Map<Userfields, String> data, PLZ plz) throws PrimaryKeyViolationException {
+	public int createAccount(Map<Userfields, String> data, PLZ plz) throws DatabaseException {
 		userBuilder.setPLZ(plz);
 		return createAccount(data);
 	}
 
 	@Override
-	public int createAccount(Map<Userfields, String> data) throws PrimaryKeyViolationException {
+	public int createAccount(Map<Userfields, String> data) throws DatabaseException {
 		userBuilder.setRole(UserRoles.USER);
 		data.forEach((userfield, information) -> {
 			readData(userfield, information);
@@ -46,20 +45,20 @@ public class UserServiceImpl implements UserService {
 		try {
 			return userDao.insertUser(userBuilder.createUser());
 		} catch (Exception e) {
-
-			throw new PrimaryKeyViolationException(ErrorMessageHelper.couldNotBeSaved("User") + e.getMessage());
-
+			throw new DatabaseException(ErrorMessageHelper.couldNotBeSaved("User") + e.getMessage());
 		}
 	}
 
 	@Override
-	public User findbyMail(String eMail) {
-		return userDao.getUserByEMail(eMail);
+	public User findbyMail(String eMail) throws DatabaseException {
+		return userDao.getUserByEMail(eMail)
+				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
 	}
 
 	@Override
-	public User findByID(int id) {
-		return userDao.getUserByID(id);
+	public User findByID(int id) throws DatabaseException {
+		return userDao.getUserByID(id)
+				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
 	}
 
 	@Override
