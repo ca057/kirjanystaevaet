@@ -17,6 +17,10 @@ import exceptions.data.PrimaryKeyViolation;
  * @author Johannes
  * 
  */
+/**
+ * @author Hannes
+ *
+ */
 @Service
 public interface UserService {
 
@@ -58,18 +62,33 @@ public interface UserService {
 	int createAccount(Map<Userfields, String> data, PLZ plz) throws PrimaryKeyViolation;
 
 	/**
+	 * @param userId
+	 * @return
+	 */
+	boolean deleteAccount(int userId);
+
+	/**
+	 * @param userId
+	 * @param map
+	 * @return
+	 */
+	boolean updateAccount(int userId, Map<Userfields, String> map);
+
+	/**
 	 * @param eMail
 	 *            the email address of the user
 	 * @return the user if existing
+	 * @throws PrimaryKeyViolation
 	 */
-	User findbyMail(String eMail);
+	User findbyMail(String eMail) throws PrimaryKeyViolation;
 
 	/**
 	 * @param id
 	 *            the id of the user
 	 * @return the user if existing
+	 * @throws PrimaryKeyViolation
 	 */
-	User findByID(int id);
+	User findByID(int id) throws PrimaryKeyViolation;
 
 	/**
 	 * @return A {@code list} with all users saved

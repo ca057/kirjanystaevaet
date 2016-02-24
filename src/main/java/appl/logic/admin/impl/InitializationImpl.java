@@ -28,9 +28,15 @@ public class InitializationImpl implements Initialization, InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() {
-		if (userService.findbyMail("admin@ky.de") == null) {
-			createAdmin();
-			createUser();
+		// TODO Verbessern.
+		try {
+			if (userService.findbyMail("admin@ky.de") == null) {
+				createAdmin();
+				createUser();
+			}
+		} catch (PrimaryKeyViolation e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
