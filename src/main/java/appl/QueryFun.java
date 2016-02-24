@@ -21,6 +21,10 @@ import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
+import exceptions.data.CategoryExistsException;
+import exceptions.data.DatabaseException;
+import exceptions.data.EntityDoesNotExistException;
+import exceptions.data.PrimaryKeyViolationException;
 
 public class QueryFun {
 
@@ -38,6 +42,126 @@ public class QueryFun {
 
 		System.out.println();
 		System.exit(0);
+	}
+	
+	public void testExceptions(ApplicationContext ctx) throws EntityDoesNotExistException{
+		BookService service = ctx.getBean(BookService.class);
+		
+		service.getCategoryByExactName("Some Shit");
+	}
+	public void testCategoryInsert(ApplicationContext ctx) throws CategoryExistsException{
+		BookService service = ctx.getBean(BookService.class);
+		service.insertCategory("stricken");
+		service.insertCategory("häkeln");
+		List<String> categoryNames = service.getAllCategoryNames();
+		System.out.println("Nach insert");
+		for (String s : categoryNames){
+			System.out.println(s);
+		}
+	}
+	public void testCategoryDelete(ApplicationContext ctx){
+		BookService service = ctx.getBean(BookService.class);
+		service.deleteCategory("stricken");
+		List<String> categoryNames = service.getAllCategoryNames();
+		System.out.println("Nach Delete\n\n");
+		for (String s : categoryNames){
+			System.out.println(s);
+		}
+	}
+	public void testAuthorInsert(ApplicationContext ctx){
+		BookService service = ctx.getBean(BookService.class);
+		try {
+			service.insertAuthor("Madeleine", "Rosenhagen", true);
+		} catch (AuthorMayExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(1);
+		}
+		List<Author> authorNames = service.getAllAuthors();
+		System.out.println("Inserted Author\n\n");
+		for (Author a : authorNames){
+			System.out.println(a.getNameF() + " " + a.getNameL());
+		}
+	}
+	public void testAuthorDelete(ApplicationContext ctx){
+		BookService service = ctx.getBean(BookService.class);
+		List<Author> author = service.getAuthorByExactName("Madeleine", "Rosenhagen");
+		service.deleteAuthor(author.get(0));
+		List<Author> authorNames = service.getAllAuthors();
+		System.out.println("Deleted Author\n\n");
+		for (Author a : authorNames){
+			System.out.println(a.getNameF() + " " + a.getNameL());
+		}
+	}
+	
+	public void testInsertBook(ApplicationContext ctx){
+		BookService service = ctx.getBean(BookService.class);
+		List<Book> bookList = service.getAllBooks();
+		System.out.println(" \n\nBooklist before insert");
+		for (Book b : bookList){
+			System.out.println(b.toString());
+		}
+		try {
+			int authorId = service.insertAuthor("Madeleine", "Rosenhagen", true);
+			Map<Searchfields, String> bookMap = new HashMap<Searchfields, String>();
+			bookMap.put(Searchfields.title, "Die unendliche Geschichte");
+			bookMap.put(Searchfields.description, "Fantasy Children's book");
+			bookMap.put(Searchfields.price, "34.56");
+			bookMap.put(Searchfields.isbn, "0101010101");
+			bookMap.put(Searchfields.pages, "1234");
+			try {
+				int categoryId = service.insertCategory("Children's Fanatsy");
+				Set<Integer> catSet = new HashSet<Integer>();
+				catSet.add(categoryId);
+				Set<Integer> authorSet = new HashSet<Integer>();
+				authorSet.add(authorId);
+				
+					
+				service.insertBook(bookMap, authorSet, catSet);
+			
+				
+			} catch (CategoryExistsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.exit(1);
+			} catch (EntityDoesNotExistException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.exit(1);
+
+			
+			} catch (DatabaseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.exit(1);
+
+			}
+			
+		} catch (AuthorMayExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(1);
+
+		}
+		bookList = service.getAllBooks();
+		System.out.println(" \n\nBooklist after insert");
+		for (Book b : bookList){
+			System.out.println(b.toString());
+		}
+		
+		
+		
+		
+		
+	}
+	public void testDeleteBook(ApplicationContext ctx){
+		BookService service = ctx.getBean(BookService.class);
+		service.deleteBook("0101010101");
+		List<Book> bookList = service.getAllBooks();
+		System.out.println(" \n\nBooklist after delete");
+		for (Book b : bookList){
+			System.out.println(b.toString());
+		}
 	}
 /*
 	public void doSomeOrderTesting(ApplicationContext ctx) {
@@ -61,6 +185,7 @@ public class QueryFun {
 	}
 	*/
 
+	/*
 	public void doSomeTesting(SessionFactory sessionFactory) {
 		// Transaction: "Allows the application to define units of work, while
 		// maintaining abstraction from the underlying transaction
@@ -155,6 +280,7 @@ public class QueryFun {
 		System.out.println("Done");
 		System.exit(0);
 	}
+	*/
 
 	public void jdbcStuff(JdbcTemplate jdbc) {
 		// int counter = 1;
@@ -220,7 +346,8 @@ public class QueryFun {
 		bookService.getBooksByOpenSearch("I love my cat");
 	}
 	*/
-	public void testBookInsert (ApplicationContext ctx){
+	/*
+	public void testBookInsert (ApplicationContext ctx) throws PrimaryKeyViolationException{
 		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
 		BookService bookService = ctx.getBean(BookService.class);
 		/*List<String> allCats = bookService.getAllCategoryNames();
@@ -238,10 +365,17 @@ public class QueryFun {
 		Author singleAuthor = bookService.getAuthorById(42);
 		System.out.println(singleAuthor.toString());
 		System.exit(1);
-		*/
+		
 		// Testen, wenn ich weiß, dass es ein neuer Autor ist
 		try {
-			int authorId = bookService.insertAuthor("Someone", "Anyone", true);
+			System.out.println("Get all Books\n\n");
+			List<Book> allBook = bookService.getAllBooks();
+			for (Book b: allBook){
+				System.out.println(b.toString());
+			}
+			
+			
+			int authorId = bookService.insertAuthor("Jason", "Gilmore", true);
 			System.out.println("QueryFun nach bookService.insertAuthor");
 			Set<Integer> authors = new HashSet<Integer>();
 			authors.add(authorId);
@@ -269,10 +403,13 @@ public class QueryFun {
 			bookService.insertBook(dataMap, authors, categories);
 			
 			System.out.println("Get all Books\n\n");
-			List<Book> allBook = bookService.getAllBooks();
-			for (Book b: allBook){
+			List<Book> allBook2 = bookService.getAllBooks();
+			for (Book b: allBook2){
 				System.out.println(b.toString());
 			}
+			
+			
+			
 			
 		} catch (AuthorMayExistException e) {
 			// HIer nochmal Exception in try catch Block -> ignore
@@ -282,6 +419,8 @@ public class QueryFun {
 		
 		
 	}
+	*/
+	
 	/*
 
 	public Set<Book> createTestData() {
