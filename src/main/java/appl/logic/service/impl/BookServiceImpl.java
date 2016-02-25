@@ -11,6 +11,7 @@ import java.util.Set;
 import org.hibernate.HibernateException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import appl.data.builder.AuthorBuilder;
@@ -28,13 +29,10 @@ import appl.data.items.Book;
 import appl.data.items.Category;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
-import exceptions.data.AuthorNotFoundException;
 import exceptions.data.CategoryExistsException;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
 import exceptions.data.ErrorMessageHelper;
-import exceptions.data.IsbnAlreadyExistsException;
-import exceptions.data.PrimaryKeyViolationException;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -103,7 +101,7 @@ public class BookServiceImpl implements BookService {
 		throw new CategoryExistsException();
 
 	}
-	public void deleteCategory(String name){
+	public void deleteCategory(String name) throws DatabaseException{
 		// Prüfen, ob Category vorhanden
 		/*try {
 			categoryDao.getCategoriesByExactName(name);
@@ -117,6 +115,9 @@ public class BookServiceImpl implements BookService {
 		} catch (EntityDoesNotExistException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category"));
+		} catch (DataIntegrityViolationException e){
+			throw new DatabaseException(ErrorMessageHelper.DataIntegrityViolation("Category", "Book", e.getMessage()));
 		}
 		
 	}

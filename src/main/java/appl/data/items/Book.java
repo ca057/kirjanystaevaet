@@ -127,7 +127,8 @@ public class Book {
 		return pages;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	//@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY)// Wenn das letzte Buch einer Kategorie gelöscht wird, wird die Kategorie nicht gelöscht
 	@JoinTable(name = "bookcategoriesbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "categoryId") )
 	public Set<Category> getCategories() {
 		return categories;

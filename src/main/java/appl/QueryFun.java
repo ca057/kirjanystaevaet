@@ -6,25 +6,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import appl.data.dao.OrderDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
-import appl.data.items.Order;
-import appl.data.items.PLZ;
-import appl.data.items.User;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.CategoryExistsException;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
-import exceptions.data.PrimaryKeyViolationException;
 
 public class QueryFun {
 
@@ -59,7 +52,7 @@ public class QueryFun {
 			System.out.println(s);
 		}
 	}
-	public void testCategoryDelete(ApplicationContext ctx){
+	public void testCategoryDelete(ApplicationContext ctx) throws DatabaseException{
 		BookService service = ctx.getBean(BookService.class);
 		service.deleteCategory("stricken");
 		List<String> categoryNames = service.getAllCategoryNames();
@@ -94,7 +87,7 @@ public class QueryFun {
 		}
 	}
 	
-	public void testInsertBook(ApplicationContext ctx){
+	public void testInsertBook(ApplicationContext ctx) throws DatabaseException{
 		BookService service = ctx.getBean(BookService.class);
 		List<Book> bookList = service.getAllBooks();
 		System.out.println(" \n\nBooklist before insert");
@@ -148,6 +141,22 @@ public class QueryFun {
 		for (Book b : bookList){
 			System.out.println(b.toString());
 		}
+		List<Category> categoryList = service.getAllCategories();
+		System.out.println("\n\nCategories after insert");
+		for(Category cat : categoryList){
+			System.out.println(cat.getCategoryName());
+		}
+		System.out.println("\n\nDelete Category\n\n");
+		
+		service.deleteCategory("Children's Fanatsy");
+		bookList = service.getAllBooks();
+		System.out.println(" \n\nBooklist after Category Delete");
+		for (Book b : bookList){
+			System.out.println(b.toString());
+		}
+		
+		
+		
 		
 		
 		
@@ -162,6 +171,12 @@ public class QueryFun {
 		for (Book b : bookList){
 			System.out.println(b.toString());
 		}
+		List<Category> categoryList = service.getAllCategories();
+		System.out.println("\n\nCategories after delete");
+		for(Category cat : categoryList){
+			System.out.println(cat.getCategoryName());
+		}
+		
 	}
 /*
 	public void doSomeOrderTesting(ApplicationContext ctx) {

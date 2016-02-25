@@ -5,12 +5,12 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import conf.RootConfig;
 import exceptions.data.CategoryExistsException;
-import exceptions.data.EntityDoesNotExistException;
+import exceptions.data.DatabaseException;
 import exceptions.data.PrimaryKeyViolationException;
 
 public class Main {
 
-	public static void main(String[] args) throws PrimaryKeyViolationException, EntityDoesNotExistException, CategoryExistsException {
+	public static void main(String[] args) throws PrimaryKeyViolationException, CategoryExistsException, DatabaseException {
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(RootConfig.class);
 		// new QueryFun().doSomeTesting2(ctx);
 		// new QueryFun().doSomeTesting(sessionFactory);

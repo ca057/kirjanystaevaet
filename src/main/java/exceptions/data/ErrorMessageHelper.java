@@ -21,6 +21,10 @@ public abstract class ErrorMessageHelper {
 	public static String entityDoesNotExist(String entity){
 		return String.format("%s does not Exist", entity);
 	}
+	
+	public static String DataIntegrityViolation(String entity1, String entity2, String errormessage){
+		return String.format("%s kann only be deleted when it does not contain any %s \n Original ErrorMessage: %s", entity1, entity2, errormessage);
+	}
 
 	/**
 	 * Use if an object could not be saved to database. Expects to be followed

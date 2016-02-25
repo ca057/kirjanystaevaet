@@ -12,8 +12,6 @@ import exceptions.data.AuthorMayExistException;
 import exceptions.data.CategoryExistsException;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
-import exceptions.data.IsbnAlreadyExistsException;
-import exceptions.data.PrimaryKeyViolationException;
 
 public interface BookService {
 	//Category Methoden
@@ -43,7 +41,7 @@ public interface BookService {
 	
 	// Delete
 	
-	public void deleteCategory(String name);
+	public void deleteCategory(String name) throws DatabaseException;
 	
 	
 	// Author Methoden
