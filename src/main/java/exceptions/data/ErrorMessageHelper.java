@@ -60,6 +60,13 @@ public abstract class ErrorMessageHelper {
 		return String.format("%s does not exist", entity);
 	}
 	
+	/**
+	 * Use if you may try to delete something that is still in relationship with some other entities
+	 * @param entity1 you try to delete
+	 * @param entity2 contained in entity
+	 * @param errormessage original errormessage of the original exception
+	 * @return
+	 */
 	public static String DataIntegrityViolation(String entity1, String entity2, String errormessage){
 		return String.format("%s kann only be deleted when it does not contain any %s \n Original ErrorMessage: %s", entity1, entity2, errormessage);
 	}
