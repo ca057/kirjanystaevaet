@@ -29,7 +29,6 @@ import appl.data.items.Book;
 import appl.data.items.Category;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
-import exceptions.data.CategoryExistsException;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
 import exceptions.data.ErrorMessageHelper;
@@ -46,59 +45,106 @@ public class BookServiceImpl implements BookService {
 	
 
 	@Override
-	public Category getCategoryByExactName(String name) throws EntityDoesNotExistException {
-		Category category = categoryDao.getCategoriesByExactName(name);
-		return category;
+	public Category getCategoryByExactName(String name) throws DatabaseException {
+		try{
+			Category category = categoryDao.getCategoriesByExactName(name);
+			return category;
+		}
+		catch(EntityDoesNotExistException e){
+			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category"));
+		}
+		catch(HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 
 	@Override
-	public Category getCategoryById(int id) throws EntityDoesNotExistException {
-		Category category = categoryDao.getCategoryById(id);
-		return category;
+	public Category getCategoryById(int id) throws DatabaseException {
+		try{
+			Category category = categoryDao.getCategoryById(id);
+			return category;
+			
+		}
+		catch(EntityDoesNotExistException e){
+			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category"));
+		}
+		catch(HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+		
 	}
+/*
+	@Override
+	public List<String> getAllCategoryNames() throws DatabaseException {
+		try{
+			List<Category> categories = categoryDao.getCategories();
+			List<String> names = new LinkedList<String>();
+			for (Category ct : categories) {
+				names.add(ct.getCategoryName());
+			//System.out.println(ct.getCategoryName());
+			}
+			return names;
+		}
+		catch(HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+	}
+	*/
 
 	@Override
 	public List<String> getAllCategoryNames() {
 		
-		List<Category> categories = categoryDao.getCategories();
-		List<String> names = new LinkedList<String>();
-		for (Category ct : categories) {
-			names.add(ct.getCategoryName());
+			List<Category> categories = categoryDao.getCategories();
+			List<String> names = new LinkedList<String>();
+			for (Category ct : categories) {
+				names.add(ct.getCategoryName());
 			//System.out.println(ct.getCategoryName());
-		}
-		if (names.isEmpty()) {
-			// TODO
-			//throw new RuntimeException("aösdlkfj");
-		}
-		return names;
+			}
+			return names;
+		
+		
 	}
 
-	@Override
+	/*@Override
 	public List<Category> getAllCategories() {
 		return categoryDao.getCategories();
 	}
+	*/
+	
+	@Override
+	public List<Category> getAllCategories() throws DatabaseException {
+		try{
+			return categoryDao.getCategories();
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+	}
+
 
 	@Override
-	public int insertCategory(String name) throws CategoryExistsException {
+	public int insertCategory(String name) throws DatabaseException {
 		// Prüfen, ob es Category schon gibt
 		
 		try{
 			Category cat = categoryDao.getCategoriesByExactName(name);
 		} catch(EntityDoesNotExistException e){
-			System.out.println("Service.inserCategory im catch-Block");
-			CategoryBuilder cb = new CategoryBuilderImpl();
-			Category cat = cb.setCategoryName(name).createCatgory();
-			List<Category> categories = categoryDao.getCategories();
-			System.out.println("List of all Categories\n\n");
-			for (Category c : categories){
-				System.out.println(c.getCategoryName() + " " + c.getCategoryID());
+			try{
+				CategoryBuilder cb = new CategoryBuilderImpl();
+				Category cat = cb.setCategoryName(name).createCatgory();
+				List<Category> categories = categoryDao.getCategories();
+				System.out.println("List of all Categories\n\n");
+				for (Category c : categories){
+					System.out.println(c.getCategoryName() + " " + c.getCategoryID());
+				}
+				int id = categoryDao.insertCategory(cat);
+				return id;
 			}
-			int id = categoryDao.insertCategory(cat);
-			System.out.println("In Bookservice.insertCtaegory name = " + name + " id = " + id);
-			return id;
+				catch(HibernateException f){
+					throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(f.getMessage()));
+				}
 			
 		}
-		throw new CategoryExistsException();
+		throw new DatabaseException(ErrorMessageHelper.entityDoesAlreadyExist("Category"));
 
 	}
 	public void deleteCategory(String name) throws DatabaseException{
@@ -113,11 +159,12 @@ public class BookServiceImpl implements BookService {
 			Category category = categoryDao.getCategoriesByExactName(name);
 			categoryDao.deleteCategory(category.getCategoryID());
 		} catch (EntityDoesNotExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category"));
 		} catch (DataIntegrityViolationException e){
 			throw new DatabaseException(ErrorMessageHelper.DataIntegrityViolation("Category", "Book", e.getMessage()));
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 		
 	}
@@ -222,24 +269,41 @@ public class BookServiceImpl implements BookService {
 	*/
 	
 	@Override
-	public List<Author> getAuthorByExactName(String nameF, String nameL) {
-		List<Author> authors = authorDao.getAuthorByExactNames(nameF, nameL);
+	public List<Author> getAuthorByExactName(String nameF, String nameL) throws DatabaseException {
 		
-		return authors;
+		try {
+			List<Author> authors = authorDao.getAuthorByExactNames(nameF, nameL);
+			return authors;
+
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+		
 	}
 
 	@Override
-	public Author getAuthorById(int id) throws EntityDoesNotExistException {
-		Author author;
-		author = authorDao.getAuthorByID(id);
-		return author;
+	public Author getAuthorById(int id) throws DatabaseException {
+		try{
+			Author author;
+			author = authorDao.getAuthorByID(id);
+			return author;
+		} catch (EntityDoesNotExistException e){
+			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Author"));
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+		
 	
 	}
 
 	@Override
-	public List<Author> getAllAuthors() {
-	
-		return authorDao.getAuthors();
+	public List<Author> getAllAuthors() throws DatabaseException {
+		try{
+			return authorDao.getAuthors();
+
+		}catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 
 	@Override
@@ -265,17 +329,34 @@ public class BookServiceImpl implements BookService {
 		
 	}
 	@Override
-	public void deleteAuthor(Author author){
-		authorDao.deleteAuthor(author);
+	public void deleteAuthor(int id) throws DatabaseException{
+		try{
+			Author author = authorDao.getAuthorByID(id);
+			authorDao.deleteAuthor(author);
+		} catch (EntityDoesNotExistException e){
+			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Author"));
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 
+	/*
 	@Override
 	public List<Book> getAllBooks() {
 		return bookDao.getAllBooks();
 	}
+	*/
+	@Override
+	public List<Book> getAllBooks() throws DatabaseException {
+		try{
+			return bookDao.getAllBooks();
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+	}
 
 	// ToDo die MEthode funktioniert nur darüber, dass man über CategoryNAme bekommt, nicht über die ID, -> Umbenennen!
-	@Override
+	/*@Override
 	public List<Book> getBooksByCategory(String category) {
 		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.categoryName, category);
@@ -283,28 +364,42 @@ public class BookServiceImpl implements BookService {
 		//return dao.getBooksByCategory(category);
 		//return null;
 	}
+	*/
+	@Override
+	public List<Book> getBooksByCategory(String category) throws DatabaseException {
+		try{ 
+			Map<Searchfields, String> map = new HashMap<Searchfields, String>();
+			map.put(Searchfields.categoryName, category);
+			return bookDao.getBooksByMetadata(map);
+		//return dao.getBooksByCategory(category);
+		//return null;
+		}catch(HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+	}
 
 	
 	@Override
-	public Book getBookByIsbn(String isbn) {
+	public Book getBookByIsbn(String isbn) throws DatabaseException {
 		// TODO So umbauen das mit UniqueResult gearbeitet wird
 		// TODO alles entfernen, was nicht Zahl oder Buchstabe ist
 		isbn = onlyLeaveLettersAndNumbers(isbn);
+		try{
+			Book book = bookDao.getBookByIsbn(isbn);
+			return book;
+		}catch (EntityDoesNotExistException e){
+			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
+		}
+		/*
 		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.isbn, isbn);
 
 		List<Book> bookList = bookDao.getBooksByMetadata(map);
 		if (bookList.size() > 1){
-			// TODO Fehlerbehandlung
-			System.out.println("Something went totally wrong");
-			System.out.println("Listsize is: " + bookList.size());
-			System.out.println("See whole content:");
-			
-			for (Book b : bookList){
-				System.out.println(b.toString());
-			}
+
+
 		}
-		return bookList.get(0);
+		*/
 	}
 
 	@Override
@@ -433,9 +528,16 @@ public class BookServiceImpl implements BookService {
 		
 	}
 	@Override
-	public void deleteBook(String isbn){
-		Book book = getBookByIsbn(isbn);
-		bookDao.deleteBook(isbn);
+	public void deleteBook(String isbn) throws DatabaseException{
+		try {
+			Book book = getBookByIsbn(isbn);
+			bookDao.deleteBook(isbn);
+
+		} catch(EntityDoesNotExistException e){
+			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 		
 		
 	}

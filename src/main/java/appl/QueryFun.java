@@ -21,7 +21,7 @@ import exceptions.data.EntityDoesNotExistException;
 
 public class QueryFun {
 
-	public void doSomeTesting2(ApplicationContext ctx) {
+	public void doSomeTesting2(ApplicationContext ctx) throws DatabaseException {
 		BookService service = ctx.getBean(BookService.class);
 		//CategoryService ct = ctx.getBean(CategoryService.class);
 		//System.out.println("Kategorien: " + ct.getAllCategoryNames());
@@ -37,12 +37,12 @@ public class QueryFun {
 		System.exit(0);
 	}
 	
-	public void testExceptions(ApplicationContext ctx) throws EntityDoesNotExistException{
+	public void testExceptions(ApplicationContext ctx) throws DatabaseException{
 		BookService service = ctx.getBean(BookService.class);
 		
 		service.getCategoryByExactName("Some Shit");
 	}
-	public void testCategoryInsert(ApplicationContext ctx) throws CategoryExistsException{
+	public void testCategoryInsert(ApplicationContext ctx) throws CategoryExistsException, DatabaseException{
 		BookService service = ctx.getBean(BookService.class);
 		service.insertCategory("stricken");
 		service.insertCategory("häkeln");
@@ -61,7 +61,7 @@ public class QueryFun {
 			System.out.println(s);
 		}
 	}
-	public void testAuthorInsert(ApplicationContext ctx){
+	public void testAuthorInsert(ApplicationContext ctx) throws DatabaseException{
 		BookService service = ctx.getBean(BookService.class);
 		try {
 			service.insertAuthor("Madeleine", "Rosenhagen", true);
@@ -76,10 +76,10 @@ public class QueryFun {
 			System.out.println(a.getNameF() + " " + a.getNameL());
 		}
 	}
-	public void testAuthorDelete(ApplicationContext ctx){
+	public void testAuthorDelete(ApplicationContext ctx) throws DatabaseException{
 		BookService service = ctx.getBean(BookService.class);
 		List<Author> author = service.getAuthorByExactName("Madeleine", "Rosenhagen");
-		service.deleteAuthor(author.get(0));
+		service.deleteAuthor(author.get(0).getAuthorId());
 		List<Author> authorNames = service.getAllAuthors();
 		System.out.println("Deleted Author\n\n");
 		for (Author a : authorNames){
@@ -113,10 +113,7 @@ public class QueryFun {
 				service.insertBook(bookMap, authorSet, catSet);
 			
 				
-			} catch (CategoryExistsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.exit(1);
+
 			} catch (EntityDoesNotExistException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -163,7 +160,7 @@ public class QueryFun {
 		
 		
 	}
-	public void testDeleteBook(ApplicationContext ctx){
+	public void testDeleteBook(ApplicationContext ctx) throws DatabaseException{
 		BookService service = ctx.getBean(BookService.class);
 		service.deleteBook("0101010101");
 		List<Book> bookList = service.getAllBooks();
