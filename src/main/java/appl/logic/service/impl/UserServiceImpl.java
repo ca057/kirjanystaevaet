@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,29 +25,37 @@ import exceptions.data.ErrorMessageHelper;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	UserDAO userDao;
+	private UserDAO userDao;
 
 	@Autowired
-	BookService bookService;
+	private BookService bookService;
 
 	@Autowired
-	UserBuilder userBuilder;
+	private PasswordEncoder pswEncoder;
 
 	@Autowired
-	PasswordEncoder pswEncoder;
+	private BeanFactory beanFactory;
+
+	private UserBuilder getUserBuilder() {
+		return beanFactory.getBean(UserBuilder.class);
+	}
 
 	@Override
-
 	public int createAccount(Map<Userfields, String> data, PLZ plz) throws DatabaseException {
-		userBuilder.setPLZ(plz);
-		return createAccount(data);
+		UserBuilder userBuilder = getUserBuilder().setPLZ(plz);
+		return createAccount(userBuilder, data);
 	}
 
 	@Override
 	public int createAccount(Map<Userfields, String> data) throws DatabaseException {
+		UserBuilder userBuilder = getUserBuilder();
+		return createAccount(userBuilder, data);
+	}
+
+	private int createAccount(UserBuilder userBuilder, Map<Userfields, String> data) throws DatabaseException {
 		userBuilder.setRole(UserRoles.USER);
 		data.forEach((userfield, information) -> {
-			readData(userfield, information);
+			readData(userBuilder, userfield, information);
 		});
 		try {
 			return userDao.insertUser(userBuilder.createUser());
@@ -59,8 +68,9 @@ public class UserServiceImpl implements UserService {
 	public boolean updateAccount(int userId, Map<Userfields, String> map) throws DatabaseException {
 		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
 				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
+		UserBuilder userBuilder = getUserBuilder();
 		map.forEach((userfield, information) -> {
-			readData(userfield, information);
+			readData(userBuilder, userfield, information);
 		});
 		return userDao.updateUser(userId, user);
 	}
@@ -101,7 +111,7 @@ public class UserServiceImpl implements UserService {
 		return userDao.updateVisitedBooks(userId, book);
 	}
 
-	private UserBuilder readData(Userfields userfield, String information) {
+	private UserBuilder readData(UserBuilder userBuilder, Userfields userfield, String information) {
 		switch (userfield) {
 		case role:
 			if (UserRoles.ADMIN.toString().equals(information)) {
