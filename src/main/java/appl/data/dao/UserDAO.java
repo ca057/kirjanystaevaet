@@ -2,24 +2,41 @@ package appl.data.dao;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import appl.data.enums.Searchfields;
 import appl.data.enums.Userfields;
 import appl.data.items.User;
-import exceptions.data.PrimaryKeyViolationException;
+import exceptions.data.DatabaseException;
 
+/**
+ * @author Johannes
+ *
+ */
 @Transactional
 public interface UserDAO {
 
-	List<User> getUsers();
+	/**
+	 * @return
+	 * @throws DatabaseException
+	 */
+	List<User> getUsers() throws DatabaseException;
 
-	List<User> getUserByMetadata(Map<Userfields, String> map);
+	/**
+	 * @param map
+	 * @return
+	 * @throws DatabaseException
+	 */
+	List<User> getUserByMetadata(Map<Userfields, String> map) throws DatabaseException;
 
-	User getUserByEMail(String email);
-
-	User getUserByID(int id);
+	/**
+	 * @param field
+	 * @param value
+	 * @return
+	 * @throws DatabaseException
+	 */
+	Optional<User> getUserByUniqueField(Userfields field, String value) throws DatabaseException;
 
 	/**
 	 * Password encryption is supposed to happen in a service.
@@ -28,11 +45,20 @@ public interface UserDAO {
 	 * @return
 	 * @throws PrimaryKeyViolation
 	 */
-	int insertUser(User user) throws PrimaryKeyViolationException;
+	int insertUser(User user) throws DatabaseException;
 
-	void deleteUser(User user);
+	/**
+	 * @param user
+	 * @throws DatabaseException
+	 */
+	boolean deleteUser(User user) throws DatabaseException;
 
-	void updateUser(User user, Map<Searchfields, String> map);
+	/**
+	 * @param userId
+	 * @param user
+	 * @param map
+	 * @throws DatabaseException
+	 */
+	boolean updateUser(int userId, User user) throws DatabaseException;
 
 }
-

@@ -2,6 +2,7 @@ package appl.data.builder;
 
 import org.springframework.stereotype.Component;
 
+import appl.data.builder.impl.UserBuilderImpl;
 import appl.data.enums.UserRoles;
 import appl.data.items.PLZ;
 import appl.data.items.User;
@@ -26,5 +27,10 @@ public interface UserBuilder {
 	public UserBuilder setPLZ(PLZ plz);
 
 	public User createUser();
+
+	// TODO Ist das sinnvoll? Bisher noch nicht in Gebrauch.
+	public default UserBuilder getUserBuilder() {
+		return new UserBuilderImpl();
+	}
 
 }

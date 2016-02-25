@@ -1,6 +1,5 @@
 package conf;
 
-import java.sql.SQLException;
 import java.util.Properties;
 
 import org.hibernate.HibernateException;
@@ -44,12 +43,30 @@ public class RootConfig {
 	@Autowired
 	Initialization init;
 
+	/**
+	 * This bean is necessary for the performance of transactions on the
+	 * database.
+	 * 
+	 * @return a {@link PlatformTransactionManager} with the
+	 *         {@code SessionFactory} configured below.
+	 * @throws DatabaseInitializationException
+	 *             if an error occurs during set up of the
+	 *             {@code SessionFactory}
+	 * 
+	 * @see {@link #getSessionFactory()}
+	 */
 	@Bean
-	public PlatformTransactionManager txManager()
-			throws HibernateException, SQLException, DatabaseInitializationException {
+	public PlatformTransactionManager txManager() throws DatabaseInitializationException {
 		return new HibernateTransactionManager(getSessionFactory());
 	}
 
+	/**
+	 * This bean provides substantial access to all database functions.
+	 * 
+	 * @return a configured {@link SessionFactory}
+	 * @throws DatabaseInitializationException
+	 *             if an error occurs during initialization of the database
+	 */
 	@Bean
 	public SessionFactory getSessionFactory() throws DatabaseInitializationException {
 		return buildSessionFactory();

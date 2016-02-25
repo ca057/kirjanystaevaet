@@ -116,6 +116,13 @@ Alle anonymen Gäste bekommen die Möglichkeit, sich anzumelden. Wer nicht anony
 ```
 
 ## Database
+### Cascading
+Über den CascadeType in den Annotationen wird angegeben, welche Elemente, die in einer Relation mit einem Element stehen ebenfalls gelöscht/gespeichert werden, wenn letzteres gelöscht/gespeichert wird.
+Wenn in der Annotation kein CascadeType angegeben ist, tritt der Default ein, nämlich, dass kein Cascading stattfindet.
+In diesem Projekt wurden folgende Entscheidungen getroffen:
+- Eine `Category` kann nur gelöscht werden, wenn es kein `Book` mehr mit dieser `Category` gibt. Ein socher Versuch führt zu einer `DatabaseException` mit einer entsprechendedn Errormessage.
+- Wenn das letzte `Book` einer `Category` gelöscht wird, wird die `Category` nicht gelöscht. Es darf `Categories` geben, die keine `Books` enthalten.
+- Wenn das letzte `Book` eines bestimmten `Authors` gelöscht wird, wird der `Author` ebenfalls gelöscht (`CascadeType.ALL`). `Author` wird hier anders behandelt als `Category`, da `Categories` potentiell besser weiter verwendet werden können als `Authors`. 
 
 ### DAOs
 TODO: Im Grunde immutable -> Zugriff nur über Konstruktor.

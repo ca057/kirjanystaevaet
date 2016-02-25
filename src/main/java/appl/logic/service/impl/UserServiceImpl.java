@@ -2,6 +2,7 @@ package appl.logic.service.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,9 +15,8 @@ import appl.data.enums.Userfields;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.UserService;
+import exceptions.data.DatabaseException;
 import exceptions.data.ErrorMessageHelper;
-import exceptions.data.PrimaryKeyViolationException;
-
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -32,13 +32,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 
-	public int createAccount(Map<Userfields, String> data, PLZ plz) throws PrimaryKeyViolationException {
+	public int createAccount(Map<Userfields, String> data, PLZ plz) throws DatabaseException {
 		userBuilder.setPLZ(plz);
 		return createAccount(data);
 	}
 
 	@Override
-	public int createAccount(Map<Userfields, String> data) throws PrimaryKeyViolationException {
+	public int createAccount(Map<Userfields, String> data) throws DatabaseException {
 		userBuilder.setRole(UserRoles.USER);
 		data.forEach((userfield, information) -> {
 			readData(userfield, information);
@@ -46,24 +46,39 @@ public class UserServiceImpl implements UserService {
 		try {
 			return userDao.insertUser(userBuilder.createUser());
 		} catch (Exception e) {
-
-			throw new PrimaryKeyViolationException(ErrorMessageHelper.couldNotBeSaved("User") + e.getMessage());
-
+			throw new DatabaseException(ErrorMessageHelper.couldNotBeSaved("User") + e.getMessage());
 		}
 	}
 
 	@Override
-	public User findbyMail(String eMail) {
-		return userDao.getUserByEMail(eMail);
+	public boolean updateAccount(int userId, Map<Userfields, String> map) throws DatabaseException {
+		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
+				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
+		map.forEach((userfield, information) -> {
+			readData(userfield, information);
+		});
+		return userDao.updateUser(userId, user);
 	}
 
 	@Override
-	public User findByID(int id) {
-		return userDao.getUserByID(id);
+	public boolean deleteAccount(int userId) throws DatabaseException {
+		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
+				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
+		return userDao.deleteUser(user);
 	}
 
 	@Override
-	public List<User> getUsers() {
+	public Optional<User> findbyMail(String email) throws DatabaseException {
+		return userDao.getUserByUniqueField(Userfields.email, email);
+	}
+
+	@Override
+	public Optional<User> findByID(int id) throws DatabaseException {
+		return userDao.getUserByUniqueField(Userfields.userId, String.valueOf(id));
+	}
+
+	@Override
+	public List<User> getUsers() throws DatabaseException {
 		return userDao.getUsers();
 	}
 
