@@ -123,9 +123,7 @@ In diesem Projekt wurden folgende Entscheidungen getroffen:
 - Eine `Category` kann nur gelöscht werden, wenn es kein `Book` mehr mit dieser `Category` gibt. Ein socher Versuch führt zu einer `DatabaseException` mit einer entsprechendedn Errormessage.
 - Wenn das letzte `Book` einer `Category` gelöscht wird, wird die `Category` nicht gelöscht. Es darf `Categories` geben, die keine `Books` enthalten.
 - Wenn das letzte `Book` eines bestimmten `Authors` gelöscht wird, wird der `Author` ebenfalls gelöscht (`CascadeType.ALL`). `Author` wird hier anders behandelt als `Category`, da `Categories` potentiell besser weiter verwendet werden können als `Authors`. 
-### Deleting
-Wenn z.B. das letzte Buch einer Kategorie gelöscht wird, wird auch die Kategorie gelöscht wird. Wir wissen, dass es so ist, es lässt sich darüber streiten, wie sinnvoll das ist.
-Es kann keine Kategorie gelöscht werden, wenn es noch ein Buch dazu gibt.
+
 ### DAOs
 TODO: Im Grunde immutable -> Zugriff nur über Konstruktor.
 
