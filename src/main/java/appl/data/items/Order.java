@@ -16,8 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import appl.data.dao.ArchiveBook;
-
 @Entity
 @Table(name = "order", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "orderId") })
 public class Order {

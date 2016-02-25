@@ -1,4 +1,4 @@
-package appl.data.dao;
+package appl.data.items;
 
 import java.util.Set;
 
@@ -14,10 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
-
-import appl.data.items.Book;
-import appl.data.items.Order;
 @Entity
 @Table(name = "archivebook", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "archiveItemId") })
 public class ArchiveBook {

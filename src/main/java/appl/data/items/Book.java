@@ -15,8 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import appl.data.dao.ArchiveBook;
-
 /**
  * Book is a POJO marked as persistent entity with table name
  * "bookdescriptions". It represents a book object with different variables:

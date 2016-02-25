@@ -12,7 +12,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import appl.data.dao.ArchiveBook;
+import appl.data.items.ArchiveBook;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
