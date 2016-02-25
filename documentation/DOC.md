@@ -125,10 +125,16 @@ In diesem Projekt wurden folgende Entscheidungen getroffen:
 - Wenn das letzte `Book` eines bestimmten `Authors` gelöscht wird, wird der `Author` ebenfalls gelöscht (`CascadeType.ALL`). `Author` wird hier anders behandelt als `Category`, da `Categories` potentiell besser weiter verwendet werden können als `Authors`. 
 
 ### Exception-Handling
+Betrifft Branch Delete, noch nicht auf dem Master
+
 Im Umgang mit der Datenbank können viele Fehler auftreten. Durch ein umfassendes Exception-Handling wird versucht den Shop vor dem Absturz zu bewahren.
+
 Es wurde viel darüber nachgedacht und disskutiert, wie man die oberen Schichten über Fehler oder unerwartetes Verhalten informieren kann, wenn es geht auch ohne Exceptions. Die Probleme liegen darin, wenn ein einzelnes Objekt in der Datenbank gesucht wird und der Rückgabetyp des entsprechenden Services keine `List<..>`, sondern vom Typ der entsprechenden Entity ist. Es soll unbedingt vermieden bei einer erfolglosen Suche `null` zurückzugeben. Ein anderer Fall liegt vor, wenn versucht wird eine Entity zu löschen, die nicht existiert oder eine Entity in die Datenbank zu speicher, die schon existiert. Im Sinne der Nutzerfreundlichkeit ist es sinnvoll, zu informieren, dass ein Objekt nicht gelöscht wurde, da es nicht existiert. Solche Fehler können z.B. durch Tippfehler in der Eingabe entstehen und dann zu unerwartetem Verhalten führen, wie z.B. das Objekt das eigentlich gelöscht werden sollte, ist immer noch vorhanden.
+
 Eine Idee war es Enums zu verwenden, die den Status eines Vorgangs angeben (z.B. `delete succssful` o.ä.) und überprüft werden können, um dementsprechend zu handeln. Der gravierende Nachteil dieser Lösung ist, dass sie nur bei `void`-Methoden anwendbar ist. Aus diesem Grund haben wir uns gegen diese Idee entschieden und sind doch dabei geblieben, bei Fehlern Exceptions zu werfen, um alle Probleme durchgängig einheitlich behandeln zu können.
+
 Dabei haben wir darauf geachtet, so weit es möglich ist, nur eine Exception an die oberen Schichten weiter zu geben, nämlich die `DatabaseException`. Ihr werden mithilfe des `ErrorMessageHelpers` sehr spezifische, aber einheitliche Fehlernachrichten mitgegeben, die dann z.B. dem Nutzer angezeigt werden können.
+
 Zudem wurde auf diese Weise versucht, `HibernateExceptions` schon auf der Ebene der Daos und Services abzufangen und ebenfalls in eine `DatabaseException` umzuwandeln. Es soll so verhindert werden, dass unchecked Exceptions den Shop zum Absturz bringen.
 
 ### DAOs
