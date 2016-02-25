@@ -4,6 +4,7 @@ package appl.data.dao.impl;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import appl.data.dao.UserDAO;
 import appl.data.enums.Userfields;
+import appl.data.items.Book;
 import appl.data.items.User;
 import exceptions.data.DatabaseException;
 import exceptions.data.ErrorMessageHelper;
@@ -107,6 +109,24 @@ public class UserDAOImpl implements UserDAO {
 			throw new DatabaseException(
 					ErrorMessageHelper.updateError("User", String.valueOf(user.getUserId()), e.getMessage()));
 		}
+	}
+
+	@Override
+	public List<Book> getVisitedBooks(int userId) throws DatabaseException {
+		User user = getUserByUniqueField(Userfields.userId, String.valueOf(userId))
+				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
+		return (List<Book>) user.getLastBooks();
+	}
+
+	@Override
+	public boolean updateVisitedBooks(int userId, Book book) throws DatabaseException {
+		User user = getUserByUniqueField(Userfields.userId, String.valueOf(userId))
+				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
+		Set<Book> books = user.getLastBooks();
+		if (!books.contains(book)) {
+			books.add(book);
+		}
+		return true;
 	}
 
 }
