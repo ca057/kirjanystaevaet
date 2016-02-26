@@ -48,7 +48,7 @@ public class Category {
 		return categoryName;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "categories")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
 	public Set<Book> getBooks() {
 		return books;
 	}
