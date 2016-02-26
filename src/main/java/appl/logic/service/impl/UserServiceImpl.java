@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import appl.data.builder.BuilderFactory;
 import appl.data.builder.UserBuilder;
 import appl.data.dao.PlzDAO;
 import appl.data.dao.UserDAO;
@@ -39,10 +39,10 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder pswEncoder;
 
 	@Autowired
-	private BeanFactory beanFactory;
+	private BuilderFactory builderFactory;
 
 	private UserBuilder getUserBuilder() {
-		return beanFactory.getBean(UserBuilder.class);
+		return builderFactory.getUserBuilder();
 	}
 
 	@Override
