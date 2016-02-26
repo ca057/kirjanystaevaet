@@ -20,7 +20,7 @@ public class ArchiveBook {
 	private int archiveItemId;
 	double price;
 	Book book;
-	Set<Order> orders;
+	Set<OrderX> orders;
 	
 	private ArchiveBook() {
 	}
@@ -45,13 +45,13 @@ public class ArchiveBook {
 		return price;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "ISBN", nullable = false)
 	public Book getBook(){
 		return book;
 	}
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "orderItems")
-	public Set<Order> getOrders(){
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "orderItems")
+	public Set<OrderX> getOrders(){
 		return orders;
 	}
 	
@@ -66,7 +66,7 @@ public class ArchiveBook {
 	private void setBook(Book book){
 		this.book = book;
 	}
-	private void setOrders(Set<Order> orders){
+	private void setOrders(Set<OrderX> orders){
 		this.orders = orders;
 	}
 }

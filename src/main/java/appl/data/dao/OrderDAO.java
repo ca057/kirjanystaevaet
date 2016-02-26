@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import appl.data.items.Order;
+import appl.data.items.OrderX;
 import exceptions.data.DatabaseException;
 
 @Transactional
 public interface OrderDAO {
-	public int insertOrder(Order order) throws DatabaseException;
+	public int insertOrder(OrderX order) throws DatabaseException;
 
-	public List<Order> getOrdersByUserId(int userId);
+	public List<OrderX> getOrdersByUserId(int userId);
 
 	public void updateOrder(); // TODO Wie sieht Signatur genau aus?
 

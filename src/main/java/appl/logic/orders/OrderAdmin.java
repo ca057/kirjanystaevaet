@@ -1,6 +1,6 @@
 package appl.logic.orders;
 
-import appl.data.items.Order;
+import appl.data.items.OrderX;
 
 /**
  * 
@@ -12,6 +12,6 @@ public interface OrderAdmin {
 
 	public void deleteOrder();
 
-	public Order getOrder();
+	public OrderX getOrder();
 
 }

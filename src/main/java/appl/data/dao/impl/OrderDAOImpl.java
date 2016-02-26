@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import appl.data.dao.OrderDAO;
-import appl.data.items.Order;
+import appl.data.items.OrderX;
 import exceptions.data.DatabaseException;
 
 @Component
@@ -23,7 +23,7 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public int insertOrder(Order order) throws DatabaseException {
+	public int insertOrder(OrderX order) throws DatabaseException {
 		int id = (int) getSession().save(order);
 		return id;
 			
@@ -32,7 +32,7 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public List<Order> getOrdersByUserId(int userId) {
+	public List<OrderX> getOrdersByUserId(int userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -139,7 +139,7 @@ public class Book {
 		return authors;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
 	public Set<ArchiveBook> getArchiveItems() {
 		return archiveItems;
 	}

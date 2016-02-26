@@ -1,5 +1,6 @@
 package appl;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -13,7 +14,10 @@ import appl.data.enums.Searchfields;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.data.items.User;
 import appl.logic.service.BookService;
+import appl.logic.service.OrderService;
+import appl.logic.service.UserService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.CategoryExistsException;
 import exceptions.data.DatabaseException;
@@ -236,7 +240,32 @@ public class QueryFun {
 		}
 		
 	}
+	public void testInsertOrder(ApplicationContext ctx) throws DatabaseException{
+		BookService dataService = ctx.getBean(BookService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
+		UserService userService = ctx.getBean(UserService.class);
+		
+		List<User>users = userService.getUsers();
+		System.out.println("List of Users");
+		for (User u : users){
+			System.out.println(u.toString());
+		}
+		
+		User user = userService.findByID(2).get();
+		List<Book> books = dataService.getAllBooks();
+		for (Book b : books){
+			System.out.println(b.toString());
+		}
+		//Book book = dataService.getBookByIsbn("9101010101");
+		Set<String> isbns = new HashSet<String>();
+		isbns.add("9101010101");
+		Calendar cal = Calendar.getInstance();
+		int orderId = orderService.createOrder(isbns, user.getUserId(), cal);
+		System.out.println("OrderId " + orderId + " ");
+		
+	}
 /*
+ * 
 	public void doSomeOrderTesting(ApplicationContext ctx) {
 		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
 		sessionFactory.getCurrentSession().beginTransaction();

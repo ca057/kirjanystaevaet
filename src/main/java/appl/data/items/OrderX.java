@@ -17,8 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "order", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "orderId") })
-public class Order {
+@Table(name = "orderX", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "orderId") })
+public class OrderX {
 	private int orderId;
 	private Set<ArchiveBook> orderItems;
 	private User user;
@@ -27,11 +27,11 @@ public class Order {
 	private Calendar date;
 	
 	// Required Constructor, may be private
-	private Order(){
+	private OrderX(){
 		
 	}
 
-	public Order(Set<ArchiveBook> orderItems, User user, Calendar date) {
+	public OrderX(Set<ArchiveBook> orderItems, User user, Calendar date) {
 		this.orderItems = orderItems;
 		this.user = user;
 		//this.payed = false;
@@ -63,7 +63,7 @@ public class Order {
 		return this.user;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "OrderOrderItems", schema = "public", joinColumns = @JoinColumn(name = "orderId") , inverseJoinColumns = @JoinColumn(name = "archiveItemId") )
 	public Set<ArchiveBook> getOrderItems() {
 		return orderItems;
@@ -102,6 +102,9 @@ public class Order {
 		return price;
 
 	}
+	//public String toString(){
+		
+	//}
 
 	/*public void changeStatusToPayed() {
 		updateOrderInDatabase();

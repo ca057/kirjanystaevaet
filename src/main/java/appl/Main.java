@@ -34,8 +34,9 @@ public class Main {
 		//qf.testAuthorInsert(ctx);
 		//qf.testAuthorDelete(ctx);
 		
-		qf.testInsertBook(ctx);
+		//qf.testInsertBook(ctx);
 		//qf.testDeleteBook(ctx);
+		qf.testInsertOrder(ctx);
 	}
 
 }

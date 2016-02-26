@@ -349,7 +349,9 @@ public class BookServiceImpl implements BookService {
 		try{
 			return bookDao.getAllBooks();
 		} catch (HibernateException e){
-			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+			e.printStackTrace();
+			System.exit(1);
+			return null;
 		}
 	}
 

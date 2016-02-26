@@ -34,7 +34,7 @@ import exceptions.data.ErrorMessageHelper;
  * <li>street number</li>
  * <li>role</li>
  * </ul>
- * Lists of {@link Order}s are joined via many-to-many connections. {@link PLZ}
+ * Lists of {@link OrderX}s are joined via many-to-many connections. {@link PLZ}
  * is joined via many-to-one connections.
  * 
  * The {@code password} will not be encrypted, so a prior handling of this issue
@@ -58,7 +58,7 @@ public class User {
 	private String streetnumber;
 	private PLZ plz;
 	private String role;
-	private Set<Order> orders;
+	private Set<OrderX> orders;
 	private Set<Book> lastBooks;
 
 	private User() {
@@ -94,7 +94,7 @@ public class User {
 	 * @see {@link PLZ}
 	 */
 	public User(String password, String name, String surname, String email, String street, String streetnumber, PLZ plz,
-			String role, HashSet<Order> orders) {
+			String role, HashSet<OrderX> orders) {
 		setPassword(password);
 		setName(surname);
 		setSurname(surname);
@@ -155,7 +155,7 @@ public class User {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	public Set<Order> getOrders() {
+	public Set<OrderX> getOrders() {
 		return this.orders;
 	}
 
@@ -212,7 +212,7 @@ public class User {
 		this.role = role.toString();
 	}
 
-	private void setOrders(Set<Order> orders) {
+	private void setOrders(Set<OrderX> orders) {
 		this.orders = orders;
 	}
 

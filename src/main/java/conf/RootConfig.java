@@ -16,7 +16,7 @@ import appl.data.items.ArchiveBook;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
-import appl.data.items.Order;
+import appl.data.items.OrderX;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.admin.Initialization;
@@ -79,7 +79,7 @@ public class RootConfig {
 			cfg.addAnnotatedClass(Author.class);
 			cfg.addAnnotatedClass(Book.class);
 			cfg.addAnnotatedClass(Category.class);
-			cfg.addAnnotatedClass(Order.class);
+			cfg.addAnnotatedClass(OrderX.class);
 			cfg.addAnnotatedClass(PLZ.class);
 			cfg.addAnnotatedClass(User.class);
 			cfg.addAnnotatedClass(ArchiveBook.class);
