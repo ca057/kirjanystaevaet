@@ -1,6 +1,6 @@
 package web.jsonwrappers;
 
-public class UserRegisterWrapper {
+public class UserJSONWrapper {
 	private String name;
 	private String surname;
 	private String email;
@@ -10,7 +10,7 @@ public class UserRegisterWrapper {
 	private String plz;
 	private String role;
 
-	public UserRegisterWrapper() {
+	public UserJSONWrapper() {
 
 	}
 

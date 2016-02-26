@@ -6,6 +6,7 @@ function handleRegistration () {
 	var userData = {};
 	$("#register-submit").on("click", function (e) {
 		if (!allInputsAreValid()) {
+			// TODO validate plz
 			return;
 		}
 		e.preventDefault();

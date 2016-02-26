@@ -16,7 +16,7 @@ import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
-import web.jsonwrappers.UserRegisterWrapper;
+import web.jsonwrappers.UserJSONWrapper;
 
 @Controller
 public class BackendUsersController {
@@ -39,27 +39,28 @@ public class BackendUsersController {
 	}
 
 	@RequestMapping(path = "/backend/nutzerinnen/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-	public ResponseEntity<UserRegisterWrapper> addUser(@RequestBody final UserRegisterWrapper req) {
+	public ResponseEntity<UserJSONWrapper> addUser(@RequestBody final UserJSONWrapper req) {
 		// TODO use register API here because code is the same
 		Map<Userfields, String> userMap = new HashMap<Userfields, String>();
 		userMap.put(Userfields.email, req.getEmail());
 		userMap.put(Userfields.name, req.getName());
 		userMap.put(Userfields.surname, req.getSurname());
 		userMap.put(Userfields.password, "magic");
-		userMap.put(Userfields.plz, req.getPlz());
+		// FIXME implement PLZ
+		// userMap.put(Userfields.plz, req.getPlz());
 		userMap.put(Userfields.role,
 				req.getRole().equals("ADMIN") ? UserRoles.ADMIN.toString() : UserRoles.USER.toString());
 		userMap.put(Userfields.street, req.getStreet());
 		userMap.put(Userfields.streetnumber, req.getStreetnumber());
 
-		UserRegisterWrapper returnWrapper = req;
+		UserJSONWrapper returnWrapper = req;
 		returnWrapper.setPassword("");
 		try {
 			int id = userService.createAccount(userMap);
-			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.OK);
+			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.OK);
 		} catch (DatabaseException e) {
 			System.err.println(e.getMessage());
-			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
+			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}
 }
