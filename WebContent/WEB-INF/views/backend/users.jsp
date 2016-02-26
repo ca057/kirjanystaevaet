@@ -3,6 +3,9 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <div>
+	<c:if test="${param.error != null}">
+	    <p><em>Fehler:</em> Bei der Abfrage der Daten ist ein Fehler mit der folgenden Fehlermeldung aufgetreten: &bdquo;<c:out value="${errormsg}"></c:out>&ldquo;</p>
+	</c:if>
 	<h2>Nutzer:innenverwaltung</h2>
 	<h4 id="anlegen">Nutzer:in anlegen</h4>
 	<form>

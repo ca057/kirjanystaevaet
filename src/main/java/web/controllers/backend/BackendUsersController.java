@@ -33,7 +33,8 @@ public class BackendUsersController {
 		try {
 			m.addAttribute("users", userService.getUsers());
 		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
+			m.addAttribute("errormsg", e.getMessage());
+			return "backend/users?error";
 		}
 		return "backend/users";
 	}
