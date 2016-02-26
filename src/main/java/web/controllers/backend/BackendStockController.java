@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
-import exceptions.data.CategoryExistsException;
+import exceptions.data.DatabaseException;
 
 /**
  * 
@@ -53,7 +53,7 @@ public class BackendStockController {
 		// TODO handle empty string
 		try {
 			service.insertCategory(name);
-		} catch (CategoryExistsException e) {
+		} catch (DatabaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

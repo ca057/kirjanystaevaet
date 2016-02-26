@@ -34,32 +34,36 @@
 	<form>		
 		<fieldset>
 			<legend>Nutzer:in auswählen und Änderungen eintragen</legend>
-			<select name="user" id="user" required>
-				<c:if test="${!users.isEmpty()}">
-					<c:forEach var="user" items="${users}">
-						<option value="${user.getUserId()}"><c:out value="${user.getUserId()}" />: <c:out value="${user.getName()}" /> <c:out value="${user.getSurname()}" /></option>
-					</c:forEach>			
-				</c:if>
-				<label for="edit-name">Vorname</label>
-				<input type="text" id="edit-name" name="edit-name" required/>
-				<label for="edit-surname">Nachname</label>
-				<input type="text" id="edit-surname" name="edit-surname" required/>
-				<label for="edit-street">Straße</label>
-				<input type="text" id="edit-street" name="edit-street" required/>
-				<label for="edit-streetnumber">Hausnummer</label>
-				<input type="text" id="edit-streetnumber" name="edit-streetnumber" required/>
-				<label for="edit-plz">PLZ</label>
-				<input type="text" id="edit-plz" name="edit-plz" required/>
-				<label for="edit-email">E-Mail</label>
-				<input type="email" id="edit-email" name="edit-email" required/>
-				<label for="edit-role">Rolle</label>
-				<select name="edit-role" id="edit-role" required>
-					<option value="USER">Nutzer:in</option>
-					<option value="ADMIN">Administrator:in</option>
-				</select>
-				<button type="submit" id="edit-user-submit">Nutzer:in anlegen</button>
-	
-			</select>
+			<c:choose>
+				<c:when test="${users.isEmpty()}">
+					<p>Noch keine Nutzer:innen in der Datenbank vorhanden.</p>
+				</c:when>
+				<c:otherwise>
+					<select name="user" id="user" required>
+						<c:forEach var="user" items="${users}">
+							<option value="${user.getUserId()}"><c:out value="${user.getUserId()}" />: <c:out value="${user.getName()}" /> <c:out value="${user.getSurname()}" /></option>
+						</c:forEach>			
+					</select>
+					<label for="edit-name">Vorname</label>
+					<input type="text" id="edit-name" name="edit-name" required/>
+					<label for="edit-surname">Nachname</label>
+					<input type="text" id="edit-surname" name="edit-surname" required/>
+					<label for="edit-street">Straße</label>
+					<input type="text" id="edit-street" name="edit-street" required/>
+					<label for="edit-streetnumber">Hausnummer</label>
+					<input type="text" id="edit-streetnumber" name="edit-streetnumber" required/>
+					<label for="edit-plz">PLZ</label>
+					<input type="text" id="edit-plz" name="edit-plz" required/>
+					<label for="edit-email">E-Mail</label>
+					<input type="email" id="edit-email" name="edit-email" required/>
+					<label for="edit-role">Rolle</label>
+					<select name="edit-role" id="edit-role" required>
+						<option value="USER">Nutzer:in</option>
+						<option value="ADMIN">Administrator:in</option>
+					</select>
+					<button type="submit" id="edit-user-submit">Nutzer:in anlegen</button>	
+				</c:otherwise>
+			</c:choose>
 		</fieldset>
 	</form>
 	

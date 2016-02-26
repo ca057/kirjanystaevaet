@@ -30,7 +30,11 @@ public class BackendUsersController {
 
 	@RequestMapping(value = "/backend/nutzerinnen", method = RequestMethod.GET)
 	public String getUsers(Model m) {
-		m.addAttribute("users", userService.getUsers());
+		try {
+			m.addAttribute("users", userService.getUsers());
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+		}
 		return "backend/users";
 	}
 
