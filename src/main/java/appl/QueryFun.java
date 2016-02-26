@@ -103,7 +103,7 @@ public class QueryFun {
 			bookMap.put(Searchfields.isbn, "0101010101");
 			bookMap.put(Searchfields.pages, "1234");
 			try {
-				int categoryId = service.insertCategory("Children's Fanatsy");
+				int categoryId = service.insertCategory("Children's Fantasy");
 				Set<Integer> catSet = new HashSet<Integer>();
 				catSet.add(categoryId);
 				Set<Integer> authorSet = new HashSet<Integer>();
@@ -127,12 +127,12 @@ public class QueryFun {
 
 			}
 			
-		} catch (AuthorMayExistException e) {
+		/*} catch (AuthorMayExistException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.exit(1);
 
-		}
+		}*/
 		bookList = service.getAllBooks();
 		System.out.println(" \n\nBooklist after insert");
 		for (Book b : bookList){
@@ -143,7 +143,9 @@ public class QueryFun {
 		for(Category cat : categoryList){
 			System.out.println(cat.getCategoryName());
 		}
-		System.out.println("\n\nDelete Category\n\n");
+		
+		
+		/*System.out.println("\n\nDelete Category\n\n");
 		
 		service.deleteCategory("Children's Fanatsy");
 		bookList = service.getAllBooks();
@@ -151,15 +153,74 @@ public class QueryFun {
 		for (Book b : bookList){
 			System.out.println(b.toString());
 		}
+		*/
 		
 		
 		
 		
+		int authorId2 = service.insertAuthor("Michael", "Ende", true);
+		Map<Searchfields, String> bookMap2 = new HashMap<Searchfields, String>();
+		bookMap2.put(Searchfields.title, "Momo");
+		bookMap2.put(Searchfields.description, "Fantasy Children's book");
+		bookMap2.put(Searchfields.price, "34.56");
+		bookMap2.put(Searchfields.isbn, "9101010101");
+		bookMap2.put(Searchfields.pages, "1234");
+		Category category = service.getCategoryByExactName("Children's Fantasy");
+		try {
+			
+			Set<Integer> catSet = new HashSet<Integer>();
+			catSet.add(category.getCategoryID());
+			Set<Integer> authorSet2 = new HashSet<Integer>();
+			authorSet2.add(authorId2);
+			
+				
+			service.insertBook(bookMap2, authorSet2, catSet);
 		
+			
+
+		} catch (EntityDoesNotExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(1);
+
 		
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(1);
+
+		}
 		
+	} catch (AuthorMayExistException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		System.exit(1);
+
+	}
+		bookList = service.getAllBooks();
+		System.out.println(" \n\nBooklist after insert2");
+		for (Book b : bookList){
+			System.out.println(b.toString());
+		}
+		List<Category> categoryList = service.getAllCategories();
+		System.out.println("\n\nCategories after insert2");
+		for(Category cat : categoryList){
+			System.out.println(cat.getCategoryName());
+		}
+		
+		Category cat = service.getCategoryByExactName("Children's Fantasy");
+		Set<Book> bookOfCat = cat.getBooks();
+		System.out.println("\nTest getBooks\n");
+		for (Book b : bookOfCat){
+			System.out.println(b.toString());
+		}
 		
 	}
+		
+		
+		
+	
+
 	public void testDeleteBook(ApplicationContext ctx) throws DatabaseException{
 		BookService service = ctx.getBean(BookService.class);
 		service.deleteBook("0101010101");
