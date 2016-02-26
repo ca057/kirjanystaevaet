@@ -112,5 +112,14 @@ public abstract class ErrorMessageHelper {
 	public static String removeError(String entity, String id, String message) {
 		return String.format("Unable to delete %s with id %s: %s", entity, id, message);
 	}
+	/**
+	 * Used if one for example tries to insert an entity that already exists
+	 * @param entity
+	 * @return
+	 */
+	public static String entityDoesAlreadyExist(String entity){
+		return String.format("%s does already exist", entity);
+	}
+
 
 }
