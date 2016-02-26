@@ -2,10 +2,10 @@ package appl.data.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import appl.data.dao.OrderDAO;
 import appl.data.items.Order;
@@ -16,10 +16,15 @@ public class OrderDAOImpl implements OrderDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	
+	private Session getSession() {
+		return sessionFactory.getCurrentSession();
+	}
+
 	@Override
-	@Transactional
-	public void insertOrder(Order order) {
-		// TODO implement this!
+	public int insertOrder(Order order) {
+		getSession().save(order);
+		
 	}
 
 	@Override

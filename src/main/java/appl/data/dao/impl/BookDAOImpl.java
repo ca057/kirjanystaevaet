@@ -8,14 +8,12 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import appl.data.dao.BookDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
-import exceptions.data.IsbnAlreadyExistsException;
 
 @Repository
 public class BookDAOImpl implements BookDAO {
@@ -154,7 +152,8 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public void updateBook(Book book, Map<Searchfields, String> map) {
+	public void updateBook(Book book) {
+		getSession().update(book);
 		// TODO implement this
 	}
 

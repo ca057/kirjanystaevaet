@@ -31,12 +31,11 @@ public class Order {
 		
 	}
 
-	public Order(Set<ArchiveBook> orderItems, User user, int year, int month, int day, int hourOfDay, int minute, int second) {
+	public Order(Set<ArchiveBook> orderItems, User user, Calendar date) {
 		this.orderItems = orderItems;
 		this.user = user;
 		//this.payed = false;
-		this.date = Calendar.getInstance();
-		this.date.set(year, month, day, hourOfDay, minute, second);
+		this.date = date;
 
 	}
 

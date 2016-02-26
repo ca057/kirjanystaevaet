@@ -8,7 +8,7 @@ import appl.data.items.Order;
 
 @Transactional
 public interface OrderDAO {
-	public void insertOrder(Order order);
+	public int insertOrder(Order order);
 
 	public List<Order> getOrdersByUserId(int userId);
 

@@ -25,8 +25,12 @@ public class ArchiveBook {
 	private ArchiveBook() {
 	}
 	
-	public ArchiveBook(Book book, double price, Set<Order> orders){
-		this.orders = orders;
+	/**
+	 * 
+	 * @param book
+	 * @param price
+	 */
+	public ArchiveBook(Book book, double price){
 		this.book = book;
 		this.price = price;
 	}
@@ -41,7 +45,7 @@ public class ArchiveBook {
 		return price;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "ISBN", nullable = false)
 	public Book getBook(){
 		return book;
