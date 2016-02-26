@@ -124,6 +124,9 @@ In diesem Projekt wurden folgende Entscheidungen getroffen:
 - Wenn das letzte `Book` einer `Category` gelöscht wird, wird die `Category` nicht gelöscht. Es darf `Categories` geben, die keine `Books` enthalten.
 - Wenn das letzte `Book` eines bestimmten `Authors` gelöscht wird, wird der `Author` ebenfalls gelöscht (`CascadeType.ALL`). `Author` wird hier anders behandelt als `Category`, da `Categories` potentiell besser weiter verwendet werden können als `Authors`. 
 
+### Fetch-Type
+FetchType wurde auf eager gesetzt, weil man da über die getter der Item-Klassen leichter an die verknüpften Daten kommt. Der Default wäre LAZY. In diesem Fall ist das meiner Meinung nach möglich, da die Datenbank relativ klein ist und die Performanz nicht wirklich darunter leidet, wenn die assoziierten Daten mit geladen wird.
+
 ### Exception-Handling
 Betrifft Branch Delete, noch nicht auf dem Master
 
