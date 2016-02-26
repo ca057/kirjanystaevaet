@@ -323,8 +323,6 @@ public class BookServiceImpl implements BookService {
 		Author author = ab.setNameF(nameF).setNameL(nameL).createAuthor();
 		System.out.println("\n\nEinmal den Autor checken\n\n" + author.toString());
 		int id = authorDao.insertAuthor(author);
-		// TODO in der Datenbank speichern? -> Ja und dann nur die ID zurück geben
-		System.out.println("BookserviceImpl. insert Book nach insertAuthor\n\n\n id = " + id);
 		return id;
 		
 	}

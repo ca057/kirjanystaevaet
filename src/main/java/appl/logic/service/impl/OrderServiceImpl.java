@@ -67,23 +67,17 @@ public class OrderServiceImpl implements OrderService{
 					archiveItemsOfOrder.add(newArchiveItem);
 				}
 			}
-			// Order anlegen und speichern
-			User user = userService.findByID(userId).get();
-			Order order = new Order(archiveItemsOfOrder, user, cal);
-			try{ 
-			 int orderId = orderDao.insertOrder(order);
-			} catch (HibernateException e){
-				throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-			}
+			
 		}
-		
-		// OrderObjekt erstellen
-		// CascadingType -> Wenn letzte Order mit einem ArchiveItem gelöscht wird, dann auch ArchiveItem löschen
-		
-		// Order speichern
-		
-		
-		return 0;
+		// Order anlegen und speichern
+		User user = userService.findByID(userId).get();
+		Order order = new Order(archiveItemsOfOrder, user, cal);
+		try{ 
+			int orderId = orderDao.insertOrder(order);
+			return orderId;
+		} catch (HibernateException e){
+				throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 	
 

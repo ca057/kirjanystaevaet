@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import appl.data.dao.OrderDAO;
 import appl.data.items.Order;
+import exceptions.data.DatabaseException;
 
 @Component
 public class OrderDAOImpl implements OrderDAO {
@@ -22,8 +23,11 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public int insertOrder(Order order) {
-		getSession().save(order);
+	public int insertOrder(Order order) throws DatabaseException {
+		int id = (int) getSession().save(order);
+		return id;
+			
+		
 		
 	}
 
