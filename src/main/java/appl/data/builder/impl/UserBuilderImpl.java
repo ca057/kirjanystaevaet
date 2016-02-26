@@ -6,7 +6,6 @@ import appl.data.builder.UserBuilder;
 import appl.data.enums.UserRoles;
 import appl.data.items.PLZ;
 import appl.data.items.User;
-import exceptions.data.ErrorMessageHelper;
 
 @Component
 public class UserBuilderImpl implements UserBuilder {
@@ -21,9 +20,6 @@ public class UserBuilderImpl implements UserBuilder {
 
 	@Override
 	public UserBuilder setPassword(String password) {
-		if (password == null || password.isEmpty()) {
-			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("Password"));
-		}
 		this.password = password;
 		return this;
 	}

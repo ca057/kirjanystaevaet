@@ -3,12 +3,15 @@ package appl.data.items;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -37,6 +40,9 @@ import exceptions.data.ErrorMessageHelper;
  * The {@code password} will not be encrypted, so a prior handling of this issue
  * is necessary!
  * 
+ * Furthermore, it is recommended to use an {@link UserBuilder} to build a new
+ * object of this class.
+ * 
  * @author Johannes
  *
  */
@@ -53,6 +59,7 @@ public class User {
 	private PLZ plz;
 	private String role;
 	private Set<Order> orders;
+	private Set<Book> lastBooks;
 
 	private User() {
 	}
@@ -152,6 +159,12 @@ public class User {
 		return this.orders;
 	}
 
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "userbooks", schema = "public", joinColumns = @JoinColumn(name = "userId") , inverseJoinColumns = @JoinColumn(name = "isbn") )
+	public Set<Book> getLastBooks() {
+		return lastBooks;
+	}
+
 	private void setStreet(String street) {
 		this.street = street;
 	}
@@ -205,6 +218,10 @@ public class User {
 
 	private void setUserId(int id) {
 		this.userId = id;
+	}
+
+	private void setLastBooks(Set<Book> lastBooks) {
+		this.lastBooks = lastBooks;
 	}
 
 	@Override
