@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import appl.data.dao.BookDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
+import exceptions.data.EntityDoesNotExistException;
 
 @Repository
 public class BookDAOImpl implements BookDAO {
@@ -128,6 +129,18 @@ public class BookDAOImpl implements BookDAO {
 		// System.out.println("In DAO: Resultsize: " + result.size());
 		return result;
 	}
+	@Override
+	public Book getBookByIsbn(String isbn) throws EntityDoesNotExistException{
+		Criteria cr = setupAndGetCriteria();
+		cr.add(Restrictions.eq("isbn", isbn));
+		Object result = cr.uniqueResult();
+		if ( result != null){
+			Book book = (Book) result;
+			return book;
+		} else {
+			throw new EntityDoesNotExistException();
+		}
+	}	
 
 	@Override
 	//public String insertBook(Book book) throws IsbnAlreadyExistsException {

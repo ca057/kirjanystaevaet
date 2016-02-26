@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,9 @@ import appl.data.builder.UserBuilder;
 import appl.data.dao.UserDAO;
 import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
-import appl.data.items.PLZ;
+import appl.data.items.Book;
 import appl.data.items.User;
+import appl.logic.service.BookService;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 import exceptions.data.ErrorMessageHelper;
@@ -22,26 +24,32 @@ import exceptions.data.ErrorMessageHelper;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	UserDAO userDao;
+	private UserDAO userDao;
 
 	@Autowired
-	UserBuilder userBuilder;
+	private BookService bookService;
 
 	@Autowired
-	PasswordEncoder pswEncoder;
+	private PasswordEncoder pswEncoder;
 
-	@Override
+	@Autowired
+	private BeanFactory beanFactory;
 
-	public int createAccount(Map<Userfields, String> data, PLZ plz) throws DatabaseException {
-		userBuilder.setPLZ(plz);
-		return createAccount(data);
+	private UserBuilder getUserBuilder() {
+		return beanFactory.getBean(UserBuilder.class);
 	}
 
 	@Override
 	public int createAccount(Map<Userfields, String> data) throws DatabaseException {
+		// TODO String PLZ ->
+		UserBuilder userBuilder = getUserBuilder();
+		return createAccount(userBuilder, data);
+	}
+
+	private int createAccount(UserBuilder userBuilder, Map<Userfields, String> data) throws DatabaseException {
 		userBuilder.setRole(UserRoles.USER);
 		data.forEach((userfield, information) -> {
-			readData(userfield, information);
+			readData(userBuilder, userfield, information);
 		});
 		try {
 			return userDao.insertUser(userBuilder.createUser());
@@ -54,8 +62,9 @@ public class UserServiceImpl implements UserService {
 	public boolean updateAccount(int userId, Map<Userfields, String> map) throws DatabaseException {
 		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
 				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
+		UserBuilder userBuilder = getUserBuilder();
 		map.forEach((userfield, information) -> {
-			readData(userfield, information);
+			readData(userBuilder, userfield, information);
 		});
 		return userDao.updateUser(userId, user);
 	}
@@ -82,7 +91,21 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUsers();
 	}
 
-	private UserBuilder readData(Userfields userfield, String information) {
+	@Override
+	public List<Book> getVisitedBooks(int userId) throws DatabaseException {
+		return userDao.getVisitedBooks(userId);
+	}
+
+	@Override
+	public boolean updateVisitedBooks(int userId, String isbn) throws DatabaseException {
+		Book book = bookService.getBookByIsbn(isbn);
+		if (book == null) {
+			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
+		}
+		return userDao.updateVisitedBooks(userId, book);
+	}
+
+	private UserBuilder readData(UserBuilder userBuilder, Userfields userfield, String information) {
 		switch (userfield) {
 		case role:
 			if (UserRoles.ADMIN.toString().equals(information)) {

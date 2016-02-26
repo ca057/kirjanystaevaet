@@ -166,6 +166,34 @@ footer {
 	display: inline-block;
 }
 
+ul.navigation-content {
+	
+}
+
+ul.navigation-content li {
+	width: auto;
+}
+
+ul.navigation-content li ul.navigation-content-sub {
+	width: inherit;
+	background-color: #009688;
+	display: none;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+}
+
+ul.navigation-content li ul.navigation-content-sub li {
+	display: block;
+}
+
+
+ul.navigation-content li:hover .navigation-content-sub {
+	display: block;
+}
+
+
 .float-right {
 	float: right;
 }

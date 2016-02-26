@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Entity class representing (German) postcode and place.
+ * Entity class representing (German) postal code and place.
  * 
  * @author Johannes
  *

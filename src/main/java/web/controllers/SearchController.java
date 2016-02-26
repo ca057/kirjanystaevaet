@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 import appl.logic.service.BookService;
+import exceptions.data.DatabaseException;
 
 @Controller
 public class SearchController {
@@ -41,50 +42,60 @@ public class SearchController {
 		return "search";
 	}
 
+	/**
+	 * Processes the given list of search terms. Checks each term, if it is not
+	 * null or empty and proceeds with the trimmed {@code String}. If the
+	 * {@code all} is passed with an non-empty string, an open search is started
+	 * and all other terms are ignored. Otherwise a specific search is started
+	 * with the passed parameters except {@code all}.
+	 * 
+	 * @param all
+	 * @param title
+	 * @param authorFirst
+	 * @param authorLast
+	 * @param isbn
+	 * @param year
+	 * @param category
+	 * @return the result of the open or specific search
+	 */
 	private List<Book> processSearchTerms(String all, String title, String authorFirst, String authorLast, String isbn,
 			String year, String category) {
 		if (all != null && !all.isEmpty()) {
-			queryTerm = all;
-			return bookService.getBooksByOpenSearch(all);
+			queryTerm = all.trim();
+			return bookService.getBooksByOpenSearch(all.trim());
 		} else {
-			String searchTitle = "";
-			String searchAuthorFirst = "";
-			String searchAuthorLast = "";
-			String searchYear = "";
-			String searchIsbn = "";
-			String searchCategory = "";
 			Map<Searchfields, String> searchMap = new HashMap<Searchfields, String>();
 			if (title != null && !title.isEmpty()) {
-				searchTitle = title;
-				searchMap.put(Searchfields.title, searchTitle);
-				queryTerm += " Titel: " + title;
+				searchMap.put(Searchfields.title, title.trim());
+				queryTerm += " Titel: " + title.trim();
 			}
 			if (authorFirst != null && !authorFirst.isEmpty()) {
-				searchAuthorFirst = authorFirst;
-				searchMap.put(Searchfields.nameF, searchAuthorFirst);
-				queryTerm += " Vorname: " + authorFirst;
+				searchMap.put(Searchfields.nameF, authorFirst.trim());
+				queryTerm += " Vorname: " + authorFirst.trim();
 			}
 			if (authorLast != null && !authorLast.isEmpty()) {
-				searchAuthorLast = authorLast;
-				searchMap.put(Searchfields.nameL, searchAuthorLast);
+				searchMap.put(Searchfields.nameL, authorLast.trim());
 				queryTerm += " Nachname: " + authorLast;
 			}
 			if (isbn != null && !isbn.isEmpty()) {
-				searchIsbn = isbn;
-				searchMap.put(Searchfields.isbn, searchIsbn);
+				searchMap.put(Searchfields.isbn, isbn.trim());
 				queryTerm += " ISBN: " + isbn;
 			}
 			if (year != null && !year.isEmpty()) {
-				searchYear = year;
-				searchMap.put(Searchfields.pubdate, searchYear);
+				searchMap.put(Searchfields.pubdate, year.trim());
 				queryTerm += " Jahr: " + year;
 			}
 			if (category != null && !category.isEmpty()) {
-				searchCategory = category;
-				searchMap.put(Searchfields.categoryName, searchCategory);
+				searchMap.put(Searchfields.categoryName, category.trim());
 				queryTerm += " Kategorie: " + category;
 			}
-			return bookService.getBooksByMetadata(searchMap);
+			try {
+				return bookService.getBooksByMetadata(searchMap);
+			} catch (DatabaseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null; // Eingefügt von Madeleine, was wollt ihr hier wirklich machen?
+			}
 		}
 	}
 }
