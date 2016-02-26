@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
 import appl.logic.service.BookService;
+import exceptions.data.DatabaseException;
 
 @Controller
 public class SearchController {
@@ -88,7 +89,13 @@ public class SearchController {
 				searchMap.put(Searchfields.categoryName, category.trim());
 				queryTerm += " Kategorie: " + category;
 			}
-			return bookService.getBooksByMetadata(searchMap);
+			try {
+				return bookService.getBooksByMetadata(searchMap);
+			} catch (DatabaseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null; // Eingefügt von Madeleine, was wollt ihr hier wirklich machen?
+			}
 		}
 	}
 }

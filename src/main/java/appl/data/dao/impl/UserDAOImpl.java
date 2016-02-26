@@ -4,8 +4,10 @@ package appl.data.dao.impl;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -13,10 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import appl.data.dao.UserDAO;
-import appl.data.enums.Searchfields;
 import appl.data.enums.Userfields;
+import appl.data.items.Book;
 import appl.data.items.User;
-import exceptions.data.PrimaryKeyViolationException;
+import exceptions.data.DatabaseException;
+import exceptions.data.ErrorMessageHelper;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -33,67 +36,98 @@ public class UserDAOImpl implements UserDAO {
 			throw new RuntimeException("[Error] SessionFactory is null");
 		}
 		Criteria cr = getSession().createCriteria(User.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		// return cr.createAlias("plz", "p");
+		// return cr.createAlias("PLZ", "p");
 		return cr;
 	}
 
 	@Override
-	public List<User> getUsers() {
-		// return getSession().createCriteria(User.class).list();
-		return setupAndGetCriteria().list();
+	public List<User> getUsers() throws DatabaseException {
+		try {
+			return setupAndGetCriteria().list();
+		} catch (HibernateException e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 
 	@Override
-	public List<User> getUserByMetadata(Map<Userfields, String> map) {
+	public List<User> getUserByMetadata(Map<Userfields, String> map) throws DatabaseException {
 		Criteria cr = setupAndGetCriteria();
 		map.forEach((field, data) -> {
 			cr.add(Restrictions.ilike(field.toString(), data));
 		});
-		return cr.list();
+		try {
+			return cr.list();
+		} catch (HibernateException e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 
 	@Override
-	public Optional<User> getUserByEMail(String email) {
-		Criteria cr = setupAndGetCriteria();
-		cr.add(Restrictions.eq(Userfields.email.toString(), email));
-		User user = (User) cr.uniqueResult();
-		// User user = (User) getSession()
-		// .createQuery("from User where " + Userfields.email.toString() + "='"
-		// + email + "'").uniqueResult();
-		if (user == null) {
-			System.err.println("no user found with this email: " + email);
+	public Optional<User> getUserByUniqueField(Userfields field, String value) throws DatabaseException {
+		User user = null;
+		try {
+			switch (field) {
+			case userId:
+				user = (User) setupAndGetCriteria().add(Restrictions.idEq(Integer.valueOf(value))).uniqueResult();
+				break;
+			case email:
+				user = (User) setupAndGetCriteria().add(Restrictions.eq(Userfields.email.toString(), value))
+						.uniqueResult();
+			default:
+				break;
+			}
+
+		} catch (HibernateException e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 		return Optional.ofNullable(user);
 	}
 
 	@Override
-	public int insertUser(User user) throws PrimaryKeyViolationException {
+	public int insertUser(User user) {
 		return (Integer) getSession().save(user);
 	}
 
 	@Override
-	public void deleteUser(User user) {
-		// TODO implement this!
+	public boolean deleteUser(User user) throws DatabaseException {
+		try {
+			getSession().delete(user);
+			return true;
+		} catch (HibernateException e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 
 	@Override
-	public void updateUser(User user, Map<Searchfields, String> map) {
-		// TODO update(USER)? Eine Ebene drüber müsste das
-		// jeweilige zu ändernde Feld via USER.set() geändert werden
+	public boolean updateUser(int userId, User updatedUser) throws DatabaseException {
+		User user = getUserByUniqueField(Userfields.userId, String.valueOf(userId))
+				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
+		try {
+			// TODO Funktioniert das so?
+			user = (User) getSession().merge(updatedUser);
+			return true;
+		} catch (HibernateException e) {
+			throw new DatabaseException(
+					ErrorMessageHelper.updateError("User", String.valueOf(user.getUserId()), e.getMessage()));
+		}
 	}
 
 	@Override
-	public Optional<User> getUserByID(int id) {
-		return Optional.ofNullable((User) setupAndGetCriteria().add(Restrictions.idEq(id)).uniqueResult());
-		// cr.add(Restrictions.idEq(id));
-		// User user = (User) cr.uniqueResult();
-		// // User user = (User) getSession().createQuery("from User where
-		// userId
-		// // ='" + id + "'").uniqueResult();
-		// if (user == null) {
-		// System.err.println("no user found with this ID: " + id);
-		// }
-		// return user;
+	public List<Book> getVisitedBooks(int userId) throws DatabaseException {
+		User user = getUserByUniqueField(Userfields.userId, String.valueOf(userId))
+				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
+		return (List<Book>) user.getLastBooks();
+	}
+
+	@Override
+	public boolean updateVisitedBooks(int userId, Book book) throws DatabaseException {
+		User user = getUserByUniqueField(Userfields.userId, String.valueOf(userId))
+				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
+		Set<Book> books = user.getLastBooks();
+		if (!books.contains(book)) {
+			books.add(book);
+		}
+		return true;
 	}
 
 }
