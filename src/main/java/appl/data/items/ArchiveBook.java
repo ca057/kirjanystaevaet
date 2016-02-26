@@ -14,13 +14,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
 @Entity
 @Table(name = "archivebook", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "archiveItemId") })
 public class ArchiveBook {
 	private int archiveItemId;
 	double price;
 	Book book;
-	Set<OrderX> orders;
+	Set<Orderx> orders;
 	
 	private ArchiveBook() {
 	}
@@ -51,7 +52,7 @@ public class ArchiveBook {
 		return book;
 	}
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "orderItems")
-	public Set<OrderX> getOrders(){
+	public Set<Orderx> getOrders(){
 		return orders;
 	}
 	
@@ -66,7 +67,7 @@ public class ArchiveBook {
 	private void setBook(Book book){
 		this.book = book;
 	}
-	private void setOrders(Set<OrderX> orders){
+	private void setOrders(Set<Orderx> orders){
 		this.orders = orders;
 	}
 }

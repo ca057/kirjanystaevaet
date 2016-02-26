@@ -12,7 +12,7 @@ import appl.data.dao.BookDAO;
 import appl.data.dao.OrderDAO;
 import appl.data.items.ArchiveBook;
 import appl.data.items.Book;
-import appl.data.items.OrderX;
+import appl.data.items.Orderx;
 import appl.data.items.User;
 import appl.logic.service.BookService;
 import appl.logic.service.OrderService;
@@ -71,7 +71,7 @@ public class OrderServiceImpl implements OrderService{
 		}
 		// Order anlegen und speichern
 		User user = userService.findByID(userId).get();
-		OrderX order = new OrderX(archiveItemsOfOrder, user, cal);
+		Orderx order = new Orderx(archiveItemsOfOrder, user, cal);
 		try{ 
 			int orderId = orderDao.insertOrder(order);
 			return orderId;

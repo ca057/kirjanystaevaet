@@ -16,7 +16,7 @@ import appl.data.items.ArchiveBook;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
-import appl.data.items.OrderX;
+import appl.data.items.Orderx;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.admin.Initialization;
@@ -79,7 +79,7 @@ public class RootConfig {
 			cfg.addAnnotatedClass(Author.class);
 			cfg.addAnnotatedClass(Book.class);
 			cfg.addAnnotatedClass(Category.class);
-			cfg.addAnnotatedClass(OrderX.class);
+			cfg.addAnnotatedClass(Orderx.class);
 			cfg.addAnnotatedClass(PLZ.class);
 			cfg.addAnnotatedClass(User.class);
 			cfg.addAnnotatedClass(ArchiveBook.class);
@@ -92,7 +92,7 @@ public class RootConfig {
 
 	private Properties createProperties() {
 		Properties prop = new Properties();
-		// prop.setProperty("hibernate.hbm2ddl.auto", "create");
+		prop.setProperty("hibernate.hbm2ddl.auto", "create");
 		// FIXME Johannes, you know what to do!
 		prop.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
 		// TODO Autoserver (automatic mixed mode)
