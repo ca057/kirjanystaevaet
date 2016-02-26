@@ -21,9 +21,7 @@ public interface BookService {
 	public Category getCategoryById(int id) throws DatabaseException;
 	
 	
-	// Im Controller noch nicht behandelt
 	public List<String> getAllCategoryNames() throws DatabaseException;
-	//public List<String> getAllCategoryNames();
 	
 	public List<Category> getAllCategories() throws DatabaseException;
 
@@ -90,7 +88,7 @@ public interface BookService {
 
 	public List<Book> getBooksByOpenSearch(String searchTerm);
 
-	public List<Book> getBooksByMetadata(Map<Searchfields, String> map);
+	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) throws DatabaseException;
 	
 
 

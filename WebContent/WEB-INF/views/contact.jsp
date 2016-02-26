@@ -6,6 +6,7 @@
 	<article>
 		<h3>Kontakt</h3>
 		<p>Schreibt Liebesbriefe an: </p>
+		<p>Telefon: 80101&nbsp;110&nbsp;105&nbsp;115</p>
 	</article>
 
 	<article>

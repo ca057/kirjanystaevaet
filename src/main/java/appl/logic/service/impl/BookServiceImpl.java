@@ -411,8 +411,13 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) {
-		return bookDao.getBooksByMetadata(map);
+	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) throws DatabaseException {
+		try{
+			return bookDao.getBooksByMetadata(map);
+
+		}catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 	
 	/*
