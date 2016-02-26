@@ -14,7 +14,6 @@ import appl.data.dao.UserDAO;
 import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
 import appl.data.items.Book;
-import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.BookService;
 import appl.logic.service.UserService;
@@ -41,13 +40,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int createAccount(Map<Userfields, String> data, PLZ plz) throws DatabaseException {
-		UserBuilder userBuilder = getUserBuilder().setPLZ(plz);
-		return createAccount(userBuilder, data);
-	}
-
-	@Override
 	public int createAccount(Map<Userfields, String> data) throws DatabaseException {
+		// TODO String PLZ ->
 		UserBuilder userBuilder = getUserBuilder();
 		return createAccount(userBuilder, data);
 	}
