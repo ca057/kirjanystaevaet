@@ -73,7 +73,7 @@ public class BookServiceImpl implements BookService {
 		}
 		
 	}
-/*
+
 	@Override
 	public List<String> getAllCategoryNames() throws DatabaseException {
 		try{
@@ -89,8 +89,8 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
-	*/
-
+	
+/*
 	@Override
 	public List<String> getAllCategoryNames() {
 		
@@ -104,7 +104,7 @@ public class BookServiceImpl implements BookService {
 		
 		
 	}
-
+*/
 	/*@Override
 	public List<Category> getAllCategories() {
 		return categoryDao.getCategories();

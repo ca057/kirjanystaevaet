@@ -22,8 +22,8 @@ public interface BookService {
 	
 	
 	// Im Controller noch nicht behandelt
-	//public List<String> getAllCategoryNames() throws DatabaseException;
-	public List<String> getAllCategoryNames();
+	public List<String> getAllCategoryNames() throws DatabaseException;
+	//public List<String> getAllCategoryNames();
 	
 	public List<Category> getAllCategories() throws DatabaseException;
 

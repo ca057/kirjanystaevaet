@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import appl.logic.service.BookService;
 import exceptions.controller.CategoryNotFoundException;
+import exceptions.data.DatabaseException;
 
 /**
  * Controller for the route to the categories.
@@ -32,7 +33,12 @@ public class CategoriesController {
 
 	@RequestMapping(value = "/kategorien", method = RequestMethod.GET)
 	public String getCategoryOverview(Model m) {
-		m.addAttribute("allCategories", service.getAllCategoryNames());
+		try {
+			m.addAttribute("allCategories", service.getAllCategoryNames());
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "categories";
 	}
 
@@ -56,8 +62,14 @@ public class CategoriesController {
 		if (service == null) {
 			throw new IllegalArgumentException("Service is null");
 		}
-		return service.getAllCategoryNames().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
-				.contains(category.toUpperCase());
+		try {
+			return service.getAllCategoryNames().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
+					.contains(category.toUpperCase());
+		} catch (DatabaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false; // Eingefügt von MAdeleine, was wollt ihr wirklich machen?
+		}
 	}
 
 	/**
@@ -71,10 +83,15 @@ public class CategoriesController {
 	 */
 	private String getCorrectCategoryName(String category) throws CategoryNotFoundException {
 		if (checkIfExistingCategory(category)) {
-			for (String c : service.getAllCategoryNames()) {
-				if (category.toUpperCase().equals(c.toUpperCase())) {
-					return c;
+			try {
+				for (String c : service.getAllCategoryNames()) {
+					if (category.toUpperCase().equals(c.toUpperCase())) {
+						return c;
+					}
 				}
+			} catch (DatabaseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		throw new CategoryNotFoundException("Die Kategorie " + category + " wurde nicht gefunden.");
