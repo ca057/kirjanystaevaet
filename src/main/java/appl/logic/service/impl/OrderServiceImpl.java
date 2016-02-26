@@ -39,6 +39,8 @@ public class OrderServiceImpl implements OrderService{
 			for (ArchiveBook a : archiveItems){
 				if(b.getPrice() == a.getPrice()){
 					//TODO neue Verknüpfung
+					b.getArchiveItems().add(a);
+					
 				} else {
 					// TODO neues ArchiveItem erstellen
 				}
