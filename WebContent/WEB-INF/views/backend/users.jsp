@@ -42,7 +42,7 @@
 					<p>Noch keine Nutzer:innen in der Datenbank vorhanden.</p>
 				</c:when>
 				<c:otherwise>
-					<select name="user" id="user" required>
+					<select name="edit-user" id="user" required>
 						<c:forEach var="user" items="${users}">
 							<option value="${user.getUserId()}"><c:out value="${user.getUserId()}" />: <c:out value="${user.getName()}" /> <c:out value="${user.getSurname()}" /></option>
 						</c:forEach>			
@@ -59,6 +59,8 @@
 					<input type="text" id="edit-plz" name="edit-plz" required/>
 					<label for="edit-email">E-Mail</label>
 					<input type="email" id="edit-email" name="edit-email" required/>
+					<label for="edit-password">Passwort</label>
+					<input type="password" id="edit-password" name="edit-password" required/>
 					<label for="edit-role">Rolle</label>
 					<select name="edit-role" id="edit-role" required>
 						<option value="USER">Nutzer:in</option>

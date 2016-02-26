@@ -64,4 +64,20 @@ public class BackendUsersController {
 			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}
+
+	@RequestMapping(path = "/backend/nutzerinnen/edit", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	public ResponseEntity<UserJSONWrapper> editUser(@RequestBody final UserJSONWrapper req) {
+		// FIXME implement me!
+		System.out.println("ID of user: " + req.getId());
+
+		UserJSONWrapper returnWrapper = req;
+		returnWrapper.setPassword("");
+		try {
+			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO implement correct exception
+			System.err.println(e.getMessage());
+			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	}
 }

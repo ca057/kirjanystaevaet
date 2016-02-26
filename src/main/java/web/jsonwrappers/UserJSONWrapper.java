@@ -9,6 +9,7 @@ public class UserJSONWrapper {
 	private String streetnumber;
 	private String plz;
 	private String role;
+	private String id;
 
 	public UserJSONWrapper() {
 
@@ -76,6 +77,14 @@ public class UserJSONWrapper {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }
