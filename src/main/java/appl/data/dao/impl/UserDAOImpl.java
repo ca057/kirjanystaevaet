@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -43,7 +44,7 @@ public class UserDAOImpl implements UserDAO {
 	public List<User> getUsers() throws DatabaseException {
 		try {
 			return setupAndGetCriteria().list();
-		} catch (Exception e) {
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
@@ -56,7 +57,7 @@ public class UserDAOImpl implements UserDAO {
 		});
 		try {
 			return cr.list();
-		} catch (Exception e) {
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
@@ -76,7 +77,7 @@ public class UserDAOImpl implements UserDAO {
 				break;
 			}
 
-		} catch (Exception e) {
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 		return Optional.ofNullable(user);
@@ -92,7 +93,7 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			getSession().delete(user);
 			return true;
-		} catch (Exception e) {
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
@@ -105,7 +106,7 @@ public class UserDAOImpl implements UserDAO {
 			// TODO Funktioniert das so?
 			user = (User) getSession().merge(updatedUser);
 			return true;
-		} catch (Exception e) {
+		} catch (HibernateException e) {
 			throw new DatabaseException(
 					ErrorMessageHelper.updateError("User", String.valueOf(user.getUserId()), e.getMessage()));
 		}
