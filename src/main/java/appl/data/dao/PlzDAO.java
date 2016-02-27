@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import appl.data.items.PLZ;
 
+// TODO Javadoc
+
 @Transactional
 public interface PlzDAO {
 

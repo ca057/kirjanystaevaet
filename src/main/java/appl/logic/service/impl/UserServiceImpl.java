@@ -54,7 +54,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int createAccount(Map<Userfields, String> data) throws DatabaseException {
-		// TODO String PLZ ->
 		UserBuilder userBuilder = getUserBuilder();
 		return createAccount(userBuilder, data);
 	}
