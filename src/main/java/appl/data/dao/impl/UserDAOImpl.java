@@ -85,6 +85,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public int insertUser(User user) {
+		System.out.println(user.toString());
 		return (Integer) getSession().save(user);
 	}
 

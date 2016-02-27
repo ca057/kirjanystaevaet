@@ -45,7 +45,7 @@ public class InitializationImpl implements Initialization, InitializingBean {
 		data.put(Userfields.email, "user@ky.de");
 		data.put(Userfields.password, "user");
 		data.put(Userfields.role, UserRoles.USER.toString());
-		userService.createAccount(data, null);
+		userService.createAccount(data);
 	}
 
 	private void createAdmin() throws DatabaseException {
@@ -56,7 +56,7 @@ public class InitializationImpl implements Initialization, InitializingBean {
 		data.put(Userfields.email, "admin@ky.de");
 		data.put(Userfields.password, "admin");
 		data.put(Userfields.role, UserRoles.ADMIN.toString());
-		userService.createAccount(data, null);
+		userService.createAccount(data);
 	}
 
 }

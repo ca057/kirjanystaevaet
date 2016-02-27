@@ -24,7 +24,7 @@ import exceptions.data.DatabaseException;
 public interface UserService {
 
 	/**
-	 * Method to save a new user with postal code.
+	 * Method to save a new user without postal code.
 	 * 
 	 * For further information on the fields available and/or necessary, see the
 	 * documentation of {@link User} or the available {@link Userfields}.
@@ -33,14 +33,14 @@ public interface UserService {
 	 *            A map with the field name as key and the belonging information
 	 *            as value
 	 * @param plz
-	 *            the postal code of the user's address as {@link PLZ} object
+	 *            the {@link PLZ} of the user
 	 * @return the {@code id} of the user
 	 * @throws DatabaseException
-	 * @throws PrimaryKeyViolation
+	 *             if an error occurs while interacting with the underlying DAO
 	 * 
-	 * @see {@link PLZ}
 	 * @see {@link Userfields}
 	 * @see {@link User}
+	 * @see {@link PLZ}
 	 */
 	int createAccount(Map<Userfields, String> data, PLZ plz) throws DatabaseException;
 
@@ -143,4 +143,27 @@ public interface UserService {
 	 *             if an error occurs while interacting with the underlying DAO
 	 */
 	boolean updateVisitedBooks(int userId, String isbn) throws DatabaseException;
+
+	/**
+	 * Checks which objects of {@link PLZ} contain a specific postal code and
+	 * returns the result as a {@link list}.
+	 * 
+	 * @param postalCode
+	 *            the postal code inserted
+	 * @return a {link list} with all {link PLZ}s in question
+	 * @throws DatabaseException
+	 *             if an error occurs while interacting with the underlying DAO
+	 */
+	List<PLZ> getPLZs(String postalCode) throws DatabaseException;
+
+	/**
+	 * Getter to find a {@link PLZ} object by its {@code id} in the database.
+	 * 
+	 * @param plzId
+	 *            the id of the {@link PLZ} object
+	 * @return an optional with the resulting {@code PLZ} if existent
+	 * @throws DatabaseException
+	 *             if an error occurs while interacting with the underlying DAO
+	 */
+	Optional<PLZ> getPLZ(int plzId) throws DatabaseException;
 }

@@ -2,14 +2,16 @@ package appl.logic.service.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import appl.data.builder.BuilderFactory;
 import appl.data.builder.UserBuilder;
+import appl.data.dao.PlzDAO;
 import appl.data.dao.UserDAO;
 import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
@@ -28,21 +30,25 @@ public class UserServiceImpl implements UserService {
 	private UserDAO userDao;
 
 	@Autowired
+	private PlzDAO plzDAO;
+
+	@Autowired
 	private BookService bookService;
 
 	@Autowired
 	private PasswordEncoder pswEncoder;
 
 	@Autowired
-	private BeanFactory beanFactory;
+	private BuilderFactory builderFactory;
 
 	private UserBuilder getUserBuilder() {
-		return beanFactory.getBean(UserBuilder.class);
+		return builderFactory.getUserBuilder();
 	}
 
 	@Override
 	public int createAccount(Map<Userfields, String> data, PLZ plz) throws DatabaseException {
-		UserBuilder userBuilder = getUserBuilder().setPLZ(plz);
+		UserBuilder userBuilder = getUserBuilder();
+		userBuilder.setPLZ(plz);
 		return createAccount(userBuilder, data);
 	}
 
@@ -54,9 +60,9 @@ public class UserServiceImpl implements UserService {
 
 	private int createAccount(UserBuilder userBuilder, Map<Userfields, String> data) throws DatabaseException {
 		userBuilder.setRole(UserRoles.USER);
-		data.forEach((userfield, information) -> {
-			readData(userBuilder, userfield, information);
-		});
+		for (Entry<Userfields, String> entry : data.entrySet()) {
+			readData(userBuilder, entry.getKey(), entry.getValue());
+		}
 		try {
 			return userDao.insertUser(userBuilder.createUser());
 		} catch (Exception e) {
@@ -65,13 +71,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean updateAccount(int userId, Map<Userfields, String> map) throws DatabaseException {
+	public boolean updateAccount(int userId, Map<Userfields, String> data) throws DatabaseException {
 		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
 				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
 		UserBuilder userBuilder = getUserBuilder();
-		map.forEach((userfield, information) -> {
-			readData(userBuilder, userfield, information);
-		});
+		for (Entry<Userfields, String> entry : data.entrySet()) {
+			readData(userBuilder, entry.getKey(), entry.getValue());
+		}
 		return userDao.updateUser(userId, user);
 	}
 
@@ -111,11 +117,11 @@ public class UserServiceImpl implements UserService {
 		return userDao.updateVisitedBooks(userId, book);
 	}
 
-	private UserBuilder readData(UserBuilder userBuilder, Userfields userfield, String information) {
+	private UserBuilder readData(UserBuilder userBuilder, Userfields userfield, String information)
+			throws DatabaseException {
 		switch (userfield) {
 		case role:
 			if (UserRoles.ADMIN.toString().equals(information)) {
-				System.out.println("Ein Admin wurde angelegt");
 				userBuilder.setRole(UserRoles.ADMIN);
 			}
 			break;
@@ -141,6 +147,16 @@ public class UserServiceImpl implements UserService {
 			break;
 		}
 		return userBuilder;
+	}
+
+	@Override
+	public List<PLZ> getPLZs(String postalCode) throws DatabaseException {
+		return plzDAO.getPLZByPostalCode(postalCode);
+	}
+
+	@Override
+	public Optional<PLZ> getPLZ(int plzId) throws DatabaseException {
+		return plzDAO.getPLZ(plzId);
 	}
 
 }
