@@ -102,6 +102,13 @@ public class Orderx {
 		return price;
 
 	}
+	public String toString(){
+		String s = "OrderId + " +orderId + " UserId" +user.getUserId() + " UserSurName " + user.getSurname() + "\n" + "Amount of Ordered Items " +orderItems.size();
+		for (ArchiveBook a : orderItems){
+			s = s + "Isbn " + a.getBook().getIsbn() + " Title" + a.getBook().getTitle() + " Ordering-Price " + a.getPrice() +"\n";
+ 		}
+		return s;
+	}
 	//public String toString(){
 		
 	//}

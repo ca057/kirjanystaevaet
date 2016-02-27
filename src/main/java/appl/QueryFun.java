@@ -264,9 +264,16 @@ public class QueryFun {
 		int orderId = orderService.createOrder(isbns, user.getUserId(), cal);
 		System.out.println("OrderId " + orderId + " ");
 		
-		Set<Orderx> userOrders = user.getOrders();
+		/*Set<Orderx> userOrders = user.getOrders();
 		System.out.println("\n\nGet Order of user\n\n");
 		for(Orderx o : userOrders){
+			System.out.println(o.toString());
+		}
+		*/
+		List<Orderx> allOrders = orderService.getAllOrders();
+		System.out.println("\n\nGet all orders\n\n");
+		System.out.println("Size of Orderlist: "+allOrders.size());
+		for (Orderx o : allOrders){
 			System.out.println(o.toString());
 		}
 
