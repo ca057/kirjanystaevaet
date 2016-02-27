@@ -9,4 +9,6 @@ public interface ArchiveDAO {
 	
 	public void update(ArchiveBook archiveItem);
 
+	int insert(ArchiveBook archiveItem);
+
 }

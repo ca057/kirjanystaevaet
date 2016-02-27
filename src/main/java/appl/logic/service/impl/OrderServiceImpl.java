@@ -9,6 +9,7 @@ import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import appl.data.dao.ArchiveDAO;
 import appl.data.dao.BookDAO;
 import appl.data.dao.OrderDAO;
 import appl.data.items.ArchiveBook;
@@ -25,12 +26,16 @@ import exceptions.data.ErrorMessageHelper;
 public class OrderServiceImpl implements OrderService{
 	@Autowired
 	BookService dataService;
+	@Autowired
+	UserService userService;
+	@Autowired
+	ArchiveDAO archiveDao;
 	@Autowired 
 	OrderDAO orderDao;
 	@Autowired
 	BookDAO bookDao;
-	@Autowired
-	UserService userService;
+	
+	
 	public OrderServiceImpl() {
 		
 		
@@ -41,6 +46,7 @@ public class OrderServiceImpl implements OrderService{
 		Set<Book> books = new HashSet<Book>();
 		
 		for (String isbn : isbns){
+			System.out.println("Bestellte Bücher: " + isbn);
 			books.add(dataService.getBookByIsbn(isbn));			
 		}
 			
@@ -50,19 +56,38 @@ public class OrderServiceImpl implements OrderService{
 		for (Book b : books){
 			// ArchiveItems herholen
 			Set<ArchiveBook> archiveItemsOfThisBook = b.getArchiveItems();
+			// Falls noch keines existiert, muss auf jeden Fall ein neues erstellt werden
+			if(archiveItemsOfThisBook.size() == 0){
+				// TODO Codeduplikat vermeiden
+				System.out.println("\n Book has no ArchiveItems yet\n");
+				//neues ArchiveItem erstellen
+				ArchiveBook newArchiveItem = new ArchiveBook(b, b.getPrice());
+				// TODO Testen, ob hier ArchiveItem schon persistiert werden muss! JA MUSS!
+				// ArchiveItem persitieren
+				try{ 
+					int archiveItemId = archiveDao.insert(newArchiveItem);
+				}catch(HibernateException e){
+					throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+				}
+				archiveItemsOfOrder.add(newArchiveItem);
+			}
+			System.out.println("\nGot archive Items for book with title " + b.getTitle() + " its size is " + archiveItemsOfThisBook.size() + "\n\n");
 			// Preis überprüfen
 			for (ArchiveBook a : archiveItemsOfThisBook){
 				if(b.getPrice() == a.getPrice()){
+					System.out.println("\nItem has the same price\n");
 					b.getArchiveItems().add(a);
 					try {
 						bookDao.updateBook(b);
+						System.out.println("\n updated Book\n");
 						archiveItemsOfOrder.add(a); // Auch dem Archive Set für die aktuelle Order hinzufügen
 					} catch (HibernateException e){
 						throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 					}
 					
 				} else {
-					// TODO neues ArchiveItem erstellen
+					System.out.println("\n need a new Archiveitem \n");
+					//neues ArchiveItem erstellen
 					ArchiveBook newArchiveItem = new ArchiveBook(b, b.getPrice());
 					// TODO Testen, ob hier ArchiveItem schon persistiert werden muss
 					archiveItemsOfOrder.add(newArchiveItem);
