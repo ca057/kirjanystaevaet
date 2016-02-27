@@ -1,41 +1,5 @@
 console.log('¯\\_(ツ)_/¯');
 
-const MAIL = /[A-Za-z0-9\.\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]+\@[A-Za-z0-9\_\-]+\.[A-Za-z]{2,3}/g;
-const KY = {
-	// wrapper for performing AJAX-requests
-	request: function(url) {
-		const ajax = function (type, data) {
-			return $.ajax({
-				url: url,
-				type: type,
-				data: JSON.stringify(data),
-				dataType: 'json',
-				contentType: 'application/json',
-			    processData: false,
-				headers: { 
-			        'Accept': 'application/json',
-			        'Content-Type': 'application/json' 
-			    },
-				beforeSend: function (xhr) {
-					xhr.setRequestHeader("X-CSRF-TOKEN", $('[name=_csrf]').val());
-				}
-			});
-		};
-		
-		return {
-			POST: (data) => ajax('POST', data),
-			GET: () => ajax('GET'),
-			DELETE: (data) => ajax('DELETE', data),
-		};
-	},
-	// checks if the given array of html-ids of inputs without leading '#' are not empty
-	inputsAreNotEmpty: function (inputs) {
-		// TODO refactor, so it works with or without leading '#'
-		return inputs.filter(e => $('#' + e).val().trim() === "").length === 0;
-	}
-};
-
-
 const handle = function() {
 	const userManagement = function () {
 		console.info("USERS ARE MANAGED");
@@ -44,7 +8,7 @@ const handle = function() {
 			"edit-plz", "edit-email", "edit-role", "edit-password"];
 		// handles adding a user
 		$("#add-user-submit").on('click', (e) => {
-			if (!KY.inputsAreNotEmpty(addInputs) && !MAIL.test($("#email").val().trim())) {
+			if (!KY.inputsAreNotEmpty(addInputs) && !KY.MAIL.test($("#email").val().trim())) {
 				console.error('Something with the inputs of adding a user is wrong...');
 				return;
 			}
@@ -54,7 +18,7 @@ const handle = function() {
 
 			addInputs.forEach((e) => {
 				$('#' + e).prop('disabled', true);
-				data[e] = $(id).val();
+				data[e] = $('#' + e).val();
 			});
 			$("#add-user-submit").prop('disabled', true);
 			KY.request('/kirjanystaevaet/backend/nutzerinnen/add')
@@ -77,16 +41,12 @@ const handle = function() {
 		});
 		// handles editing a user
 		$('#edit-user-submit').on('click', (e) => {
-			if (!KY.inputsAreNotEmpty(editInputs) && !MAIL.test($("#edit-email").val().trim())) {
-				console.error('Something with the inputs of editing a user is wrong...');
-				return;
-			}
 			e.preventDefault();
 			const data = {};
 
 			editInputs.forEach((e) => {
 				$('#' + e).prop('disabled', true);
-				data[e.substring(5)] = $(id).val();
+				data[e.substring(5)] = $('#' + e).val();
 			});
 			$("#edit-user-submit").prop('disabled', true);
 			KY.request('/kirjanystaevaet/backend/nutzerinnen/edit')

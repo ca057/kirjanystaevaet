@@ -41,7 +41,6 @@ public class BackendUsersController {
 
 	@RequestMapping(path = "/backend/nutzerinnen/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<UserJSONWrapper> addUser(@RequestBody final UserJSONWrapper req) {
-		// TODO use register API here because code is the same
 		Map<Userfields, String> userMap = new HashMap<Userfields, String>();
 		userMap.put(Userfields.email, req.getEmail());
 		userMap.put(Userfields.name, req.getName());

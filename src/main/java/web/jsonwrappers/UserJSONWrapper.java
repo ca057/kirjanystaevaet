@@ -87,4 +87,11 @@ public class UserJSONWrapper {
 		this.id = id;
 	}
 
+	@Override
+	public String toString() {
+		return "UserJSONWrapper [name=" + name + ", surname=" + surname + ", email=" + email + ", password=" + password
+				+ ", street=" + street + ", streetnumber=" + streetnumber + ", plz=" + plz + ", role=" + role + ", id="
+				+ id + "]";
+	}
+
 }
