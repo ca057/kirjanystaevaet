@@ -4,7 +4,7 @@ const handle = function() {
 	const userManagement = function () {
 		console.info("USERS ARE MANAGED");
 		const addInputs = ["name", "surname", "street", "streetnumber", "plz", "email", "role"];
-		const editInputs = ["edit-user", "edit-name", "edit-surname", "edit-street", "edit-streetnumber",
+		const editInputs = ["edit-id", "edit-name", "edit-surname", "edit-street", "edit-streetnumber",
 			"edit-plz", "edit-email", "edit-role", "edit-password"];
 		// handles adding a user
 		$("#add-user-submit").on('click', (e) => {

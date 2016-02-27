@@ -42,8 +42,8 @@
 					<p>Noch keine Nutzer:innen in der Datenbank vorhanden.</p>
 				</c:when>
 				<c:otherwise>
-					<label for="edit-user">Datensatz auswählen</label>
-					<select name="edit-user" id="edit-user" required>
+					<label for="edit-id">Datensatz auswählen</label>
+					<select name="edit-id" id="edit-id" required>
 						<c:forEach var="user" items="${users}">
 							<option value="${user.getUserId()}"><c:out value="${user.getUserId()}" />: <c:out value="${user.getName()}" /> <c:out value="${user.getSurname()}" /></option>
 						</c:forEach>			
@@ -76,7 +76,7 @@
 						<option value="ADMIN">Administrator:in</option>
 					</select>
 					
-					<button type="submit" id="edit-user-submit">Nutzer:in anlegen</button>	
+					<button type="submit" id="edit-user-submit">Datensatz ändern</button>	
 				</c:otherwise>
 			</c:choose>
 		</fieldset>
