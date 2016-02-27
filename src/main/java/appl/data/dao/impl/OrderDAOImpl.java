@@ -37,9 +37,14 @@ public class OrderDAOImpl implements OrderDAO {
 		return null;
 	}
 
-	@Override
+	//@Override
 	public void updateOrder() {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public List<Orderx> getAllOrders() {
+		return getSession().createCriteria(Orderx.class).list();
 	}
 
 }

@@ -14,6 +14,7 @@ import appl.data.enums.Searchfields;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.data.items.Orderx;
 import appl.data.items.User;
 import appl.logic.service.BookService;
 import appl.logic.service.OrderService;
@@ -211,14 +212,14 @@ public class QueryFun {
 		for(Category cat : categoryList){
 			System.out.println(cat.getCategoryName());
 		}
-		
+		/*
 		Category cat = service.getCategoryByExactName("Children's Fantasy");
 		Set<Book> bookOfCat = cat.getBooks();
 		System.out.println("\nTest getBooks\n");
 		for (Book b : bookOfCat){
 			System.out.println(b.toString());
 		}
-		
+		*/
 	}
 		
 		
@@ -263,6 +264,12 @@ public class QueryFun {
 		int orderId = orderService.createOrder(isbns, user.getUserId(), cal);
 		System.out.println("OrderId " + orderId + " ");
 		
+		Set<Orderx> userOrders = user.getOrders();
+		System.out.println("\n\nGet Order of user\n\n");
+		for(Orderx o : userOrders){
+			System.out.println(o.toString());
+		}
+
 	}
 /*
  * 

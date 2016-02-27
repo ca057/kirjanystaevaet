@@ -57,7 +57,7 @@ public class Orderx {
 	}
 	*/
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "USERID", nullable = false)
 	public User getUser() {
 		return this.user;

@@ -12,8 +12,10 @@ public interface OrderDAO {
 	public int insertOrder(Orderx order) throws DatabaseException;
 
 	public List<Orderx> getOrdersByUserId(int userId);
+	
+	public List<Orderx> getAllOrders();
 
-	public void updateOrder(); // TODO Wie sieht Signatur genau aus?
+	//public void updateOrder(); // TODO Wie sieht Signatur genau aus?
 
 }
 /*

@@ -2,6 +2,7 @@ package appl.logic.service.impl;
 
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.HibernateException;
@@ -78,6 +79,19 @@ public class OrderServiceImpl implements OrderService{
 		} catch (HibernateException e){
 				throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
+	}
+	@Override
+	public List<Orderx> getAllOrders() throws DatabaseException {
+		try {
+			List<Orderx> orders = orderDao.getAllOrders();
+			return orders;
+		} catch(HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+	}
+	@Override
+	public List<Orderx> getOrdersByUserid(int userId) {
+		return null;
 	}
 	
 

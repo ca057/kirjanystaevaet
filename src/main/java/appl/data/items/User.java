@@ -154,7 +154,7 @@ public class User {
 		return plz;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	public Set<Orderx> getOrders() {
 		return this.orders;
 	}
