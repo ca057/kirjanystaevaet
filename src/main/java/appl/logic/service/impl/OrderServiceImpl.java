@@ -90,8 +90,14 @@ public class OrderServiceImpl implements OrderService{
 		}
 	}
 	@Override
-	public List<Orderx> getOrdersByUserid(int userId) {
-		return null;
+	public Set<Orderx> getOrdersByUserid(int userId) throws DatabaseException {
+		User user = userService.findByID(userId).get();
+		try{ 
+		Set<Orderx> orders = user.getOrders();
+		return orders;
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getLocalizedMessage()));
+		}
 	}
 	
 

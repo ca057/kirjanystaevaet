@@ -21,5 +21,5 @@ public interface OrderService {
 	public int createOrder(Set<String> isbns, int userId, Calendar cal) throws DatabaseException;
 	
 	public List<Orderx> getAllOrders() throws DatabaseException;
-	public List<Orderx> getOrdersByUserid(int userId);
+	public Set<Orderx> getOrdersByUserid(int userId) throws DatabaseException;
 }
