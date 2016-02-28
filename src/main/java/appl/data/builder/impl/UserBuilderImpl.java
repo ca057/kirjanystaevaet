@@ -17,6 +17,8 @@ public class UserBuilderImpl implements UserBuilder {
 	private String streetnumber;
 	private PLZ plz;
 	private String role;
+	private byte[] image;
+	private int id = -1;
 
 	@Override
 	public UserBuilder setPassword(String password) {
@@ -67,10 +69,25 @@ public class UserBuilderImpl implements UserBuilder {
 	}
 
 	@Override
+	public UserBuilder setImage(byte[] image) {
+		this.image = image;
+		return this;
+	}
+
+	@Override
 	public User createUser() {
-		User user = new User(password, name, surname, email, street, streetnumber, plz, role, null);
+		if (id < 0) {
+			return new User(password, name, surname, email, street, streetnumber, plz, role, image, null);
+		} else {
+			return new User(id, password, name, surname, email, street, streetnumber, plz, role, image, null);
+		}
 		// TODO remove old variables?
-		return user;
+	}
+
+	@Override
+	public UserBuilder setId(int id) {
+		this.id = (id >= 0) ? id : -1;
+		return this;
 	}
 
 }

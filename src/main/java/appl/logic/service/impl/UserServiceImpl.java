@@ -46,6 +46,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public int createAccount(Map<Userfields, String> data, byte[] image) throws DatabaseException {
+		UserBuilder userBuilder = getUserBuilder();
+		userBuilder.setImage(image);
+		return createAccount(userBuilder, data);
+	}
+
+	@Override
+	public int createAccount(Map<Userfields, String> data, PLZ plz, byte[] image) throws DatabaseException {
+		UserBuilder userBuilder = getUserBuilder();
+		userBuilder.setPLZ(plz);
+		userBuilder.setImage(image);
+		return createAccount(userBuilder, data);
+	}
+
+	@Override
 	public int createAccount(Map<Userfields, String> data, PLZ plz) throws DatabaseException {
 		UserBuilder userBuilder = getUserBuilder();
 		userBuilder.setPLZ(plz);
@@ -72,13 +87,60 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean updateAccount(int userId, Map<Userfields, String> data) throws DatabaseException {
+		return updateAcount(userId, data, Optional.empty(), Optional.empty());
+	}
+
+	@Override
+	public boolean updateAccount(int userId, Map<Userfields, String> data, PLZ plz) throws DatabaseException {
+		return updateAcount(userId, data, Optional.empty(), Optional.empty());
+	}
+
+	@Override
+	public boolean updateAccount(int userId, Map<Userfields, String> data, PLZ plz, byte[] image)
+			throws DatabaseException {
+		return updateAcount(userId, data, Optional.ofNullable(plz), Optional.ofNullable(image));
+	}
+
+	@Override
+	public boolean updateAccount(int userId, Map<Userfields, String> data, byte[] image) throws DatabaseException {
+		if (image == null) {
+			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("image"));
+		}
+		return updateAcount(userId, data, Optional.empty(), Optional.ofNullable(image));
+	}
+
+	private boolean updateAcount(int userId, Map<Userfields, String> data, Optional<PLZ> plz, Optional<byte[]> image)
+			throws DatabaseException {
 		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
 				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
 		UserBuilder userBuilder = getUserBuilder();
+		userBuilder = saveOldValues(user, userBuilder);
+
+		if (image.isPresent()) {
+			userBuilder.setImage(image.orElse(null));
+		}
+		if (plz.isPresent()) {
+			userBuilder.setPLZ(plz.orElse(null));
+		}
+
 		for (Entry<Userfields, String> entry : data.entrySet()) {
 			readData(userBuilder, entry.getKey(), entry.getValue());
 		}
-		return userDao.updateUser(userId, user);
+		return userDao.updateUser(userBuilder.createUser());
+	}
+
+	private UserBuilder saveOldValues(User user, UserBuilder userBuilder) {
+		userBuilder.setEmail(user.getEmail());
+		userBuilder.setImage(user.getImage());
+		userBuilder.setName(user.getName());
+		userBuilder.setPassword(user.getPassword());
+		userBuilder.setPLZ(user.getPlz());
+		userBuilder.setRole(UserRoles.ADMIN.equals(user.getRole()) ? UserRoles.ADMIN : UserRoles.USER);
+		userBuilder.setStreet(user.getStreet());
+		userBuilder.setStreetnumber(user.getStreetnumber());
+		userBuilder.setSurname(user.getSurname());
+		userBuilder.setId(user.getUserId());
+		return userBuilder;
 	}
 
 	@Override

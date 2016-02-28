@@ -26,6 +26,10 @@ public interface UserBuilder {
 
 	public UserBuilder setPLZ(PLZ plz);
 
+	public UserBuilder setImage(byte[] image);
+
+	public UserBuilder setId(int id);
+
 	public User createUser();
 
 	// TODO Ist das sinnvoll? Bisher noch nicht in Gebrauch.
