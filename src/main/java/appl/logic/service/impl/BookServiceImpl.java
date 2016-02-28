@@ -130,7 +130,7 @@ public class BookServiceImpl implements BookService {
 		} catch(EntityDoesNotExistException e){
 			try{
 				CategoryBuilder cb = new CategoryBuilderImpl();
-				Category cat = cb.setCategoryName(name).createCatgory();
+				Category cat = cb.setCategoryName(name).createCategory();
 				List<Category> categories = categoryDao.getCategories();
 				System.out.println("List of all Categories\n\n");
 				for (Category c : categories){
