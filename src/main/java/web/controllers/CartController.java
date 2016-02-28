@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import appl.data.items.Book;
 import appl.data.items.Cart;
+import appl.data.items.User;
 import appl.logic.service.BookService;
 
 @Controller
 public class CartController {
+	private User user = (User) SecurityContextHolder.getContext().getAuthentication();
 
 	@Autowired
 	private BookService bookService;
@@ -31,13 +34,6 @@ public class CartController {
 
 	public void setCart(Cart cart) {
 		this.cart = cart;
-	}
-
-	// private User = user;
-
-	// Setter-Injection not necessary since user aint no bean, aight?
-	public void setUser() {
-		this.user = user;
 	}
 
 	public void setBookService(BookService bookService) {
