@@ -31,7 +31,7 @@
  			<p>Du kannst leider nichts bestellen. Tue doch erst etwas in Deinen Warenkorb :)</p>
  		</c:when>
  		<c:otherwise>
- 			Bestellung aufgegeben
+ 			<p>Bestellung aufgegeben</p>
  		</c:otherwise>
  	</c:choose>
  	
