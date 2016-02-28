@@ -105,4 +105,9 @@ public class RootConfig {
 		return prop;
 	}
 
+	// @Bean
+	// public PasswordEncoder encoder() {
+	// return new BCryptPasswordEncoder(11);
+	// }
+
 }
