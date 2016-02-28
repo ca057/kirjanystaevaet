@@ -43,6 +43,10 @@ public class Cart {
 
 	}
 
+	public boolean isEmpty() {
+		return books.isEmpty();
+	}
+
 	public void deleteContent() {
 		books.clear();
 	}

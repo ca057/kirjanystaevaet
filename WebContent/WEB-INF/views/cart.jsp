@@ -26,4 +26,13 @@
 		</c:choose>
 	
  	<a href="<c:url value='/bestellen'/>">bestellen</a> 
+ 	<c:choose>
+ 		<c:when test="${cart.isEmpty()} ">
+ 			<p>Du kannst leider nichts bestellen. Tue doch erst etwas in Deinen Warenkorb :)</p>
+ 		</c:when>
+ 		<c:otherwise>
+ 			Bestellung aufgegeben
+ 		</c:otherwise>
+ 	</c:choose>
+ 	
 </section>  

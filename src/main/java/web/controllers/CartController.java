@@ -1,5 +1,9 @@
 package web.controllers;
 
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import appl.data.items.Book;
 import appl.data.items.Cart;
 import appl.logic.service.BookService;
 
@@ -15,6 +20,9 @@ public class CartController {
 
 	@Autowired
 	private BookService bookService;
+
+	// @Autowired
+	// private OrderService orderService;
 
 	@Autowired
 	private Cart cart;
@@ -26,6 +34,10 @@ public class CartController {
 	public void setBookService(BookService bookService) {
 		this.bookService = bookService;
 	}
+
+	// public void setOrderService(OrderService orderService){
+	// this.setOrderService = orderService;
+	// }
 
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.POST)
 	public String addToCart(@RequestParam(value = "isbn") String isbn) {
@@ -53,7 +65,14 @@ public class CartController {
 
 	@RequestMapping(value = "/bestellen", method = RequestMethod.POST)
 	public String orderContent() {
-		// TODO implement order
+		Set<String> isbns = new HashSet<String>();
+		Calendar cal = Calendar.getInstance();
+		// books- Liste iterieren, getISbn -> zu set hinzufügen
+		for (Book b : cart.getBooks()) {
+			isbns.add(b.getIsbn());
+		}
+		// orderService.createOrder(isbns, userId, cal);
+		// TODO orderService.METHOD
 		cart.deleteContent();
 		return "";
 	}
