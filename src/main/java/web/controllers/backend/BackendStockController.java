@@ -2,6 +2,7 @@ package web.controllers.backend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,11 +20,11 @@ import exceptions.data.DatabaseException;
 @Controller
 public class BackendStockController {
 
-	private BookService service;
+	private BookService bookService;
 
 	@Autowired
-	private void setBookService(BookService service) {
-		this.service = service;
+	private void setBookService(BookService bookService) {
+		this.bookService = bookService;
 	}
 
 	/**
@@ -33,7 +34,15 @@ public class BackendStockController {
 	 * @return the name of the backend view
 	 */
 	@RequestMapping(value = "/backend/bestand", method = RequestMethod.GET)
-	public String getStock() {
+	public String getStock(Model m) {
+		try {
+			m.addAttribute("categories", bookService.getAllCategories());
+			m.addAttribute("authors", bookService.getAllAuthors());
+			m.addAttribute("books", bookService.getAllBooks());
+		} catch (DatabaseException e) {
+			m.addAttribute("errormsg", e.getMessage());
+			return "backend/stock?error";
+		}
 		return "backend/stock";
 	}
 
@@ -47,15 +56,14 @@ public class BackendStockController {
 	 */
 	@RequestMapping(value = "/backend/bestand/kategorien/add", method = RequestMethod.POST)
 	public String addCategory(@RequestParam(value = "name") String name) {
-		if (name == null) {
+		if (name == null || name.isEmpty()) {
 			throw new IllegalArgumentException("The passed name of the category is null and can not be added.");
 		}
-		// TODO handle empty string
 		try {
-			service.insertCategory(name);
+			bookService.insertCategory(name);
 		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// TODO test if its working
+			return "redirect:/backend/bestand?error";
 		}
 		return "redirect:/backend/bestand";
 	}
@@ -86,7 +94,7 @@ public class BackendStockController {
 	public String addAuthor() {
 		// TODO implement me
 		try {
-			service.insertAuthor("", "", true);
+			bookService.insertAuthor("", "", true);
 		} catch (AuthorMayExistException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -111,6 +119,9 @@ public class BackendStockController {
 	@RequestMapping(value = "/backend/bestand/buecher/add", method = RequestMethod.POST)
 	public String addBook() {
 		// TODO implement me
+		// parameters:
+		// categories, title, description, price, publisher, date, edition,
+		// pages, authors
 		return "redirect:/backend/bestand";
 	}
 
