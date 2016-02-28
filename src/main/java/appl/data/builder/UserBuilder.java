@@ -26,6 +26,30 @@ public interface UserBuilder {
 
 	public UserBuilder setPLZ(PLZ plz);
 
+	public UserBuilder setImage(byte[] image);
+
+	public UserBuilder setId(int id);
+
+	public UserRoles getRole();
+
+	public String getPassword();
+
+	public String getName();
+
+	public String getSurname();
+
+	public String getEmail();
+
+	public String getStreet();
+
+	public String getStreetnumber();
+
+	public PLZ getPlz();
+
+	public byte[] getImage();
+
+	public int getId();
+
 	public User createUser();
 
 	// TODO Ist das sinnvoll? Bisher noch nicht in Gebrauch.

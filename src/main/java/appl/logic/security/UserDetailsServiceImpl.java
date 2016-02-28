@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,10 +36,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			// TODO check if exists / Fehler fangen
 			// TODO UserRole Enum / String überlegen
 			User user = userService.findbyMail(email).get();
-			LinkedList<GrantedAuthorityImpl> list = new LinkedList<GrantedAuthorityImpl>();
+			LinkedList<GrantedAuthority> list = new LinkedList<GrantedAuthority>();
 			System.out.println("Rolle: " + user.getRole());
 			list.add(new GrantedAuthorityImpl("ROLE_" + user.getRole()));
-			return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), list);
+			// return new
+			// org.springframework.security.core.userdetails.User(user.getName(),
+			// user.getPassword(), list);
+			return new UserPrincipal(user, list);
 		} catch (DatabaseException | NoSuchElementException e) {
 			// TODO Spring-Exception
 			throw new UsernameNotFoundException(e.getMessage());

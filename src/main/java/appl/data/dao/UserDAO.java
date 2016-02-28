@@ -109,7 +109,7 @@ public interface UserDAO {
 	 *             if an error occurs while accessing the database or if the
 	 *             user cannot be found
 	 */
-	boolean updateUser(int userId, User user) throws DatabaseException;
+	boolean updateUser(User user) throws DatabaseException;
 
 	/**
 	 * Lists the books an user was interested in.
@@ -137,5 +137,4 @@ public interface UserDAO {
 	 *             user cannot be found
 	 */
 	boolean updateVisitedBooks(int userId, Book book) throws DatabaseException;
-
 }

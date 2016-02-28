@@ -10,7 +10,8 @@ import exceptions.data.PrimaryKeyViolationException;
 
 public class Main {
 
-	public static void main(String[] args) throws PrimaryKeyViolationException, CategoryExistsException, DatabaseException {
+	public static void main(String[] args)
+			throws PrimaryKeyViolationException, CategoryExistsException, DatabaseException {
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(RootConfig.class);
 		// new QueryFun().doSomeTesting2(ctx);
 		// new QueryFun().doSomeTesting(sessionFactory);
@@ -20,20 +21,21 @@ public class Main {
 		// new QueryFun().jdbcStuff(jdbc);
 
 		// OrderTesting
-		//new QueryFun().doSomeOrderTesting(ctx);
-		
-		//new QueryFun().testDao(ctx);
-		//new QueryFun().testBookInsert(ctx);
-		//new QueryFun().testExceptions(ctx);
+		// new QueryFun().doSomeOrderTesting(ctx);
+
+		// new QueryFun().testDao(ctx);
+		// new QueryFun().testBookInsert(ctx);
+		// new QueryFun().testExceptions(ctx);
 		QueryFun qf = new QueryFun();
-		//qf.testCategoryInsert(ctx);
-		//qf.testCategoryDelete(ctx);
-		
-		//qf.testAuthorInsert(ctx);
-		//qf.testAuthorDelete(ctx);
-		
-		qf.testInsertBook(ctx);
-		//qf.testDeleteBook(ctx);
+		qf.testUser(ctx);
+		// qf.testCategoryInsert(ctx);
+		// qf.testCategoryDelete(ctx);
+
+		// qf.testAuthorInsert(ctx);
+		// qf.testAuthorDelete(ctx);
+
+		// qf.testInsertBook(ctx);
+		// qf.testDeleteBook(ctx);
 	}
 
 }
