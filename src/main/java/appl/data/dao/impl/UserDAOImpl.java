@@ -102,6 +102,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public boolean updateUser(User updatedUser) throws DatabaseException {
 		try {
+			System.out.println("Neues Passwort: " + updatedUser.getPassword());
 			getSession().update(updatedUser);
 			return true;
 		} catch (HibernateException e) {

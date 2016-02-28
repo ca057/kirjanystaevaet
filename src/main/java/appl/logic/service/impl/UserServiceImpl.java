@@ -123,9 +123,13 @@ public class UserServiceImpl implements UserService {
 			userBuilder.setPLZ(plz.orElse(null));
 		}
 
+		System.out.println("Map-Größe: " + data.size());
+		System.out.println(data.toString());
 		for (Entry<Userfields, String> entry : data.entrySet()) {
+			System.out.println("Update: " + entry.getKey() + ": " + entry.getValue());
 			readData(userBuilder, entry.getKey(), entry.getValue());
 		}
+		System.out.println("Rolle: " + userBuilder.getRole());
 		return userDao.updateUser(userBuilder.createUser());
 	}
 
@@ -135,7 +139,7 @@ public class UserServiceImpl implements UserService {
 		userBuilder.setName(user.getName());
 		userBuilder.setPassword(user.getPassword());
 		userBuilder.setPLZ(user.getPlz());
-		userBuilder.setRole(UserRoles.ADMIN.equals(user.getRole()) ? UserRoles.ADMIN : UserRoles.USER);
+		userBuilder.setRole(UserRoles.ADMIN.toString().equals(user.getRole()) ? UserRoles.ADMIN : UserRoles.USER);
 		userBuilder.setStreet(user.getStreet());
 		userBuilder.setStreetnumber(user.getStreetnumber());
 		userBuilder.setSurname(user.getSurname());
@@ -183,9 +187,7 @@ public class UserServiceImpl implements UserService {
 			throws DatabaseException {
 		switch (userfield) {
 		case role:
-			if (UserRoles.ADMIN.toString().equals(information)) {
-				userBuilder.setRole(UserRoles.ADMIN);
-			}
+			userBuilder.setRole(UserRoles.ADMIN.toString().equals(information) ? UserRoles.ADMIN : UserRoles.USER);
 			break;
 		case name:
 			userBuilder.setName(information);
@@ -203,6 +205,7 @@ public class UserServiceImpl implements UserService {
 			userBuilder.setStreetnumber(information);
 			break;
 		case password:
+			System.out.println("Neues Passwort im Service: " + information);
 			userBuilder.setPassword(pswEncoder.encode(information));
 			break;
 		default:
