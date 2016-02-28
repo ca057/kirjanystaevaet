@@ -14,15 +14,15 @@ import appl.data.items.User;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 
+/**
+ * @author Johannes
+ *
+ */
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+	@Autowired
 	UserService userService;
-
-	@Autowired // Using setter injection
-	public void setUserRepository(UserService userService) {
-		this.userService = userService;
-	}
 
 	public UserDetailsServiceImpl() {
 		super();
