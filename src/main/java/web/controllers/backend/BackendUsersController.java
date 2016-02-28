@@ -16,7 +16,7 @@ import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
-import web.jsonwrappers.UserRegisterWrapper;
+import web.jsonwrappers.UserJSONWrapper;
 
 @Controller
 public class BackendUsersController {
@@ -33,33 +33,85 @@ public class BackendUsersController {
 		try {
 			m.addAttribute("users", userService.getUsers());
 		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
+			m.addAttribute("errormsg", e.getMessage());
+			return "backend/users?error";
 		}
 		return "backend/users";
 	}
 
 	@RequestMapping(path = "/backend/nutzerinnen/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-	public ResponseEntity<UserRegisterWrapper> addUser(@RequestBody final UserRegisterWrapper req) {
-		// TODO use register API here because code is the same
+	public ResponseEntity<UserJSONWrapper> addUser(@RequestBody final UserJSONWrapper req) {
+		if (req == null) {
+			return new ResponseEntity<UserJSONWrapper>(HttpStatus.BAD_REQUEST);
+		}
 		Map<Userfields, String> userMap = new HashMap<Userfields, String>();
 		userMap.put(Userfields.email, req.getEmail());
 		userMap.put(Userfields.name, req.getName());
 		userMap.put(Userfields.surname, req.getSurname());
 		userMap.put(Userfields.password, "magic");
-		userMap.put(Userfields.plz, req.getPlz());
+		// FIXME implement PLZ
+		// userMap.put(Userfields.plz, req.getPlz());
 		userMap.put(Userfields.role,
 				req.getRole().equals("ADMIN") ? UserRoles.ADMIN.toString() : UserRoles.USER.toString());
 		userMap.put(Userfields.street, req.getStreet());
 		userMap.put(Userfields.streetnumber, req.getStreetnumber());
 
-		UserRegisterWrapper returnWrapper = req;
+		UserJSONWrapper returnWrapper = req;
 		returnWrapper.setPassword("");
 		try {
-			int id = userService.createAccount(userMap);
-			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.OK);
+			userService.createAccount(userMap);
+			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.OK);
 		} catch (DatabaseException e) {
 			System.err.println(e.getMessage());
-			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
+			return returnUnprocessableEntity(returnWrapper);
 		}
+	}
+
+	@RequestMapping(path = "/backend/nutzerinnen/edit", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	public ResponseEntity<UserJSONWrapper> editUser(@RequestBody final UserJSONWrapper req) {
+		if (req == null) {
+			return new ResponseEntity<UserJSONWrapper>(HttpStatus.BAD_REQUEST);
+		}
+
+		Map<Userfields, String> userMap = new HashMap<Userfields, String>();
+		if (req.getName().isEmpty()) {
+			userMap.put(Userfields.name, req.getName());
+		} else if (!req.getSurname().isEmpty()) {
+			userMap.put(Userfields.surname, "");
+		} else if (!req.getStreet().isEmpty()) {
+			userMap.put(Userfields.street, "");
+		} else if (!req.getStreetnumber().isEmpty()) {
+			userMap.put(Userfields.streetnumber, "");
+		} else if (!req.getPlz().isEmpty()) {
+			// TODO implement PLZ querying
+			// userMap.put(Userfields.plz, "");
+		} else if (!req.getEmail().isEmpty()) {
+			userMap.put(Userfields.email, "");
+		} else if (!req.getRole().isEmpty()) {
+			userMap.put(Userfields.role, "");
+		} else if (!req.getPassword().isEmpty()) {
+			userMap.put(Userfields.password, "");
+		}
+
+		UserJSONWrapper returnWrapper = req;
+		returnWrapper.setPassword("");
+
+		try {
+			if (!userService.updateAccount(Integer.parseInt(req.getId()), userMap)) {
+				return returnUnprocessableEntity(returnWrapper);
+			}
+			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.OK);
+		} catch (DatabaseException e) {
+			System.err.println(e.getMessage());
+			return returnUnprocessableEntity(returnWrapper);
+		}
+	}
+
+	private ResponseEntity<UserJSONWrapper> returnUnprocessableEntity(UserJSONWrapper response) {
+		if (response == null) {
+			throw new IllegalArgumentException(
+					"The passed UserJSONWrapper as response is null, no ResponseEntity can be returned.");
+		}
+		return new ResponseEntity<UserJSONWrapper>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 }

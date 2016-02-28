@@ -1,6 +1,6 @@
 package web.jsonwrappers;
 
-public class UserRegisterWrapper {
+public class UserJSONWrapper {
 	private String name;
 	private String surname;
 	private String email;
@@ -9,8 +9,9 @@ public class UserRegisterWrapper {
 	private String streetnumber;
 	private String plz;
 	private String role;
+	private String id;
 
-	public UserRegisterWrapper() {
+	public UserJSONWrapper() {
 
 	}
 
@@ -76,6 +77,21 @@ public class UserRegisterWrapper {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "UserJSONWrapper [name=" + name + ", surname=" + surname + ", email=" + email + ", password=" + password
+				+ ", street=" + street + ", streetnumber=" + streetnumber + ", plz=" + plz + ", role=" + role + ", id="
+				+ id + "]";
 	}
 
 }

@@ -14,7 +14,8 @@
 
 	<link rel="stylesheet" href="<s:url value='/css/style.css'/>">
 	
-	<script type="text/javascript" src="<s:url value='https://code.jquery.com/jquery-1.12.0.min.js' />"></script>
+	<script type="text/javascript" src="<s:url value='/js/jquery-2.2.1.min.js' />"></script>
+	<script type="text/javascript" src="<s:url value='/js/helpme.js'/>"></script>
 	<script type="text/javascript" src="<s:url value='/js/script.js'/>"></script>
 	
 	<sec:authorize access="hasRole('ADMIN')">
@@ -25,25 +26,21 @@
 <body>
 	<div id="wrapper">
 		<div id="content-wrapper">
-			<!-- Header (gleichbleibend auf allen Seiten) -->
 			<header>
 				<a href="<c:url value='/'/>" title="zur Startseite">
 					<t:insertAttribute name="header"></t:insertAttribute>
 				</a>
 			</header>
 	
-			<!-- Navigation (gleichbleibend auf allen Seiten, wird dynamisch anhand der Kategorien generiert) -->
 			<nav class="shadow-1">
 				<t:insertAttribute name="navigation"></t:insertAttribute>
 			</nav>
 		
-			<!-- Inhalt (hier folgt der jeweilige Seiteninhalt) -->
 			<div id="content">
 				<t:insertAttribute name="content"></t:insertAttribute>
 			</div>
 		</div>
 		
-		<!-- Footer (auf allen Seiten gleich) -->
 		<footer>
 			<t:insertAttribute name="footer"></t:insertAttribute>
 		</footer>
