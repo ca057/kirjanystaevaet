@@ -28,11 +28,15 @@ public class CartController {
 	@Autowired
 	private Cart cart;
 
-	@Autowired
-	private User user;
-
 	public void setCart(Cart cart) {
 		this.cart = cart;
+	}
+
+	private User user;
+
+	// Setter-Injection not necessary since user aint no bean, aight?
+	public void setUser() {
+		this.user = user;
 	}
 
 	public void setBookService(BookService bookService) {
