@@ -17,6 +17,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import appl.data.enums.UserRoles;
 
+/**
+ * Holds configuration of beans and implementation of methods connected to
+ * security aspects.
+ * 
+ * @author Christian
+ * @author Johannes
+ *
+ */
 @Configuration
 @ComponentScan(basePackages = { "appl.logic.security" })
 @EnableWebSecurity
@@ -35,8 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authProvider());
-		// auth.inMemoryAuthentication().withUser("user").password("user").roles(UserRoles.USER.toString());
-		// TODO ggf configure(...) { ... }
 	}
 
 	@Override
@@ -70,4 +76,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder encoder() {
 		return new BCryptPasswordEncoder(11);
 	}
-}>>>>>>>refs/remotes/origin/master
+}
