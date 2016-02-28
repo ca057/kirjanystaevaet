@@ -92,7 +92,7 @@ public class RootConfig {
 
 	private Properties createProperties() {
 		Properties prop = new Properties();
-		// prop.setProperty("hibernate.hbm2ddl.auto", "create");
+		prop.setProperty("hibernate.hbm2ddl.auto", "create");
 		// FIXME Johannes, you know what to do!
 		prop.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
 		// TODO Autoserver (automatic mixed mode)

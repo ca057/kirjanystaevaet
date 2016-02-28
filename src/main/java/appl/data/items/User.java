@@ -1,6 +1,5 @@
 package appl.data.items;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -97,7 +96,7 @@ public class User {
 	 * @see {@link PLZ}
 	 */
 	public User(String password, String name, String surname, String email, String street, String streetnumber, PLZ plz,
-			String role, byte[] image, HashSet<Order> orders) {
+			String role, byte[] image, Set<Order> orders) {
 		setPassword(password);
 		setName(surname);
 		setSurname(surname);
@@ -111,7 +110,7 @@ public class User {
 	}
 
 	public User(int id, String password, String name, String surname, String email, String street, String streetnumber,
-			PLZ plz, String role, byte[] image, HashSet<Order> orders) {
+			PLZ plz, String role, byte[] image, Set<Order> orders) {
 		setUserId(id);
 		setPassword(password);
 		setName(surname);
