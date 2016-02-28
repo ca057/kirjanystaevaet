@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.data.items.Book;
 import appl.data.items.Cart;
+import appl.data.items.User;
 import appl.logic.service.BookService;
 
 @Controller
@@ -26,6 +27,9 @@ public class CartController {
 
 	@Autowired
 	private Cart cart;
+
+	@Autowired
+	private User user;
 
 	public void setCart(Cart cart) {
 		this.cart = cart;
@@ -65,15 +69,18 @@ public class CartController {
 
 	@RequestMapping(value = "/bestellen", method = RequestMethod.POST)
 	public String orderContent() {
-		Set<String> isbns = new HashSet<String>();
-		Calendar cal = Calendar.getInstance();
-		// books- Liste iterieren, getISbn -> zu set hinzufügen
-		for (Book b : cart.getBooks()) {
-			isbns.add(b.getIsbn());
+		if (user.getStreet() != null && user.getStreetnumber() != null && user.getPlz() != null) {
+			Set<String> isbns = new HashSet<String>();
+			Calendar cal = Calendar.getInstance();
+			// books- Liste iterieren, getISbn -> zu set hinzufügen
+			for (Book b : cart.getBooks()) {
+				isbns.add(b.getIsbn());
+			}
+			// orderService.createOrder(isbns, userId, cal);
+			// TODO orderService.METHOD
+			cart.deleteContent();
+
 		}
-		// orderService.createOrder(isbns, userId, cal);
-		// TODO orderService.METHOD
-		cart.deleteContent();
-		return "";
+		return "redirect:/warenkorb";
 	}
 }
