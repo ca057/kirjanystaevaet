@@ -59,6 +59,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 	}
 
 
+
 	@Override
 	public List<Category> getCategoriesByName(String categoryName) {
 		
@@ -70,8 +71,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 	@Override
 	public int insertCategory(Category category) {
 		int id = (int) getSession().save(category);
-		System.out.println("In categoryDao.insertCtaegory name = " + category.getCategoryName() + " id = " + id);
-
 		return id;
 	}
 

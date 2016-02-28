@@ -1,37 +1,36 @@
 package appl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import appl.data.dao.OrderDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
-import appl.data.items.Order;
-import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.logic.service.BookService;
+import appl.logic.service.UserService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.CategoryExistsException;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
-import exceptions.data.PrimaryKeyViolationException;
 
 public class QueryFun {
 
-	public void doSomeTesting2(ApplicationContext ctx) {
+	public void doSomeTesting2(ApplicationContext ctx) throws DatabaseException {
 		BookService service = ctx.getBean(BookService.class);
-		//CategoryService ct = ctx.getBean(CategoryService.class);
-		//System.out.println("Kategorien: " + ct.getAllCategoryNames());
+		// CategoryService ct = ctx.getBean(CategoryService.class);
+		// System.out.println("Kategorien: " + ct.getAllCategoryNames());
 		HashMap<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.categoryName, "php");
 		// map.put(Searchfields.title, "Architecture");
@@ -43,32 +42,35 @@ public class QueryFun {
 		System.out.println();
 		System.exit(0);
 	}
-	
-	public void testExceptions(ApplicationContext ctx) throws EntityDoesNotExistException{
+
+	public void testExceptions(ApplicationContext ctx) throws DatabaseException {
 		BookService service = ctx.getBean(BookService.class);
-		
+
 		service.getCategoryByExactName("Some Shit");
 	}
-	public void testCategoryInsert(ApplicationContext ctx) throws CategoryExistsException{
+
+	public void testCategoryInsert(ApplicationContext ctx) throws CategoryExistsException, DatabaseException {
 		BookService service = ctx.getBean(BookService.class);
 		service.insertCategory("stricken");
 		service.insertCategory("häkeln");
 		List<String> categoryNames = service.getAllCategoryNames();
 		System.out.println("Nach insert");
-		for (String s : categoryNames){
+		for (String s : categoryNames) {
 			System.out.println(s);
 		}
 	}
-	public void testCategoryDelete(ApplicationContext ctx){
+
+	public void testCategoryDelete(ApplicationContext ctx) throws DatabaseException {
 		BookService service = ctx.getBean(BookService.class);
 		service.deleteCategory("stricken");
 		List<String> categoryNames = service.getAllCategoryNames();
 		System.out.println("Nach Delete\n\n");
-		for (String s : categoryNames){
+		for (String s : categoryNames) {
 			System.out.println(s);
 		}
 	}
-	public void testAuthorInsert(ApplicationContext ctx){
+
+	public void testAuthorInsert(ApplicationContext ctx) throws DatabaseException {
 		BookService service = ctx.getBean(BookService.class);
 		try {
 			service.insertAuthor("Madeleine", "Rosenhagen", true);
@@ -79,26 +81,27 @@ public class QueryFun {
 		}
 		List<Author> authorNames = service.getAllAuthors();
 		System.out.println("Inserted Author\n\n");
-		for (Author a : authorNames){
+		for (Author a : authorNames) {
 			System.out.println(a.getNameF() + " " + a.getNameL());
 		}
 	}
-	public void testAuthorDelete(ApplicationContext ctx){
+
+	public void testAuthorDelete(ApplicationContext ctx) throws DatabaseException {
 		BookService service = ctx.getBean(BookService.class);
 		List<Author> author = service.getAuthorByExactName("Madeleine", "Rosenhagen");
-		service.deleteAuthor(author.get(0));
+		service.deleteAuthor(author.get(0).getAuthorId());
 		List<Author> authorNames = service.getAllAuthors();
 		System.out.println("Deleted Author\n\n");
-		for (Author a : authorNames){
+		for (Author a : authorNames) {
 			System.out.println(a.getNameF() + " " + a.getNameL());
 		}
 	}
-	
-	public void testInsertBook(ApplicationContext ctx){
+
+	public void testInsertBook(ApplicationContext ctx) throws DatabaseException {
 		BookService service = ctx.getBean(BookService.class);
 		List<Book> bookList = service.getAllBooks();
 		System.out.println(" \n\nBooklist before insert");
-		for (Book b : bookList){
+		for (Book b : bookList) {
 			System.out.println(b.toString());
 		}
 		try {
@@ -110,33 +113,81 @@ public class QueryFun {
 			bookMap.put(Searchfields.isbn, "0101010101");
 			bookMap.put(Searchfields.pages, "1234");
 			try {
-				int categoryId = service.insertCategory("Children's Fanatsy");
+				int categoryId = service.insertCategory("Children's Fantasy");
 				Set<Integer> catSet = new HashSet<Integer>();
 				catSet.add(categoryId);
 				Set<Integer> authorSet = new HashSet<Integer>();
 				authorSet.add(authorId);
-				
-					
+
 				service.insertBook(bookMap, authorSet, catSet);
-			
-				
-			} catch (CategoryExistsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.exit(1);
+
 			} catch (EntityDoesNotExistException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.exit(1);
 
-			
 			} catch (DatabaseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.exit(1);
 
 			}
-			
+
+			/*
+			 * } catch (AuthorMayExistException e) { // TODO Auto-generated
+			 * catch block e.printStackTrace(); System.exit(1);
+			 * 
+			 * }
+			 */
+			bookList = service.getAllBooks();
+			System.out.println(" \n\nBooklist after insert");
+			for (Book b : bookList) {
+				System.out.println(b.toString());
+			}
+			List<Category> categoryList = service.getAllCategories();
+			System.out.println("\n\nCategories after insert");
+			for (Category cat : categoryList) {
+				System.out.println(cat.getCategoryName());
+			}
+
+			/*
+			 * System.out.println("\n\nDelete Category\n\n");
+			 * 
+			 * service.deleteCategory("Children's Fanatsy"); bookList =
+			 * service.getAllBooks(); System.out.println(
+			 * " \n\nBooklist after Category Delete"); for (Book b : bookList){
+			 * System.out.println(b.toString()); }
+			 */
+
+			int authorId2 = service.insertAuthor("Michael", "Ende", true);
+			Map<Searchfields, String> bookMap2 = new HashMap<Searchfields, String>();
+			bookMap2.put(Searchfields.title, "Momo");
+			bookMap2.put(Searchfields.description, "Fantasy Children's book");
+			bookMap2.put(Searchfields.price, "34.56");
+			bookMap2.put(Searchfields.isbn, "9101010101");
+			bookMap2.put(Searchfields.pages, "1234");
+			Category category = service.getCategoryByExactName("Children's Fantasy");
+			try {
+
+				Set<Integer> catSet = new HashSet<Integer>();
+				catSet.add(category.getCategoryID());
+				Set<Integer> authorSet2 = new HashSet<Integer>();
+				authorSet2.add(authorId2);
+
+				service.insertBook(bookMap2, authorSet2, catSet);
+
+			} catch (EntityDoesNotExistException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.exit(1);
+
+			} catch (DatabaseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.exit(1);
+
+			}
+
 		} catch (AuthorMayExistException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -144,143 +195,139 @@ public class QueryFun {
 
 		}
 		bookList = service.getAllBooks();
-		System.out.println(" \n\nBooklist after insert");
-		for (Book b : bookList){
+		System.out.println(" \n\nBooklist after insert2");
+		for (Book b : bookList) {
 			System.out.println(b.toString());
 		}
-		
-		
-		
-		
-		
+		List<Category> categoryList = service.getAllCategories();
+		System.out.println("\n\nCategories after insert2");
+		for (Category cat : categoryList) {
+			System.out.println(cat.getCategoryName());
+		}
+
+		Category cat = service.getCategoryByExactName("Children's Fantasy");
+		Set<Book> bookOfCat = cat.getBooks();
+		System.out.println("\nTest getBooks\n");
+		for (Book b : bookOfCat) {
+			System.out.println(b.toString());
+		}
+
 	}
-	public void testDeleteBook(ApplicationContext ctx){
+
+	public void testDeleteBook(ApplicationContext ctx) throws DatabaseException {
 		BookService service = ctx.getBean(BookService.class);
 		service.deleteBook("0101010101");
 		List<Book> bookList = service.getAllBooks();
 		System.out.println(" \n\nBooklist after delete");
-		for (Book b : bookList){
+		for (Book b : bookList) {
 			System.out.println(b.toString());
 		}
-	}
-/*
-	public void doSomeOrderTesting(ApplicationContext ctx) {
-		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
-		sessionFactory.getCurrentSession().beginTransaction();
-		Order order = createOrderTestData();
-		OrderDAO oDao = ctx.getBean(OrderDAO.class);
-		oDao.insertOrder(order);
-
-		//ToDo Orderabfragen
-		
-	}
-	*/
-/*
-	public Order createOrderTestData() {
-		Set<Book> book = createTestData();
-		User user = createUserTestData();
-		Order order = new Order(book, user, 1990, 8, 6, 0, 4, 12);
-		return order;
+		List<Category> categoryList = service.getAllCategories();
+		System.out.println("\n\nCategories after delete");
+		for (Category cat : categoryList) {
+			System.out.println(cat.getCategoryName());
+		}
 
 	}
-	*/
+	/*
+	 * public void doSomeOrderTesting(ApplicationContext ctx) { SessionFactory
+	 * sessionFactory = ctx.getBean(SessionFactory.class);
+	 * sessionFactory.getCurrentSession().beginTransaction(); Order order =
+	 * createOrderTestData(); OrderDAO oDao = ctx.getBean(OrderDAO.class);
+	 * oDao.insertOrder(order);
+	 * 
+	 * //ToDo Orderabfragen
+	 * 
+	 * }
+	 */
+	/*
+	 * public Order createOrderTestData() { Set<Book> book = createTestData();
+	 * User user = createUserTestData(); Order order = new Order(book, user,
+	 * 1990, 8, 6, 0, 4, 12); return order;
+	 * 
+	 * }
+	 */
 
 	/*
-	public void doSomeTesting(SessionFactory sessionFactory) {
-		// Transaction: "Allows the application to define units of work, while
-		// maintaining abstraction from the underlying transaction
-		// implementation"
-		sessionFactory.getCurrentSession().beginTransaction();
-
-		System.out.println(sessionFactory.getCurrentSession()
-				.createQuery("from Book where category.name like php and author.nameF like Jason").uniqueResult());
-
-		// Bücher speichern. save() oder persist()?
-		// for (Book b : createTestData()) {
-		// session.save(b);
-		// }
-
-		// Testabfrage
-		Query query = sessionFactory.getCurrentSession().createQuery("from Book");
-		List<Book> list = query.list();
-		for (Book o : list) {
-			System.out.println("\n---------------------");
-			System.out.println(o.getTitle());
-			System.out.println(o.getIsbn());
-			System.out.println(o.getCategories().iterator().next().toString());
-			System.out.println(o.getAuthors().iterator().next().toString());
-			System.out.println("---------------------\n");
-		}
-
-		// Das geht nicht: System.out.println(session.createQuery("from
-		// author").list());
-
-		// Test von fetch type
-		Book usualBook = (Book) sessionFactory.getCurrentSession().createQuery("from Book where isbn='0131428985'")
-				.uniqueResult();
-		System.out.println("---------------------\n" + usualBook.getCategories() + "\n"
-				+ usualBook.getAuthors().iterator().next().getBooks() + "\n---------------------");
-
-		// Select -> nicht das ganze Objekt bekommen, sondern nur nen String
-		// oder so
-		System.out.println("\n --------- SELECT ----------------------------- \n");
-		// Query querySelect = session.createQuery("select nameF from Book where
-		// nameL=Gilmore");
-		Query querySelect = sessionFactory.getCurrentSession()
-				.createQuery("select description from Book where isbn='0131428985'");
-		List<String> name = querySelect.list();
-		System.out.println("Anzahl der ELement: " + name.size());
-		// System.out.println("The desc is: " + name.getDescription());
-		// System.out.println("The isbn is: " + name.getIsbn());
-		for (String n : name) {
-			// System.out.println("The isbn is: " + n.getIsbn());
-			// System.out.println("The name is: " + n.getDescription());
-			System.out.println("Desc: " + n);
-		}
-
-		// Kategorien suchen -> für getCategories
-		System.out.println("\n ---------------------------- KATEGORIEN -------------------------");
-		Query query2 = sessionFactory.getCurrentSession().createQuery("select distinct categoryName from Category");
-		List<String> cats = query2.list();
-		System.out.println("Anzahl der ELement: " + cats.size());
-		// System.out.println("The desc is: " + name.getDescription());
-		// System.out.println("The isbn is: " + name.getIsbn());
-		for (String n : cats) {
-			// System.out.println("The isbn is: " + n.getIsbn());
-			// System.out.println("The name is: " + n.getDescription());
-			System.out.println("Desc: " + n);
-		}
-
-		// Versuche eines Joins. Für Autoren funktioniert es, aber nicht für
-		// categorien, was mega seltsam ist, da es exakt diesselbe Struktur ist
-		// Query query3 = session.createQuery("select a.CategoryName from Book b
-		// join b.categories a where b.isbn ='0131428985'");
-		System.out.println("\n ------------------ getCategoryOfBook-----\n");
-		Query query3 = sessionFactory.getCurrentSession()
-				.createQuery("select a.categoryName from Book b join b.categories a where b.isbn ='0131428985'");
-		// query.setString("name", "MySQL");
-		List<String> books = query3.list();
-		for (String n : books) {
-			System.out.println("Cat: " + n);
-		}
-
-		// Select Book by Category
-
-		System.out.println("\n ------------------ getBookByCategory-----\n");
-		Query query4 = sessionFactory.getCurrentSession()
-				.createQuery("select b from Book b join b.categories a where a.categoryName='PHP'");
-		// query.setString("name", "MySQL");
-		List<Book> books1 = query4.list();
-		for (Book n : books1) {
-			System.out.println("Titel: " + n.getTitle() + " Cat: " + n.getCategories());
-			// System.out.println("Titel: " + n);
-		}
-
-		sessionFactory.getCurrentSession().getTransaction().commit();
-		System.out.println("Done");
-		System.exit(0);
-	}
-	*/
+	 * public void doSomeTesting(SessionFactory sessionFactory) { //
+	 * Transaction: "Allows the application to define units of work, while //
+	 * maintaining abstraction from the underlying transaction //
+	 * implementation" sessionFactory.getCurrentSession().beginTransaction();
+	 * 
+	 * System.out.println(sessionFactory.getCurrentSession() .createQuery(
+	 * "from Book where category.name like php and author.nameF like Jason"
+	 * ).uniqueResult());
+	 * 
+	 * // Bücher speichern. save() oder persist()? // for (Book b :
+	 * createTestData()) { // session.save(b); // }
+	 * 
+	 * // Testabfrage Query query =
+	 * sessionFactory.getCurrentSession().createQuery("from Book"); List<Book>
+	 * list = query.list(); for (Book o : list) {
+	 * System.out.println("\n---------------------");
+	 * System.out.println(o.getTitle()); System.out.println(o.getIsbn());
+	 * System.out.println(o.getCategories().iterator().next().toString());
+	 * System.out.println(o.getAuthors().iterator().next().toString());
+	 * System.out.println("---------------------\n"); }
+	 * 
+	 * // Das geht nicht: System.out.println(session.createQuery("from //
+	 * author").list());
+	 * 
+	 * // Test von fetch type Book usualBook = (Book)
+	 * sessionFactory.getCurrentSession().createQuery(
+	 * "from Book where isbn='0131428985'") .uniqueResult();
+	 * System.out.println("---------------------\n" + usualBook.getCategories()
+	 * + "\n" + usualBook.getAuthors().iterator().next().getBooks() +
+	 * "\n---------------------");
+	 * 
+	 * // Select -> nicht das ganze Objekt bekommen, sondern nur nen String //
+	 * oder so System.out.println(
+	 * "\n --------- SELECT ----------------------------- \n"); // Query
+	 * querySelect = session.createQuery("select nameF from Book where //
+	 * nameL=Gilmore"); Query querySelect = sessionFactory.getCurrentSession()
+	 * .createQuery("select description from Book where isbn='0131428985'");
+	 * List<String> name = querySelect.list(); System.out.println(
+	 * "Anzahl der ELement: " + name.size()); // System.out.println(
+	 * "The desc is: " + name.getDescription()); // System.out.println(
+	 * "The isbn is: " + name.getIsbn()); for (String n : name) { //
+	 * System.out.println("The isbn is: " + n.getIsbn()); // System.out.println(
+	 * "The name is: " + n.getDescription()); System.out.println("Desc: " + n);
+	 * }
+	 * 
+	 * // Kategorien suchen -> für getCategories System.out.println(
+	 * "\n ---------------------------- KATEGORIEN -------------------------");
+	 * Query query2 = sessionFactory.getCurrentSession().createQuery(
+	 * "select distinct categoryName from Category"); List<String> cats =
+	 * query2.list(); System.out.println("Anzahl der ELement: " + cats.size());
+	 * // System.out.println("The desc is: " + name.getDescription()); //
+	 * System.out.println("The isbn is: " + name.getIsbn()); for (String n :
+	 * cats) { // System.out.println("The isbn is: " + n.getIsbn()); //
+	 * System.out.println("The name is: " + n.getDescription());
+	 * System.out.println("Desc: " + n); }
+	 * 
+	 * // Versuche eines Joins. Für Autoren funktioniert es, aber nicht für //
+	 * categorien, was mega seltsam ist, da es exakt diesselbe Struktur ist //
+	 * Query query3 = session.createQuery("select a.CategoryName from Book b //
+	 * join b.categories a where b.isbn ='0131428985'"); System.out.println(
+	 * "\n ------------------ getCategoryOfBook-----\n"); Query query3 =
+	 * sessionFactory.getCurrentSession() .createQuery(
+	 * "select a.categoryName from Book b join b.categories a where b.isbn ='0131428985'"
+	 * ); // query.setString("name", "MySQL"); List<String> books =
+	 * query3.list(); for (String n : books) { System.out.println("Cat: " + n);
+	 * }
+	 * 
+	 * // Select Book by Category
+	 * 
+	 * System.out.println("\n ------------------ getBookByCategory-----\n");
+	 * Query query4 = sessionFactory.getCurrentSession() .createQuery(
+	 * "select b from Book b join b.categories a where a.categoryName='PHP'");
+	 * // query.setString("name", "MySQL"); List<Book> books1 = query4.list();
+	 * for (Book n : books1) { System.out.println("Titel: " + n.getTitle() +
+	 * " Cat: " + n.getCategories()); // System.out.println("Titel: " + n); }
+	 * 
+	 * sessionFactory.getCurrentSession().getTransaction().commit();
+	 * System.out.println("Done"); System.exit(0); }
+	 */
 
 	public void jdbcStuff(JdbcTemplate jdbc) {
 		// int counter = 1;
@@ -303,165 +350,159 @@ public class QueryFun {
 		// PUBLIC.bookauthors", Integer.class));
 	}
 	/*
-	public void testDao(ApplicationContext ctx){
-		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
-		BookService bookService = ctx.getBean(BookService.class);
-		CategoryService categoryService = ctx.getBean(CategoryService.class);
-		
-		List<String> allCategories = categoryService.getAllCategoryNames();
-		System.out.println("GetAllCategories-----------------------\n\n\n");
-		for (String s : allCategories){
-			System.out.println(s);
-		}
-		
-		
-		Book book = bookService.getBookByIsbn("0201-433 3-62");
-		System.out.println("GetBookByIsbn-------------------------------\n\n\n");
-		System.out.println(book.toString());
-		
-		List<Book> booksByCat = bookService.getBooksByCategory("Linguistik");
-
-		System.out.println("Get books by Category------------------------------\n\n\n");
-		for (Book b : booksByCat){
-			System.out.println(b.toString());
-		}
-		List<Book> allBooks = bookService.getAllBooks();
-		System.out.println("Get all books --------------------\n\n\n");
-		for (Book b : allBooks){
-			System.out.println(b.toString());
-		}
-		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
-		
-		map.put(Searchfields.categoryName, "Linguistik");
-		map.put(Searchfields.title, "Learning PHP");
-		List<Book> results = bookService.getBooksByMetadata(map);
-		System.out.println("GetBooksByMetadata _-------------------------------------\n\n\n");
-		System.out.println("Size: " + results.size());
-		for(Book b : results){
-			System.out.println(b.toString());
-		}
-		
-		
-		System.out.println("Test OpenSearch------------------\n\n\n");
-		bookService.getBooksByOpenSearch("I love my cat");
-	}
-	*/
+	 * public void testDao(ApplicationContext ctx){ SessionFactory
+	 * sessionFactory = ctx.getBean(SessionFactory.class); BookService
+	 * bookService = ctx.getBean(BookService.class); CategoryService
+	 * categoryService = ctx.getBean(CategoryService.class);
+	 * 
+	 * List<String> allCategories = categoryService.getAllCategoryNames();
+	 * System.out.println("GetAllCategories-----------------------\n\n\n"); for
+	 * (String s : allCategories){ System.out.println(s); }
+	 * 
+	 * 
+	 * Book book = bookService.getBookByIsbn("0201-433 3-62");
+	 * System.out.println("GetBookByIsbn-------------------------------\n\n\n");
+	 * System.out.println(book.toString());
+	 * 
+	 * List<Book> booksByCat = bookService.getBooksByCategory("Linguistik");
+	 * 
+	 * System.out.println(
+	 * "Get books by Category------------------------------\n\n\n"); for (Book b
+	 * : booksByCat){ System.out.println(b.toString()); } List<Book> allBooks =
+	 * bookService.getAllBooks(); System.out.println(
+	 * "Get all books --------------------\n\n\n"); for (Book b : allBooks){
+	 * System.out.println(b.toString()); } Map<Searchfields, String> map = new
+	 * HashMap<Searchfields, String>();
+	 * 
+	 * map.put(Searchfields.categoryName, "Linguistik");
+	 * map.put(Searchfields.title, "Learning PHP"); List<Book> results =
+	 * bookService.getBooksByMetadata(map); System.out.println(
+	 * "GetBooksByMetadata _-------------------------------------\n\n\n");
+	 * System.out.println("Size: " + results.size()); for(Book b : results){
+	 * System.out.println(b.toString()); }
+	 * 
+	 * 
+	 * System.out.println("Test OpenSearch------------------\n\n\n");
+	 * bookService.getBooksByOpenSearch("I love my cat"); }
+	 */
 	/*
-	public void testBookInsert (ApplicationContext ctx) throws PrimaryKeyViolationException{
-		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
-		BookService bookService = ctx.getBean(BookService.class);
-		/*List<String> allCats = bookService.getAllCategoryNames();
-		for (String s : allCats){
-			System.out.println(allCats);
-		}
-		System.exit(1);
-		*/
-		/*List<Author> allauthors = bookService.getAllAuthors();
-		for (Author a : allauthors){
-			
-			System.out.println(a.toString());
-		}
-		
-		Author singleAuthor = bookService.getAuthorById(42);
-		System.out.println(singleAuthor.toString());
-		System.exit(1);
-		
-		// Testen, wenn ich weiß, dass es ein neuer Autor ist
+	 * public void testBookInsert (ApplicationContext ctx) throws
+	 * PrimaryKeyViolationException{ SessionFactory sessionFactory =
+	 * ctx.getBean(SessionFactory.class); BookService bookService =
+	 * ctx.getBean(BookService.class); /*List<String> allCats =
+	 * bookService.getAllCategoryNames(); for (String s : allCats){
+	 * System.out.println(allCats); } System.exit(1);
+	 */
+	/*
+	 * List<Author> allauthors = bookService.getAllAuthors(); for (Author a :
+	 * allauthors){
+	 * 
+	 * System.out.println(a.toString()); }
+	 * 
+	 * Author singleAuthor = bookService.getAuthorById(42);
+	 * System.out.println(singleAuthor.toString()); System.exit(1);
+	 * 
+	 * // Testen, wenn ich weiß, dass es ein neuer Autor ist try {
+	 * System.out.println("Get all Books\n\n"); List<Book> allBook =
+	 * bookService.getAllBooks(); for (Book b: allBook){
+	 * System.out.println(b.toString()); }
+	 * 
+	 * 
+	 * int authorId = bookService.insertAuthor("Jason", "Gilmore", true);
+	 * System.out.println("QueryFun nach bookService.insertAuthor");
+	 * Set<Integer> authors = new HashSet<Integer>(); authors.add(authorId);
+	 * 
+	 * Set<Integer> categories = new HashSet<Integer>();
+	 * 
+	 * Category category = bookService.getCategoryByExactName("PHP");
+	 * System.out.println("Got Category: " + category.toString() + "\n\n");
+	 * categories.add(category.getCategoryID());
+	 * 
+	 * Map<Searchfields, String> dataMap = new HashMap<Searchfields, String>();
+	 * dataMap.put(Searchfields.isbn, "08006700");
+	 * dataMap.put(Searchfields.description, "This is a TestTextBook");
+	 * dataMap.put(Searchfields.edition, "1"); dataMap.put(Searchfields.pages,
+	 * "555"); dataMap.put(Searchfields.price, "9.99");
+	 * dataMap.put(Searchfields.pubdate, "January 2016");
+	 * dataMap.put(Searchfields.publisher, "Springer");
+	 * dataMap.put(Searchfields.title, "PHP fuer Dummies");
+	 * 
+	 * System.out.println(
+	 * "QueryFun, bevor service.insertBook\n Gib die Author Ids aus dem Set aus"
+	 * ); for (int s : authors){ System.out.println("Author id : " + s + "\n");
+	 * } bookService.insertBook(dataMap, authors, categories);
+	 * 
+	 * System.out.println("Get all Books\n\n"); List<Book> allBook2 =
+	 * bookService.getAllBooks(); for (Book b: allBook2){
+	 * System.out.println(b.toString()); }
+	 * 
+	 * 
+	 * 
+	 * 
+	 * } catch (AuthorMayExistException e) { // HIer nochmal Exception in try
+	 * catch Block -> ignore // TODO Auto-generated catch block
+	 * e.printStackTrace(); }
+	 * 
+	 * 
+	 * }
+	 */
+
+	public void testUser(ApplicationContext ctx) {
+		UserService service = ctx.getBean(UserService.class);
+		File file = new File("WebContent/resources/img/cover/0131428985.jpg");
+		byte[] bFile = new byte[(int) file.length()];
 		try {
-			System.out.println("Get all Books\n\n");
-			List<Book> allBook = bookService.getAllBooks();
-			for (Book b: allBook){
-				System.out.println(b.toString());
-			}
-			
-			
-			int authorId = bookService.insertAuthor("Jason", "Gilmore", true);
-			System.out.println("QueryFun nach bookService.insertAuthor");
-			Set<Integer> authors = new HashSet<Integer>();
-			authors.add(authorId);
-			
-			Set<Integer> categories = new HashSet<Integer>();
-			
-			Category category = bookService.getCategoryByExactName("PHP");
-			System.out.println("Got Category: " + category.toString() + "\n\n");
-			categories.add(category.getCategoryID());
-			
-			Map<Searchfields, String> dataMap = new HashMap<Searchfields, String>();
-			dataMap.put(Searchfields.isbn, "08006700");
-			dataMap.put(Searchfields.description, "This is a TestTextBook");
-			dataMap.put(Searchfields.edition, "1");
-			dataMap.put(Searchfields.pages, "555");
-			dataMap.put(Searchfields.price, "9.99");
-			dataMap.put(Searchfields.pubdate, "January 2016");
-			dataMap.put(Searchfields.publisher, "Springer");
-			dataMap.put(Searchfields.title, "PHP fuer Dummies");
-			
-			System.out.println("QueryFun, bevor service.insertBook\n Gib die Author Ids aus dem Set aus");
-			for (int s : authors){
-				System.out.println("Author id : " + s + "\n");
-			}
-			bookService.insertBook(dataMap, authors, categories);
-			
-			System.out.println("Get all Books\n\n");
-			List<Book> allBook2 = bookService.getAllBooks();
-			for (Book b: allBook2){
-				System.out.println(b.toString());
-			}
-			
-			
-			
-			
-		} catch (AuthorMayExistException e) {
-			// HIer nochmal Exception in try catch Block -> ignore
+			FileInputStream fileInputStream = new FileInputStream(file);
+			fileInputStream.read(bFile);
+			service.updateAccount(service.findbyMail("admin@ky.de").get().getUserId(), new HashMap<>(), bFile);
+			fileInputStream.close();
+			FileOutputStream fos = new FileOutputStream("output.jpg");
+			User user = (User) service.findbyMail("admin@ky.de")
+					.orElseThrow(() -> new EntityDoesNotExistException("User nicht gefunden"));
+			System.out.println(user);
+			fos.write(user.getImage());
+			fos.close();
+
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
-	*/
-	
+
 	/*
-
-	public Set<Book> createTestData() {
-		Set<Book> books = new HashSet<>();
-		Set<Author> authors = new HashSet<>();
-
-		Author author = new Author();
-		author.setNameF("Hans");
-		author.setNameL("Peter");
-		authors.add(author);
-
-		Book book = new Book("1213452", "title", "Desc", 11.00, "String publisher", "String pubdate", "String edition",
-				10, null, null);
-
-		books.add(new Book("1213452", "title", "Desc", 12.00, "String publisher", "String pubdate", "String edition",
-				10, null, authors));
-		books.add(new Book("12134394", "title", "Desc", 10.00, "String publisher", "String pubdate", "String edition",
-				10, null, authors));
-
-		// books.add(book);
-		Category category1 = new Category("Category1", books);
-		Category category2 = new Category("Category2", null);
-
-		Set<Category> categories = new HashSet<Category>();
-		categories.add(category1);
-		categories.add(category2);
-
-		book.setCategories(categories);
-		return books;
-	}
-	*/
-/*
-	public User createUserTestData() {
-		PLZ plz = new PLZ();
-		plz.setPlace("Buxtehude");
-		plz.setPostcode("000000");
-
-		User user1 = new User("krabbe", "Rosenhagen", "Madeleine", "xyz@ihp.de", "streetstrett", "23a", plz);
-		return user1;
-
-	}
-	*/
+	 * 
+	 * public Set<Book> createTestData() { Set<Book> books = new HashSet<>();
+	 * Set<Author> authors = new HashSet<>();
+	 * 
+	 * Author author = new Author(); author.setNameF("Hans");
+	 * author.setNameL("Peter"); authors.add(author);
+	 * 
+	 * Book book = new Book("1213452", "title", "Desc", 11.00,
+	 * "String publisher", "String pubdate", "String edition", 10, null, null);
+	 * 
+	 * books.add(new Book("1213452", "title", "Desc", 12.00, "String publisher",
+	 * "String pubdate", "String edition", 10, null, authors)); books.add(new
+	 * Book("12134394", "title", "Desc", 10.00, "String publisher",
+	 * "String pubdate", "String edition", 10, null, authors));
+	 * 
+	 * // books.add(book); Category category1 = new Category("Category1",
+	 * books); Category category2 = new Category("Category2", null);
+	 * 
+	 * Set<Category> categories = new HashSet<Category>();
+	 * categories.add(category1); categories.add(category2);
+	 * 
+	 * book.setCategories(categories); return books; }
+	 */
+	/*
+	 * public User createUserTestData() { PLZ plz = new PLZ();
+	 * plz.setPlace("Buxtehude"); plz.setPostcode("000000");
+	 * 
+	 * User user1 = new User("krabbe", "Rosenhagen", "Madeleine", "xyz@ihp.de",
+	 * "streetstrett", "23a", plz); return user1;
+	 * 
+	 * }
+	 */
 
 }

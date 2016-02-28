@@ -1,15 +1,15 @@
 /**
  * Script for client-side-logic for handling user input, input validation etc. 
- * No ADMIN logic here to hide the administration logic from public.
  */
 
 function handleRegistration () {
 	var userData = {};
 	$("#register-submit").on("click", function (e) {
-		e.preventDefault();
 		if (!allInputsAreValid()) {
+			// TODO validate plz
 			return;
 		}
+		e.preventDefault();
 		clearOrDisableInputs("disable", true);
 		userData = {
 			name: $('#name').val(),

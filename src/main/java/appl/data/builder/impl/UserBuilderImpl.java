@@ -6,7 +6,6 @@ import appl.data.builder.UserBuilder;
 import appl.data.enums.UserRoles;
 import appl.data.items.PLZ;
 import appl.data.items.User;
-import exceptions.data.ErrorMessageHelper;
 
 @Component
 public class UserBuilderImpl implements UserBuilder {
@@ -17,20 +16,25 @@ public class UserBuilderImpl implements UserBuilder {
 	private String street;
 	private String streetnumber;
 	private PLZ plz;
-	private String role;
+	private UserRoles role;
+	private byte[] image;
+	private int id = -1;
+
+	@Override
+	public UserBuilder setId(int id) {
+		this.id = (id >= 0) ? id : -1;
+		return this;
+	}
 
 	@Override
 	public UserBuilder setPassword(String password) {
-		if (password == null || password.isEmpty()) {
-			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("Password"));
-		}
 		this.password = password;
 		return this;
 	}
 
 	@Override
 	public UserBuilder setRole(UserRoles role) {
-		this.role = role.toString();
+		this.role = role;
 		return this;
 	}
 
@@ -71,10 +75,70 @@ public class UserBuilderImpl implements UserBuilder {
 	}
 
 	@Override
+	public UserBuilder setImage(byte[] image) {
+		this.image = image;
+		return this;
+	}
+
+	@Override
 	public User createUser() {
-		User user = new User(password, name, surname, email, street, streetnumber, plz, role, null);
+		if (id < 0) {
+			return new User(password, name, surname, email, street, streetnumber, plz, role.toString(), image, null);
+		} else {
+			return new User(id, password, name, surname, email, street, streetnumber, plz, role.toString(), image,
+					null);
+		}
 		// TODO remove old variables?
-		return user;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public String getSurname() {
+		return surname;
+	}
+
+	@Override
+	public String getEmail() {
+		return email;
+	}
+
+	@Override
+	public String getStreet() {
+		return street;
+	}
+
+	@Override
+	public String getStreetnumber() {
+		return streetnumber;
+	}
+
+	@Override
+	public PLZ getPlz() {
+		return plz;
+	}
+
+	@Override
+	public UserRoles getRole() {
+		return role;
+	}
+
+	@Override
+	public byte[] getImage() {
+		return image;
+	}
+
+	@Override
+	public int getId() {
+		return id;
 	}
 
 }

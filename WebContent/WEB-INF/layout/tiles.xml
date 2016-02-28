@@ -54,6 +54,22 @@
 		<put-attribute name="content" value="/WEB-INF/views/backend/login.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="backend/stock" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/backend/stock.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="backend/users" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/backend/users.jsp"></put-attribute>
+	</definition>
+
+	<definition name="backend/usage" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/backend/usage.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="backend/settings" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/backend/settings.jsp"></put-attribute>
+	</definition>
+	
 	<!-- all views for displaying errors -->
 	<definition name="404" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/error/404.jsp"></put-attribute>

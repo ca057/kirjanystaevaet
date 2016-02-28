@@ -27,8 +27,40 @@
 </ul>
 
 <sec:authorize access="hasRole('ADMIN')">
-	<!-- die für den Admin benötigte Konfiguration folgt hier -->
 	<ul class="navigation-content list-inline">
-		<li>Admin-spezifische Navigation folgt hier...</li>
+		<li><a href="<c:url value='/backend' />" title="Admin-Bereich">Admin-Bereich</a></li>
+		<li><a href="<c:url value='/backend/bestand' />" title="Bestand verwalten">Bestand verwalten</a>
+			<ul class="navigation-content-sub">
+				<li><a href="<c:url value='/backend/bestand#kategorien' />" title="Kategorien verwalten">Kategorien</a>
+					<ul>
+						<li><a href="<c:url value='/backend/bestand#kategorien-anlegen' />" title="Neue Kategorie anlegen">Anlegen</a></li>
+						<li><a href="<c:url value='/backend/bestand#kategorien-loeschen' />" title="Bestehende Kategorie löschen">Löschen</a></li>
+					</ul>
+				</li>
+				<li><a href="<c:url value='/backend/bestand#autorinnen' />" title="Autor:innen verwalten">Autor:innen</a>
+					<ul>
+						<li><a href="<c:url value='/backend/bestand#autorinnen-anlegen' />" title="Neue:n Autor:in anlegen">Anlegen</a></li>
+						<li><a href="<c:url value='/backend/bestand#autorinnen-aendern' />" title="Bestehende Autor:innen ändern">Ändern</a></li>
+						<li><a href="<c:url value='/backend/bestand#autorinnen-loeschen' />" title="Bestehende Autor:innen löschen">Löschen</a></li>
+					</ul>
+				</li>
+				<li><a href="<c:url value='/backend/bestand#buecher' />" title="Autor:innen verwalten">Bücher</a>
+					<ul>
+						<li><a href="<c:url value='/backend/bestand#buecher' />" title="Neue Bücher anlegen">Anlegen</a></li>
+						<li><a href="<c:url value='/backend/bestand#buecher-aendern' />" title="Bestehnde Bücher ändern">Ändern</a></li>
+						<li><a href="<c:url value='/backend/bestand#buecher-loeschen' />" title="Bestehende Bücher löschen">Löschen</a></li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><a href="<c:url value='/backend/nutzerinnen' />" title="Kund:innen verwalten">Nutzer:in verwalten</a>
+			<ul class="navigation-content-sub">
+				<li><a href="<c:url value='/backend/nutzerinnen#anlegen' />" title="Neue:n Nutzer:in anlegen">Anlegen</a></li>
+				<li><a href="<c:url value='/backend/nutzerinnen#aendern' />" title="Bestehende Nutzer:in ändern">Ändern</a></li>
+				<li><a href="<c:url value='/backend/nutzerinnen#loeschen' />" title="Bestehende Nutzer:in löschen">Löschen</a></li>
+			</ul>
+		</li>
+		<li><a href="<c:url value='/backend/nutzungsstatistiken' />" title="Nutzungsstatistiken">Nutzungsstatistiken</a></li>
+		<li><a href="<c:url value='/backend/einstellungen' />" title="Einstellungen">Einstellungen</a></li>
 	</ul>
 </sec:authorize>

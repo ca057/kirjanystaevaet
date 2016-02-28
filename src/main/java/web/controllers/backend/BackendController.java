@@ -12,7 +12,7 @@ public class BackendController {
 		// TODO Auto-generated constructor stub
 	}
 
-	@RequestMapping(method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	@RequestMapping(method = RequestMethod.GET)
 	public String getBackend() {
 		return "backend";
 	}

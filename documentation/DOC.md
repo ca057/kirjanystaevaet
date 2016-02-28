@@ -116,6 +116,29 @@ Alle anonymen Gäste bekommen die Möglichkeit, sich anzumelden. Wer nicht anony
 ```
 
 ## Database
+### Cascading
+Über den CascadeType in den Annotationen wird angegeben, welche Elemente, die in einer Relation mit einem Element stehen ebenfalls gelöscht/gespeichert werden, wenn letzteres gelöscht/gespeichert wird.
+Wenn in der Annotation kein CascadeType angegeben ist, tritt der Default ein, nämlich, dass kein Cascading stattfindet.
+In diesem Projekt wurden folgende Entscheidungen getroffen:
+- Eine `Category` kann nur gelöscht werden, wenn es kein `Book` mehr mit dieser `Category` gibt. Ein socher Versuch führt zu einer `DatabaseException` mit einer entsprechendedn Errormessage.
+- Wenn das letzte `Book` einer `Category` gelöscht wird, wird die `Category` nicht gelöscht. Es darf `Categories` geben, die keine `Books` enthalten.
+- Wenn das letzte `Book` eines bestimmten `Authors` gelöscht wird, wird der `Author` ebenfalls gelöscht (`CascadeType.ALL`). `Author` wird hier anders behandelt als `Category`, da `Categories` potentiell besser weiter verwendet werden können als `Authors`. 
+
+### Fetch-Type
+FetchType wurde auf eager gesetzt, weil man da über die getter der Item-Klassen leichter an die verknüpften Daten kommt. Der Default wäre LAZY. In diesem Fall ist das meiner Meinung nach möglich, da die Datenbank relativ klein ist und die Performanz nicht wirklich darunter leidet, wenn die assoziierten Daten mit geladen wird.
+
+### Exception-Handling
+Betrifft Branch Delete, noch nicht auf dem Master
+
+Im Umgang mit der Datenbank können viele Fehler auftreten. Durch ein umfassendes Exception-Handling wird versucht den Shop vor dem Absturz zu bewahren.
+
+Es wurde viel darüber nachgedacht und disskutiert, wie man die oberen Schichten über Fehler oder unerwartetes Verhalten informieren kann, wenn es geht auch ohne Exceptions. Die Probleme liegen darin, wenn ein einzelnes Objekt in der Datenbank gesucht wird und der Rückgabetyp des entsprechenden Services keine `List<..>`, sondern vom Typ der entsprechenden Entity ist. Es soll unbedingt vermieden bei einer erfolglosen Suche `null` zurückzugeben. Ein anderer Fall liegt vor, wenn versucht wird eine Entity zu löschen, die nicht existiert oder eine Entity in die Datenbank zu speicher, die schon existiert. Im Sinne der Nutzerfreundlichkeit ist es sinnvoll, zu informieren, dass ein Objekt nicht gelöscht wurde, da es nicht existiert. Solche Fehler können z.B. durch Tippfehler in der Eingabe entstehen und dann zu unerwartetem Verhalten führen, wie z.B. das Objekt das eigentlich gelöscht werden sollte, ist immer noch vorhanden.
+
+Eine Idee war es Enums zu verwenden, die den Status eines Vorgangs angeben (z.B. `delete succssful` o.ä.) und überprüft werden können, um dementsprechend zu handeln. Der gravierende Nachteil dieser Lösung ist, dass sie nur bei `void`-Methoden anwendbar ist. Aus diesem Grund haben wir uns gegen diese Idee entschieden und sind doch dabei geblieben, bei Fehlern Exceptions zu werfen, um alle Probleme durchgängig einheitlich behandeln zu können.
+
+Dabei haben wir darauf geachtet, so weit es möglich ist, nur eine Exception an die oberen Schichten weiter zu geben, nämlich die `DatabaseException`. Ihr werden mithilfe des `ErrorMessageHelpers` sehr spezifische, aber einheitliche Fehlernachrichten mitgegeben, die dann z.B. dem Nutzer angezeigt werden können.
+
+Zudem wurde auf diese Weise versucht, `HibernateExceptions` schon auf der Ebene der Daos und Services abzufangen und ebenfalls in eine `DatabaseException` umzuwandeln. Es soll so verhindert werden, dass unchecked Exceptions den Shop zum Absturz bringen.
 
 ### DAOs
 TODO: Im Grunde immutable -> Zugriff nur über Konstruktor.

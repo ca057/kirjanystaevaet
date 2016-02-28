@@ -1,6 +1,5 @@
 package conf;
 
-import java.sql.SQLException;
 import java.util.Properties;
 
 import org.hibernate.HibernateException;
@@ -44,12 +43,30 @@ public class RootConfig {
 	@Autowired
 	Initialization init;
 
+	/**
+	 * This bean is necessary for the performance of transactions on the
+	 * database.
+	 * 
+	 * @return a {@link PlatformTransactionManager} with the
+	 *         {@code SessionFactory} configured below.
+	 * @throws DatabaseInitializationException
+	 *             if an error occurs during set up of the
+	 *             {@code SessionFactory}
+	 * 
+	 * @see {@link #getSessionFactory()}
+	 */
 	@Bean
-	public PlatformTransactionManager txManager()
-			throws HibernateException, SQLException, DatabaseInitializationException {
+	public PlatformTransactionManager txManager() throws DatabaseInitializationException {
 		return new HibernateTransactionManager(getSessionFactory());
 	}
 
+	/**
+	 * This bean provides substantial access to all database functions.
+	 * 
+	 * @return a configured {@link SessionFactory}
+	 * @throws DatabaseInitializationException
+	 *             if an error occurs during initialization of the database
+	 */
 	@Bean
 	public SessionFactory getSessionFactory() throws DatabaseInitializationException {
 		return buildSessionFactory();
@@ -76,14 +93,22 @@ public class RootConfig {
 	private Properties createProperties() {
 		Properties prop = new Properties();
 		prop.setProperty("hibernate.hbm2ddl.auto", "create");
+		// FIXME Johannes, you know what to do!
 		prop.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
-		prop.setProperty("hibernate.connection.url", "jdbc:h2:./database/kirjanystaevaet");
-		prop.setProperty("hibernate.c3p0.idle_test_period", "3000");
+		// TODO Autoserver (automatic mixed mode)
+		prop.setProperty("hibernate.connection.url", "jdbc:h2:./database/kirjanystaevaet;AUTO_SERVER=TRUE");
+		// prop.setProperty("hibernate.c3p0.idle_test_period", "30");
+		prop.setProperty("hibernate.c3p0.testConnectionOnCheckout", "true");
 		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 		prop.setProperty("hibernate.current_session_context_class",
 				"org.springframework.orm.hibernate5.SpringSessionContext");
 		prop.setProperty("show_sql", "true");
 		return prop;
 	}
+
+	// @Bean
+	// public PasswordEncoder encoder() {
+	// return new BCryptPasswordEncoder(11);
+	// }
 
 }

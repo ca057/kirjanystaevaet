@@ -18,10 +18,11 @@ import appl.data.items.Book;
 import appl.data.items.Cart;
 import appl.data.items.User;
 import appl.logic.service.BookService;
+import exceptions.data.DatabaseException;
 
 @Controller
 public class CartController {
-	private User user = (User) SecurityContextHolder.getContext().getAuthentication();
+	private User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 	@Autowired
 	private BookService bookService;
@@ -48,7 +49,12 @@ public class CartController {
 	public String addToCart(@RequestParam(value = "isbn") String isbn) {
 		System.out.println(isbn);
 		if (isbn != null && !isbn.isEmpty()) {
-			cart.addBook(bookService.getBookByIsbn(isbn));
+			try {
+				cart.addBook(bookService.getBookByIsbn(isbn));
+			} catch (DatabaseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return "redirect:/warenkorb";
 	}
@@ -56,7 +62,12 @@ public class CartController {
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.DELETE)
 	public String deleteFromCart(@RequestParam(value = "isbn") String isbn) {
 		if (isbn != null && !isbn.isEmpty()) {
-			cart.deleteBook(bookService.getBookByIsbn(isbn));
+			try {
+				cart.deleteBook(bookService.getBookByIsbn(isbn));
+			} catch (DatabaseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return "redirect:/warenkorb";
 	}
