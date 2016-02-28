@@ -5,15 +5,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import appl.data.items.Book;
 import appl.data.items.Cart;
-import appl.data.items.User;
 import appl.logic.service.BookService;
 
 @Controller
@@ -32,7 +33,7 @@ public class CartController {
 		this.cart = cart;
 	}
 
-	private User user;
+	// private User = user;
 
 	// Setter-Injection not necessary since user aint no bean, aight?
 	public void setUser() {
@@ -71,6 +72,11 @@ public class CartController {
 		return "cart";
 	}
 
+	@ResponseBody
+	public String currentUserName(Authentication authentication) {
+		return authentication.getName();
+	}
+
 	@RequestMapping(value = "/bestellen", method = RequestMethod.POST)
 	public String orderContent() {
 		if (user.getStreet() != null && user.getStreetnumber() != null && user.getPlz() != null) {
@@ -83,7 +89,6 @@ public class CartController {
 			// orderService.createOrder(isbns, userId, cal);
 			// TODO orderService.METHOD
 			cart.deleteContent();
-
 		}
 		return "redirect:/warenkorb";
 	}
