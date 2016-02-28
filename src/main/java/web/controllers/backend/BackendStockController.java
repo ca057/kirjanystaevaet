@@ -1,5 +1,11 @@
 package web.controllers.backend;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import appl.data.enums.Searchfields;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
@@ -117,11 +124,50 @@ public class BackendStockController {
 	 * @return
 	 */
 	@RequestMapping(value = "/backend/bestand/buecher/add", method = RequestMethod.POST)
-	public String addBook() {
-		// TODO implement me
-		// parameters:
-		// categories, title, description, price, publisher, date, edition,
-		// pages, authors
+	public String addBook(@RequestParam(value = "categories", required = false) List<String> categories,
+			@RequestParam(value = "title", required = true) String title,
+			@RequestParam(value = "isbn", required = true) String isbn,
+			@RequestParam(value = "description", required = true) String description,
+			@RequestParam(value = "price", required = true) String price,
+			@RequestParam(value = "publisher", required = true) String publisher,
+			@RequestParam(value = "date", required = true) String date,
+			@RequestParam(value = "edition", required = true) String edition,
+			@RequestParam(value = "pages", required = true) String pages,
+			@RequestParam(value = "authors", required = true) List<String> authors) {
+		if (title == null || title.isEmpty() || isbn == null || isbn.isEmpty() || description == null
+				|| description.isEmpty() || price == null || price.isEmpty() || publisher == null || publisher.isEmpty()
+				|| date == null || date.isEmpty() || edition == null || edition.isEmpty() || pages == null
+				|| pages.isEmpty() || authors == null || authors.isEmpty()) {
+			// TODO implement better error handling
+			// TODO check if pages, categories and authors only contains
+			// numerical values
+			return "redirect:/backend/bestand?error";
+		}
+		Map<Searchfields, String> book = new HashMap<Searchfields, String>();
+		book.put(Searchfields.title, title);
+		book.put(Searchfields.isbn, isbn);
+		book.put(Searchfields.description, description);
+		book.put(Searchfields.price, price);
+		book.put(Searchfields.publisher, publisher);
+		book.put(Searchfields.pubdate, date);
+		book.put(Searchfields.edition, edition);
+		book.put(Searchfields.pages, pages);
+
+		Set<Integer> authorIds = new HashSet<Integer>(1);
+		authors.stream().forEach(id -> authorIds.add(Integer.parseInt(id)));
+
+		Set<Integer> categoryIds = new HashSet<Integer>(1);
+		if (categories != null && !categories.isEmpty()) {
+			categories.stream().forEach(id -> categoryIds.add(Integer.parseInt(id)));
+		}
+
+		try {
+			bookService.insertBook(book, authorIds, categoryIds);
+		} catch (DatabaseException e) {
+			// TODO implement better error handling
+			return "redirect:/backend/bestand?error";
+		}
+
 		return "redirect:/backend/bestand";
 	}
 
@@ -144,5 +190,4 @@ public class BackendStockController {
 		// TODO implement me
 		return "redirect:/backend/bestand";
 	}
-
 }
