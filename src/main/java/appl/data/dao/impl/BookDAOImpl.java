@@ -171,4 +171,16 @@ public class BookDAOImpl implements BookDAO {
 		// TODO implement this
 	}
 
+	@Override
+	public void decrementStock(String isbn) throws DatabaseException {
+		Book book = (Book) getSession().get(Book.class, isbn);
+		if (book.getStock()>0){
+			book.decrementStock();
+			getSession().update(book);
+		} else {
+			throw new DatabaseException(ErrorMessageHelper.stockIsNull());
+		}
+		
+	}
+
 }

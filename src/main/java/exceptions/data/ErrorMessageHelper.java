@@ -125,6 +125,9 @@ public abstract class ErrorMessageHelper {
 		return String.format("Insert of %s failed", entity);
 		
 	}
+	public static String stockIsNull(){
+		return String.format("Sorry, someone else was fast, the book is not available anymore. Stock = 0");
+	}
 
 
 }

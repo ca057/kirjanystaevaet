@@ -216,6 +216,10 @@ public class Book {
 	private void setVisitingUsers(Set<User> visitingUsers) {
 		this.visitingUsers = visitingUsers;
 	}
+	
+	public void decrementStock(){
+		stock--;
+	}
 
 	@Override
 	public String toString() {

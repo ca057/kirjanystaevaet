@@ -19,6 +19,7 @@ public class BookBuilderImpl implements BookBuilder {
 	private String pubdate;
 	private String edition;
 	private String pages;
+	private int stock;
 	private Set<Author> authors;
 	private Set<Category> categories;
 
@@ -84,6 +85,12 @@ public class BookBuilderImpl implements BookBuilder {
 		this.categories = categories;
 		return this;
 	}
+	@Override
+	public BookBuilder setStock(int stock) {
+		this.stock = stock;
+		return this;
+	}
+
 
 	@Override
 	public Book createBook() {
@@ -91,4 +98,5 @@ public class BookBuilderImpl implements BookBuilder {
 				this.pages, this.categories, this.authors);
 	}
 
+	
 }

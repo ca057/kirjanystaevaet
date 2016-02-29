@@ -28,5 +28,7 @@ public interface BookDAO {
 	public void updateBook(Book book);
 
 	public List<Book> getAllBooks();
+	
+	public void decrementStock(String isbn) throws DatabaseException;
 
 }
