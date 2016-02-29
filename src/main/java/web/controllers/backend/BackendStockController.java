@@ -112,9 +112,9 @@ public class BackendStockController {
 		try {
 			bookService.insertAuthor(req.getNameF(), req.getNameL(), req.isNewAuthor());
 		} catch (AuthorMayExistException e) {
-			return new ResponseEntity<AuthorJSONWrapper>(HttpStatus.CONFLICT);
+			return new ResponseEntity<AuthorJSONWrapper>(req, HttpStatus.CONFLICT);
 		}
-		return new ResponseEntity<AuthorJSONWrapper>(HttpStatus.OK);
+		return new ResponseEntity<AuthorJSONWrapper>(req, HttpStatus.OK);
 	}
 
 	/**
