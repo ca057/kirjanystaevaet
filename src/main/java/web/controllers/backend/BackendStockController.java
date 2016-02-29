@@ -130,16 +130,19 @@ public class BackendStockController {
 			@RequestParam(value = "description", required = true) String description,
 			@RequestParam(value = "price", required = true) String price,
 			@RequestParam(value = "publisher", required = true) String publisher,
-			@RequestParam(value = "date", required = true) String date,
+			@RequestParam(value = "day", required = true) String day,
+			@RequestParam(value = "month", required = true) String month,
+			@RequestParam(value = "year", required = true) String year,
 			@RequestParam(value = "edition", required = true) String edition,
 			@RequestParam(value = "pages", required = true) String pages,
 			@RequestParam(value = "stock", required = true) String stock,
 			@RequestParam(value = "authors", required = true) List<String> authors) {
 		if (categories != null || !categories.isEmpty() || title == null || title.isEmpty() || isbn == null
 				|| isbn.isEmpty() || description == null || description.isEmpty() || price == null || price.isEmpty()
-				|| publisher == null || publisher.isEmpty() || date == null || date.isEmpty() || edition == null
-				|| edition.isEmpty() || pages == null || pages.isEmpty() || authors == null || authors.isEmpty()
-				|| stock == null || stock.isEmpty()) {
+				|| publisher == null || publisher.isEmpty() || day == null || day.isEmpty() || month == null
+				|| month.isEmpty() || year == null || year.isEmpty() || edition == null || edition.isEmpty()
+				|| pages == null || pages.isEmpty() || authors == null || authors.isEmpty() || stock == null
+				|| stock.isEmpty()) {
 			// TODO check if pages, categories and authors only contains
 			// numerical values
 			throw new IllegalArgumentException("One of the passed values for adding a book is null or empty.");
@@ -150,7 +153,9 @@ public class BackendStockController {
 		book.put(Searchfields.description, description);
 		book.put(Searchfields.price, price);
 		book.put(Searchfields.publisher, publisher);
-		book.put(Searchfields.pubdate, date);
+		// date as string like Monat als String + " " + Tag als Zahl ohne
+		// führende Null + ", " + Jahr als Zahl
+		book.put(Searchfields.pubdate, month.trim() + " " + Integer.parseInt(day) + ", " + year);
 		book.put(Searchfields.edition, edition);
 		book.put(Searchfields.pages, pages);
 		// TODO add stock to book

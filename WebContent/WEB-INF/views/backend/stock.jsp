@@ -109,8 +109,59 @@
 						<label for="buecher-anlegen-publisher">Verleger:</label>
 						<input type="text" id="buecher-anlegen-publisher" name="publisher" placeholder="Verleger eingeben" required/>
 						
-						<label for="buecher-anlegen-date">Veröffentlichungsdatum:</label>
-						<input type="date" id="buecher-anlegen-date" name="date" required autocomplete/>
+						
+						<p>Veröffentlichungsdatum:</p>
+						<label for="buecher-anlegen-day">Tag:</label>
+						<select name="day" id="buecher-anlegen-day" required>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+							<option value="17">17</option>
+							<option value="18">18</option>
+							<option value="19">19</option>
+							<option value="20">20</option>
+							<option value="21">21</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="25">25</option>
+							<option value="26">26</option>
+							<option value="27">27</option>
+							<option value="28">28</option>
+							<option value="29">29</option>
+							<option value="30">30</option>
+							<option value="31">31</option>
+						</select>
+						<label for="buecher-anlegen-month">Monat:</label>
+						<select name="month" id="buecher-anlegen-month" required>
+							<option value="Januar">Januar</option>
+							<option value="Februar">Februar</option>
+							<option value="März">März</option>
+							<option value="April">April</option>
+							<option value="Mai">Mai</option>
+							<option value="Juni">Juni</option>
+							<option value="Juli">Juli</option>
+							<option value="August">August</option>
+							<option value="September">September</option>
+							<option value="Oktober">Oktober</option>
+							<option value="November">November</option>
+							<option value="Dezember">Dezember</option>
+						</select>
+						<label for="buecher-anlegen-year">Jahr:</label>
+						<input type="number" min="0" max="2222" id="buecher-anlegen-year" name="year" placeholder="Jahr eingeben" required/>
 						
 						<label for="buecher-anlegen-edition">Ausgabe:</label>
 						<input type="text" id="buecher-anlegen-edition" name="edition" placeholder="Ausgabe" required/>
