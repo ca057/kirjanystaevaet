@@ -177,7 +177,7 @@ public class BackendStockController {
 	@RequestMapping(value = "/backend/bestand/buecher/edit", method = RequestMethod.POST)
 	public String editBook() {
 		// TODO implement me
-		return "redirect:/backend/bestand?deleted";
+		return "redirect:/backend/bestand";
 	}
 
 	/**
@@ -185,8 +185,16 @@ public class BackendStockController {
 	 * @return
 	 */
 	@RequestMapping(value = "/backend/bestand/buecher/delete", method = RequestMethod.DELETE)
-	public String deleteBook() {
-		// TODO implement me
+	public String deleteBook(@RequestParam(value = "isbn") String isbn) {
+		if (isbn == null || isbn.isEmpty()) {
+			throw new IllegalArgumentException(
+					"The passed ISBN for the book to delete is either null or an empty string.");
+		}
+		try {
+			bookService.deleteBook(isbn);
+		} catch (DatabaseException e) {
+			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
+		}
 		return "redirect:/backend/bestand";
 	}
 }
