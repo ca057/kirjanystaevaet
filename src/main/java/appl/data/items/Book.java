@@ -218,8 +218,12 @@ public class Book {
 		this.visitingUsers = visitingUsers;
 	}
 	
-	public void decrementStock(){
-		stock--;
+	public void decrementStock(int decrement){
+		stock-= decrement;
+	}
+	public int addToStock(int add){
+		stock += add;
+		return stock;
 	}
 
 	@Override

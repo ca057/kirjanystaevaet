@@ -172,10 +172,10 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public void decrementStock(String isbn) throws DatabaseException {
+	public void decrementStock(String isbn, int decrement) throws DatabaseException {
 		Book book = (Book) getSession().get(Book.class, isbn);
 		if (book.getStock()>0){
-			book.decrementStock();
+			book.decrementStock(decrement);
 			getSession().update(book);
 		} else {
 			throw new DatabaseException(ErrorMessageHelper.stockIsNull());

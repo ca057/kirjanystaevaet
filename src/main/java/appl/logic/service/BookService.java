@@ -103,6 +103,16 @@ public interface BookService {
 	//public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds)throws IsbnAlreadyExistsException ;
 	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) throws DatabaseException;
 	// Update
+	
+	// Update Stock
+	/**
+	 * 
+	 * @param isbn
+	 * @param additional
+	 * @return the new Stock
+	 * @throws DatabaseException
+	 */
+	public int updateStock(String isbn, int additional) throws DatabaseException;
 	// Delete
 	public void deleteBook(String isbn) throws DatabaseException;
 

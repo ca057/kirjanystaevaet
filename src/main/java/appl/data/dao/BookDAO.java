@@ -29,6 +29,6 @@ public interface BookDAO {
 
 	public List<Book> getAllBooks();
 	
-	public void decrementStock(String isbn) throws DatabaseException;
+	public void decrementStock(String isbn, int decrement) throws DatabaseException;
 
 }

@@ -524,6 +524,16 @@ public class BookServiceImpl implements BookService {
 		}
 
 	}
+	
+	@Override
+	public int updateStock(String isbn, int additional) throws DatabaseException {
+		Book book = bookDao.getBookByIsbn(isbn);
+		int newStock = book.addToStock(additional);
+		bookDao.updateBook(book);
+		return newStock;
+		
+		
+	}
 
 	@Override
 	public void deleteBook(String isbn) throws DatabaseException {
@@ -561,6 +571,8 @@ public class BookServiceImpl implements BookService {
 		}
 		return false;
 	}
+
+	
 
 	/*
 	 * @Override public void insertBook(Map<Searchfields, String> map, boolean
