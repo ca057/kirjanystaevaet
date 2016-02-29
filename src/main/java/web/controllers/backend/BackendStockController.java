@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.data.enums.Searchfields;
 import appl.logic.service.BookService;
-import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
 
 /**
@@ -69,8 +68,7 @@ public class BackendStockController {
 		try {
 			bookService.insertCategory(name);
 		} catch (DatabaseException e) {
-			// TODO test if its working
-			return "redirect:/backend/bestand?error";
+			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 		return "redirect:/backend/bestand";
 	}
@@ -102,9 +100,8 @@ public class BackendStockController {
 		// TODO implement me
 		try {
 			bookService.insertAuthor("", "", true);
-		} catch (AuthorMayExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (DatabaseException e) {
+			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 		return "redirect:/backend/bestand";
 	}
@@ -140,10 +137,9 @@ public class BackendStockController {
 				|| publisher == null || publisher.isEmpty() || date == null || date.isEmpty() || edition == null
 				|| edition.isEmpty() || pages == null || pages.isEmpty() || authors == null || authors.isEmpty()
 				|| stock == null || stock.isEmpty()) {
-			// TODO implement better error handling
 			// TODO check if pages, categories and authors only contains
 			// numerical values
-			return "redirect:/backend/bestand?error";
+			throw new IllegalArgumentException("One of the passed values for adding a book is null or empty.");
 		}
 		Map<Searchfields, String> book = new HashMap<Searchfields, String>();
 		book.put(Searchfields.title, title);
@@ -165,8 +161,7 @@ public class BackendStockController {
 		try {
 			bookService.insertBook(book, authorIds, categoryIds);
 		} catch (DatabaseException e) {
-			// TODO implement better error handling
-			return "redirect:/backend/bestand?error";
+			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 
 		return "redirect:/backend/bestand";

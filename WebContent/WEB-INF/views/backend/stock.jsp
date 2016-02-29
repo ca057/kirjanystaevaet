@@ -4,7 +4,16 @@
 
 <div id="stockmgmt">
 	<c:if test="${param.error != null}">
-	    <p><em>Fehler:</em> Bei der Abfrage der Daten ist ein Fehler mit der folgenden Fehlermeldung aufgetreten: &bdquo;<c:out value="${errormsg}"></c:out>&ldquo;</p>
+	    <p><em>Fehler:</em> Bei der Abfrage der Daten ist ein Fehler mit der folgenden Fehlermeldung aufgetreten:
+		    <c:choose>
+		    	<c:when test="${errormsg != null}">
+		    		&bdquo;<c:out value="${errormsg}"></c:out>&ldquo;
+		    	</c:when>
+		    	<c:when test="${param.msg != null}">
+		    		&bdquo;<c:out value="${param.msg}"></c:out>&ldquo;
+		    	</c:when>
+		    </c:choose>
+	    </p>
 	</c:if>
 
 	<h2>Bestandsverwaltung</h2>
