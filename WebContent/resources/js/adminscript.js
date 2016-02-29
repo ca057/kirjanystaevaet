@@ -69,7 +69,27 @@ const handle = function() {
 	
 	const stockManagement = function () {
 		console.info('STOCK IS MANAGED');
-		// TODO implement more here
+		$('#autorinnen-anlegen-submit').on('click', (e) => {
+			e.preventDefault();
+			const data = {
+				nameF: $('#autorinnen-anlegen-first').val().trim(),
+				nameL: $('#autorinnen-anlegen-last').val().trim(),
+				newAuthor: false
+			};
+			$('#autorinnen-anlegen.first').prop('disabled', true);
+			$('#autorinnen-anlegen-last').prop('disabled', true);
+			$('#autorinnen-anlegen-submit').prop('disabled', true);
+
+			const req = KY.request('/kirjanystaevaet/backend/bestand/autorinnen/add');
+			req.POST(data).done(() => {
+					console.log("author was added.");
+					$('#autorinnen-anlegen.first').val('').prop('disabled', true);
+					$('#autorinnen-anlegen-last').val('').prop('disabled', true);
+					$('#autorinnen-anlegen-submit').prop('disabled', true);
+				})
+				.fail((jqXHR, status, err) => {
+					console.log(jqXHR, status, err);
+				});
 	};
 		
 	return {

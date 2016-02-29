@@ -60,7 +60,7 @@ public class BackendUsersController {
 		returnWrapper.setPassword("");
 		try {
 			userService.createAccount(userMap);
-			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.OK);
+			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.CREATED);
 		} catch (DatabaseException e) {
 			System.err.println(e.getMessage());
 			return returnUnprocessableEntity(returnWrapper);
