@@ -2,11 +2,16 @@ package appl.data.builder;
 
 import org.springframework.stereotype.Component;
 
-import appl.data.builder.impl.UserBuilderImpl;
 import appl.data.enums.UserRoles;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 
+/**
+ * Builder to create a new object of the {@link User} class.
+ * 
+ * @author Johannes
+ *
+ */
 @Component
 public interface UserBuilder {
 
@@ -51,10 +56,5 @@ public interface UserBuilder {
 	public int getId();
 
 	public User createUser();
-
-	// TODO Ist das sinnvoll? Bisher noch nicht in Gebrauch.
-	public default UserBuilder getUserBuilder() {
-		return new UserBuilderImpl();
-	}
 
 }
