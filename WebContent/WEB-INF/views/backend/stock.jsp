@@ -51,15 +51,17 @@
 		<h3>Autor:innen verwalten</h3>
 		<p><em>Hinweis: Neu angelegte Autor:innen stehen erst nach einem neuen Laden der Seite zur Verfügung.</em></p>
 		<h4 id="autorinnen-anlegen">Neue:n Autor:in anlegen</h4>
-			<form action="bestand/autorinnen/add" method="POST">
-				<label for="autorinnen-anlegen-first">Vorname:</label>
-				<input id="autorinnen-anlegen-first" name="first" type="text" placeholder="Vorname" required />
-
-				<label for="autorinnen-anlegen-last">Nachname:</label>
-				<input id="autorinnen-anlegen-last" name="last" type="text" placeholder="Nachname" required />
-			
-				<button type="submit" id="autorinnen-anlegen-submit">Autor:in anlegen</button>
-				<sec:csrfInput/>
+			<form>
+				<fieldset>
+					<label for="autorinnen-anlegen-first">Vorname:</label>
+					<input id="autorinnen-anlegen-first" name="first" type="text" placeholder="Vorname" required />
+	
+					<label for="autorinnen-anlegen-last">Nachname:</label>
+					<input id="autorinnen-anlegen-last" name="last" type="text" placeholder="Nachname" required />
+				
+					<button type="submit" id="autorinnen-anlegen-submit">Autor:in anlegen</button>
+					<sec:csrfInput/>
+				</fieldset>
 			</form>
 		
 		<h4 id="autorinnen-loeschen">Bestehende:n Autor:in löschen</h4>

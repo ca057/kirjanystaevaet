@@ -76,20 +76,39 @@ const handle = function() {
 				nameL: $('#autorinnen-anlegen-last').val().trim(),
 				newAuthor: false
 			};
-			$('#autorinnen-anlegen.first').prop('disabled', true);
+
+			$('#autorinnen-anlegen-first').prop('disabled', true);
 			$('#autorinnen-anlegen-last').prop('disabled', true);
 			$('#autorinnen-anlegen-submit').prop('disabled', true);
-
-			const req = KY.request('/kirjanystaevaet/backend/bestand/autorinnen/add');
-			req.POST(data).done(() => {
-					console.log("author was added.");
-					$('#autorinnen-anlegen.first').val('').prop('disabled', true);
-					$('#autorinnen-anlegen-last').val('').prop('disabled', true);
-					$('#autorinnen-anlegen-submit').prop('disabled', true);
-				})
-				.fail((jqXHR, status, err) => {
-					console.log(jqXHR, status, err);
+			
+			KY.request('/kirjanystaevaet/backend/bestand/autorinnen/add').POST(data).done(() => {
+					console.log("AUTHOR IS CREATED.");
+					$('#autorinnen-anlegen-first').val('').prop('disabled', false);
+					$('#autorinnen-anlegen-last').val('').prop('disabled', false);
+					$('#autorinnen-anlegen-submit').prop('disabled', false);
+				}).fail((jqXHR, status, err) => {
+					console.log(jqXHR.status);
+					console.log(jqXHR.status === 409);
+					if (jqXHR.status === 409) {
+						if (confirm("Die Datenbank enthält möglicherweise schon eine:n " +
+								"Autor:in mit diesem Namen. Datensatz trotzdem einfügen? \n" +
+								"Vorname: " + data.nameF +"\n" +
+								"Nachme: " + data.nameL)) {
+							data.newAuthor = true;
+							KY.request('/kirjanystaevaet/backend/bestand/autorinnen/add').POST(data).done(() => {
+								console.log("AUTHOR IS CREATED.")
+							}).fail(() => {
+								alert("Ein:e Autor:in mit diesen Daten konnte nicht angelegt werden.")
+							});
+						}
+					} else {
+						alert("Ein unbekannter Fehler ist aufgetreten. Versuchen Sie das Anlegen des Datensatzes erneut.");
+					}
+					$('#autorinnen-anlegen-first').val('').prop('disabled', false);
+					$('#autorinnen-anlegen-last').val('').prop('disabled', false);
+					$('#autorinnen-anlegen-submit').prop('disabled', false);
 				});
+		});
 	};
 		
 	return {

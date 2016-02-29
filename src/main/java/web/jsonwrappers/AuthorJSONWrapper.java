@@ -5,6 +5,10 @@ public class AuthorJSONWrapper {
 	private String nameL;
 	private boolean newAuthor;
 
+	public AuthorJSONWrapper() {
+
+	}
+
 	public String getNameF() {
 		return nameF;
 	}

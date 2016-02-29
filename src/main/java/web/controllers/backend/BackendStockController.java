@@ -7,8 +7,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +20,7 @@ import appl.data.enums.Searchfields;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
+import web.jsonwrappers.AuthorJSONWrapper;
 
 /**
  * 
@@ -100,15 +104,17 @@ public class BackendStockController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/backend/bestand/autorinnen/add", method = RequestMethod.POST)
-	public String addAuthor() {
-		// TODO implement me
-		try {
-			bookService.insertAuthor("", "", true);
-		} catch (AuthorMayExistException e) {
-			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
+	@RequestMapping(value = "/backend/bestand/autorinnen/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	public ResponseEntity<AuthorJSONWrapper> addAuthor(@RequestBody final AuthorJSONWrapper req) {
+		if (req == null) {
+			return new ResponseEntity<AuthorJSONWrapper>(HttpStatus.BAD_REQUEST);
 		}
-		return "redirect:/backend/bestand";
+		try {
+			bookService.insertAuthor(req.getNameF(), req.getNameL(), req.isNewAuthor());
+		} catch (AuthorMayExistException e) {
+			return new ResponseEntity<AuthorJSONWrapper>(HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<AuthorJSONWrapper>(HttpStatus.OK);
 	}
 
 	/**
