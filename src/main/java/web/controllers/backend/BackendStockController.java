@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.data.enums.Searchfields;
 import appl.logic.service.BookService;
+import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
 
 /**
@@ -104,7 +105,7 @@ public class BackendStockController {
 		// TODO implement me
 		try {
 			bookService.insertAuthor("", "", true);
-		} catch (DatabaseException e) {
+		} catch (AuthorMayExistException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 		return "redirect:/backend/bestand";
@@ -115,8 +116,15 @@ public class BackendStockController {
 	 * @return
 	 */
 	@RequestMapping(value = "/backend/bestand/autorinnen/delete", method = RequestMethod.POST)
-	public String deleteAuthor() {
-		// TODO implement me
+	public String deleteAuthor(@RequestParam(value = "author") String id) {
+		if (id == null || id.isEmpty()) {
+			throw new IllegalArgumentException("The passed id of the author is null or empty.");
+		}
+		try {
+			bookService.deleteAuthor(Integer.parseInt(id));
+		} catch (NumberFormatException | DatabaseException e) {
+			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
+		}
 		return "redirect:/backend/bestand";
 	}
 

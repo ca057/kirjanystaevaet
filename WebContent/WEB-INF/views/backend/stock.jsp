@@ -55,14 +55,15 @@
 				<sec:csrfInput/>
 			</form>
 		
-		<h4 id="autorinnen-aendern">Bestehende:n Autor:in ändern</h4>
-			<form action="bestand/autorinnen/edit" method="POST">
-				<button type="submit">Autor:in ändern</button>
-				<sec:csrfInput/>
-			</form>
-					
 		<h4 id="autorinnen-loeschen">Bestehende:n Autor:in löschen</h4>
 			<form action="bestand/autorinnen/delete" method="POST">
+			<label for="autorinnen-loeschen-id">Autor:innen auswählen</label>
+				<select name="author" id="autorinnen-loeschen-id" multiple required>
+					<c:forEach var="author" items="${authors}">
+						<option value="${author.getAuthorId()}"><c:out value="${author.getAuthorId()}" />: <c:out value="${author.getNameF()}" /> <c:out value="${author.getNameL()}" /></option>
+					</c:forEach>
+				</select>
+			
 				<button type="submit">Autor:in löschen</button>
 				<sec:csrfInput/>
 			</form>
@@ -178,12 +179,6 @@
 				</c:choose>
 			</form>
 		
-		<h4 id="buecher-aendern">Bestehendes Buch ändern</h4>
-			<form action="bestand/buecher/edit" method="POST">
-				<button type="submit">Buch ändern</button>
-				<sec:csrfInput/>
-			</form>
-					
 		<h4 id="buecher-loeschen">Bestehendes Buch löschen</h4>
 			<c:choose>
 				<c:when test="${books.isEmpty()}">
