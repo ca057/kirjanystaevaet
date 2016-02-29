@@ -95,7 +95,7 @@ public class BookBuilderImpl implements BookBuilder {
 	@Override
 	public Book createBook() {
 		return new Book(this.isbn, this.title, this.description, this.price, this.publisher, this.pubdate, this.edition,
-				this.pages, this.categories, this.authors);
+				this.pages, this.stock, this.categories, this.authors);
 	}
 
 	
