@@ -124,7 +124,7 @@ public class BackendStockController {
 	 * @return
 	 */
 	@RequestMapping(value = "/backend/bestand/buecher/add", method = RequestMethod.POST)
-	public String addBook(@RequestParam(value = "categories", required = false) List<String> categories,
+	public String addBook(@RequestParam(value = "categories", required = true) List<String> categories,
 			@RequestParam(value = "title", required = true) String title,
 			@RequestParam(value = "isbn", required = true) String isbn,
 			@RequestParam(value = "description", required = true) String description,
@@ -133,11 +133,13 @@ public class BackendStockController {
 			@RequestParam(value = "date", required = true) String date,
 			@RequestParam(value = "edition", required = true) String edition,
 			@RequestParam(value = "pages", required = true) String pages,
+			@RequestParam(value = "stock", required = true) String stock,
 			@RequestParam(value = "authors", required = true) List<String> authors) {
-		if (title == null || title.isEmpty() || isbn == null || isbn.isEmpty() || description == null
-				|| description.isEmpty() || price == null || price.isEmpty() || publisher == null || publisher.isEmpty()
-				|| date == null || date.isEmpty() || edition == null || edition.isEmpty() || pages == null
-				|| pages.isEmpty() || authors == null || authors.isEmpty()) {
+		if (categories != null || !categories.isEmpty() || title == null || title.isEmpty() || isbn == null
+				|| isbn.isEmpty() || description == null || description.isEmpty() || price == null || price.isEmpty()
+				|| publisher == null || publisher.isEmpty() || date == null || date.isEmpty() || edition == null
+				|| edition.isEmpty() || pages == null || pages.isEmpty() || authors == null || authors.isEmpty()
+				|| stock == null || stock.isEmpty()) {
 			// TODO implement better error handling
 			// TODO check if pages, categories and authors only contains
 			// numerical values
@@ -152,14 +154,13 @@ public class BackendStockController {
 		book.put(Searchfields.pubdate, date);
 		book.put(Searchfields.edition, edition);
 		book.put(Searchfields.pages, pages);
+		// TODO add stock to book
 
 		Set<Integer> authorIds = new HashSet<Integer>(1);
 		authors.stream().forEach(id -> authorIds.add(Integer.parseInt(id)));
 
 		Set<Integer> categoryIds = new HashSet<Integer>(1);
-		if (categories != null && !categories.isEmpty()) {
-			categories.stream().forEach(id -> categoryIds.add(Integer.parseInt(id)));
-		}
+		categories.stream().forEach(id -> categoryIds.add(Integer.parseInt(id)));
 
 		try {
 			bookService.insertBook(book, authorIds, categoryIds);

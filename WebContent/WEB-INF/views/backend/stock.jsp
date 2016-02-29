@@ -83,12 +83,19 @@
 	
 						<label for="buecher-anlegen-title">Titel:</label>
 						<input type="text" id="buecher-anlegen-title" name="title" placeholder="Titel eingeben" required/>
+			
+						<label for="buecher-anlegen-authors">Autor:innen auswählen</label>
+						<select name="authors" id="buecher-anlegen-authors" multiple required>
+							<c:forEach var="author" items="${authors}">
+								<option value="${author.getAuthorId()}"><c:out value="${author.getAuthorId()}" />: <c:out value="${author.getNameF()}" /> <c:out value="${author.getNameL()}" /></option>
+							</c:forEach>
+						</select>
 						
 						<label for="buecher-anlegen-description">Beschreibung:</label>
-						<textarea rows="10" cols="50" maxlength="1024" name="description" id="buecher-anlegen-description" required></textarea>
+						<textarea rows="10" cols="50" maxlength="4096" name="description" id="buecher-anlegen-description" required></textarea>
 						
 						<label for="buecher-anlegen-price">Preis:</label>
-						<input type="number" min="0" id="buecher-anlegen-price" name="price" placeholder="Preis eingeben" required/>
+						<input type="text" id="buecher-anlegen-price" name="price" placeholder="Preis eingeben" required/>
 						
 						<label for="buecher-anlegen-publisher">Verleger:</label>
 						<input type="text" id="buecher-anlegen-publisher" name="publisher" placeholder="Verleger eingeben" required/>
@@ -101,13 +108,9 @@
 	
 						<label for="buecher-anlegen-pages">Seitenzahl:</label>
 						<input type="number" min="0" id="buecher-anlegen-pages" name="pages" placeholder="Seitenzahl eingeben" required/>
-			
-						<label for="buecher-anlegen-authors">Autor:innen auswählen</label>
-						<select name="authors" id="buecher-anlegen-authors" multiple required>
-							<c:forEach var="author" items="${authors}">
-								<option value="${author.getAuthorId()}"><c:out value="${author.getAuthorId()}" />: <c:out value="${author.getNameF()}" /> <c:out value="${author.getNameL()}" /></option>
-							</c:forEach>
-						</select>
+						
+						<label for="buecher-anlegen-stock">Bestand:</label>
+						<input type="number" min="0" id="buecher-anlegen-stock" name="stock" placeholder="Bestand eingeben" required/>
 
 						<button type="submit">Buch anlegen</button>
 						<sec:csrfInput/>
