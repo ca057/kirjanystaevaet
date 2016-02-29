@@ -46,6 +46,7 @@ public class Book {
 	private String pubdate;
 	private String edition;
 	private String pages;
+	private int stock;
 
 	private Set<Category> categories = new HashSet<Category>(0);
 	private Set<Author> authors = new HashSet<Author>(0);
@@ -125,6 +126,10 @@ public class Book {
 	public String getPages() {
 		return pages;
 	}
+	@Column(name = "stock", nullable = true, length = 8)
+	public int getStock() {
+		return stock;
+	}
 
 	//@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@ManyToMany(fetch = FetchType.LAZY)// Wenn das letzte Buch einer Kategorie gelöscht wird, wird die Kategorie nicht gelöscht
@@ -187,6 +192,9 @@ public class Book {
 
 	public void setPages(String pages) {
 		this.pages = pages;
+	}
+	public void setStock(int stock){
+		this.stock = stock;
 	}
 
 	public void setCategories(Set<Category> categories) {
