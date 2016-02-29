@@ -191,7 +191,7 @@ public class User {
 		return image;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	//public Set<Order> getOrders() {
 		public Set<Orderx> getOrders() {
 

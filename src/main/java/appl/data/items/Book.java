@@ -127,7 +127,7 @@ public class Book {
 	public String getPages() {
 		return pages;
 	}
-	@Column(name = "stock", nullable = true, length = 8)
+	@Column(name = "stock", nullable = false, length = 8)
 	public int getStock() {
 		return stock;
 	}
@@ -235,7 +235,7 @@ public class Book {
 		 */
 		return "Book [isbn=" + isbn + ", title=" + title + ", description=" + description + ", price=" + price
 				+ ", publisher=" + publisher + ", pubdate=" + pubdate + ", edition=" + edition + ", pages=" + pages
-				+ ", category= " + categoryString + "]";
+				+ ", category= " + categoryString + ", stock=" + stock + "]";
 	}
 
 }
