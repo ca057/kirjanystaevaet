@@ -77,17 +77,18 @@ public class BackendStockController {
 	 * Deletes the passed category as request parameters and returns a redirect
 	 * to the basic stock management url. POST request is needed.
 	 * 
-	 * @param name
+	 * @param id
 	 *            the name as {@code String} of the category to delete
 	 * @return the name of the backend view
 	 */
 	@RequestMapping(value = "/backend/bestand/kategorien/delete", method = RequestMethod.POST)
-	public String deleteCategory(@RequestParam(value = "name") String name) {
-		if (name == null || name.isEmpty()) {
-			throw new IllegalArgumentException("The passed name of the category is null and can not be deleted.");
+	public String deleteCategory(@RequestParam(value = "id") String id) {
+		if (id == null || id.isEmpty()) {
+			throw new IllegalArgumentException(
+					"The passed id of the category is null or empty and can not be deleted.");
 		}
 		try {
-			bookService.deleteCategory(name);
+			bookService.deleteCategory(bookService.getCategoryById(Integer.parseInt(id)).getCategoryName());
 		} catch (DatabaseException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}

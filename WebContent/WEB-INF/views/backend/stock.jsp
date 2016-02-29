@@ -35,7 +35,7 @@
 					</c:when>
 					<c:otherwise>
 						<label for="kategorien-loeschen-input">Name der Kategorie:</label>
-						<select name="name" id="kategorien-loeschen-input" required>
+						<select name="id" id="kategorien-loeschen-input" required>
 							<c:forEach var="category" items="${categories}">
 								<option value="${category.getCategoryID()}"><c:out value="${category.getCategoryID()}" />: <c:out value="${category.getCategoryName()}" /></option>
 							</c:forEach>			
