@@ -102,6 +102,7 @@ public class OrderServiceImpl implements OrderService{
 			int orderId = orderDao.insertOrder(order);
 			return orderId;
 		} catch (HibernateException e){
+			e.printStackTrace();
 				throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}

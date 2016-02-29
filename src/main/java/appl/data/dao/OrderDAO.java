@@ -14,6 +14,8 @@ public interface OrderDAO {
 	public List<Orderx> getOrdersByUserId(int userId);
 	
 	public List<Orderx> getAllOrders();
+	
+	public Orderx getOrderByOrderId(int id) throws DatabaseException;
 
 	//public void updateOrder(); // TODO Wie sieht Signatur genau aus?
 

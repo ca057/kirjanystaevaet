@@ -16,6 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import appl.data.enums.Searchfields;
+import appl.data.items.ArchiveBook;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
@@ -204,11 +205,12 @@ public class QueryFun {
 		for (Book b : bookList) {
 			System.out.println(b.toString());
 		}
-		List<Category> categoryList = service.getAllCategories();
+		/*List<Category> categoryList = service.getAllCategories();
 		System.out.println("\n\nCategories after insert2");
 		for (Category cat : categoryList) {
 			System.out.println(cat.getCategoryName());
 		}
+		*/
 
 		/*
 
@@ -259,16 +261,24 @@ public class QueryFun {
 		
 		User user = userService.findByID(2).get();
 		List<Book> books = dataService.getAllBooks();
-		for (Book b : books){
+		/*for (Book b : books){
 			System.out.println(b.toString());
-		}
+		}*/
 		//Book book = dataService.getBookByIsbn("9101010101");
 		Set<String> isbns = new HashSet<String>();
 		isbns.add("9101010101");
 		Calendar cal = Calendar.getInstance();
 		int orderId = orderService.createOrder(isbns, user.getUserId(), cal);
 		System.out.println("OrderId " + orderId + " ");
-		
+		Set<Orderx> ordersOfThisUser = user.getOrders();
+		System.out.println("\nOrder of this User amunt \n" + ordersOfThisUser.size());
+		for (Orderx o : ordersOfThisUser){
+			Set<ArchiveBook> items = o.getOrderItems();
+			System.out.println("Größe der Bestellung" + o.getOrderItems().size());
+			for (ArchiveBook a : items){
+				System.out.println("Title " + a.getBook().getTitle() + "Stock " + a.getBook().getStock());
+			}
+		}	
 		
 		// Zweite Order
 		Set<String> isbns2 = new HashSet<String>();
