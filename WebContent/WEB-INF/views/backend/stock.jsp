@@ -81,7 +81,7 @@
 					</c:when>		
 					<c:otherwise>
 						<label for="buecher-anlegen-category">Kategorien auswählen:</label>
-						<select name="categories" id="buecher-anlegen-category" multiple>
+						<select name="categories" id="buecher-anlegen-category" multiple required>
 							<c:forEach var="category" items="${categories}">
 								<option value="${category.getCategoryID()}"><c:out value="${category.getCategoryID()}" />: <c:out value="${category.getCategoryName()}" /></option>
 							</c:forEach>

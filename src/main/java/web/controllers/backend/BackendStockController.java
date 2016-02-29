@@ -137,7 +137,7 @@ public class BackendStockController {
 			@RequestParam(value = "pages", required = true) String pages,
 			@RequestParam(value = "stock", required = true) String stock,
 			@RequestParam(value = "authors", required = true) List<String> authors) {
-		if (categories != null || !categories.isEmpty() || title == null || title.isEmpty() || isbn == null
+		if (categories == null || categories.isEmpty() || title == null || title.isEmpty() || isbn == null
 				|| isbn.isEmpty() || description == null || description.isEmpty() || price == null || price.isEmpty()
 				|| publisher == null || publisher.isEmpty() || day == null || day.isEmpty() || month == null
 				|| month.isEmpty() || year == null || year.isEmpty() || edition == null || edition.isEmpty()
