@@ -75,13 +75,13 @@ public class BackendStockController {
 
 	/**
 	 * Deletes the passed category as request parameters and returns a redirect
-	 * to the basic stock management url. DELETE request is needed.
+	 * to the basic stock management url. POST request is needed.
 	 * 
 	 * @param name
 	 *            the name as {@code String} of the category to delete
 	 * @return the name of the backend view
 	 */
-	@RequestMapping(value = "/backend/bestand/kategorien/delete", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/backend/bestand/kategorien/delete", method = RequestMethod.POST)
 	public String deleteCategory(@RequestParam(value = "name") String name) {
 		if (name == null || name.isEmpty()) {
 			throw new IllegalArgumentException("The passed name of the category is null and can not be deleted.");
@@ -113,7 +113,7 @@ public class BackendStockController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/backend/bestand/autorinnen/delete", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/backend/bestand/autorinnen/delete", method = RequestMethod.POST)
 	public String deleteAuthor() {
 		// TODO implement me
 		return "redirect:/backend/bestand";
@@ -184,7 +184,7 @@ public class BackendStockController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/backend/bestand/buecher/delete", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/backend/bestand/buecher/delete", method = RequestMethod.POST)
 	public String deleteBook(@RequestParam(value = "isbn") String isbn) {
 		if (isbn == null || isbn.isEmpty()) {
 			throw new IllegalArgumentException(

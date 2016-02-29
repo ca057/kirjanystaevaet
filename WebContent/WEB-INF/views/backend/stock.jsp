@@ -28,7 +28,7 @@
 			</form>
 
 		<h4 id="kategorien-loeschen">Bestehende Kategorien löschen</h4>
-			<form action="bestand/kategorien/delete" method="DELETE">
+			<form action="bestand/kategorien/delete" method="POST">
 				<c:choose>
 					<c:when test="${categories.isEmpty()}">
 						<p>Noch keine Kategorien in der Datenbank vorhanden.</p>
@@ -62,7 +62,7 @@
 			</form>
 					
 		<h4 id="autorinnen-loeschen">Bestehende:n Autor:in löschen</h4>
-			<form action="bestand/autorinnen/delete" method="DELETE">
+			<form action="bestand/autorinnen/delete" method="POST">
 				<button type="submit">Autor:in löschen</button>
 				<sec:csrfInput/>
 			</form>
@@ -139,7 +139,7 @@
 					<p>Noch keine Bücher in der Datenbank vorhanden.</p>
 				</c:when>
 				<c:otherwise>
-					<form action="bestand/buecher/delete" method="DELETE">
+					<form action="bestand/buecher/delete" method="POST">
 						<label for="buecher-loeschen-isbn"></label>
 						<select name="isbn" id=buecher-loeschen-isbn required>
 							<c:forEach var="book" items="${books}">
