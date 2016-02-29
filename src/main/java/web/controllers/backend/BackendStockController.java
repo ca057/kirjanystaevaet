@@ -83,11 +83,14 @@ public class BackendStockController {
 	 */
 	@RequestMapping(value = "/backend/bestand/kategorien/delete", method = RequestMethod.DELETE)
 	public String deleteCategory(@RequestParam(value = "name") String name) {
-		if (name == null) {
+		if (name == null || name.isEmpty()) {
 			throw new IllegalArgumentException("The passed name of the category is null and can not be deleted.");
 		}
-		// TODO handle empty string
-		// TODO delete category
+		try {
+			bookService.deleteCategory(name);
+		} catch (DatabaseException e) {
+			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
+		}
 		return "redirect:/backend/bestand";
 	}
 
