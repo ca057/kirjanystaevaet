@@ -170,6 +170,7 @@ public class QueryFun {
 			bookMap2.put(Searchfields.price, "34.56");
 			bookMap2.put(Searchfields.isbn, "9101010101");
 			bookMap2.put(Searchfields.pages, "1234");
+			bookMap2.put(Searchfields.stock, "8");
 			Category category = service.getCategoryByExactName("Children's Fantasy");
 			try {
 

@@ -487,6 +487,14 @@ public class BookServiceImpl implements BookService {
 				throw new IllegalArgumentException(ErrorMessageHelper.mayContainOnlyNumbers("Pages"));
 			}
 		}
+		
+		int stock = 0;
+		if (map.get(Searchfields.stock) != null){
+			if(!containsOnlyNumbers(map.get(Searchfields.stock))){
+				throw new IllegalArgumentException(ErrorMessageHelper.mayContainOnlyNumbers("Stock"));
+			}
+			stock = Integer.parseInt(map.get(Searchfields.stock));
+		}
 
 		BookBuilder bb = builderFactory.getBookBuilder();
 		double price = Double.parseDouble(map.get(Searchfields.price));
@@ -513,7 +521,8 @@ public class BookServiceImpl implements BookService {
 				.setDescription(map.get(Searchfields.description)).setPrice(price)
 				.setPublisher(map.get(Searchfields.publisher)).setPubdate(map.get(Searchfields.pubdate))
 				.setEdition(map.get(Searchfields.edition)).setPages(map.get(Searchfields.pages))
-				.setCategories(categories).createBook();
+				.setCategories(categories)
+				.setStock(stock).createBook();
 
 		try {
 			bookDao.insertBook(newBook);
