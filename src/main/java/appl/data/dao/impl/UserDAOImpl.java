@@ -100,16 +100,14 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean updateUser(int userId, User updatedUser) throws DatabaseException {
-		User user = getUserByUniqueField(Userfields.userId, String.valueOf(userId))
-				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
+	public boolean updateUser(User updatedUser) throws DatabaseException {
 		try {
-			// TODO Funktioniert das so?
-			user = (User) getSession().merge(updatedUser);
+			System.out.println("Neues Passwort: " + updatedUser.getPassword());
+			getSession().update(updatedUser);
 			return true;
 		} catch (HibernateException e) {
 			throw new DatabaseException(
-					ErrorMessageHelper.updateError("User", String.valueOf(user.getUserId()), e.getMessage()));
+					ErrorMessageHelper.updateError("User", String.valueOf(updatedUser.getUserId()), e.getMessage()));
 		}
 	}
 

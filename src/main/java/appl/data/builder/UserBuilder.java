@@ -2,11 +2,16 @@ package appl.data.builder;
 
 import org.springframework.stereotype.Component;
 
-import appl.data.builder.impl.UserBuilderImpl;
 import appl.data.enums.UserRoles;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 
+/**
+ * Builder to create a new object of the {@link User} class.
+ * 
+ * @author Johannes
+ *
+ */
 @Component
 public interface UserBuilder {
 
@@ -26,11 +31,30 @@ public interface UserBuilder {
 
 	public UserBuilder setPLZ(PLZ plz);
 
-	public User createUser();
+	public UserBuilder setImage(byte[] image);
 
-	// TODO Ist das sinnvoll? Bisher noch nicht in Gebrauch.
-	public default UserBuilder getUserBuilder() {
-		return new UserBuilderImpl();
-	}
+	public UserBuilder setId(int id);
+
+	public UserRoles getRole();
+
+	public String getPassword();
+
+	public String getName();
+
+	public String getSurname();
+
+	public String getEmail();
+
+	public String getStreet();
+
+	public String getStreetnumber();
+
+	public PLZ getPlz();
+
+	public byte[] getImage();
+
+	public int getId();
+
+	public User createUser();
 
 }

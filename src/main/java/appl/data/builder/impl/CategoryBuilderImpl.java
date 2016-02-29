@@ -17,7 +17,7 @@ public class CategoryBuilderImpl implements CategoryBuilder{
 	}
 
 	@Override
-	public Category createCatgory() {
+	public Category createCategory() {
 		return new Category(this.categoryName);
 	}
 

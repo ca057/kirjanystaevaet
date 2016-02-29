@@ -1,6 +1,5 @@
 package appl.data.items;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,13 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import appl.data.builder.UserBuilder;
-import exceptions.data.ErrorMessageHelper;
 
 /**
  * This class represents users of any kind (for example user as well as
@@ -60,6 +59,7 @@ public class User {
 	private String role;
 	private Set<Orderx> orders;
 	private Set<Book> lastBooks;
+	private byte[] image;
 
 	private User() {
 	}
@@ -87,6 +87,8 @@ public class User {
 	 *            the post code as object
 	 * @param role
 	 *            the role of the person
+	 * @param image
+	 *            the image of the user as {@code byte[]}
 	 * @param orders
 	 *            orders made by the person
 	 * 
@@ -94,7 +96,13 @@ public class User {
 	 * @see {@link PLZ}
 	 */
 	public User(String password, String name, String surname, String email, String street, String streetnumber, PLZ plz,
-			String role, HashSet<Orderx> orders) {
+//<<<<<<< HEAD
+//			String role, HashSet<Orderx> orders) {
+//=======
+			//String role, byte[] image, Set<Order> orders) {
+		String role, byte[] image, Set<Orderx> orders) {
+	
+//>>>>>>> refs/remotes/origin/master
 		setPassword(password);
 		setName(surname);
 		setSurname(surname);
@@ -103,6 +111,25 @@ public class User {
 		setStreetnumber(streetnumber);
 		setPlz(plz);
 		setRole(role);
+		setImage(image);
+		setOrders(orders);
+	}
+
+	//public User(int id, String password, String name, String surname, String email, String street, String streetnumber,
+	//		PLZ plz, String role, byte[] image, Set<Order> orders) {
+		public User(int id, String password, String name, String surname, String email, String street, String streetnumber,
+				PLZ plz, String role, byte[] image, Set<Orderx> orders) {
+	
+		setUserId(id);
+		setPassword(password);
+		setName(surname);
+		setSurname(surname);
+		setEmail(email);
+		setStreet(street);
+		setStreetnumber(streetnumber);
+		setPlz(plz);
+		setRole(role);
+		setImage(image);
 		setOrders(orders);
 	}
 
@@ -154,8 +181,21 @@ public class User {
 		return plz;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-	public Set<Orderx> getOrders() {
+//<<<<<<< HEAD
+//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+//	public Set<Orderx> getOrders() {
+//=======
+	@Lob
+	@Column(name = "image", nullable = true)
+	public byte[] getImage() {
+		return image;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	//public Set<Order> getOrders() {
+		public Set<Orderx> getOrders() {
+
+//>>>>>>> refs/remotes/origin/master
 		return this.orders;
 	}
 
@@ -163,6 +203,10 @@ public class User {
 	@JoinTable(name = "userbooks", schema = "public", joinColumns = @JoinColumn(name = "userId") , inverseJoinColumns = @JoinColumn(name = "isbn") )
 	public Set<Book> getLastBooks() {
 		return lastBooks;
+	}
+
+	private void setUserId(int id) {
+		this.userId = id;
 	}
 
 	private void setStreet(String street) {
@@ -178,46 +222,33 @@ public class User {
 	}
 
 	private void setPassword(String password) {
-		if (password == null) {
-			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("Password"));
-		}
 		this.password = password;
 	}
 
 	private void setName(String name) {
-		if (name == null) {
-			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("First Name"));
-		}
 		this.name = name;
 	}
 
 	private void setSurname(String surname) {
-		if (surname == null) {
-			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("Surname"));
-		}
 		this.surname = surname;
 	}
 
 	private void setEmail(String email) {
-		if (email == null) {
-			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("E-Mail"));
-		}
 		this.email = email;
 	}
 
+	private void setImage(byte[] image) {
+		this.image = image;
+	}
+
 	private void setRole(String role) {
-		if (role == null) {
-			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("UserRole"));
+		if (role != null) {
+			this.role = role.toString();
 		}
-		this.role = role.toString();
 	}
 
 	private void setOrders(Set<Orderx> orders) {
 		this.orders = orders;
-	}
-
-	private void setUserId(int id) {
-		this.userId = id;
 	}
 
 	private void setLastBooks(Set<Book> lastBooks) {
@@ -228,7 +259,7 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", surname=" + surname
 				+ ", email=" + email + ", street=" + street + ", streetnumber=" + streetnumber + ", plz=" + plz
-				+ ", role=" + role + "]";
+				+ ", role=" + role + " image=" + (this.image != null) + "]";
 	}
 
 }

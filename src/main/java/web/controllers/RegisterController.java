@@ -17,7 +17,7 @@ import appl.data.enums.Userfields;
 import appl.data.items.User;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
-import web.jsonwrappers.UserRegisterWrapper;
+import web.jsonwrappers.UserJSONWrapper;
 
 @Controller
 @RequestMapping(path = "/registrierung")
@@ -43,7 +43,7 @@ public class RegisterController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-	public ResponseEntity<UserRegisterWrapper> add(@RequestBody final UserRegisterWrapper req) {
+	public ResponseEntity<UserJSONWrapper> add(@RequestBody final UserJSONWrapper req) {
 		System.out.println(req.getName());
 		Map<Userfields, String> userMap = new HashMap<Userfields, String>();
 		userMap.put(Userfields.email, req.getEmail());
@@ -55,7 +55,7 @@ public class RegisterController {
 		userMap.put(Userfields.street, req.getStreet());
 		userMap.put(Userfields.streetnumber, req.getStreetnumber());
 
-		UserRegisterWrapper returnWrapper = req;
+		UserJSONWrapper returnWrapper = req;
 		req.setPassword("");
 
 		try {
@@ -68,10 +68,10 @@ public class RegisterController {
 			// UsernamePasswordAuthenticationToken(user.getEmail(),
 			// user.getPassword()));
 
-			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.OK);
+			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.OK);
 		} catch (DatabaseException e) {
 			// } catch (PrimaryKeyViolationException e) {
-			return new ResponseEntity<UserRegisterWrapper>(returnWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
+			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}
 }

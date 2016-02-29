@@ -97,12 +97,18 @@ public class RootConfig {
 		prop.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
 		// TODO Autoserver (automatic mixed mode)
 		prop.setProperty("hibernate.connection.url", "jdbc:h2:./database/kirjanystaevaet;AUTO_SERVER=TRUE");
-		prop.setProperty("hibernate.c3p0.idle_test_period", "30");
+		// prop.setProperty("hibernate.c3p0.idle_test_period", "30");
+		prop.setProperty("hibernate.c3p0.testConnectionOnCheckout", "true");
 		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 		prop.setProperty("hibernate.current_session_context_class",
 				"org.springframework.orm.hibernate5.SpringSessionContext");
 		prop.setProperty("show_sql", "true");
 		return prop;
 	}
+
+	// @Bean
+	// public PasswordEncoder encoder() {
+	// return new BCryptPasswordEncoder(11);
+	// }
 
 }

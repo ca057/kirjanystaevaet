@@ -11,9 +11,12 @@ import exceptions.data.PrimaryKeyViolationException;
 
 public class Main {
 
+
 	public static void main(String[] args) throws PrimaryKeyViolationException, CategoryExistsException, DatabaseException {
 		//ApplicationContext ctx = new AnnotationConfigApplicationContext(RootConfig.class);
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(RootConfig.class, SecurityConfig.class);
+
+	
 		// new QueryFun().doSomeTesting2(ctx);
 		// new QueryFun().doSomeTesting(sessionFactory);
 		// FIXME DB auch bei Serverbetrieb anlegen!
@@ -22,12 +25,13 @@ public class Main {
 		// new QueryFun().jdbcStuff(jdbc);
 
 		// OrderTesting
-		//new QueryFun().doSomeOrderTesting(ctx);
-		
-		//new QueryFun().testDao(ctx);
-		//new QueryFun().testBookInsert(ctx);
-		//new QueryFun().testExceptions(ctx);
+		// new QueryFun().doSomeOrderTesting(ctx);
+
+		// new QueryFun().testDao(ctx);
+		// new QueryFun().testBookInsert(ctx);
+		// new QueryFun().testExceptions(ctx);
 		QueryFun qf = new QueryFun();
+
 		//qf.testCategoryInsert(ctx);
 		//qf.testCategoryDelete(ctx);
 		
@@ -37,6 +41,10 @@ public class Main {
 		qf.testInsertBook(ctx);
 		//qf.testDeleteBook(ctx);
 		qf.testInsertOrder(ctx);
+
+		qf.testUser(ctx);
+
+
 	}
 
 }
