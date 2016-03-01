@@ -52,9 +52,12 @@ public class OrderServiceImpl implements OrderService{
 		}
 			
 		// Das ArchivSet, dass in der Order gespeichert wird
-		Set<OrderItem> archiveItemsOfOrder = new HashSet<OrderItem>();
+		Set<OrderItem> orderItems = new HashSet<OrderItem>();
 		// Archiv erstellen
 		for (Book b : books){
+			
+			// One-To-Many Relationship: Einfach ein neues orderItem erstellen
+			
 			// ArchiveItems herholen
 			Set<OrderItem> archiveItemsOfThisBook = b.getArchiveItems();
 			// Falls noch keines existiert, muss auf jeden Fall ein neues erstellt werden
@@ -70,7 +73,7 @@ public class OrderServiceImpl implements OrderService{
 				}catch(HibernateException e){
 					throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 				}
-				archiveItemsOfOrder.add(newArchiveItem);
+				orderItems.add(newArchiveItem);
 			}
 			System.out.println("\nGot archive Items for book with title " + b.getTitle() + " its size is " + archiveItemsOfThisBook.size() + "\n\n");
 			// Preis überprüfen
@@ -81,7 +84,7 @@ public class OrderServiceImpl implements OrderService{
 					try {
 						bookDao.updateBook(b);
 						System.out.println("\n updated Book\n");
-						archiveItemsOfOrder.add(a); // Auch dem Archive Set für die aktuelle Order hinzufügen
+						orderItems.add(a); // Auch dem Archive Set für die aktuelle Order hinzufügen
 					} catch (HibernateException e){
 						throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 					}
@@ -91,14 +94,14 @@ public class OrderServiceImpl implements OrderService{
 					//neues ArchiveItem erstellen
 					OrderItem newArchiveItem = new OrderItem(b, b.getPrice());
 					// TODO Testen, ob hier ArchiveItem schon persistiert werden muss
-					archiveItemsOfOrder.add(newArchiveItem);
+					orderItems.add(newArchiveItem);
 				}
 			}
 			
 		}
 		// Order anlegen und speichern, mit User verknüpfen
 		User user = userService.findByID(userId).get();
-		Orderx order = new Orderx(archiveItemsOfOrder, user, cal);
+		Orderx order = new Orderx(orderItems, user, cal);
 		//Orderx order = new Orderx(archiveItemsOfOrder, cal);
 		//user.addOrder(order);
 		try{ 

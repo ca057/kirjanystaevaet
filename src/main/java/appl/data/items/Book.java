@@ -52,7 +52,7 @@ public class Book {
 	private Set<Author> authors = new HashSet<Author>(0);
 	// TODO In Javadoc erwähnen.
 	// private Set<Order> orders = new HashSet<Order>(0);
-	private Set<OrderItem> archiveItems = new HashSet<OrderItem>(0);
+	private Set<OrderItem> orderItems = new HashSet<OrderItem>(0);
 	private Set<User> visitingUsers = new HashSet<User>(0);
 
 	public Book() {
@@ -147,7 +147,7 @@ public class Book {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
 	public Set<OrderItem> getArchiveItems() {
-		return archiveItems;
+		return orderItems;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -211,7 +211,7 @@ public class Book {
 	}
 
 	public void setArchiveItems(Set<OrderItem> archiveItems) {
-		this.archiveItems = archiveItems;
+		this.orderItems = archiveItems;
 	}
 
 	private void setVisitingUsers(Set<User> visitingUsers) {
