@@ -20,6 +20,7 @@ import javax.persistence.UniqueConstraint;
 public class OrderItem {
 	private int archiveItemId;
 	double price;
+	int numberOf;
 	Book book;
 	Set<Orderx> orders;
 	
@@ -31,9 +32,10 @@ public class OrderItem {
 	 * @param book
 	 * @param price
 	 */
-	public OrderItem(Book book, double price){
+	public OrderItem(Book book, double price, int numberOf){
 		this.book = book;
 		this.price = price;
+		this.numberOf = numberOf;
 	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -44,6 +46,10 @@ public class OrderItem {
 	@Column(name = "price", nullable = false)
 	public double getPrice(){
 		return price;
+	}
+	@Column(name = "numberOf", nullable=false)
+	public int getNumberOf(){
+		return numberOf;
 	}
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -69,5 +75,8 @@ public class OrderItem {
 	}
 	private void setOrders(Set<Orderx> orders){
 		this.orders = orders;
+	}
+	private void setNumberOf(int numberOf){
+		this.numberOf = numberOf;
 	}
 }
