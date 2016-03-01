@@ -64,6 +64,7 @@ public class CartController {
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.POST)
 	public String addToCart(@RequestParam(value = "isbn") String isbn) {
 		System.out.println(isbn);
+		System.out.println("User in Cart: " + getUser());
 		if (isbn != null && !isbn.isEmpty()) {
 			try {
 				cart.addBook(bookService.getBookByIsbn(isbn));
