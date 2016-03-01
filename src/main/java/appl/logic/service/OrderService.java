@@ -10,12 +10,13 @@ import exceptions.data.DatabaseException;
 
 public interface OrderService {
 	
+
 	/**
 	 * 
-	 * @param isbns
+	 * @param isbnsNumberOf isbn as key, the number of odered books as value
 	 * @param userId
-	 * @param cal
-	 * @return The generated orderId
+	 * @param cal the date
+	 * @return
 	 * @throws DatabaseException
 	 */
 
