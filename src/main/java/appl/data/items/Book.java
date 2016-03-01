@@ -54,7 +54,8 @@ public class Book {
 	// TODO In Javadoc erwähnen.
 	// private Set<Order> orders = new HashSet<Order>(0);
 	private Set<OrderItem> archiveItems = new HashSet<OrderItem>(0);
-	private Set<User> visitingUsers = new HashSet<User>(0);
+	// private Set<UserBookStatistic> userBookStatistics = new
+	// HashSet<UserBookStatistic>(0);
 
 	public Book() {
 	}
@@ -134,7 +135,7 @@ public class Book {
 		return stock;
 	}
 
-	@Column(name = "visitCount", nullable = true)
+	@Column(name = "visitCount", nullable = false, length = 8, columnDefinition = "int default 0")
 	public int getVisitCount() {
 		return visitCount;
 	}
@@ -159,11 +160,11 @@ public class Book {
 		return archiveItems;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "userbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "userId") )
-	public Set<User> getVisitingUsers() {
-		return visitingUsers;
-	}
+	// @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy =
+	// "book")
+	// public Set<UserBookStatistic> getUserBookStatistics() {
+	// return userBookStatistics;
+	// }
 	/*
 	 * @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	 * 
@@ -228,9 +229,9 @@ public class Book {
 		this.archiveItems = archiveItems;
 	}
 
-	private void setVisitingUsers(Set<User> visitingUsers) {
-		this.visitingUsers = visitingUsers;
-	}
+	// private void setVisitingUsers(Set<UserBookStatistic> visitingUsers) {
+	// this.userBookStatistics = visitingUsers;
+	// }
 
 	public void decrementStock(int decrement) {
 		stock -= decrement;
