@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,11 +15,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.data.items.Book;
 import appl.data.items.Cart;
+import appl.data.items.User;
 import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
 
 @Controller
 public class CartController {
+
+	public static User getUser() {
+		Authentication a = SecurityContextHolder.getContext().getAuthentication();
+		if (a == null) {
+			return null;
+		} else {
+			return (User) a.getPrincipal();
+		}
+	}
+
+	User user;
+
+	public void setCurrentUser(User user) {
+		this.user = user;
+	}
+
 	// private User user = (User)
 	// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -78,18 +97,16 @@ public class CartController {
 
 	@RequestMapping(value = "/bestellen", method = RequestMethod.POST)
 	public String orderContent() {
-		// if (user.getStreet() != null && user.getStreetnumber() != null &&
-		// user.getPlz() != null) {
-		Set<String> isbns = new HashSet<String>();
-		Calendar cal = Calendar.getInstance();
-		// books- Liste iterieren, getISbn -> zu set hinzufügen
-		for (Book b : cart.getBooks()) {
-			isbns.add(b.getIsbn());
+		if (user.getStreet() != null && user.getStreetnumber() != null && user.getPlz() != null) {
+			Set<String> isbns = new HashSet<String>();
+			Calendar cal = Calendar.getInstance();
+			for (Book b : cart.getBooks()) {
+				isbns.add(b.getIsbn());
+			}
+			// orderService.createOrder(isbns, userId, cal);
+			// TODO orderService.METHOD
+			cart.deleteContent();
 		}
-		// orderService.createOrder(isbns, userId, cal);
-		// TODO orderService.METHOD
-		cart.deleteContent();
-		// }
 		return "redirect:/warenkorb";
 	}
 }
