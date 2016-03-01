@@ -3,6 +3,7 @@ package appl.data.items;
 import java.util.Calendar;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,29 +17,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import appl.data.dao.ArchiveBook;
-
 @Entity
-@Table(name = "order", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "orderId") })
-public class Order {
+@Table(name = "orderx", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "orderId") })
+public class Orderx {
 	private int orderId;
-	private Set<ArchiveBook> orderItems;
+	private Set<OrderItem> orderItems;
 	private User user;
 	//private boolean payed; // Brauchen wir das?
 	// Date: Java.utils.Date oder eigene Klasse?
 	private Calendar date;
 	
 	// Required Constructor, may be private
-	private Order(){
+	private Orderx(){
 		
 	}
+	
+	public Orderx(Set<OrderItem> orderItems, Calendar date){
+		this.orderItems = orderItems;
+		this.date = date;
+	}
 
-	public Order(Set<ArchiveBook> orderItems, User user, int year, int month, int day, int hourOfDay, int minute, int second) {
+	public Orderx(Set<OrderItem> orderItems, User user, Calendar date) {
 		this.orderItems = orderItems;
 		this.user = user;
 		//this.payed = false;
-		this.date = Calendar.getInstance();
-		this.date.set(year, month, day, hourOfDay, minute, second);
+		this.date = date;
 
 	}
 
@@ -60,27 +63,29 @@ public class Order {
 	}
 	*/
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "USERID", nullable = false)
 	public User getUser() {
 		return this.user;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "OrderOrderItems", schema = "public", joinColumns = @JoinColumn(name = "orderId") , inverseJoinColumns = @JoinColumn(name = "archiveItemId") )
-	public Set<ArchiveBook> getOrderItems() {
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "orderorderitems", schema = "public", joinColumns = @JoinColumn(name = "orderId") , inverseJoinColumns = @JoinColumn(name = "archiveItemId") )
+	public Set<OrderItem> getOrderItems() {
 		return orderItems;
 	}
+	
+
 
 	private void setId(int OrderId) {
 		this.orderId = OrderId;
 	}
 
-	private void setOrderItems(Set<ArchiveBook> orderItems) {
+	private void setOrderItems(Set<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
 
-	private void setUser(User user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
@@ -97,12 +102,22 @@ public class Order {
 
 	public double calcPrice() {
 		double price = 0.0;
-		for (ArchiveBook b : orderItems) {
+		for (OrderItem b : orderItems) {
 			price += b.getPrice();
 		}
 		return price;
 
 	}
+	public String toString(){
+		String s = "OrderId + " +orderId + " UserId" +user.getUserId() + " UserSurName " + user.getSurname() + "\n" + "Amount of Ordered Items " +orderItems.size() + "\n";
+		for (OrderItem a : orderItems){
+			s = s + "Isbn " + a.getBook().getIsbn() + " Title" + a.getBook().getTitle() + " Ordering-Price " + a.getPrice() +"\n";
+ 		}
+		return s;
+	}
+	//public String toString(){
+		
+	//}
 
 	/*public void changeStatusToPayed() {
 		updateOrderInDatabase();

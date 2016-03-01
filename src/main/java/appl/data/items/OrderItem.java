@@ -1,4 +1,4 @@
-package appl.data.dao;
+package appl.data.items;
 
 import java.util.Set;
 
@@ -15,22 +15,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-
-import appl.data.items.Book;
-import appl.data.items.Order;
 @Entity
 @Table(name = "archivebook", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "archiveItemId") })
-public class ArchiveBook {
+public class OrderItem {
 	private int archiveItemId;
 	double price;
 	Book book;
-	Set<Order> orders;
+	Set<Orderx> orders;
 	
-	private ArchiveBook() {
+	private OrderItem() {
 	}
 	
-	public ArchiveBook(Book book, double price, Set<Order> orders){
-		this.orders = orders;
+	/**
+	 * 
+	 * @param book
+	 * @param price
+	 */
+	public OrderItem(Book book, double price){
 		this.book = book;
 		this.price = price;
 	}
@@ -45,15 +46,18 @@ public class ArchiveBook {
 		return price;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "ISBN", nullable = false)
 	public Book getBook(){
 		return book;
 	}
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "orderItems")
-	public Set<Order> getOrders(){
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "orderItems")
+	public Set<Orderx> getOrders(){
 		return orders;
 	}
+	
+	
+	
 	private void setArchiveItemId (int archiveItemId){
 		this.archiveItemId = archiveItemId;
 	}
@@ -63,7 +67,7 @@ public class ArchiveBook {
 	private void setBook(Book book){
 		this.book = book;
 	}
-	private void setOrders(Set<Order> orders){
+	private void setOrders(Set<Orderx> orders){
 		this.orders = orders;
 	}
 }
