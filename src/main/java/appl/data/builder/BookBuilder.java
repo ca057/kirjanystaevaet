@@ -33,6 +33,8 @@ public interface BookBuilder {
 	public BookBuilder setAuthors(Set<Author> authors);
 
 	public BookBuilder setCategories(Set<Category> categories);
+	
+	public BookBuilder setStock(int stock);
 
 	public Book createBook();
 }

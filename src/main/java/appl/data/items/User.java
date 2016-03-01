@@ -33,7 +33,7 @@ import appl.data.builder.UserBuilder;
  * <li>street number</li>
  * <li>role</li>
  * </ul>
- * Lists of {@link Order}s are joined via many-to-many connections. {@link PLZ}
+ * Lists of {@link Orderx}s are joined via many-to-many connections. {@link PLZ}
  * is joined via many-to-one connections.
  * 
  * The {@code password} will not be encrypted, so a prior handling of this issue
@@ -57,7 +57,7 @@ public class User {
 	private String streetnumber;
 	private PLZ plz;
 	private String role;
-	private Set<Order> orders;
+	private Set<Orderx> orders;
 	private Set<Book> lastBooks;
 	private byte[] image;
 
@@ -96,7 +96,13 @@ public class User {
 	 * @see {@link PLZ}
 	 */
 	public User(String password, String name, String surname, String email, String street, String streetnumber, PLZ plz,
-			String role, byte[] image, Set<Order> orders) {
+//<<<<<<< HEAD
+//			String role, HashSet<Orderx> orders) {
+//=======
+			//String role, byte[] image, Set<Order> orders) {
+		String role, byte[] image, Set<Orderx> orders) {
+	
+//>>>>>>> refs/remotes/origin/master
 		setPassword(password);
 		setName(surname);
 		setSurname(surname);
@@ -109,8 +115,11 @@ public class User {
 		setOrders(orders);
 	}
 
-	public User(int id, String password, String name, String surname, String email, String street, String streetnumber,
-			PLZ plz, String role, byte[] image, Set<Order> orders) {
+	//public User(int id, String password, String name, String surname, String email, String street, String streetnumber,
+	//		PLZ plz, String role, byte[] image, Set<Order> orders) {
+		public User(int id, String password, String name, String surname, String email, String street, String streetnumber,
+				PLZ plz, String role, byte[] image, Set<Orderx> orders) {
+	
 		setUserId(id);
 		setPassword(password);
 		setName(surname);
@@ -172,14 +181,21 @@ public class User {
 		return plz;
 	}
 
+//<<<<<<< HEAD
+//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+//	public Set<Orderx> getOrders() {
+//=======
 	@Lob
 	@Column(name = "image", nullable = true)
 	public byte[] getImage() {
 		return image;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	public Set<Order> getOrders() {
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	//public Set<Order> getOrders() {
+		public Set<Orderx> getOrders() {
+
+//>>>>>>> refs/remotes/origin/master
 		return this.orders;
 	}
 
@@ -231,12 +247,19 @@ public class User {
 		}
 	}
 
-	private void setOrders(Set<Order> orders) {
+	private void setOrders(Set<Orderx> orders) {
 		this.orders = orders;
 	}
 
 	private void setLastBooks(Set<Book> lastBooks) {
 		this.lastBooks = lastBooks;
+	}
+	
+	
+	// Um Orders persitieren zu können
+	public void addOrder(Orderx order){
+		order.setUser(this);
+		orders.add(order);
 	}
 
 	@Override
