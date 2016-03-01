@@ -16,10 +16,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import appl.data.enums.Searchfields;
-import appl.data.items.OrderItem;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.data.items.OrderItem;
 import appl.data.items.Orderx;
 import appl.data.items.User;
 import appl.logic.service.BookService;
@@ -265,8 +265,10 @@ public class QueryFun {
 			System.out.println(b.toString());
 		}*/
 		//Book book = dataService.getBookByIsbn("9101010101");
-		Set<String> isbns = new HashSet<String>();
-		isbns.add("9101010101");
+		//Set<String> isbns = new HashSet<String>();
+//		isbns.add("9101010101");
+		Map<String, Integer> isbns = new HashMap<String, Integer>();
+		isbns.put("9101010101", 2);
 		Calendar cal = Calendar.getInstance();
 		int orderId = orderService.createOrder(isbns, user.getUserId(), cal);
 		System.out.println("OrderId " + orderId + " ");
@@ -282,10 +284,10 @@ public class QueryFun {
 		}	
 		
 		// Zweite Order
-		Set<String> isbns2 = new HashSet<String>();
-		isbns2.add("9101010101");
-		isbns2.add("0101010101");
-		isbns2.add("1590595726");
+		Map<String, Integer> isbns2 = new HashMap<String, Integer>();
+		isbns2.put("9101010101", 1);
+		isbns2.put("0101010101", 1);
+		isbns2.put("1590595726", 1);
 		
 		Calendar cal2 = Calendar.getInstance();
 		int orderId2 = orderService.createOrder(isbns2, 1, cal2);

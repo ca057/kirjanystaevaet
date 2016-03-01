@@ -3,6 +3,7 @@ package appl.logic.service.impl;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.HibernateException;
@@ -12,8 +13,8 @@ import org.springframework.stereotype.Service;
 import appl.data.dao.ArchiveDAO;
 import appl.data.dao.BookDAO;
 import appl.data.dao.OrderDAO;
-import appl.data.items.OrderItem;
 import appl.data.items.Book;
+import appl.data.items.OrderItem;
 import appl.data.items.Orderx;
 import appl.data.items.User;
 import appl.logic.service.BookService;
@@ -41,11 +42,11 @@ public class OrderServiceImpl implements OrderService{
 		
 	}
 	@Override
-	public int createOrder(Set<String> isbns, int userId, Calendar cal) throws DatabaseException {
+	public int createOrder(Map<String, Integer> isbnsNumberOf, int userId, Calendar cal) throws DatabaseException {
 		// Aller Bücher herholen
 		Set<Book> books = new HashSet<Book>();
 		
-		for (String isbn : isbns){
+		for (String isbn : isbnsNumberOf.keySet()){
 			System.out.println("Bestellte Bücher: " + isbn);
 			books.add(dataService.getBookByIsbn(isbn));			
 		}
