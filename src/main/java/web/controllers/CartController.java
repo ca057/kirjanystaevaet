@@ -22,17 +22,6 @@ import exceptions.data.DatabaseException;
 @Controller
 public class CartController {
 
-	public static User getUser() {
-		Authentication a = SecurityContextHolder.getContext().getAuthentication();
-		if (a == null) {
-			return null;
-		} else {
-			return (User) a.getPrincipal();
-		}
-	}
-
-	User user;
-
 	// public void setCurrentUser(User user) {
 	// this.user = user;
 	// }
@@ -98,7 +87,10 @@ public class CartController {
 
 	@RequestMapping(value = "/bestellen", method = RequestMethod.POST)
 	public String orderContent() {
-		if (user.getStreet() != null && user.getStreetnumber() != null && user.getPlz() != null) {
+		User user = getUser();
+		if (user.getStreet() != null && user.getStreetnumber() != null) {
+			// TODO: In der Bedingung user.getPlz() != null ergänzen, wenn sie
+			// gesetzt wird
 			Set<String> isbns = new HashSet<String>();
 			Calendar cal = Calendar.getInstance();
 			for (Book b : cart.getBooks()) {
@@ -109,5 +101,14 @@ public class CartController {
 			cart.deleteContent();
 		}
 		return "redirect:/warenkorb";
+	}
+
+	private User getUser() {
+		Authentication a = SecurityContextHolder.getContext().getAuthentication();
+		if (a == null) {
+			return null;
+		} else {
+			return (User) a.getPrincipal();
+		}
 	}
 }
