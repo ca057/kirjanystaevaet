@@ -21,7 +21,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "orderx", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "orderId") })
 public class Orderx {
 	private int orderId;
-	private Set<ArchiveBook> orderItems;
+	private Set<OrderItem> orderItems;
 	private User user;
 	//private boolean payed; // Brauchen wir das?
 	// Date: Java.utils.Date oder eigene Klasse?
@@ -32,12 +32,12 @@ public class Orderx {
 		
 	}
 	
-	public Orderx(Set<ArchiveBook> orderItems, Calendar date){
+	public Orderx(Set<OrderItem> orderItems, Calendar date){
 		this.orderItems = orderItems;
 		this.date = date;
 	}
 
-	public Orderx(Set<ArchiveBook> orderItems, User user, Calendar date) {
+	public Orderx(Set<OrderItem> orderItems, User user, Calendar date) {
 		this.orderItems = orderItems;
 		this.user = user;
 		//this.payed = false;
@@ -71,7 +71,7 @@ public class Orderx {
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "orderorderitems", schema = "public", joinColumns = @JoinColumn(name = "orderId") , inverseJoinColumns = @JoinColumn(name = "archiveItemId") )
-	public Set<ArchiveBook> getOrderItems() {
+	public Set<OrderItem> getOrderItems() {
 		return orderItems;
 	}
 	
@@ -81,7 +81,7 @@ public class Orderx {
 		this.orderId = OrderId;
 	}
 
-	private void setOrderItems(Set<ArchiveBook> orderItems) {
+	private void setOrderItems(Set<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
 
@@ -102,7 +102,7 @@ public class Orderx {
 
 	public double calcPrice() {
 		double price = 0.0;
-		for (ArchiveBook b : orderItems) {
+		for (OrderItem b : orderItems) {
 			price += b.getPrice();
 		}
 		return price;
@@ -110,7 +110,7 @@ public class Orderx {
 	}
 	public String toString(){
 		String s = "OrderId + " +orderId + " UserId" +user.getUserId() + " UserSurName " + user.getSurname() + "\n" + "Amount of Ordered Items " +orderItems.size() + "\n";
-		for (ArchiveBook a : orderItems){
+		for (OrderItem a : orderItems){
 			s = s + "Isbn " + a.getBook().getIsbn() + " Title" + a.getBook().getTitle() + " Ordering-Price " + a.getPrice() +"\n";
  		}
 		return s;

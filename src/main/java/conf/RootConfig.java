@@ -12,7 +12,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import appl.data.items.ArchiveBook;
+import appl.data.items.OrderItem;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
@@ -82,7 +82,7 @@ public class RootConfig {
 			cfg.addAnnotatedClass(Orderx.class);
 			cfg.addAnnotatedClass(PLZ.class);
 			cfg.addAnnotatedClass(User.class);
-			cfg.addAnnotatedClass(ArchiveBook.class);
+			cfg.addAnnotatedClass(OrderItem.class);
 			return cfg.setProperties(createProperties()).buildSessionFactory();
 		} catch (HibernateException e) {
 			System.err.println("Initial SessionFactory creation failed." + e.getMessage());

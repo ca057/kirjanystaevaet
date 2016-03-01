@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import appl.data.dao.ArchiveDAO;
-import appl.data.items.ArchiveBook;
+import appl.data.items.OrderItem;
 
 @Repository
 public class ArchiveDAOImpl implements ArchiveDAO {
@@ -28,19 +28,19 @@ public class ArchiveDAOImpl implements ArchiveDAO {
 			throw new RuntimeException("[Error] SessionFactory is null");
 		}
 		Session s = getSession();
-		Criteria cr = s.createCriteria(ArchiveBook.class);
+		Criteria cr = s.createCriteria(OrderItem.class);
 		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return cr;
 		//return cr.createAlias("books", "b").createAlias("authors", "a");
 		//return cr.createAlias("books", "b"); // Category hat keinen Author -> kein Alias dafür angeben
 	}
 	@Override
-	public void update(ArchiveBook archiveItem) {
+	public void update(OrderItem archiveItem) {
 		getSession().update(archiveItem);
 		
 	}
 	@Override
-	public int insert(ArchiveBook archiveItem){
+	public int insert(OrderItem archiveItem){
 		int id = (int) getSession().save(archiveItem);
 		return id;
 	}

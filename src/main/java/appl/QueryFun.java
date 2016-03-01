@@ -16,7 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import appl.data.enums.Searchfields;
-import appl.data.items.ArchiveBook;
+import appl.data.items.OrderItem;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
@@ -274,9 +274,9 @@ public class QueryFun {
 		//Set<Orderx> ordersOfThisUser = user.getOrders();
 		System.out.println("\nOrder of this User amunt \n" + ordersOfThisUser.size());
 		for (Orderx o : ordersOfThisUser){
-			Set<ArchiveBook> items = o.getOrderItems();
+			Set<OrderItem> items = o.getOrderItems();
 			System.out.println("Größe der Bestellung" + o.getOrderItems().size());
-			for (ArchiveBook a : items){
+			for (OrderItem a : items){
 				System.out.println("Title " + a.getBook().getTitle() + "Stock " + a.getBook().getStock());
 			}
 		}	

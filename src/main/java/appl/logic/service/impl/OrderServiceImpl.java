@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import appl.data.dao.ArchiveDAO;
 import appl.data.dao.BookDAO;
 import appl.data.dao.OrderDAO;
-import appl.data.items.ArchiveBook;
+import appl.data.items.OrderItem;
 import appl.data.items.Book;
 import appl.data.items.Orderx;
 import appl.data.items.User;
@@ -51,17 +51,17 @@ public class OrderServiceImpl implements OrderService{
 		}
 			
 		// Das ArchivSet, dass in der Order gespeichert wird
-		Set<ArchiveBook> archiveItemsOfOrder = new HashSet<ArchiveBook>();
+		Set<OrderItem> archiveItemsOfOrder = new HashSet<OrderItem>();
 		// Archiv erstellen
 		for (Book b : books){
 			// ArchiveItems herholen
-			Set<ArchiveBook> archiveItemsOfThisBook = b.getArchiveItems();
+			Set<OrderItem> archiveItemsOfThisBook = b.getArchiveItems();
 			// Falls noch keines existiert, muss auf jeden Fall ein neues erstellt werden
 			if(archiveItemsOfThisBook.size() == 0){
 				// TODO Codeduplikat vermeiden
 				System.out.println("\n Book has no ArchiveItems yet\n");
 				//neues ArchiveItem erstellen
-				ArchiveBook newArchiveItem = new ArchiveBook(b, b.getPrice());
+				OrderItem newArchiveItem = new OrderItem(b, b.getPrice());
 				// TODO Testen, ob hier ArchiveItem schon persistiert werden muss! JA MUSS!
 				// ArchiveItem persitieren
 				try{ 
@@ -73,7 +73,7 @@ public class OrderServiceImpl implements OrderService{
 			}
 			System.out.println("\nGot archive Items for book with title " + b.getTitle() + " its size is " + archiveItemsOfThisBook.size() + "\n\n");
 			// Preis überprüfen
-			for (ArchiveBook a : archiveItemsOfThisBook){
+			for (OrderItem a : archiveItemsOfThisBook){
 				if(b.getPrice() == a.getPrice()){
 					System.out.println("\nItem has the same price\n");
 					b.getArchiveItems().add(a);
@@ -88,7 +88,7 @@ public class OrderServiceImpl implements OrderService{
 				} else {
 					System.out.println("\n need a new Archiveitem \n");
 					//neues ArchiveItem erstellen
-					ArchiveBook newArchiveItem = new ArchiveBook(b, b.getPrice());
+					OrderItem newArchiveItem = new OrderItem(b, b.getPrice());
 					// TODO Testen, ob hier ArchiveItem schon persistiert werden muss
 					archiveItemsOfOrder.add(newArchiveItem);
 				}

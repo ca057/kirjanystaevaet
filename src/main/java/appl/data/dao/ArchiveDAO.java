@@ -2,13 +2,13 @@ package appl.data.dao;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import appl.data.items.ArchiveBook;
+import appl.data.items.OrderItem;
 
 @Transactional
 public interface ArchiveDAO {
 	
-	public void update(ArchiveBook archiveItem);
+	public void update(OrderItem archiveItem);
 
-	int insert(ArchiveBook archiveItem);
+	int insert(OrderItem archiveItem);
 
 }

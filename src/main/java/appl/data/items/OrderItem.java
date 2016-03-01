@@ -17,13 +17,13 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "archivebook", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "archiveItemId") })
-public class ArchiveBook {
+public class OrderItem {
 	private int archiveItemId;
 	double price;
 	Book book;
 	Set<Orderx> orders;
 	
-	private ArchiveBook() {
+	private OrderItem() {
 	}
 	
 	/**
@@ -31,7 +31,7 @@ public class ArchiveBook {
 	 * @param book
 	 * @param price
 	 */
-	public ArchiveBook(Book book, double price){
+	public OrderItem(Book book, double price){
 		this.book = book;
 		this.price = price;
 	}
