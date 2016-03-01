@@ -47,6 +47,7 @@ public class Book {
 	private String edition;
 	private String pages;
 	private int stock;
+	private int visitCount;
 
 	private Set<Category> categories = new HashSet<Category>(0);
 	private Set<Author> authors = new HashSet<Author>(0);
@@ -127,13 +128,21 @@ public class Book {
 	public String getPages() {
 		return pages;
 	}
+
 	@Column(name = "stock", nullable = false, length = 8)
 	public int getStock() {
 		return stock;
 	}
 
-	//@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@ManyToMany(fetch = FetchType.LAZY)// Wenn das letzte Buch einer Kategorie gelöscht wird, wird die Kategorie nicht gelöscht
+	@Column(name = "visitCount", nullable = true)
+	public int getVisitCount() {
+		return visitCount;
+	}
+
+	// @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY) // Wenn das letzte Buch einer Kategorie
+										// gelöscht wird, wird die Kategorie
+										// nicht gelöscht
 	@JoinTable(name = "bookcategoriesbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "categoryId") )
 	public Set<Category> getCategories() {
 		return categories;
@@ -194,8 +203,13 @@ public class Book {
 	public void setPages(String pages) {
 		this.pages = pages;
 	}
-	public void setStock(int stock){
+
+	public void setStock(int stock) {
 		this.stock = stock;
+	}
+
+	public void setVisitCount(int visitCount) {
+		this.visitCount = visitCount;
 	}
 
 	public void setCategories(Set<Category> categories) {
@@ -217,11 +231,12 @@ public class Book {
 	private void setVisitingUsers(Set<User> visitingUsers) {
 		this.visitingUsers = visitingUsers;
 	}
-	
-	public void decrementStock(int decrement){
-		stock-= decrement;
+
+	public void decrementStock(int decrement) {
+		stock -= decrement;
 	}
-	public int addToStock(int add){
+
+	public int addToStock(int add) {
 		stock += add;
 		return stock;
 	}
