@@ -31,6 +31,11 @@ public class Orderx {
 	private Orderx(){
 		
 	}
+	
+	public Orderx(Set<ArchiveBook> orderItems, Calendar date){
+		this.orderItems = orderItems;
+		this.date = date;
+	}
 
 	public Orderx(Set<ArchiveBook> orderItems, User user, Calendar date) {
 		this.orderItems = orderItems;
@@ -80,7 +85,7 @@ public class Orderx {
 		this.orderItems = orderItems;
 	}
 
-	private void setUser(User user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 

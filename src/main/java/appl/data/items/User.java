@@ -254,6 +254,13 @@ public class User {
 	private void setLastBooks(Set<Book> lastBooks) {
 		this.lastBooks = lastBooks;
 	}
+	
+	
+	// Um Orders persitieren zu können
+	public void addOrder(Orderx order){
+		order.setUser(this);
+		orders.add(order);
+	}
 
 	@Override
 	public String toString() {
