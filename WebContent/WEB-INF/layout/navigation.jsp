@@ -4,7 +4,7 @@
 
 <ul class="navigation-content list-inline">
 	<li><a href="<c:url value='/kategorie/php'/>">PHP</a></li>
-	<li><a href="<c:url value='/kategorie/java'/>">Java</a></li>
+	<li><a href="<c:url value='/kategorie/mysql'/>">MySQL</a></li>
 
 	<li><a href="<c:url value='/suche' />" title="Suche">Suche</a></li>
 	<li><a href="<c:url value='/kontakt'/>" title="Kontakt und Impressum">Kontakt/Impressum</a></li>
@@ -40,14 +40,12 @@
 				<li><a href="<c:url value='/backend/bestand#autorinnen' />" title="Autor:innen verwalten">Autor:innen</a>
 					<ul>
 						<li><a href="<c:url value='/backend/bestand#autorinnen-anlegen' />" title="Neue:n Autor:in anlegen">Anlegen</a></li>
-						<li><a href="<c:url value='/backend/bestand#autorinnen-aendern' />" title="Bestehende Autor:innen ändern">Ändern</a></li>
 						<li><a href="<c:url value='/backend/bestand#autorinnen-loeschen' />" title="Bestehende Autor:innen löschen">Löschen</a></li>
 					</ul>
 				</li>
 				<li><a href="<c:url value='/backend/bestand#buecher' />" title="Autor:innen verwalten">Bücher</a>
 					<ul>
 						<li><a href="<c:url value='/backend/bestand#buecher' />" title="Neue Bücher anlegen">Anlegen</a></li>
-						<li><a href="<c:url value='/backend/bestand#buecher-aendern' />" title="Bestehnde Bücher ändern">Ändern</a></li>
 						<li><a href="<c:url value='/backend/bestand#buecher-loeschen' />" title="Bestehende Bücher löschen">Löschen</a></li>
 					</ul>
 				</li>
