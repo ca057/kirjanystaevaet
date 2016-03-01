@@ -1,13 +1,16 @@
 package appl.data.items;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
-//@Scope("session")
 @Component
-public class Cart {
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
+public class Cart implements Serializable {
 
 	private List<Book> books = new ArrayList<Book>();
 

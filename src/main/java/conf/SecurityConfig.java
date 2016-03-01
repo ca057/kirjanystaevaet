@@ -47,7 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#authorize-requests
 		http.authorizeRequests()
 				.antMatchers("/", "/kategorien", "/kategorie/**", "/buch/**", "/suche", "/kontakt", "/login", "/logout",
 						"/warenkorb", "/registrierung")
@@ -60,7 +59,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		// allow access to all requests which start with css, js or img
 		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
 	}
 
