@@ -97,9 +97,9 @@ public class OrderServiceImpl implements OrderService{
 		}
 		// Order anlegen und speichern, mit User verknüpfen
 		User user = userService.findByID(userId).get();
-		//Orderx order = new Orderx(archiveItemsOfOrder, user, cal);
-		Orderx order = new Orderx(archiveItemsOfOrder, cal);
-		user.addOrder(order);
+		Orderx order = new Orderx(archiveItemsOfOrder, user, cal);
+		//Orderx order = new Orderx(archiveItemsOfOrder, cal);
+		//user.addOrder(order);
 		try{ 
 			int orderId = orderDao.insertOrder(order);
 			return orderId;

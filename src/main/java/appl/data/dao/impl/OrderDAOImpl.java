@@ -33,8 +33,7 @@ public class OrderDAOImpl implements OrderDAO {
 		Criteria cr = s.createCriteria(Orderx.class);
 		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return cr;
-		//return cr.createAlias("books", "b").createAlias("authors", "a");
-		//return cr.createAlias("books", "b"); // Category hat keinen Author -> kein Alias dafür angeben
+		
 	}
 
 	@Override
@@ -59,7 +58,7 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override
 	public List<Orderx> getAllOrders() {
-		return getSession().createCriteria(Orderx.class).list();
+		return setupAndGetCriteria().list();
 	}
 
 	@Override

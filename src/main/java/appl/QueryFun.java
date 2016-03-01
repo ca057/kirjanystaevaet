@@ -270,7 +270,8 @@ public class QueryFun {
 		Calendar cal = Calendar.getInstance();
 		int orderId = orderService.createOrder(isbns, user.getUserId(), cal);
 		System.out.println("OrderId " + orderId + " ");
-		Set<Orderx> ordersOfThisUser = user.getOrders();
+		Set<Orderx> ordersOfThisUser = userService.findByID(2).get().getOrders();
+		//Set<Orderx> ordersOfThisUser = user.getOrders();
 		System.out.println("\nOrder of this User amunt \n" + ordersOfThisUser.size());
 		for (Orderx o : ordersOfThisUser){
 			Set<ArchiveBook> items = o.getOrderItems();
@@ -287,7 +288,7 @@ public class QueryFun {
 		isbns2.add("1590595726");
 		
 		Calendar cal2 = Calendar.getInstance();
-		int orderId2 = orderService.createOrder(isbns2, user.getUserId(), cal2);
+		int orderId2 = orderService.createOrder(isbns2, 1, cal2);
 		System.out.println("OrderId " + orderId2 + " ");
 		
 		Set<Orderx> userOrders = user.getOrders();
