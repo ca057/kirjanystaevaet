@@ -4,10 +4,8 @@
 
 <section>
 	<h2>Warenkorb</h2>
-	<article>
-		<p>Hallo <c:out value="${name}" />, ich bin dein Warenkorb. Schau mal, was schon in mir liegt :)</p>
-	</article>
- Bücher im Warenkorb 
+	<p>Hallo <c:out value="${name}" />, ich bin dein Warenkorb. Schau mal, was schon in mir liegt :)</p>
+ 	<h3>Bücher im Warenkorb</h3> 
 		<c:choose>
 			<c:when test="${bookItems.isEmpty()}">
 				<p>Keine Bücher im Warenkorb</p>
@@ -16,11 +14,10 @@
 				<c:forEach var="book" items="${bookItems}">
 <%-- 					<p><c:out value="<c:url value="/img/cover/${book.getIsbn()}.jpg"/>"/></p> --%>
 					<h4><c:out value="${book.getTitle()}"/></h4>
-					<p><c:out value="${book.getDescription()}" escapeXml="false"/></p>
+<%--				<p><c:out value="${book.getDescription()}" escapeXml="false"/></p>
 					<p><c:out value="${book.getPages()}"/></p>
-					<p><c:out value="${book.getPublisher()}"/></p>
-					<p><c:out value="${book.getIsbn()}"/></p>
-					<p><c:out value="${book.getPrice()}"/></p>
+					<p><c:out value="${book.getPublisher()}"/></p> --%>
+					<p>ISBN: <c:out value="${book.getIsbn()}"/>; Preis: <c:out value="${book.getPrice()}"/></p>
 				</c:forEach> 
 			</c:otherwise>
 		</c:choose>
