@@ -293,7 +293,7 @@ public class QueryFun {
 		int orderId2 = orderService.createOrder(isbns2, 1, cal2);
 		System.out.println("OrderId " + orderId2 + " ");
 		
-		Set<Orderx> userOrders = user.getOrders();
+		Set<Orderx> userOrders = userService.findByID(1).get().getOrders();
 		System.out.println("\n\nGet Order of user\nSize "+ userOrders.size() + "\n");
 		for(Orderx o : userOrders){
 			System.out.println(o.toString());

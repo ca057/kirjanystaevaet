@@ -6,13 +6,13 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import appl.data.dao.ArchiveDAO;
+import appl.data.dao.OrderItemDAO;
 import appl.data.items.OrderItem;
 
 @Repository
-public class ArchiveDAOImpl implements ArchiveDAO {
+public class OrderItemDAOImpl implements OrderItemDAO {
 
-	public ArchiveDAOImpl() {
+	public OrderItemDAOImpl() {
 		// TODO Auto-generated constructor stub
 	}
 	

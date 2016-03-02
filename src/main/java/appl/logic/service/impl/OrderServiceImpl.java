@@ -10,9 +10,9 @@ import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import appl.data.dao.ArchiveDAO;
 import appl.data.dao.BookDAO;
 import appl.data.dao.OrderDAO;
+import appl.data.dao.OrderItemDAO;
 import appl.data.items.Book;
 import appl.data.items.OrderItem;
 import appl.data.items.Orderx;
@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService{
 	@Autowired
 	UserService userService;
 	@Autowired
-	ArchiveDAO archiveDao;
+	OrderItemDAO orderItemDao;
 	@Autowired 
 	OrderDAO orderDao;
 	@Autowired
@@ -55,7 +55,7 @@ public class OrderServiceImpl implements OrderService{
 			book.getOrderItems().add(orderItem);
 			// neues OrderItem persitieren
 				try{ 
-					int orderItemId = archiveDao.insert(orderItem);
+					int orderItemId = orderItemDao.insert(orderItem);
 				}catch(HibernateException e){
 					e.printStackTrace();
 					throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
@@ -63,28 +63,7 @@ public class OrderServiceImpl implements OrderService{
 				// 
 				orderItems.add(orderItem);
 			}
-	
-//			// Preis überprüfen
-//			for (OrderItem a : archiveItemsOfThisBook){
-//				if(b.getPrice() == a.getPrice()){
-//					System.out.println("\nItem has the same price\n");
-//					b.getArchiveItems().add(a);
-//					try {
-//						bookDao.updateBook(b);
-//						System.out.println("\n updated Book\n");
-//						orderItems.add(a); // Auch dem Archive Set für die aktuelle Order hinzufügen
-//					} catch (HibernateException e){
-//						throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-//					}
-//					
-//				} else {
-//					System.out.println("\n need a new Archiveitem \n");
-//					//neues ArchiveItem erstellen
-//					OrderItem newArchiveItem = new OrderItem(b, b.getPrice());
-//					// TODO Testen, ob hier ArchiveItem schon persistiert werden muss
-//					orderItems.add(newArchiveItem);
-//				}
-//			}
+
 			
 		
 		// Order anlegen und speichern, mit User verknüpfen
