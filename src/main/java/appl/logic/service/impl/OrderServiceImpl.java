@@ -43,67 +43,57 @@ public class OrderServiceImpl implements OrderService{
 	}
 	@Override
 	public int createOrder(Map<String, Integer> isbnsNumberOf, int userId, Calendar cal) throws DatabaseException {
-		// Aller Bücher herholen
-		Set<Book> books = new HashSet<Book>();
 		
-		for (String isbn : isbnsNumberOf.keySet()){
-			System.out.println("Bestellte Bücher: " + isbn);
-			books.add(dataService.getBookByIsbn(isbn));			
-		}
-			
 		// Das ArchivSet, dass in der Order gespeichert wird
 		Set<OrderItem> orderItems = new HashSet<OrderItem>();
-		// Archiv erstellen
-		for (Book b : books){
-			
+		
+		for (String isbn : isbnsNumberOf.keySet()){
 			// One-To-Many Relationship: Einfach ein neues orderItem erstellen
-			
-			// ArchiveItems herholen
-			Set<OrderItem> archiveItemsOfThisBook = b.getArchiveItems();
-			// Falls noch keines existiert, muss auf jeden Fall ein neues erstellt werden
-			if(archiveItemsOfThisBook.size() == 0){
-				// TODO Codeduplikat vermeiden
-				System.out.println("\n Book has no ArchiveItems yet\n");
-				//neues ArchiveItem erstellen
-				OrderItem newArchiveItem = new OrderItem(b, b.getPrice());
-				// TODO Testen, ob hier ArchiveItem schon persistiert werden muss! JA MUSS!
-				// ArchiveItem persitieren
+			Book book = bookDao.getBookByIsbn(isbn);
+			OrderItem orderItem = new OrderItem(book, book.getPrice(), isbnsNumberOf.get(isbn) );
+			// Dem Book hinzufügen
+			book.getOrderItems().add(orderItem);
+			// neues OrderItem persitieren
 				try{ 
-					int archiveItemId = archiveDao.insert(newArchiveItem);
+					int orderItemId = archiveDao.insert(orderItem);
 				}catch(HibernateException e){
+					e.printStackTrace();
 					throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 				}
-				orderItems.add(newArchiveItem);
+				// 
+				orderItems.add(orderItem);
 			}
-			System.out.println("\nGot archive Items for book with title " + b.getTitle() + " its size is " + archiveItemsOfThisBook.size() + "\n\n");
-			// Preis überprüfen
-			for (OrderItem a : archiveItemsOfThisBook){
-				if(b.getPrice() == a.getPrice()){
-					System.out.println("\nItem has the same price\n");
-					b.getArchiveItems().add(a);
-					try {
-						bookDao.updateBook(b);
-						System.out.println("\n updated Book\n");
-						orderItems.add(a); // Auch dem Archive Set für die aktuelle Order hinzufügen
-					} catch (HibernateException e){
-						throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-					}
-					
-				} else {
-					System.out.println("\n need a new Archiveitem \n");
-					//neues ArchiveItem erstellen
-					OrderItem newArchiveItem = new OrderItem(b, b.getPrice());
-					// TODO Testen, ob hier ArchiveItem schon persistiert werden muss
-					orderItems.add(newArchiveItem);
-				}
-			}
+	
+//			// Preis überprüfen
+//			for (OrderItem a : archiveItemsOfThisBook){
+//				if(b.getPrice() == a.getPrice()){
+//					System.out.println("\nItem has the same price\n");
+//					b.getArchiveItems().add(a);
+//					try {
+//						bookDao.updateBook(b);
+//						System.out.println("\n updated Book\n");
+//						orderItems.add(a); // Auch dem Archive Set für die aktuelle Order hinzufügen
+//					} catch (HibernateException e){
+//						throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+//					}
+//					
+//				} else {
+//					System.out.println("\n need a new Archiveitem \n");
+//					//neues ArchiveItem erstellen
+//					OrderItem newArchiveItem = new OrderItem(b, b.getPrice());
+//					// TODO Testen, ob hier ArchiveItem schon persistiert werden muss
+//					orderItems.add(newArchiveItem);
+//				}
+//			}
 			
-		}
+		
 		// Order anlegen und speichern, mit User verknüpfen
-		User user = userService.findByID(userId).get();
+		User user = userService.findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
 		Orderx order = new Orderx(orderItems, user, cal);
-		//Orderx order = new Orderx(archiveItemsOfOrder, cal);
-		//user.addOrder(order);
+
+//		Orderx order = new Orderx(orderItems, user, cal);
+//		//Orderx order = new Orderx(archiveItemsOfOrder, cal);
+//		//user.addOrder(order);
 		try{ 
 			int orderId = orderDao.insertOrder(order);
 			return orderId;

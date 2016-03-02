@@ -146,7 +146,7 @@ public class Book {
 	}
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
-	public Set<OrderItem> getArchiveItems() {
+	public Set<OrderItem> getOrderItems() {
 		return orderItems;
 	}
 
@@ -210,8 +210,8 @@ public class Book {
 		this.authors = authors;
 	}
 
-	public void setArchiveItems(Set<OrderItem> archiveItems) {
-		this.orderItems = archiveItems;
+	public void setOrderItems(Set<OrderItem> orderItems) {
+		this.orderItems = orderItems;
 	}
 
 	private void setVisitingUsers(Set<User> visitingUsers) {
