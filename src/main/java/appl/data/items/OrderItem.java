@@ -80,7 +80,11 @@ public class OrderItem {
 	
 	@Override
 	public String toString(){
-		//String s = "OrderItemId" + orderItemId + 
-				return null;
+		String s = "OrderItemId=" + orderItemId + " BookTitle=" + book.getTitle() + 
+				" Price at Order=" + price + " number=" + numberOf + " User Name=" + 
+				" orderId=" + order.getId() + 
+				order.getUser().getName() + " User Id=" +
+				order.getUser().getUserId();
+		return s;
 	}
 }

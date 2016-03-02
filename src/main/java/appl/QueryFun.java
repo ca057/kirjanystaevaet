@@ -307,7 +307,7 @@ public class QueryFun {
 		}
 		
 		List<OrderItem> allOrderItems = orderService.getAllOrderItems();
-		System.out.println("\n all order items\n");
+		System.out.println("\n all order items size: \n" + allOrderItems.size());
 		for (OrderItem o : allOrderItems){
 			System.out.println(o.toString());
 		}
