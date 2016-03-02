@@ -21,10 +21,21 @@ KY = {
 			});
 		};
 		
+		const sendParam = function (type, param) {
+			return $.ajax({
+				url: (url.charAt(url.length -1) !== "?" ? url + "?" : url) + $(param),
+				type: type,
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader("X-CSRF-TOKEN", $('[name=_csrf]').val());
+				}
+			});
+		};
+		
 		return {
 			POST: (data) => ajax('POST', data),
 			GET: () => ajax('GET'),
 			DELETE: (data) => ajax('DELETE', data),
+			POST_PARAM: (param) => sendParam('POST', param)
 		};
 	},
 	// checks if the given array of html-ids of inputs without leading '#' are not empty

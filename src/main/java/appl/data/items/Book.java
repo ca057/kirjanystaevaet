@@ -47,13 +47,16 @@ public class Book {
 	private String edition;
 	private String pages;
 	private int stock;
+	private int visitCount;
 
 	private Set<Category> categories = new HashSet<Category>(0);
 	private Set<Author> authors = new HashSet<Author>(0);
 	// TODO In Javadoc erwähnen.
 	// private Set<Order> orders = new HashSet<Order>(0);
+
 	private Set<OrderItem> orderItems = new HashSet<OrderItem>(0);
 	private Set<User> visitingUsers = new HashSet<User>(0);
+
 
 	public Book() {
 	}
@@ -127,13 +130,21 @@ public class Book {
 	public String getPages() {
 		return pages;
 	}
+
 	@Column(name = "stock", nullable = false, length = 8)
 	public int getStock() {
 		return stock;
 	}
 
-	//@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@ManyToMany(fetch = FetchType.LAZY)// Wenn das letzte Buch einer Kategorie gelöscht wird, wird die Kategorie nicht gelöscht
+	@Column(name = "visitCount", nullable = false, length = 8, columnDefinition = "int default 0")
+	public int getVisitCount() {
+		return visitCount;
+	}
+
+	// @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY) // Wenn das letzte Buch einer Kategorie
+										// gelöscht wird, wird die Kategorie
+										// nicht gelöscht
 	@JoinTable(name = "bookcategoriesbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "categoryId") )
 	public Set<Category> getCategories() {
 		return categories;
@@ -150,11 +161,11 @@ public class Book {
 		return orderItems;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "userbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "userId") )
-	public Set<User> getVisitingUsers() {
-		return visitingUsers;
-	}
+	// @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy =
+	// "book")
+	// public Set<UserBookStatistic> getUserBookStatistics() {
+	// return userBookStatistics;
+	// }
 	/*
 	 * @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	 * 
@@ -194,8 +205,13 @@ public class Book {
 	public void setPages(String pages) {
 		this.pages = pages;
 	}
-	public void setStock(int stock){
+
+	public void setStock(int stock) {
 		this.stock = stock;
+	}
+
+	public void setVisitCount(int visitCount) {
+		this.visitCount = visitCount;
 	}
 
 	public void setCategories(Set<Category> categories) {
@@ -214,14 +230,15 @@ public class Book {
 		this.orderItems = orderItems;
 	}
 
-	private void setVisitingUsers(Set<User> visitingUsers) {
-		this.visitingUsers = visitingUsers;
+	// private void setVisitingUsers(Set<UserBookStatistic> visitingUsers) {
+	// this.userBookStatistics = visitingUsers;
+	// }
+
+	public void decrementStock(int decrement) {
+		stock -= decrement;
 	}
-	
-	public void decrementStock(int decrement){
-		stock-= decrement;
-	}
-	public int addToStock(int add){
+
+	public int addToStock(int add) {
 		stock += add;
 		return stock;
 	}

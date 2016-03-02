@@ -69,7 +69,46 @@ const handle = function() {
 	
 	const stockManagement = function () {
 		console.info('STOCK IS MANAGED');
-		// TODO implement more here
+		$('#autorinnen-anlegen-submit').on('click', (e) => {
+			e.preventDefault();
+			const data = {
+				nameF: $('#autorinnen-anlegen-first').val().trim(),
+				nameL: $('#autorinnen-anlegen-last').val().trim(),
+				newAuthor: false
+			};
+
+			$('#autorinnen-anlegen-first').prop('disabled', true);
+			$('#autorinnen-anlegen-last').prop('disabled', true);
+			$('#autorinnen-anlegen-submit').prop('disabled', true);
+			
+			KY.request('/kirjanystaevaet/backend/bestand/autorinnen/add').POST(data).done(() => {
+					console.log("AUTHOR IS CREATED.");
+					$('#autorinnen-anlegen-first').val('').prop('disabled', false);
+					$('#autorinnen-anlegen-last').val('').prop('disabled', false);
+					$('#autorinnen-anlegen-submit').prop('disabled', false);
+				}).fail((jqXHR, status, err) => {
+					console.log(jqXHR.status);
+					console.log(jqXHR.status === 409);
+					if (jqXHR.status === 409) {
+						if (confirm("Die Datenbank enthält möglicherweise schon eine:n " +
+								"Autor:in mit diesem Namen. Datensatz trotzdem einfügen? \n" +
+								"Vorname: " + data.nameF +"\n" +
+								"Nachme: " + data.nameL)) {
+							data.newAuthor = true;
+							KY.request('/kirjanystaevaet/backend/bestand/autorinnen/add').POST(data).done(() => {
+								console.log("AUTHOR IS CREATED.")
+							}).fail(() => {
+								alert("Ein:e Autor:in mit diesen Daten konnte nicht angelegt werden.")
+							});
+						}
+					} else {
+						alert("Ein unbekannter Fehler ist aufgetreten. Versuchen Sie das Anlegen des Datensatzes erneut.");
+					}
+					$('#autorinnen-anlegen-first').val('').prop('disabled', false);
+					$('#autorinnen-anlegen-last').val('').prop('disabled', false);
+					$('#autorinnen-anlegen-submit').prop('disabled', false);
+				});
+		});
 	};
 		
 	return {
