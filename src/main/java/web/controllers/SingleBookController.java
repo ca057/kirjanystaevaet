@@ -1,5 +1,7 @@
 package web.controllers;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,8 @@ public class SingleBookController {
 			try {
 				Book book = bookService.getBookByIsbn(isbn);
 				m.addAttribute("book", book);
+				// FIXME return authors as list
+				m.addAttribute("authors", book.getAuthors().stream().collect(Collectors.toList()));
 			} catch (DatabaseException e) {
 				return "book?error";
 			}
