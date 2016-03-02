@@ -19,6 +19,7 @@ import appl.data.items.OrderItem;
 import appl.data.items.Orderx;
 import appl.data.items.PLZ;
 import appl.data.items.User;
+import appl.data.items.UserBookStatistic;
 import appl.logic.admin.Initialization;
 import exceptions.data.DatabaseInitializationException;
 
@@ -83,6 +84,7 @@ public class RootConfig {
 			cfg.addAnnotatedClass(PLZ.class);
 			cfg.addAnnotatedClass(User.class);
 			cfg.addAnnotatedClass(OrderItem.class);
+			cfg.addAnnotatedClass(UserBookStatistic.class);
 			return cfg.setProperties(createProperties()).buildSessionFactory();
 		} catch (HibernateException e) {
 			System.err.println("Initial SessionFactory creation failed." + e.getMessage());

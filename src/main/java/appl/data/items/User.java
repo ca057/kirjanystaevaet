@@ -2,16 +2,13 @@ package appl.data.items;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -45,6 +42,7 @@ import appl.data.builder.UserBuilder;
  * @author Johannes
  *
  */
+// TODO Update Javadoc
 @Entity
 @Table(name = "user", schema = "public")
 public class User {
@@ -58,7 +56,7 @@ public class User {
 	private PLZ plz;
 	private String role;
 	private Set<Orderx> orders;
-	private Set<Book> lastBooks;
+	private Set<UserBookStatistic> userBookStatistics;
 	private byte[] image;
 
 	private User() {
@@ -96,13 +94,8 @@ public class User {
 	 * @see {@link PLZ}
 	 */
 	public User(String password, String name, String surname, String email, String street, String streetnumber, PLZ plz,
-//<<<<<<< HEAD
-//			String role, HashSet<Orderx> orders) {
-//=======
-			//String role, byte[] image, Set<Order> orders) {
-		String role, byte[] image, Set<Orderx> orders) {
-	
-//>>>>>>> refs/remotes/origin/master
+			String role, byte[] image, Set<Orderx> orders) {
+
 		setPassword(password);
 		setName(surname);
 		setSurname(surname);
@@ -115,11 +108,9 @@ public class User {
 		setOrders(orders);
 	}
 
-	//public User(int id, String password, String name, String surname, String email, String street, String streetnumber,
-	//		PLZ plz, String role, byte[] image, Set<Order> orders) {
-		public User(int id, String password, String name, String surname, String email, String street, String streetnumber,
-				PLZ plz, String role, byte[] image, Set<Orderx> orders) {
-	
+	public User(int id, String password, String name, String surname, String email, String street, String streetnumber,
+			PLZ plz, String role, byte[] image, Set<Orderx> orders) {
+
 		setUserId(id);
 		setPassword(password);
 		setName(surname);
@@ -181,10 +172,6 @@ public class User {
 		return plz;
 	}
 
-//<<<<<<< HEAD
-//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-//	public Set<Orderx> getOrders() {
-//=======
 	@Lob
 	@Column(name = "image", nullable = true)
 	public byte[] getImage() {
@@ -192,17 +179,13 @@ public class User {
 	}
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-	//public Set<Order> getOrders() {
-		public Set<Orderx> getOrders() {
-
-//>>>>>>> refs/remotes/origin/master
+	public Set<Orderx> getOrders() {
 		return this.orders;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "userbooks", schema = "public", joinColumns = @JoinColumn(name = "userId") , inverseJoinColumns = @JoinColumn(name = "isbn") )
-	public Set<Book> getLastBooks() {
-		return lastBooks;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	public Set<UserBookStatistic> getUserBookStatistics() {
+		return this.userBookStatistics;
 	}
 
 	private void setUserId(int id) {
@@ -251,13 +234,12 @@ public class User {
 		this.orders = orders;
 	}
 
-	private void setLastBooks(Set<Book> lastBooks) {
-		this.lastBooks = lastBooks;
+	private void setUserBookStatistics(Set<UserBookStatistic> userBookStatistics) {
+		this.userBookStatistics = userBookStatistics;
 	}
-	
-	
+
 	// Um Orders persitieren zu können
-	public void addOrder(Orderx order){
+	public void addOrder(Orderx order) {
 		order.setUser(this);
 		orders.add(order);
 	}

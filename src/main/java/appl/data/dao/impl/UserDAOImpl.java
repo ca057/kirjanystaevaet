@@ -1,10 +1,11 @@
 
 package appl.data.dao.impl;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -18,6 +19,7 @@ import appl.data.dao.UserDAO;
 import appl.data.enums.Userfields;
 import appl.data.items.Book;
 import appl.data.items.User;
+import appl.data.items.UserBookStatistic;
 import exceptions.data.DatabaseException;
 import exceptions.data.ErrorMessageHelper;
 
@@ -112,21 +114,35 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<Book> getVisitedBooks(int userId) throws DatabaseException {
+	public List<UserBookStatistic> getUserBookStatistics(int userId) throws DatabaseException {
 		User user = getUserByUniqueField(Userfields.userId, String.valueOf(userId))
 				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
-		return (List<Book>) user.getLastBooks();
+		List<UserBookStatistic> result = new ArrayList<UserBookStatistic>();
+		// TODO Methode für get() anbieten?
+		result.addAll(user.getUserBookStatistics());
+		return result;
 	}
 
 	@Override
-	public boolean updateVisitedBooks(int userId, Book book) throws DatabaseException {
-		User user = getUserByUniqueField(Userfields.userId, String.valueOf(userId))
-				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
-		Set<Book> books = user.getLastBooks();
-		if (!books.contains(book)) {
-			books.add(book);
+	public boolean updateUserBookStatistic(User user, Book book, Calendar date) throws DatabaseException {
+		Optional<UserBookStatistic> statistic = Optional
+				.ofNullable((UserBookStatistic) getSession().createCriteria(UserBookStatistic.class)
+						.add(Restrictions.eq("user", user)).add(Restrictions.eq("book", book)).uniqueResult());
+		if (statistic.isPresent()) {
+			return updateUserBookStatistic(
+					new UserBookStatistic(user, book, date, statistic.get().getWatchCount() + 1));
+		} else {
+			return updateUserBookStatistic(new UserBookStatistic(user, book, date, 1));
 		}
-		return true;
+	}
+
+	private boolean updateUserBookStatistic(UserBookStatistic statistic) throws DatabaseException {
+		try {
+			getSession().saveOrUpdate(statistic);
+			return true;
+		} catch (HibernateException e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 
 }

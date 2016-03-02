@@ -35,6 +35,7 @@ import javax.persistence.UniqueConstraint;
  * @author Madeleine
  *
  */
+// TODO Javadoc updaten
 @Entity
 @Table(name = "bookdescriptions", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "isbn") })
 public class Book {
@@ -51,12 +52,8 @@ public class Book {
 
 	private Set<Category> categories = new HashSet<Category>(0);
 	private Set<Author> authors = new HashSet<Author>(0);
-	// TODO In Javadoc erwähnen.
-	// private Set<Order> orders = new HashSet<Order>(0);
-
 	private Set<OrderItem> orderItems = new HashSet<OrderItem>(0);
-	private Set<User> visitingUsers = new HashSet<User>(0);
-
+	private Set<UserBookStatistic> userBookStatistics = new HashSet<UserBookStatistic>(0);
 
 	public Book() {
 	}
@@ -141,10 +138,7 @@ public class Book {
 		return visitCount;
 	}
 
-	// @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@ManyToMany(fetch = FetchType.LAZY) // Wenn das letzte Buch einer Kategorie
-										// gelöscht wird, wird die Kategorie
-										// nicht gelöscht
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "bookcategoriesbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "categoryId") )
 	public Set<Category> getCategories() {
 		return categories;
@@ -161,18 +155,10 @@ public class Book {
 		return orderItems;
 	}
 
-	// @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy =
-	// "book")
-	// public Set<UserBookStatistic> getUserBookStatistics() {
-	// return userBookStatistics;
-	// }
-	/*
-	 * @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	 * 
-	 * @JoinTable(name = "bookorder", schema = "public", joinColumns
-	 * = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name =
-	 * "orderId") ) public Set<Order> getOrders() { return orders; }
-	 */
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
+	public Set<UserBookStatistic> getUserBookStatistics() {
+		return userBookStatistics;
+	}
 
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
@@ -218,10 +204,6 @@ public class Book {
 		this.categories = categories;
 	}
 
-	/*
-	 * public void setOrders(Set<Order> orders) { this.orders = orders; }
-	 */
-
 	public void setAuthors(Set<Author> authors) {
 		this.authors = authors;
 	}
@@ -230,9 +212,9 @@ public class Book {
 		this.orderItems = orderItems;
 	}
 
-	// private void setVisitingUsers(Set<UserBookStatistic> visitingUsers) {
-	// this.userBookStatistics = visitingUsers;
-	// }
+	public void setUserBookStatistics(Set<UserBookStatistic> userBookStatistics) {
+		this.userBookStatistics = userBookStatistics;
+	}
 
 	public void decrementStock(int decrement) {
 		stock -= decrement;
@@ -245,14 +227,10 @@ public class Book {
 
 	@Override
 	public String toString() {
-		String categoryString = "";
-		/*
-		 * for (Category c : categories){ categoryString = categoryString + " "
-		 * + c.toString(); }
-		 */
+		// TODO Category
 		return "Book [isbn=" + isbn + ", title=" + title + ", description=" + description + ", price=" + price
 				+ ", publisher=" + publisher + ", pubdate=" + pubdate + ", edition=" + edition + ", pages=" + pages
-				+ ", category= " + categoryString + ", stock=" + stock + "]";
+				+ ", stock=" + stock + "]";
 	}
 
 }

@@ -1,5 +1,6 @@
 package appl.logic.service.impl;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,6 +19,7 @@ import appl.data.enums.Userfields;
 import appl.data.items.Book;
 import appl.data.items.PLZ;
 import appl.data.items.User;
+import appl.data.items.UserBookStatistic;
 import appl.logic.service.BookService;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
@@ -170,17 +172,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Book> getVisitedBooks(int userId) throws DatabaseException {
-		return userDao.getVisitedBooks(userId);
+	public List<UserBookStatistic> getUserBookStatistics(int userId) throws DatabaseException {
+		return userDao.getUserBookStatistics(userId);
 	}
 
 	@Override
-	public boolean updateVisitedBooks(int userId, String isbn) throws DatabaseException {
+	public boolean updateUserBookStatistic(int userId, String isbn, Calendar date) throws DatabaseException {
 		Book book = bookService.getBookByIsbn(isbn);
-		if (book == null) {
-			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
-		}
-		return userDao.updateVisitedBooks(userId, book);
+		User user = findByID(userId)
+				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.updateError("UserBookStatistic",
+						String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
+		return userDao.updateUserBookStatistic(user, book, date);
 	}
 
 	private UserBuilder readData(UserBuilder userBuilder, Userfields userfield, String information)
