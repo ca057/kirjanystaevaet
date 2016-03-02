@@ -100,6 +100,15 @@ public class OrderServiceImpl implements OrderService{
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getLocalizedMessage()));
 		}
 	}
+	@Override
+	public List<OrderItem> getAllOrderItems() throws DatabaseException {
+		try{
+			return orderItemDao.getAllOrderItems();
+		}
+		catch(HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+	}
 	
 
 }

@@ -1,5 +1,7 @@
 package appl.data.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -43,6 +45,11 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	public int insert(OrderItem archiveItem){
 		int id = (int) getSession().save(archiveItem);
 		return id;
+	}
+
+	@Override
+	public List<OrderItem> getAllOrderItems() {
+		return setupAndGetCriteria().list();		
 	}
 
 }
