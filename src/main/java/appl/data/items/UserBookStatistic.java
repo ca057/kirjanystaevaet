@@ -83,8 +83,8 @@ public class UserBookStatistic {
 
 	@Override
 	public String toString() {
-		return "UserBookStatistic [id=" + id + ", date=" + date + ", watchCount=" + watchCount + ", user=" + user
-				+ ", book=" + book + "]";
+		return "UserBookStatistic [id=" + id + ", date=" + date.getTime().toString() + ", watchCount=" + watchCount
+				+ ", user=" + user.getEmail() + ", book=" + book.getTitle() + "]";
 	}
 
 }

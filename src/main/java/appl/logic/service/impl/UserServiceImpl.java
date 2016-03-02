@@ -185,6 +185,16 @@ public class UserServiceImpl implements UserService {
 		return userDao.updateUserBookStatistic(user, book, date);
 	}
 
+	@Override
+	public List<PLZ> getPLZs(String postalCode) throws DatabaseException {
+		return plzDAO.getPLZByPostalCode(postalCode);
+	}
+
+	@Override
+	public Optional<PLZ> getPLZ(int plzId) throws DatabaseException {
+		return plzDAO.getPLZ(plzId);
+	}
+
 	private UserBuilder readData(UserBuilder userBuilder, Userfields userfield, String information)
 			throws DatabaseException {
 		switch (userfield) {
@@ -207,23 +217,13 @@ public class UserServiceImpl implements UserService {
 			userBuilder.setStreetnumber(information);
 			break;
 		case password:
-			System.out.println("Neues Passwort im Service: " + information);
+			System.out.println("Im Service angekommenes Passwort: " + information);
 			userBuilder.setPassword(pswEncoder.encode(information));
 			break;
 		default:
 			break;
 		}
 		return userBuilder;
-	}
-
-	@Override
-	public List<PLZ> getPLZs(String postalCode) throws DatabaseException {
-		return plzDAO.getPLZByPostalCode(postalCode);
-	}
-
-	@Override
-	public Optional<PLZ> getPLZ(int plzId) throws DatabaseException {
-		return plzDAO.getPLZ(plzId);
 	}
 
 }

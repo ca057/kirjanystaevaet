@@ -118,20 +118,28 @@ public class UserDAOImpl implements UserDAO {
 		User user = getUserByUniqueField(Userfields.userId, String.valueOf(userId))
 				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
 		List<UserBookStatistic> result = new ArrayList<UserBookStatistic>();
+		return getSession().createCriteria(UserBookStatistic.class).list();
 		// TODO Methode für get() anbieten?
-		result.addAll(user.getUserBookStatistics());
-		return result;
+		// result.addAll(user.getUserBookStatistics());
+		// return result;
 	}
 
 	@Override
 	public boolean updateUserBookStatistic(User user, Book book, Calendar date) throws DatabaseException {
-		Optional<UserBookStatistic> statistic = Optional
-				.ofNullable((UserBookStatistic) getSession().createCriteria(UserBookStatistic.class)
-						.add(Restrictions.eq("user", user)).add(Restrictions.eq("book", book)).uniqueResult());
+		Optional<UserBookStatistic> statistic = Optional.ofNullable((UserBookStatistic) getSession()
+				.createCriteria(UserBookStatistic.class).add(Restrictions.like("user.userId", user.getUserId()))
+				.add(Restrictions.like("book.isbn", book.getIsbn())).uniqueResult());
+
+		System.out.println("Ergebnis von Criteria: " + getSession().createCriteria(UserBookStatistic.class)
+				.add(Restrictions.like("user.userId", user.getUserId()))
+				.add(Restrictions.like("book.isbn", book.getIsbn())).uniqueResult());
+
 		if (statistic.isPresent()) {
+			System.out.println("WatchCount erhoeht sich um 1.");
 			return updateUserBookStatistic(
 					new UserBookStatistic(user, book, date, statistic.get().getWatchCount() + 1));
 		} else {
+			System.out.println("WatchCount wird mit 1 angelegt");
 			return updateUserBookStatistic(new UserBookStatistic(user, book, date, 1));
 		}
 	}
@@ -144,5 +152,16 @@ public class UserDAOImpl implements UserDAO {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+
+	// private boolean saveUserBookStatistic(UserBookStatistic statistic) throws
+	// DatabaseException {
+	// try {
+	// getSession().save(statistic);
+	// return true;
+	// } catch (HibernateException e) {
+	// throw new
+	// DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+	// }
+	// }
 
 }
