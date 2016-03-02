@@ -55,7 +55,7 @@ public class OrderItem {
 		return book;
 	}
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "ORDERID", nullable = false)
+	@JoinColumn(name = "ORDERID", nullable = true)
 	public Orderx getOrder(){
 		return order;
 	}
