@@ -31,6 +31,10 @@ public class Orderx {
 		
 	}
 	
+	public Orderx(Calendar date){
+		this.date = date;
+	}
+	
 	public Orderx(Set<OrderItem> orderItems, Calendar date){
 		this.orderItems = orderItems;
 		this.date = date;

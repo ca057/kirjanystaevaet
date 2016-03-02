@@ -34,6 +34,13 @@ public class OrderItem {
 		this.price = price;
 		this.numberOf = numberOf;
 	}
+	
+	public OrderItem(Book book, double price, int numberOf, Orderx order){
+		this.book = book;
+		this.price = price;
+		this.numberOf = numberOf;
+		this.order = order;
+	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "orderItemId", unique = true, nullable = false)

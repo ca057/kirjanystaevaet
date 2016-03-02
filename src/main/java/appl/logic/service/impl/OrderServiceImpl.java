@@ -1,7 +1,6 @@
 package appl.logic.service.impl;
 
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,42 +43,69 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public int createOrder(Map<String, Integer> isbnsNumberOf, int userId, Calendar cal) throws DatabaseException {
 		
-		// Das ArchivSet, dass in der Order gespeichert wird
-		Set<OrderItem> orderItems = new HashSet<OrderItem>();
-		
+		Orderx order = new Orderx(cal);
 		for (String isbn : isbnsNumberOf.keySet()){
-			// One-To-Many Relationship: Einfach ein neues orderItem erstellen
-			Book book = bookDao.getBookByIsbn(isbn);
-			OrderItem orderItem = new OrderItem(book, book.getPrice(), isbnsNumberOf.get(isbn) );
-			// Dem Book hinzufügen
-			book.getOrderItems().add(orderItem);
-			// neues OrderItem persitieren
-				try{ 
-					int orderItemId = orderItemDao.insert(orderItem);
-				}catch(HibernateException e){
-					e.printStackTrace();
-					throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-				}
-				// 
-				orderItems.add(orderItem);
-			}
-
-			
-		
-		// Order anlegen und speichern, mit User verknüpfen
-		User user = userService.findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
-		Orderx order = new Orderx(orderItems, user, cal);
-
-//		Orderx order = new Orderx(orderItems, user, cal);
-//		//Orderx order = new Orderx(archiveItemsOfOrder, cal);
-//		//user.addOrder(order);
-		try{ 
-			int orderId = orderDao.insertOrder(order);
-			return orderId;
-		} catch (HibernateException e){
-			e.printStackTrace();
+			try{
+				Book book = bookDao.getBookByIsbn(isbn);
+				OrderItem orderItem = new OrderItem(book, book.getPrice(), isbnsNumberOf.get(isbn), order);
+				
+				// OrderItem im Buch setzen
+				book.getOrderItems().add(orderItem);
+				// OrderItem in der Order setzen
+				order.getOrderItems().add(orderItem);
+			} catch(HibernateException e){
 				throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+			}
+			
 		}
+		// Order speichern
+		try {
+			int orderId = orderDao.insertOrder(order);
+		}catch(HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+		// Den User updaten
+		
+		User user = userService.findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
+		
+		//return orderId;
+		return 0;
+//		// Das ArchivSet, dass in der Order gespeichert wird
+//		Set<OrderItem> orderItems = new HashSet<OrderItem>();
+//		
+//		for (String isbn : isbnsNumberOf.keySet()){
+//			// One-To-Many Relationship: Einfach ein neues orderItem erstellen
+//			Book book = bookDao.getBookByIsbn(isbn);
+//			OrderItem orderItem = new OrderItem(book, book.getPrice(), isbnsNumberOf.get(isbn) );
+//			// Dem Book hinzufügen
+//			book.getOrderItems().add(orderItem);
+//			// neues OrderItem persitieren
+//				try{ 
+//					int orderItemId = orderItemDao.insert(orderItem);
+//				}catch(HibernateException e){
+//					e.printStackTrace();
+//					throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+//				}
+//				// 
+//				orderItems.add(orderItem);
+//			}
+//
+//			
+//		
+//		// Order anlegen und speichern, mit User verknüpfen
+//		User user = userService.findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
+//		Orderx order = new Orderx(orderItems, user, cal);
+//
+////		Orderx order = new Orderx(orderItems, user, cal);
+////		//Orderx order = new Orderx(archiveItemsOfOrder, cal);
+////		//user.addOrder(order);
+//		try{ 
+//			int orderId = orderDao.insertOrder(order);
+//			return orderId;
+//		} catch (HibernateException e){
+//			e.printStackTrace();
+//				throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+//		}
 	}
 	@Override
 	public List<Orderx> getAllOrders() throws DatabaseException {
