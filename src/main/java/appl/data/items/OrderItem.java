@@ -13,9 +13,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "archivebook", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "archiveItemId") })
+@Table(name = "archivebook", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "orderItemId") })
 public class OrderItem {
-	private int archiveItemId;
+	private int orderItemId;
 	double price;
 	int numberOf;
 	Book book;
@@ -36,9 +36,9 @@ public class OrderItem {
 	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "archiveItemId", unique = true, nullable = false)
+	@Column(name = "orderItemId", unique = true, nullable = false)
 	public int getArchiveItemId(){
-		return archiveItemId;
+		return orderItemId;
 	}
 	@Column(name = "price", nullable = false)
 	public double getPrice(){
@@ -63,7 +63,7 @@ public class OrderItem {
 	
 	
 	private void setArchiveItemId (int archiveItemId){
-		this.archiveItemId = archiveItemId;
+		this.orderItemId = archiveItemId;
 	}
 	private void setPrice (double price){
 		this.price = price;
@@ -76,5 +76,11 @@ public class OrderItem {
 	}
 	private void setNumberOf(int numberOf){
 		this.numberOf = numberOf;
+	}
+	
+	@Override
+	public String toString(){
+		//String s = "OrderItemId" + orderItemId + 
+				return null;
 	}
 }

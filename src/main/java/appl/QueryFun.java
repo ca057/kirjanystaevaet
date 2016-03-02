@@ -305,6 +305,12 @@ public class QueryFun {
 		for (Orderx o : allOrders){
 			System.out.println(o.toString());
 		}
+		
+		List<OrderItem> allOrderItems = orderService.getAllOrderItems();
+		System.out.println("\n all order items\n");
+		for (OrderItem o : allOrderItems){
+			System.out.println(o.toString());
+		}
 
 	}
 /*
