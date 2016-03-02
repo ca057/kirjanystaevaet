@@ -1,7 +1,5 @@
 package appl.data.items;
 
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -20,8 +17,9 @@ import javax.persistence.UniqueConstraint;
 public class OrderItem {
 	private int archiveItemId;
 	double price;
+	int numberOf;
 	Book book;
-	Set<Orderx> orders;
+	Orderx order;
 	
 	private OrderItem() {
 	}
@@ -31,9 +29,10 @@ public class OrderItem {
 	 * @param book
 	 * @param price
 	 */
-	public OrderItem(Book book, double price){
+	public OrderItem(Book book, double price, int numberOf){
 		this.book = book;
 		this.price = price;
+		this.numberOf = numberOf;
 	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -45,15 +44,20 @@ public class OrderItem {
 	public double getPrice(){
 		return price;
 	}
+	@Column(name = "numberOf", nullable=false)
+	public int getNumberOf(){
+		return numberOf;
+	}
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "ISBN", nullable = false)
 	public Book getBook(){
 		return book;
 	}
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "orderItems")
-	public Set<Orderx> getOrders(){
-		return orders;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "ORDERID", nullable = true)
+	public Orderx getOrder(){
+		return order;
 	}
 	
 	
@@ -67,7 +71,10 @@ public class OrderItem {
 	private void setBook(Book book){
 		this.book = book;
 	}
-	private void setOrders(Set<Orderx> orders){
-		this.orders = orders;
+	private void setOrder(Orderx order){
+		this.order = order;
+	}
+	private void setNumberOf(int numberOf){
+		this.numberOf = numberOf;
 	}
 }

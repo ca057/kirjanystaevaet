@@ -12,10 +12,10 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import appl.data.items.OrderItem;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.data.items.OrderItem;
 import appl.data.items.Orderx;
 import appl.data.items.PLZ;
 import appl.data.items.User;
@@ -86,6 +86,7 @@ public class RootConfig {
 			return cfg.setProperties(createProperties()).buildSessionFactory();
 		} catch (HibernateException e) {
 			System.err.println("Initial SessionFactory creation failed." + e.getMessage());
+			e.printStackTrace();
 			throw new DatabaseInitializationException(e.getMessage());
 		}
 	}
