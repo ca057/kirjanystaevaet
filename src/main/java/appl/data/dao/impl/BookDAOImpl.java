@@ -168,7 +168,6 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public void updateBook(Book book) {
 		getSession().update(book);
-		// TODO implement this
 	}
 
 	@Override

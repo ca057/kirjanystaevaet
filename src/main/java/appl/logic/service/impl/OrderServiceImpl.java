@@ -44,32 +44,75 @@ public class OrderServiceImpl implements OrderService{
 	public int createOrder(Map<String, Integer> isbnsNumberOf, int userId, Calendar cal) throws DatabaseException {
 		
 		Orderx order = new Orderx(cal);
-		for (String isbn : isbnsNumberOf.keySet()){
-			try{
+		try {
+			int orderId = orderDao.insertOrder(order);
+			for (String isbn : isbnsNumberOf.keySet()){
+			
 				Book book = bookDao.getBookByIsbn(isbn);
 				OrderItem orderItem = new OrderItem(book, book.getPrice(), isbnsNumberOf.get(isbn), order);
-				
+					
 				// OrderItem im Buch setzen
 				book.getOrderItems().add(orderItem);
 				// OrderItem in der Order setzen
 				order.getOrderItems().add(orderItem);
-			} catch(HibernateException e){
-				throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+				
+				// OrderItems speichern
+				orderItemDao.insert(orderItem);
+				
+				
 			}
 			
-		}
-		// Order speichern
-		try {
-			int orderId = orderDao.insertOrder(order);
-		}catch(HibernateException e){
+			// Verbindung zwischen User und Order herstellen
+			User user = userService.findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
+			user.getOrders().add(order);
+			order.setUser(user);
+			orderDao.updateOrder(order);
+			
+			return orderId;
+
+		} catch (HibernateException e){
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
-		// Den User updaten
-		
-		User user = userService.findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
-		
-		//return orderId;
-		return 0;
+//		for (String isbn : isbnsNumberOf.keySet()){
+//			try{
+//				Book book = bookDao.getBookByIsbn(isbn);
+//				OrderItem orderItem = new OrderItem(book, book.getPrice(), isbnsNumberOf.get(isbn), order);
+//				
+//				// OrderItem im Buch setzen
+//				book.getOrderItems().add(orderItem);
+//				// OrderItem in der Order setzen
+//				order.getOrderItems().add(orderItem);
+//				
+//				int orderId = orderDao.insertOrder(order);
+//				
+//			} catch(HibernateException e){
+//				throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+//			}
+//			
+//		}
+//		// Order speichern
+//		try {
+//			int orderId = orderDao.insertOrder(order);
+//			
+//			// Der Order den User hinzufügen, order updaten
+//			
+//			User user = userService.findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
+//			Orderx savedOrder = orderDao.getOrderByOrderId(orderId);
+//			// Dem User die neue Order hinzufügen
+//			user.getOrders().add(savedOrder);
+//			// Der Order den User hinzufügen
+//			savedOrder.setUser(user);
+//			// Die Ordernochmals updaten
+//			
+//		}catch(HibernateException e){
+//			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+//		}
+//		// order mit 
+//		
+//		
+//		
+//		//return orderId;
+//		return 0;
 //		// Das ArchivSet, dass in der Order gespeichert wird
 //		Set<OrderItem> orderItems = new HashSet<OrderItem>();
 //		

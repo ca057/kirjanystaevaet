@@ -1,6 +1,7 @@
 package appl.data.items;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "orderx", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "orderId") })
 public class Orderx {
 	private int orderId;
-	private Set<OrderItem> orderItems;
+	private Set<OrderItem> orderItems = new HashSet<OrderItem>();
 	private User user;
 	//private boolean payed; // Brauchen wir das?
 	// Date: Java.utils.Date oder eigene Klasse?
@@ -67,7 +68,7 @@ public class Orderx {
 	*/
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "USERID", nullable = false)
+	@JoinColumn(name = "USERID", nullable = true)
 	public User getUser() {
 		return this.user;
 	}

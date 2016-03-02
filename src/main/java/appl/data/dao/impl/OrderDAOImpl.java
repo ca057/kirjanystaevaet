@@ -51,9 +51,10 @@ public class OrderDAOImpl implements OrderDAO {
 		return null;
 	}
 
-	//@Override
-	public void updateOrder() {
-		// TODO Auto-generated method stub
+	@Override
+	public void updateOrder(Orderx order) {
+		getSession().update(order);
+
 	}
 
 	@Override
@@ -74,5 +75,7 @@ public class OrderDAOImpl implements OrderDAO {
 		}
 	
 	}
+
+	
 
 }
