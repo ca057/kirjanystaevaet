@@ -50,8 +50,12 @@ public class SingleBookController {
 		if (isbn != null && !isbn.isEmpty()) {
 			try {
 				Book book = bookService.getBookByIsbn(isbn);
-				m.addAttribute("book", book);
-				m.addAttribute("authors", bookService.getAuthorByIsbn(book.getIsbn()));
+				if (book.getStock() > 0) {
+					m.addAttribute("book", book);
+					m.addAttribute("authors", bookService.getAuthorByIsbn(book.getIsbn()));
+				} else {
+					m.addAttribute("info", "Das Buch steht derzeit nicht zum Verkauf!");
+				}
 			} catch (DatabaseException e) {
 				m.addAttribute("error",
 						"Ein Fehler ist aufgetreten. Versuchen Sie es zu einem späteren Zeitpunkt noch einmal.");
