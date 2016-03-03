@@ -38,14 +38,14 @@ public class Main {
 		// qf.testAuthorInsert(ctx);
 		// qf.testAuthorDelete(ctx);
 
-		//qf.testInsertBook(ctx);
+		qf.testInsertBook(ctx);
 		// qf.testDeleteBook(ctx);
-		//qf.testInsertOrder(ctx);
+		qf.testInsertOrder(ctx);
 
-		qf.testUser(ctx);
-		qf.testStatistics(ctx);
+		//qf.testUser(ctx);
+		//qf.testStatistics(ctx);
 
-		qf.testGetAuthorsByIsbn(ctx);;
+		//qf.testGetAuthorsByIsbn(ctx);;
 	}
 
 }
