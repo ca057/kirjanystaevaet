@@ -28,9 +28,7 @@ public class SingleBookController {
 			try {
 				Book book = bookService.getBookByIsbn(isbn);
 				m.addAttribute("book", book);
-				// FIXME we need a list of authors here
-				// m.addAttribute("authors",
-				// book.getAuthors().stream().collect(Collectors.toList()));
+				m.addAttribute("authors", bookService.getAuthorByIsbn(book.getIsbn()));
 			} catch (DatabaseException e) {
 				return "book?error";
 			}
