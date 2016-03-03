@@ -31,6 +31,16 @@ public class CategoriesController {
 		this.bookService = bookService;
 	}
 
+	/**
+	 * Adds a list with all existing categories to the model. If an exception
+	 * occurs while querying the category names, the exception is ignored. In
+	 * this case, no list is added to the model and the view will render an
+	 * error message.
+	 * 
+	 * @param m
+	 *            the model for the view
+	 * @return the name of the view responsible for displaying the categories
+	 */
 	@RequestMapping(value = "/kategorien", method = RequestMethod.GET)
 	public String getCategoryOverview(Model m) {
 		try {
@@ -42,10 +52,28 @@ public class CategoriesController {
 		return "categories";
 	}
 
+	/**
+	 * If the URL contains a category name as path variable, this method tries
+	 * to resolve it to an existing one. If an existing category is found, its
+	 * correct name and all its books are added to the model.
+	 * 
+	 * If an exception occurs, this method will return a redirect to the
+	 * category overview.
+	 * 
+	 * @param category
+	 *            the name of the category, upper or lower case does not matter
+	 * @param m
+	 *            the model for the view
+	 * @return the name of the view responsible for displaying a category and
+	 *         its books or a redirect to the category overview
+	 */
 	@RequestMapping(value = "/kategorie/{category}", method = RequestMethod.GET)
 	public String getCategory(@PathVariable("category") String category, Model m) {
 		try {
-			m.addAttribute("name", getCorrectCategoryName(category));
+			m.addAttribute("name",
+					bookService.getAllCategoryNames().stream()
+							.filter(c -> c.toUpperCase().equals(category.toUpperCase())).findFirst().orElseThrow(
+									() -> new CategoryNotFoundException("The searched category could not be found.")));
 			// TODO change method for querying book
 			m.addAttribute("books", bookService.getBooksByCategory(category).stream().filter(b -> b.getStock() > 0)
 					.collect(Collectors.toList()));
@@ -53,43 +81,5 @@ public class CategoriesController {
 		} catch (CategoryNotFoundException | DatabaseException e) {
 			return "redirect:/kategorien";
 		}
-	}
-
-	/**
-	 * Checks if the passed category is existing, upper/lower cases are ignored.
-	 * 
-	 * @param category
-	 * @return {@code true} if the category exists, {@code false} otherwise or
-	 *         if an error occurred
-	 */
-	private boolean isExistingCategory(String category) {
-		try {
-			return bookService.getAllCategoryNames().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
-					.contains(category.toUpperCase());
-		} catch (DatabaseException e) {
-			return false;
-		}
-	}
-
-	/**
-	 * Returns the correct formatted category name for displaying it in the
-	 * views.
-	 * 
-	 * @param category
-	 * @return the correct formatted category as {@code String}
-	 * @throws CategoryNotFoundException
-	 *             if the given category does not exist
-	 * @throws DatabaseException
-	 *             if an error occurs while querying the category names
-	 */
-	private String getCorrectCategoryName(String category) throws CategoryNotFoundException, DatabaseException {
-		if (isExistingCategory(category)) {
-			for (String c : bookService.getAllCategoryNames()) {
-				if (category.toUpperCase().equals(c.toUpperCase())) {
-					return c;
-				}
-			}
-		}
-		throw new CategoryNotFoundException("Die Kategorie " + category + " wurde nicht gefunden.");
 	}
 }
