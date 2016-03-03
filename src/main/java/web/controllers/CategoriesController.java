@@ -20,24 +20,24 @@ import exceptions.data.DatabaseException;
 public class CategoriesController {
 
 	@Autowired
-	private BookService service;
+	private BookService bookService;
 
 	/**
 	 * Setter injection for the {@link CategoryService} bean.
 	 * 
-	 * @param service
+	 * @param bookService
 	 */
-	public void setService(BookService service) {
-		this.service = service;
+	public void setService(BookService bookService) {
+		this.bookService = bookService;
 	}
 
 	@RequestMapping(value = "/kategorien", method = RequestMethod.GET)
 	public String getCategoryOverview(Model m) {
 		try {
-			m.addAttribute("allCategories", service.getAllCategoryNames());
-		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			m.addAttribute("allCategories", bookService.getAllCategoryNames());
+		} catch (DatabaseException ignore) {
+			// if the view doesn't have a list with the category names, it will
+			// render an error message
 		}
 		return "categories";
 	}
@@ -47,7 +47,7 @@ public class CategoriesController {
 		try {
 			m.addAttribute("name", getCorrectCategoryName(category));
 			return "categories";
-		} catch (CategoryNotFoundException e) {
+		} catch (CategoryNotFoundException | DatabaseException e) {
 			return "redirect:/kategorien";
 		}
 	}
@@ -56,19 +56,15 @@ public class CategoriesController {
 	 * Checks if the passed category is existing, upper/lower cases are ignored.
 	 * 
 	 * @param category
-	 * @return {@code true} if the category exists, {@code false} otherwise
+	 * @return {@code true} if the category exists, {@code false} otherwise or
+	 *         if an error occurred
 	 */
-	private boolean checkIfExistingCategory(String category) {
-		if (service == null) {
-			throw new IllegalArgumentException("Service is null");
-		}
+	private boolean isExistingCategory(String category) {
 		try {
-			return service.getAllCategoryNames().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
+			return bookService.getAllCategoryNames().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
 					.contains(category.toUpperCase());
 		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false; // Eingefügt von MAdeleine, was wollt ihr wirklich machen?
+			return false;
 		}
 	}
 
@@ -80,18 +76,15 @@ public class CategoriesController {
 	 * @return the correct formatted category as {@code String}
 	 * @throws CategoryNotFoundException
 	 *             if the given category does not exist
+	 * @throws DatabaseException
+	 *             if an error occurs while querying the category names
 	 */
-	private String getCorrectCategoryName(String category) throws CategoryNotFoundException {
-		if (checkIfExistingCategory(category)) {
-			try {
-				for (String c : service.getAllCategoryNames()) {
-					if (category.toUpperCase().equals(c.toUpperCase())) {
-						return c;
-					}
+	private String getCorrectCategoryName(String category) throws CategoryNotFoundException, DatabaseException {
+		if (isExistingCategory(category)) {
+			for (String c : bookService.getAllCategoryNames()) {
+				if (category.toUpperCase().equals(c.toUpperCase())) {
+					return c;
 				}
-			} catch (DatabaseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 		throw new CategoryNotFoundException("Die Kategorie " + category + " wurde nicht gefunden.");
