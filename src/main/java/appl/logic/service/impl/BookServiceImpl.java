@@ -312,9 +312,7 @@ public class BookServiceImpl implements BookService {
 		Author author = ab.setNameF(nameF).setNameL(nameL).createAuthor();
 		System.out.println("\n\nEinmal den Autor checken\n\n" + author.toString());
 		int id = authorDao.insertAuthor(author);
-		// TODO in der Datenbank speichern? -> Ja und dann nur die ID zurück
-		// geben
-		System.out.println("BookserviceImpl. insert Book nach insertAuthor\n\n\n id = " + id);
+
 		return id;
 
 	}
@@ -339,6 +337,7 @@ public class BookServiceImpl implements BookService {
 	public List<Book> getAllBooks() throws DatabaseException {
 		try {
 			return bookDao.getAllBooks();
+
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
@@ -489,6 +488,14 @@ public class BookServiceImpl implements BookService {
 			}
 		}
 
+		int stock = 0;
+		if (map.get(Searchfields.stock) != null) {
+			if (!containsOnlyNumbers(map.get(Searchfields.stock))) {
+				throw new IllegalArgumentException(ErrorMessageHelper.mayContainOnlyNumbers("Stock"));
+			}
+			stock = Integer.parseInt(map.get(Searchfields.stock));
+		}
+
 		BookBuilder bb = builderFactory.getBookBuilder();
 		double price = Double.parseDouble(map.get(Searchfields.price));
 
@@ -514,7 +521,7 @@ public class BookServiceImpl implements BookService {
 				.setDescription(map.get(Searchfields.description)).setPrice(price)
 				.setPublisher(map.get(Searchfields.publisher)).setPubdate(map.get(Searchfields.pubdate))
 				.setEdition(map.get(Searchfields.edition)).setPages(map.get(Searchfields.pages))
-				.setCategories(categories).createBook();
+				.setCategories(categories).setStock(stock).createBook();
 
 		try {
 			bookDao.insertBook(newBook);
@@ -523,6 +530,15 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError("Book could not be inserted"));
 		}
+
+	}
+
+	@Override
+	public int updateStock(String isbn, int additional) throws DatabaseException {
+		Book book = bookDao.getBookByIsbn(isbn);
+		int newStock = book.addToStock(additional);
+		bookDao.updateBook(book);
+		return newStock;
 
 	}
 
@@ -561,6 +577,32 @@ public class BookServiceImpl implements BookService {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int getVisitCount(String isbn) throws DatabaseException {
+		try {
+			Book book = bookDao.getBookByIsbn(isbn);
+			return book.getVisitCount();
+		} catch (EntityDoesNotExistException e) {
+			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
+		} catch (HibernateException e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+
+	}
+
+	@Override
+	public int increaseVisitCount(String isbn, int additional) throws DatabaseException {
+		try {
+			Book book = bookDao.getBookByIsbn(isbn);
+			book.setVisitCount(book.getVisitCount() + additional);
+			return bookDao.getBookByIsbn(isbn).getVisitCount();
+		} catch (EntityDoesNotExistException e) {
+			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
+		} catch (HibernateException e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 
 	/*
