@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -17,8 +18,11 @@ import appl.data.enums.Searchfields;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.data.items.OrderItem;
+import appl.data.items.Orderx;
 import appl.data.items.User;
 import appl.logic.service.BookService;
+import appl.logic.service.OrderService;
 import appl.logic.service.UserService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.CategoryExistsException;
@@ -43,10 +47,35 @@ public class QueryFun {
 		System.exit(0);
 	}
 
+	public void testStatistics(ApplicationContext ctx) {
+		UserService service = ctx.getBean(UserService.class);
+		Calendar date = new Calendar.Builder().setDate(2016, 3, 1).build();
+		try {
+			service.updateUserBookStatistic(2, "0201433362", date);
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
+		try {
+			System.out.println("Statistiken: " + service.getUserBookStatistics(2));
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	public void testExceptions(ApplicationContext ctx) throws DatabaseException {
 		BookService service = ctx.getBean(BookService.class);
 
 		service.getCategoryByExactName("Some Shit");
+	}
+	
+	public void testGetAuthorsByIsbn(ApplicationContext ctx)throws DatabaseException{
+		BookService service = ctx.getBean(BookService.class);
+		List<Author> authors = service.getAuthorByIsbn("0131428985");
+		System.out.println("Authors must be Thomas Somenthing");
+		for(Author a : authors){
+			System.out.println(a.toString());
+		}
 	}
 
 	public void testCategoryInsert(ApplicationContext ctx) throws CategoryExistsException, DatabaseException {
@@ -166,6 +195,7 @@ public class QueryFun {
 			bookMap2.put(Searchfields.price, "34.56");
 			bookMap2.put(Searchfields.isbn, "9101010101");
 			bookMap2.put(Searchfields.pages, "1234");
+			bookMap2.put(Searchfields.stock, "8");
 			Category category = service.getCategoryByExactName("Children's Fantasy");
 			try {
 
@@ -199,19 +229,21 @@ public class QueryFun {
 		for (Book b : bookList) {
 			System.out.println(b.toString());
 		}
-		List<Category> categoryList = service.getAllCategories();
-		System.out.println("\n\nCategories after insert2");
-		for (Category cat : categoryList) {
-			System.out.println(cat.getCategoryName());
-		}
+		/*
+		 * List<Category> categoryList = service.getAllCategories();
+		 * System.out.println("\n\nCategories after insert2"); for (Category cat
+		 * : categoryList) { System.out.println(cat.getCategoryName()); }
+		 */
 
-		Category cat = service.getCategoryByExactName("Children's Fantasy");
-		Set<Book> bookOfCat = cat.getBooks();
-		System.out.println("\nTest getBooks\n");
-		for (Book b : bookOfCat) {
-			System.out.println(b.toString());
-		}
-
+		/*
+		 * 
+		 * 
+		 * >>>>>>> refs/remotes/origin/master Category cat =
+		 * service.getCategoryByExactName("Children's Fantasy"); Set<Book>
+		 * bookOfCat = cat.getBooks(); System.out.println("\nTest getBooks\n");
+		 * for (Book b : bookOfCat) { System.out.println(b.toString()); }
+		 * <<<<<<< HEAD
+		 */
 	}
 
 	public void testDeleteBook(ApplicationContext ctx) throws DatabaseException {
@@ -229,9 +261,92 @@ public class QueryFun {
 		}
 
 	}
+
+	public void testInsertOrder(ApplicationContext ctx) throws DatabaseException {
+		BookService dataService = ctx.getBean(BookService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
+		UserService userService = ctx.getBean(UserService.class);
+
+		List<User> users = userService.getUsers();
+		System.out.println("List of Users");
+		for (User u : users) {
+			System.out.println(u.toString());
+		}
+
+		User user = userService.findByID(2).get();
+		List<Book> books = dataService.getAllBooks();
+		/*
+		 * for (Book b : books){ System.out.println(b.toString()); }
+		 */
+		// Book book = dataService.getBookByIsbn("9101010101");
+		// Set<String> isbns = new HashSet<String>();
+		// isbns.add("9101010101");
+		Map<String, Integer> isbns = new HashMap<String, Integer>();
+		isbns.put("9101010101", 2);
+		Calendar cal = Calendar.getInstance();
+		int orderId = orderService.createOrder(isbns, user.getUserId(), cal);
+		System.out.println("OrderId " + orderId + " ");
+		Set<Orderx> ordersOfThisUser = userService.findByID(2).get().getOrders();
+		// Set<Orderx> ordersOfThisUser = user.getOrders();
+		System.out.println("\nOrder of this User amunt \n" + ordersOfThisUser.size());
+		for (Orderx o : ordersOfThisUser) {
+			Set<OrderItem> items = o.getOrderItems();
+			System.out.println("Größe der Bestellung" + o.getOrderItems().size());
+			for (OrderItem a : items) {
+				System.out.println("Title " + a.getBook().getTitle() + "Stock " + a.getBook().getStock());
+			}
+		}
+
+		// Zweite Order
+		Map<String, Integer> isbns2 = new HashMap<String, Integer>();
+		isbns2.put("9101010101", 1);
+		isbns2.put("0101010101", 1);
+		isbns2.put("1590595726", 1);
+
+		Calendar cal2 = Calendar.getInstance();
+		int orderId2 = orderService.createOrder(isbns2, 1, cal2);
+		System.out.println("OrderId " + orderId2 + " ");
+
+		Set<Orderx> userOrders = userService.findByID(1).get().getOrders();
+		System.out.println("\n\nGet Order of user\nSize " + userOrders.size() + "\n");
+		for (Orderx o : userOrders) {
+			System.out.println(o.toString());
+		}
+
+		List<Orderx> allOrders = orderService.getAllOrders();
+		System.out.println("\n\nGet all orders\n\n");
+		System.out.println("Size of Orderlist: " + allOrders.size());
+		for (Orderx o : allOrders) {
+			System.out.println(o.toString());
+		}
+
+		List<OrderItem> allOrderItems = orderService.getAllOrderItems();
+		System.out.println("\n all order items size: \n" + allOrderItems.size());
+		for (OrderItem o : allOrderItems) {
+			System.out.println(o.toString());
+		}
+
+	}
 	/*
+	 * 
 	 * public void doSomeOrderTesting(ApplicationContext ctx) { SessionFactory
 	 * sessionFactory = ctx.getBean(SessionFactory.class);
+	 * sessionFactory.getCurrentSession().beginTransaction(); Order order =
+	 * createOrderTestData(); OrderDAO oDao = ctx.getBean(OrderDAO.class);
+	 * oDao.insertOrder(order);
+	 * 
+	 * //ToDo Orderabfragen
+	 * 
+	 * }
+	 */
+	/*
+	 * public Order createOrderTestData() { Set<Book> book = createTestData();
+	 * User user = createUserTestData(); Order order = new Order(book, user,
+	 * 1990, 8, 6, 0, 4, 12); return order;
+	 * 
+	 * 
+	 * } /* public void doSomeOrderTesting(ApplicationContext ctx) {
+	 * SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
 	 * sessionFactory.getCurrentSession().beginTransaction(); Order order =
 	 * createOrderTestData(); OrderDAO oDao = ctx.getBean(OrderDAO.class);
 	 * oDao.insertOrder(order);

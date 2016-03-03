@@ -1,6 +1,7 @@
 
 package appl.logic.service;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -8,9 +9,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import appl.data.enums.Userfields;
-import appl.data.items.Book;
 import appl.data.items.PLZ;
 import appl.data.items.User;
+import appl.data.items.UserBookStatistic;
 import exceptions.data.DatabaseException;
 
 /**
@@ -221,7 +222,8 @@ public interface UserService {
 	 * @throws DatabaseException
 	 *             if an error occurs while interacting with the underlying DAO
 	 */
-	public List<Book> getVisitedBooks(int userId) throws DatabaseException;
+	// TODO Update Javadoc
+	public List<UserBookStatistic> getUserBookStatistics(int userId) throws DatabaseException;
 
 	/**
 	 * Updates the list of the recently seen books.
@@ -234,7 +236,7 @@ public interface UserService {
 	 * @throws DatabaseException
 	 *             if an error occurs while interacting with the underlying DAO
 	 */
-	public boolean updateVisitedBooks(int userId, String isbn) throws DatabaseException;
+	boolean updateUserBookStatistic(int userId, String isbn, Calendar date) throws DatabaseException;
 
 	/**
 	 * Checks which objects of {@link PLZ} contain a specific postal code and
@@ -258,4 +260,5 @@ public interface UserService {
 	 *             if an error occurs while interacting with the underlying DAO
 	 */
 	public Optional<PLZ> getPLZ(int plzId) throws DatabaseException;
+
 }

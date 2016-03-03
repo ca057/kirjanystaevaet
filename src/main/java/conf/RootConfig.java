@@ -8,17 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import appl.data.dao.ArchiveBook;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
-import appl.data.items.Order;
+import appl.data.items.OrderItem;
+import appl.data.items.Orderx;
 import appl.data.items.PLZ;
 import appl.data.items.User;
+import appl.data.items.UserBookStatistic;
 import appl.logic.admin.Initialization;
 import exceptions.data.DatabaseInitializationException;
 
@@ -38,6 +40,7 @@ import exceptions.data.DatabaseInitializationException;
 @Configuration
 @ComponentScan({ "appl.logic.service", "appl.data.dao", "appl.data.builder", "appl.logic.admin", "appl.data.items" })
 @EnableTransactionManagement
+@EnableAspectJAutoProxy
 public class RootConfig {
 
 	@Autowired
@@ -79,13 +82,15 @@ public class RootConfig {
 			cfg.addAnnotatedClass(Author.class);
 			cfg.addAnnotatedClass(Book.class);
 			cfg.addAnnotatedClass(Category.class);
-			cfg.addAnnotatedClass(Order.class);
+			cfg.addAnnotatedClass(Orderx.class);
 			cfg.addAnnotatedClass(PLZ.class);
 			cfg.addAnnotatedClass(User.class);
-			cfg.addAnnotatedClass(ArchiveBook.class);
+			cfg.addAnnotatedClass(OrderItem.class);
+			cfg.addAnnotatedClass(UserBookStatistic.class);
 			return cfg.setProperties(createProperties()).buildSessionFactory();
 		} catch (HibernateException e) {
 			System.err.println("Initial SessionFactory creation failed." + e.getMessage());
+			e.printStackTrace();
 			throw new DatabaseInitializationException(e.getMessage());
 		}
 	}
@@ -97,8 +102,8 @@ public class RootConfig {
 		prop.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
 		// TODO Autoserver (automatic mixed mode)
 		prop.setProperty("hibernate.connection.url", "jdbc:h2:./database/kirjanystaevaet;AUTO_SERVER=TRUE");
-		// prop.setProperty("hibernate.c3p0.idle_test_period", "30");
-		prop.setProperty("hibernate.c3p0.testConnectionOnCheckout", "true");
+		prop.setProperty("hibernate.c3p0.idle_test_period", "10");
+		prop.setProperty("hibernate.c3p0.testConnectionOnCheckin", "true");
 		prop.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 		prop.setProperty("hibernate.current_session_context_class",
 				"org.springframework.orm.hibernate5.SpringSessionContext");

@@ -2,9 +2,7 @@ package appl.data.dao.impl;
 
 import java.util.List;
 
-
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -13,9 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import appl.data.dao.AuthorDAO;
 import appl.data.items.Author;
-import appl.data.items.Book;
-import appl.data.items.Category;
-import exceptions.data.AuthorNotFoundException;
 import exceptions.data.EntityDoesNotExistException;
 
 @Repository
@@ -106,6 +101,15 @@ public class AuthorDAOImpl implements AuthorDAO {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq("nameF", nameF));
 		cr.add(Restrictions.eq("nameL", nameL));
+		List<Author> authors = (List<Author>) cr.list();
+		return authors;
+	}
+
+	@Override
+	public List<Author> getAuthorsByIsbn(String isbn) {
+		Criteria cr = setupAndGetCriteria();
+		cr.createAlias("books", "b");
+		cr.add(Restrictions.eq("b.isbn", isbn));
 		List<Author> authors = (List<Author>) cr.list();
 		return authors;
 	}

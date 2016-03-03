@@ -14,7 +14,9 @@ import org.springframework.stereotype.Repository;
 import appl.data.dao.BookDAO;
 import appl.data.enums.Searchfields;
 import appl.data.items.Book;
+import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
+import exceptions.data.ErrorMessageHelper;
 
 @Repository
 public class BookDAOImpl implements BookDAO {
@@ -144,7 +146,7 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	//public String insertBook(Book book) throws IsbnAlreadyExistsException {
-	public String insertBook(Book book){
+	public String insertBook(Book book) throws DatabaseException{
 		Object id = getSession().save(book);
 			
 		
@@ -152,9 +154,8 @@ public class BookDAOImpl implements BookDAO {
 		if (id != null && id instanceof String ){	
 			return (String) id;
 		} else {
-			// TODO Fehlerbehandlung, wenn Insert Book nicht funktioniert
-			//throw new IsbnAlreadyExistsException();
-			return null;
+			throw new DatabaseException(ErrorMessageHelper.insertFailed("book"));
+
 		}
 	}
 
@@ -165,8 +166,20 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	public void updateBook(Book book, Map<Searchfields, String> map) {
-		// TODO implement this
+	public void updateBook(Book book) {
+		getSession().update(book);
+	}
+
+	@Override
+	public void decrementStock(String isbn, int decrement) throws DatabaseException {
+		Book book = (Book) getSession().get(Book.class, isbn);
+		if (book.getStock()>0){
+			book.decrementStock(decrement);
+			getSession().update(book);
+		} else {
+			throw new DatabaseException(ErrorMessageHelper.stockIsNull());
+		}
+		
 	}
 
 }
