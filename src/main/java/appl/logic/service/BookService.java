@@ -43,7 +43,9 @@ public interface BookService {
 
 	// Author Methoden
 	// Abfragen
-
+	
+	public List<Author> getAuthorByIsbn(String isbn)throws DatabaseException;
+ 
 	public List<Author> getAuthorByExactName(String NameF, String NameL) throws DatabaseException;
 
 	public Author getAuthorById(int id) throws DatabaseException;

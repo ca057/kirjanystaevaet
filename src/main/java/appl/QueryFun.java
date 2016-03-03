@@ -68,6 +68,15 @@ public class QueryFun {
 
 		service.getCategoryByExactName("Some Shit");
 	}
+	
+	public void testGetAuthorsByIsbn(ApplicationContext ctx)throws DatabaseException{
+		BookService service = ctx.getBean(BookService.class);
+		List<Author> authors = service.getAuthorByIsbn("0131428985");
+		System.out.println("Authors must be Thomas Somenthing");
+		for(Author a : authors){
+			System.out.println(a.toString());
+		}
+	}
 
 	public void testCategoryInsert(ApplicationContext ctx) throws CategoryExistsException, DatabaseException {
 		BookService service = ctx.getBean(BookService.class);

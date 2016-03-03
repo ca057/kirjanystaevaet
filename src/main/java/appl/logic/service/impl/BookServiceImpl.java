@@ -294,6 +294,17 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+	@Override
+	public List<Author> getAuthorByIsbn(String isbn) throws DatabaseException {
+		try{
+			List<Author> authors = authorDao.getAuthorsByIsbn(isbn);
+			return authors;
+
+			
+		} catch(HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+	}
 
 	@Override
 	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws AuthorMayExistException {
@@ -604,6 +615,8 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+
+	
 
 	/*
 	 * @Override public void insertBook(Map<Searchfields, String> map, boolean
