@@ -1,8 +1,9 @@
 package web.controllers;
 
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ import appl.data.items.Book;
 import appl.data.items.Cart;
 import appl.data.items.User;
 import appl.logic.service.BookService;
+import appl.logic.service.OrderService;
 import exceptions.data.DatabaseException;
 
 @Controller
@@ -32,8 +34,8 @@ public class CartController {
 	@Autowired
 	private BookService bookService;
 
-	// @Autowired
-	// private OrderService orderService;
+	@Autowired
+	private OrderService orderService;
 
 	@Autowired
 	private Cart cart;
@@ -85,18 +87,20 @@ public class CartController {
 		return "cart";
 	}
 
-	@RequestMapping(value = "/bestellen", method = RequestMethod.POST)
-	public String orderContent() {
+	@RequestMapping(value = "/bestellen", method = RequestMethod.GET)
+	public String orderContent() throws DatabaseException {
 		User user = getUser();
 		if (user.getStreet() != null && user.getStreetnumber() != null) {
 			// TODO: In der Bedingung user.getPlz() != null ergänzen, wenn sie
 			// gesetzt wird
-			Set<String> isbns = new HashSet<String>();
+			Map<String, Integer> isbns = new HashMap<String, Integer>();
 			Calendar cal = Calendar.getInstance();
+			int amount = 0;
 			for (Book b : cart.getBooks()) {
-				isbns.add(b.getIsbn());
+				amount = Collections.frequency(cart.getBooks(), b);
+				isbns.put(b.getIsbn(), amount);
 			}
-			// orderService.createOrder(isbns, userId, cal);
+			orderService.createOrder(isbns, user.getUserId(), cal);
 			// TODO orderService.METHOD
 			cart.deleteContent();
 		}
