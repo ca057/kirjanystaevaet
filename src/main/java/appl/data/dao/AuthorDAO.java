@@ -5,13 +5,14 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import appl.data.items.Author;
-import exceptions.data.AuthorNotFoundException;
 import exceptions.data.EntityDoesNotExistException;
 
 @Transactional
 public interface AuthorDAO {
 
 	public List<Author> getAuthors();
+	
+	public List<Author> getAuthorsByIsbn(String isbn);
 
 	public List<Author> getAuthorsByNameF(String nameF);
 
