@@ -46,6 +46,9 @@ public class CategoriesController {
 	public String getCategory(@PathVariable("category") String category, Model m) {
 		try {
 			m.addAttribute("name", getCorrectCategoryName(category));
+			// TODO change method for querying book
+			m.addAttribute("books", bookService.getBooksByCategory(category).stream().filter(b -> b.getStock() > 0)
+					.collect(Collectors.toList()));
 			return "categories";
 		} catch (CategoryNotFoundException | DatabaseException e) {
 			return "redirect:/kategorien";

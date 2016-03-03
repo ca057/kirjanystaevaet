@@ -9,9 +9,11 @@
 		</c:when>
 		<c:otherwise>
 			<h2><c:out value="${book.getTitle()}" /></h2>
-			<c:when test="${info != null}">
-				<p class="error"><c:out value="${info}"></c:out> </p>
-			</c:when>
+			<c:choose>
+				<c:when test="${!info.isEmpty()}">
+					<p class="error"><c:out value="${info}"></c:out> </p>
+				</c:when>			
+			</c:choose>
 			<p>von
 				<c:set var="delimiter" value="" scope="request"></c:set><c:forEach var="a" items="${authors}">${delimiter}<c:out value="${a.getNameF()}" /> <c:out value="${a.getNameL()}" /><c:set var="delimiter" value=", " scope="request"></c:set></c:forEach>
 			</p>
