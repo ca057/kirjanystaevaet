@@ -4,12 +4,10 @@
 <section>
 	<h2><c:out value="${book.getTitle()}" /></h2>
 	<p>von
-		<%-- this is needed for displaying the authors, but we need a list in the controller first
 		<c:set var="delimiter" value="" scope="request"></c:set><c:forEach var="a" items="${authors}">${delimiter}<c:out value="${a.getNameF()}" /> <c:out value="${a.getNameL()}" /><c:set var="delimiter" value=", " scope="request"></c:set></c:forEach>
-		--%> 
 	</p>
 	<h4>Beschreibung</h4>
-	<p><c:out value="${book.getDescription()}"></c:out></p>
+	<p><c:out value="${book.getDescription()}" escapeXml="false"></c:out></p>
 	<img class="book-cover" src="<c:url value="/img/cover/${book.getIsbn()}.jpg"/>" title="<c:out value="Cover des Buchs '${book.getTitle()}'"/>">
 
 	<div class="add-to-cart">
