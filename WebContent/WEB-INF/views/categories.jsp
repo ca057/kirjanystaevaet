@@ -13,11 +13,18 @@
 			</ul>
 		</c:when>
 		<c:otherwise>
-			<!-- es gibt kein Attribut mit allen Kategorien, also muss es eine einzelne Kategorie sein -->
-			<h2><c:out value='${name}'/></h2>
-			<article>
-				<p>Folgende Bücher haben wir zu <c:out value='${name}' /></p>
-			</article>
+			<!-- es gibt kein Attribut mit allen Kategorien, also muss es ein Fehler oder eine einzelne Kategorie sein -->
+			<c:choose>
+				<c:when test="${param.error != null}">
+					<p>Es ist ein Fehler bei der Abfrage aufgetreten. Versuchen Sie es zu einem späteren Zeitpunkt noch einmal.</p>
+				</c:when>
+				<c:otherwise>
+					<h2><c:out value='${name}'/></h2>
+					<article>
+						<p>Folgende Bücher haben wir zu <c:out value='${name}' /></p>
+					</article>
+				</c:otherwise>
+			</c:choose>
 		</c:otherwise>	
 	</c:choose>
 </section>
