@@ -14,7 +14,7 @@
 
 	<c:if test="${bookOfTheDay != null}">
 		<article>
-			<h3>Unser Buch des Tages</h3>
+			<h3>Unser Buch des Moments</h3>
 			<h4><c:out value="${bookOfTheDay.getTitle()}"></c:out></h4>
 			<p>von
 				<c:set var="delimiter" value="" scope="request"></c:set><c:forEach var="a" items="${bookOfTheDay.getAuthors()}">${delimiter}<c:out value="${a.getNameF()}" /> <c:out value="${a.getNameL()}" /><c:set var="delimiter" value=", " scope="request"></c:set></c:forEach>
