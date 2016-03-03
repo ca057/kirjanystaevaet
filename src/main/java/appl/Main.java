@@ -42,8 +42,8 @@ public class Main {
 		// qf.testDeleteBook(ctx);
 		//qf.testInsertOrder(ctx);
 
-		//qf.testUser(ctx);
-		//qf.testStatistics(ctx);
+		qf.testUser(ctx);
+		qf.testStatistics(ctx);
 
 		qf.testGetAuthorsByIsbn(ctx);;
 	}
