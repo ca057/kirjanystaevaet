@@ -39,7 +39,7 @@ public class Main {
 		// qf.testAuthorDelete(ctx);
 
 		qf.testInsertBook(ctx);
-		// qf.testDeleteBook(ctx);
+		 qf.testDeleteBook(ctx);
 		qf.testInsertOrder(ctx);
 
 		//qf.testUser(ctx);

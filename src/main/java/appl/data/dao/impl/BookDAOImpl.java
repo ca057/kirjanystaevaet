@@ -182,4 +182,11 @@ public class BookDAOImpl implements BookDAO {
 		
 	}
 
+	@Override
+	public void setStockToNegative(String isbn) {
+		Book book = (Book) getSession().get(Book.class, isbn);
+		book.setStock(-1);
+		getSession().update(book);
+	}
+
 }
