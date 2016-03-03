@@ -63,7 +63,7 @@ public class Author {
 		this.nameL = nameL;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "authors")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "authors")
 	public Set<Book> getBooks() {
 		return books;
 	}
