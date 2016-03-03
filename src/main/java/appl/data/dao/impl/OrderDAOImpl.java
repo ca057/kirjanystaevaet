@@ -112,6 +112,9 @@ public class OrderDAOImpl implements OrderDAO {
 				// OrderItems speichern
 				orderItemDao.insert(orderItem);
 				
+				// Stock in Books updaten
+				
+				bookDao.decrementStock(isbn, isbnsNumberOf.get(isbn));
 				
 			}
 			

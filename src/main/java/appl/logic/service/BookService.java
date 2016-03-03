@@ -112,7 +112,7 @@ public interface BookService {
 	// authorIds, Set<Integer> categoryIds)throws IsbnAlreadyExistsException ;
 	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds)
 			throws DatabaseException;
-			// Update
+	// Update
 
 	// Update Stock
 	/**
