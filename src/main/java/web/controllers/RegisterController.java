@@ -66,6 +66,18 @@ public class RegisterController {
 		return "register";
 	}
 
+	/**
+	 * Handles a JSON request with the data of a new user. Request must be of
+	 * type POST. It returns the passed data as JSON, the password field of the
+	 * response will be empty. If registering a new user was not successful, an
+	 * error code as status code is returned, a success code otherwise.
+	 * 
+	 * @param req
+	 *            the {@link UserJSONWrapper} with the data of the new user to
+	 *            register
+	 * @return a {@link ResponseEntity} with a {@link UserJSONWrapper} either
+	 *         with a success or an error status code
+	 */
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<UserJSONWrapper> add(@RequestBody final UserJSONWrapper req) {
 		System.out.println(req.getName());
