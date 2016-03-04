@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "archivebook", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "orderItemId") })
+@Table(name = "orderItem", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "orderItemId") })
 public class OrderItem {
 	private int orderItemId;
 	double price;

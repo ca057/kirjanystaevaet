@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import appl.data.items.Book;
 import appl.data.items.OrderItem;
 import appl.data.items.Orderx;
 import exceptions.data.DatabaseException;
@@ -26,4 +27,5 @@ public interface OrderService {
 	public List<Orderx> getAllOrders() throws DatabaseException;
 	public List<OrderItem> getAllOrderItems() throws DatabaseException;
 	public Set<Orderx> getOrdersByUserid(int userId) throws DatabaseException;
+	public List<Book> getOrderedBooksOfUser(int userId) throws DatabaseException;
 }

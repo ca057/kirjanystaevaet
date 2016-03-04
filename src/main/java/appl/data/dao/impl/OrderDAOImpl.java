@@ -65,7 +65,6 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override
 	public List<Orderx> getOrdersByUserId(int userId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -129,6 +128,20 @@ public class OrderDAOImpl implements OrderDAO {
 		} catch (HibernateException e){
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
+	}
+
+	@Override
+	public List<Book> getOrderedBook(int userId) {
+		System.out.println("\nBegin orderDao.getOrderedBook\n");
+		String id = String.valueOf(userId);
+		System.out.println("\n casted integer to string\n");
+		Session s = getSession();
+		Criteria cr = s.createCriteria(Book.class, "book");
+		System.out.println("Created Book Criteris\n");
+		cr.createAlias("book.orderItems", "oi").createAlias("oi.order", "o").createAlias("o.user", "u");
+		System.out.println("Created Aliasse\n");
+		cr.add(Restrictions.eq("u.userId", userId));
+		return (List<Book>) cr.list();
 	}
 
 	

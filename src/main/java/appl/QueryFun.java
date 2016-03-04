@@ -281,13 +281,13 @@ public class QueryFun {
 		// Book book = dataService.getBookByIsbn("9101010101");
 		// Set<String> isbns = new HashSet<String>();
 		// isbns.add("9101010101");
-		Map<String, Integer> isbns = new HashMap<String, Integer>();
-		isbns.put("9101010101", 2);
-		Calendar cal = Calendar.getInstance();
-		int orderId = orderService.createOrder(isbns, user.getUserId(), cal);
-		List<Book> books4 = dataService.getAllBooks();
-		
-		 for (Book b : books4){ System.out.println(b.toString()); }
+//		Map<String, Integer> isbns = new HashMap<String, Integer>();
+//		isbns.put("9101010101", 2);
+//		Calendar cal = Calendar.getInstance();
+//		int orderId = orderService.createOrder(isbns, user.getUserId(), cal);
+//		List<Book> books4 = dataService.getAllBooks();
+//		
+		// for (Book b : books4){ System.out.println(b.toString()); }
 		//System.out.println("OrderId " + orderId + " ");
 		//Set<Orderx> ordersOfThisUser = userService.findByID(2).get().getOrders();
 		// Set<Orderx> ordersOfThisUser = user.getOrders();
@@ -301,28 +301,32 @@ public class QueryFun {
 //		}
 
 //		// Zweite Order
-//		Map<String, Integer> isbns2 = new HashMap<String, Integer>();
-//		isbns2.put("9101010101", 1);
-//		isbns2.put("0101010101", 1);
-//		isbns2.put("1590595726", 1);
-//
-//		Calendar cal2 = Calendar.getInstance();
-//		int orderId2 = orderService.createOrder(isbns2, 1, cal2);
-//		System.out.println("OrderId " + orderId2 + " ");
-//
-//		Set<Orderx> userOrders = userService.findByID(1).get().getOrders();
+		Map<String, Integer> isbns2 = new HashMap<String, Integer>();
+		isbns2.put("9101010101", 1);
+		isbns2.put("0101010101", 1);
+		isbns2.put("1590595726", 1);
+
+		Calendar cal2 = Calendar.getInstance();
+		int orderId2 = orderService.createOrder(isbns2, 1, cal2);
+		//System.out.println("OrderId " + orderId2 + " ");
+		List<Book> orderedBooks = orderService.getOrderedBooksOfUser(1);
+		System.out.println("\nOrdered Books of User 1\n");
+		for (Book b : orderedBooks){
+			System.out.println(b.toString());
+		}
+		//Set<Orderx> userOrders = userService.findByID(1).get().getOrders();
 //		System.out.println("\n\nGet Order of user\nSize " + userOrders.size() + "\n");
 //		for (Orderx o : userOrders) {
 //			System.out.println(o.toString());
 //		}
-//
+
 //		List<Orderx> allOrders = orderService.getAllOrders();
 //		System.out.println("\n\nGet all orders\n\n");
 //		System.out.println("Size of Orderlist: " + allOrders.size());
 //		for (Orderx o : allOrders) {
 //			System.out.println(o.toString());
 //		}
-//
+
 //		List<OrderItem> allOrderItems = orderService.getAllOrderItems();
 //		System.out.println("\n all order items size: \n" + allOrderItems.size());
 //		for (OrderItem o : allOrderItems) {

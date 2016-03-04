@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import appl.data.dao.BookDAO;
 import appl.data.dao.OrderDAO;
 import appl.data.dao.OrderItemDAO;
+import appl.data.items.Book;
 import appl.data.items.OrderItem;
 import appl.data.items.Orderx;
 import appl.data.items.User;
@@ -51,37 +52,7 @@ public class OrderServiceImpl implements OrderService{
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 		
-//		Orderx order = new Orderx(cal);
-//		try {
-//			int orderId = orderDao.insertOrder(order);
-//			for (String isbn : isbnsNumberOf.keySet()){
-//			
-//				Book book = bookDao.getBookByIsbn(isbn);
-//				OrderItem orderItem = new OrderItem(book, book.getPrice(), isbnsNumberOf.get(isbn), order);
-//					
-//				// OrderItem im Buch setzen
-//				book.getOrderItems().add(orderItem);
-//				// OrderItem in der Order setzen
-//				order.getOrderItems().add(orderItem);
-//				
-//				// OrderItems speichern
-//				orderItemDao.insert(orderItem);
-//				
-//				
-//			}
-//			
-//			// Verbindung zwischen User und Order herstellen
-//			User user = userService.findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
-//			user.getOrders().add(order);
-//			order.setUser(user);
-//			orderDao.updateOrder(order);
-//			
-//			return orderId;
-//
-//		} catch (HibernateException e){
-//			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-//		}
-//		
+
 	}
 	@Override
 	public List<Orderx> getAllOrders() throws DatabaseException {
@@ -94,7 +65,7 @@ public class OrderServiceImpl implements OrderService{
 	}
 	@Override
 	public Set<Orderx> getOrdersByUserid(int userId) throws DatabaseException {
-		User user = userService.findByID(userId).get();
+		User user = userService.findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
 		try{ 
 		Set<Orderx> orders = user.getOrders();
 		return orders;
@@ -110,6 +81,25 @@ public class OrderServiceImpl implements OrderService{
 		catch(HibernateException e){
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
+	}
+	@Override
+	public List<Book> getOrderedBooksOfUser(int userId) throws DatabaseException {
+		try{
+			List<Book> books = orderDao.getOrderedBook(userId);
+			return books;
+		} catch(HibernateException e){
+			e.printStackTrace();
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+//		Set<Orderx> orders = getOrdersByUserid(userId);
+//		Set<Book> books = new HashSet<Book>();
+//		for(Orderx o : orders){
+//			Set<OrderItem> orderItems = o.getOrderItems();
+//			for(OrderItem i : orderItems){
+//				books.add(i.getBook());
+//			}
+//		}
+		//return books;
 	}
 	
 

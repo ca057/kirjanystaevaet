@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import appl.data.items.Book;
 import appl.data.items.Orderx;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
@@ -23,6 +24,8 @@ public interface OrderDAO {
 	public void updateOrder(Orderx order);
 	
 	public int createOrder(Map<String, Integer> isbnsNumberOf, int userId, Calendar cal) throws EntityDoesNotExistException, DatabaseException;
+	
+	public List<Book> getOrderedBook(int userId);
 
 
 }

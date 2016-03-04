@@ -177,7 +177,7 @@ public class BookDAOImpl implements BookDAO {
 			book.decrementStock(decrement);
 			getSession().update(book);
 		} else {
-			throw new DatabaseException(ErrorMessageHelper.stockIsNull());
+			throw new DatabaseException(ErrorMessageHelper.stockIsNull(book.getTitle()));
 		}
 		
 	}
