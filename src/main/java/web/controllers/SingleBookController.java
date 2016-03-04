@@ -1,5 +1,7 @@
 package web.controllers;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +47,20 @@ public class SingleBookController {
 		return "book";
 	}
 
+	/**
+	 * If a ISBN is found in the URL as path variable, the book with this ISBN
+	 * is added to model for displaying its information.
+	 * 
+	 * If an error occurs, an error message is passed to the {@code error}
+	 * attribute of the model; if the book is out of stock, an info message is
+	 * passed to the {@code info} attribute of the model.
+	 * 
+	 * @param isbn
+	 *            the isbn of the book to display
+	 * @param m
+	 *            the model for the view
+	 * @return the name of the view responsible for displaying a single book
+	 */
 	@RequestMapping(value = "/buch/{isbn}", method = RequestMethod.GET)
 	public String getBookByIsbn(@PathVariable("isbn") String isbn, Model m) {
 		if (isbn != null && !isbn.isEmpty()) {
@@ -52,7 +68,7 @@ public class SingleBookController {
 				Book book = bookService.getBookByIsbn(isbn);
 				if (book.getStock() > 0) {
 					m.addAttribute("book", book);
-					m.addAttribute("authors", bookService.getAuthorByIsbn(book.getIsbn()));
+					m.addAttribute("authors", book.getAuthors().stream().collect(Collectors.toList()));
 				} else {
 					m.addAttribute("info", "Das Buch steht derzeit nicht zum Verkauf!");
 				}
