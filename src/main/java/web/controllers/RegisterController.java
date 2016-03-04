@@ -19,6 +19,13 @@ import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 import web.jsonwrappers.UserJSONWrapper;
 
+/**
+ * Controller for managing the registration of new users.
+ * 
+ * @author Christian
+ * @author Ludwig
+ *
+ */
 @Controller
 @RequestMapping(path = "/registrierung")
 public class RegisterController {
@@ -29,14 +36,31 @@ public class RegisterController {
 	@Autowired
 	private DaoAuthenticationProvider authProvider;
 
+	/**
+	 * Setter injection for the {@link UserService}.
+	 * 
+	 * @param userService
+	 *            the {@link UserService} to inject
+	 */
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
 
+	/**
+	 * Setter injection for the {@link DaoAuthenticationProvider}.
+	 * 
+	 * @param authProvider
+	 *            the {@link DaoAuthenticationProvider} to inject
+	 */
 	public void setAuthProvider(DaoAuthenticationProvider authProvider) {
 		this.authProvider = authProvider;
 	}
 
+	/**
+	 * Handles a GET request and returns the name of the associated view.
+	 * 
+	 * @return the name of the view which displays the registration
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String registerGet() {
 		return "register";
