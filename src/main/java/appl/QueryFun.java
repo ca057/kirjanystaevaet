@@ -278,13 +278,13 @@ public class QueryFun {
 		
 		 for (Book b : books){ System.out.println(b.toString()); }
 		 
-		// Book book = dataService.getBookByIsbn("9101010101");
-		// Set<String> isbns = new HashSet<String>();
-		// isbns.add("9101010101");
-//		Map<String, Integer> isbns = new HashMap<String, Integer>();
-//		isbns.put("9101010101", 2);
-//		Calendar cal = Calendar.getInstance();
-//		int orderId = orderService.createOrder(isbns, user.getUserId(), cal);
+		 Book book = dataService.getBookByIsbn("9101010101");
+		 //Set<String> isbns = new HashSet<String>();
+		 //isbns.add("9101010101");
+		Map<String, Integer> isbns = new HashMap<String, Integer>();
+		isbns.put("9101010101", 2);
+		Calendar cal = Calendar.getInstance();
+		int orderId = orderService.createOrder(isbns, user.getUserId(), cal);
 //		List<Book> books4 = dataService.getAllBooks();
 //		
 		// for (Book b : books4){ System.out.println(b.toString()); }
@@ -303,7 +303,7 @@ public class QueryFun {
 //		// Zweite Order
 		Map<String, Integer> isbns2 = new HashMap<String, Integer>();
 		isbns2.put("9101010101", 1);
-		isbns2.put("0101010101", 1);
+		isbns2.put("0101010101", 5);
 		isbns2.put("1590595726", 1);
 
 		Calendar cal2 = Calendar.getInstance();
@@ -333,6 +333,17 @@ public class QueryFun {
 //			System.out.println(o.toString());
 //		}
 
+	}
+	public void testBestsellers(ApplicationContext ctx) throws DatabaseException{
+		BookService dataService = ctx.getBean(BookService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
+		UserService userService = ctx.getBean(UserService.class);
+		
+		List<Map.Entry<String, Integer>> bestseller = orderService.getBestsellers();
+		System.out.println("\nBestsellers\n");
+		for (Map.Entry<String, Integer> m : bestseller){
+			System.out.println(m.getKey() + " " + m.getValue());
+		}
 	}
 	/*
 	 * 

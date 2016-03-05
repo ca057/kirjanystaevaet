@@ -1,6 +1,10 @@
 package appl.logic.service.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -100,6 +104,34 @@ public class OrderServiceImpl implements OrderService{
 //			}
 //		}
 		//return books;
+	}
+	@Override
+	public List<Map.Entry<String, Integer>> getBestsellers() throws DatabaseException {
+		List<Map.Entry<String, Integer>> bestsellers = new ArrayList<Map.Entry<String, Integer>>();
+		Map<String, Integer> tmpMap = new HashMap<String, Integer>();
+		try {
+			List<OrderItem> orderItems = orderItemDao.getAllOrderItems();
+			for (OrderItem o : orderItems){
+				if(tmpMap.get(o.getBook().getIsbn())!= null){
+					tmpMap.put(o.getBook().getIsbn(), tmpMap.get(o.getBook().getIsbn()) + o.getNumberOf());
+				} else {
+					tmpMap.put(o.getBook().getIsbn(), o.getNumberOf());
+				}
+			}
+			bestsellers.addAll(tmpMap.entrySet());
+			// Sortieren
+			
+			Collections.sort(bestsellers, new Comparator<Map.Entry<String, Integer>>() {
+				public int compare(Map.Entry<String, Integer> o1,
+	                                           Map.Entry<String, Integer> o2) {
+					return (o2.getValue()).compareTo(o1.getValue());
+				}
+			});
+			
+			return bestsellers;
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 	
 

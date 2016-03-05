@@ -28,4 +28,5 @@ public interface OrderService {
 	public List<OrderItem> getAllOrderItems() throws DatabaseException;
 	public Set<Orderx> getOrdersByUserid(int userId) throws DatabaseException;
 	public List<Book> getOrderedBooksOfUser(int userId) throws DatabaseException;
+	public List<Map.Entry<String, Integer>> getBestsellers() throws DatabaseException;
 }
