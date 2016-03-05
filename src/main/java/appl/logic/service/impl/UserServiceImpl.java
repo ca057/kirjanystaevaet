@@ -81,18 +81,18 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean updateAccount(int userId, Map<Userfields, String> data) throws DatabaseException {
-		return updateAcount(userId, data, Optional.empty(), Optional.empty());
+		return updateAccount(userId, data, Optional.empty(), Optional.empty());
 	}
 
 	@Override
 	public boolean updateAccount(int userId, Map<Userfields, String> data, PLZ plz) throws DatabaseException {
-		return updateAcount(userId, data, Optional.empty(), Optional.empty());
+		return updateAccount(userId, data, Optional.empty(), Optional.empty());
 	}
 
 	@Override
 	public boolean updateAccount(int userId, Map<Userfields, String> data, PLZ plz, byte[] image)
 			throws DatabaseException {
-		return updateAcount(userId, data, Optional.ofNullable(plz), Optional.ofNullable(image));
+		return updateAccount(userId, data, Optional.ofNullable(plz), Optional.ofNullable(image));
 	}
 
 	@Override
@@ -100,10 +100,10 @@ public class UserServiceImpl implements UserService {
 		if (image == null) {
 			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("image"));
 		}
-		return updateAcount(userId, data, Optional.empty(), Optional.ofNullable(image));
+		return updateAccount(userId, data, Optional.empty(), Optional.ofNullable(image));
 	}
 
-	private boolean updateAcount(int userId, Map<Userfields, String> data, Optional<PLZ> plz, Optional<byte[]> image)
+	private boolean updateAccount(int userId, Map<Userfields, String> data, Optional<PLZ> plz, Optional<byte[]> image)
 			throws DatabaseException {
 		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
 				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
