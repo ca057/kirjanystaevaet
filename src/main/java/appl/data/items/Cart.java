@@ -1,7 +1,7 @@
 package appl.data.items;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -9,23 +9,48 @@ import org.springframework.stereotype.Component;
 @Component
 public class Cart {
 
-	private List<Book> books = new ArrayList<Book>();
+	private Map<String, Integer> books = new HashMap<String, Integer>();
 
 	public void addBook(Book book) {
 		if (book == null) {
 			throw new IllegalArgumentException("added book is null");
 		}
-		books.add(book);
-		// TODO implement me
+		if (books.containsKey(book.getIsbn())) {
+			books.put(book.getIsbn(), books.get(book.getIsbn()) + 1);
+		} else {
+			books.put(book.getIsbn(), 1);
+		}
 	}
 
-	public List<Book> getBooks() {
+	// private String getIsbns() {
+	// for (Book book : books.keySet()) {
+	// String isbns = book.getIsbn();
+	// }
+	// return getIsbns();
+	// }
+
+	public Map<String, Integer> getBooks() {
 		return books;
 	}
+	// private List<Book> books = new ArrayList<Book>();
+	//
+	// public void addBook(Book book) {
+	// if (book == null) {
+	// throw new IllegalArgumentException("added book is null");
+	// }
+	// books.add(book);
+	// // TODO implement me
+	// }
+	//
+	// public List<Book> getBooks() {
+	// return books;
+	// }
 
-	public double getPrice() {
-		return books.stream().parallel().mapToDouble(book -> book.getPrice()).sum();
-	}
+	// TODO: adjust getPrice!!!!
+	// public double getPrice() {
+	// return books.stream().parallel().mapToDouble(book ->
+	// book.getPrice()).sum();
+	// }
 
 	// Item aus Warenkorb entfernen
 	public void deleteBook(Book book) {

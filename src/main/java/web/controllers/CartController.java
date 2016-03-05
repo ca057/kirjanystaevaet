@@ -1,9 +1,7 @@
 package web.controllers;
 
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import appl.data.items.Book;
 import appl.data.items.Cart;
 import appl.data.items.User;
 import appl.logic.service.BookService;
@@ -83,7 +80,11 @@ public class CartController {
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.GET)
 	public String getCart(Model m) {
 		m.addAttribute("bookItems", cart.getBooks());
-		m.addAttribute("sum", cart.getPrice());
+		// m.addAttribute("sum", cart.getPrice());
+		Set<String> isbns = cart.getBooks().keySet();
+		for (String s : isbns) {
+
+		}
 		return "cart";
 	}
 
@@ -93,15 +94,14 @@ public class CartController {
 		if (user.getStreet() != null && user.getStreetnumber() != null) {
 			// TODO: In der Bedingung user.getPlz() != null ergänzen, wenn sie
 			// gesetzt wird
-			Map<String, Integer> isbns = new HashMap<String, Integer>();
+			// Map<String, Integer> isbns = new HashMap<String, Integer>();
 			Calendar cal = Calendar.getInstance();
-			int amount = 0;
-			for (Book b : cart.getBooks()) {
-				amount = Collections.frequency(cart.getBooks(), b);
-				isbns.put(b.getIsbn(), amount);
-			}
-			orderService.createOrder(isbns, user.getUserId(), cal);
-			// TODO orderService.METHOD
+
+			// for (Book b : cart.getBooks()) {
+			// int amount = 0;
+			// isbns.put(b.getIsbn(), amount);
+			// }
+			orderService.createOrder(cart.getBooks(), user.getUserId(), cal);
 			cart.deleteContent();
 		}
 		return "redirect:/warenkorb";
