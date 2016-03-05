@@ -4,7 +4,6 @@ import java.util.Properties;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +20,6 @@ import appl.data.items.Orderx;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.data.items.UserBookStatistic;
-import appl.logic.admin.Initialization;
 import exceptions.data.DatabaseInitializationException;
 
 /**
@@ -42,9 +40,6 @@ import exceptions.data.DatabaseInitializationException;
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
 public class RootConfig {
-
-	@Autowired
-	Initialization init;
 
 	/**
 	 * This bean is necessary for the performance of transactions on the
