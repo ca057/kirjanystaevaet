@@ -1,12 +1,23 @@
 package web.controllers;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +42,9 @@ public class RegisterController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private UserDetailsService userDetailsService;
 
 	@Autowired
 	private DaoAuthenticationProvider authProvider;
@@ -78,7 +92,7 @@ public class RegisterController {
 	 *         with a success or an error status code
 	 */
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-	public ResponseEntity<UserJSONWrapper> add(@RequestBody final UserJSONWrapper req) {
+	public ResponseEntity<UserJSONWrapper> add(@RequestBody final UserJSONWrapper req, HttpServletRequest request) {
 		Map<Userfields, String> userMap = new HashMap<Userfields, String>();
 		userMap.put(Userfields.email, req.getEmail());
 		userMap.put(Userfields.name, req.getName());
@@ -89,23 +103,24 @@ public class RegisterController {
 		userMap.put(Userfields.street, req.getStreet());
 		userMap.put(Userfields.streetnumber, req.getStreetnumber());
 
-		UserJSONWrapper returnWrapper = req;
-		req.setPassword("");
-
 		try {
-			int id = userService.createAccount(userMap);
+			userService.createAccount(userMap);
 			// TODO log user in and redirect to start page
-			// User user = userService.findByID(id).get();
-			// authProvider.authenticate(new
-			// UsernamePasswordAuthenticationToken(user.getEmail(),
-			// user.getPassword()));
-			// HttpHeaders httpHeaders = new HttpHeaders();
-			// httpHeaders.setLocation(new URI("/"));
-			// return new ResponseEntity<UserJSONWrapper>(httpHeaders,
-			// HttpStatus.OK);
-			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.OK);
-		} catch (DatabaseException /* | URISyntaxException */ e) {
-			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
+			UserDetails user = userDetailsService.loadUserByUsername(req.getEmail());
+			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(),
+					req.getPassword(), user.getAuthorities());
+			Authentication authentication = authProvider.authenticate(token);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+
+			request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+					SecurityContextHolder.getContext());
+
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.setLocation(new URI("/"));
+			req.setPassword("");
+			return new ResponseEntity<UserJSONWrapper>(httpHeaders, HttpStatus.OK);
+		} catch (DatabaseException | URISyntaxException e) {
+			return new ResponseEntity<UserJSONWrapper>(req, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}
 }
