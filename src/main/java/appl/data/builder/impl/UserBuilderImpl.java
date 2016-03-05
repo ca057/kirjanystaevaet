@@ -1,14 +1,19 @@
 package appl.data.builder.impl;
 
+import java.util.Set;
+
 import org.springframework.stereotype.Component;
 
 import appl.data.builder.UserBuilder;
 import appl.data.enums.UserRoles;
+import appl.data.items.Orderx;
 import appl.data.items.PLZ;
 import appl.data.items.User;
+import appl.data.items.UserBookStatistic;
 
 @Component
 public class UserBuilderImpl implements UserBuilder {
+	private int id = -1;
 	private String password;
 	private String name;
 	private String surname;
@@ -18,7 +23,8 @@ public class UserBuilderImpl implements UserBuilder {
 	private PLZ plz;
 	private UserRoles role;
 	private byte[] image;
-	private int id = -1;
+	private Set<UserBookStatistic> userBookStatistics;
+	private Set<Orderx> orders;
 
 	@Override
 	public UserBuilder setId(int id) {
@@ -81,14 +87,14 @@ public class UserBuilderImpl implements UserBuilder {
 	}
 
 	@Override
-	public User createUser() {
-		if (id < 0) {
-			return new User(password, name, surname, email, street, streetnumber, plz, role.toString(), image, null);
-		} else {
-			return new User(id, password, name, surname, email, street, streetnumber, plz, role.toString(), image,
-					null);
-		}
-		// TODO remove old variables?
+	public Set<UserBookStatistic> getUserBookStatistics() {
+		return userBookStatistics;
+	}
+
+	@Override
+	public UserBuilder setUserBookStatistics(Set<UserBookStatistic> userBookStatistics) {
+		this.userBookStatistics = userBookStatistics;
+		return this;
 	}
 
 	@Override
@@ -139,6 +145,28 @@ public class UserBuilderImpl implements UserBuilder {
 	@Override
 	public int getId() {
 		return id;
+	}
+
+	@Override
+	public Set<Orderx> getOrders() {
+		return orders;
+	}
+
+	@Override
+	public UserBuilder setOrders(Set<Orderx> orders) {
+		this.orders = orders;
+		return this;
+	}
+
+	@Override
+	public User createUser() {
+		if (id < 0) {
+			return new User(password, name, surname, email, street, streetnumber, plz, role.toString(), image, orders,
+					userBookStatistics);
+		} else {
+			return new User(id, password, name, surname, email, street, streetnumber, plz, role.toString(), image,
+					orders, userBookStatistics);
+		}
 	}
 
 }

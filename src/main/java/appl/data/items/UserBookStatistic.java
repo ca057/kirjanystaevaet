@@ -13,6 +13,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import exceptions.data.ErrorMessageHelper;
+
+/**
+ * An object of this class tracks several statistics concerning one specific
+ * user and one specific book.
+ * 
+ * It is possible to save and gain following information:
+ * <ol>
+ * <li>the last time the {@code user} visited the {@code book}</li>
+ * <li>the number of times the {@code user} visited the {@code book}</li>
+ * </ol>
+ * 
+ * @author Johannes
+ *
+ */
 @Entity
 @Table(name = "userbookstatistic", schema = "public")
 public class UserBookStatistic {
@@ -25,6 +40,21 @@ public class UserBookStatistic {
 	private UserBookStatistic() {
 	}
 
+	/**
+	 * Constructor and only way to create a new instance of
+	 * {@link UserBookStatistic} .
+	 * 
+	 * {@code User} and {@code book} must not be null!
+	 * 
+	 * @param user
+	 *            the user who visited
+	 * @param book
+	 *            the book visited by the user
+	 * @param date
+	 *            the time the book was last visited by the user
+	 * @param watchCount
+	 *            the number of times the book was visited by the user
+	 */
 	public UserBookStatistic(User user, Book book, Calendar date, int watchCount) {
 		setUser(user);
 		setBook(book);
@@ -39,7 +69,7 @@ public class UserBookStatistic {
 		return id;
 	}
 
-	@Column(name = "date", unique = false, nullable = false)
+	@Column(name = "date", unique = false, nullable = true)
 	public Calendar getDate() {
 		return date;
 	}
@@ -50,13 +80,13 @@ public class UserBookStatistic {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "userId", nullable = true)
+	@JoinColumn(name = "userId", nullable = false)
 	public User getUser() {
 		return user;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "ISBN", nullable = true)
+	@JoinColumn(name = "ISBN", nullable = false)
 	public Book getBook() {
 		return book;
 	}
@@ -65,19 +95,25 @@ public class UserBookStatistic {
 		this.id = id;
 	}
 
-	public void setDate(Calendar date) {
+	private void setDate(Calendar date) {
 		this.date = date;
 	}
 
-	public void setWatchCount(int watchCount) {
+	private void setWatchCount(int watchCount) {
 		this.watchCount = watchCount;
 	}
 
-	public void setUser(User user) {
+	private void setUser(User user) {
+		if (user == null) {
+			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("User"));
+		}
 		this.user = user;
 	}
 
-	public void setBook(Book book) {
+	private void setBook(Book book) {
+		if (book == null) {
+			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("Book"));
+		}
 		this.book = book;
 	}
 
