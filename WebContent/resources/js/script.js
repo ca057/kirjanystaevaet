@@ -33,13 +33,11 @@ function handleRegistration () {
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader("X-CSRF-TOKEN", $('[name=_csrf]').val());
 			}
-		})
-		.done(function (data, status, jqXHR) {
+		}).done(function (data, status, jqXHR) {
 			clearOrDisableInputs("clear");
 			// TODO commented this to redirect via the controller
-			// window.location.replace("/kirjanystaevaet/meinkonto");
-		})
-		.fail(function (jqXHR, status, err) {
+			window.location.replace("/kirjanystaevaet/meinkonto");
+		}).fail(function (jqXHR, status, err) {
 			$("#password").val("");
 			showMessage("Der Account konnte nicht angelegt werden, versuchen Sie es mit einer anderen Email-Adresse.", true)
 			clearOrDisableInputs("disable", false);
