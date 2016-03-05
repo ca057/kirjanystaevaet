@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
@@ -108,9 +107,13 @@ public class RegisterController {
 		try {
 			userService.createAccount(userMap);
 			// TODO log user in and redirect to start page
-			UserDetails user = userDetailsService.loadUserByUsername(req.getEmail());
-			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(),
-					req.getPassword(), user.getAuthorities());
+			// UserDetails user =
+			// userDetailsService.loadUserByUsername(req.getEmail());
+			// UsernamePasswordAuthenticationToken token = new
+			// UsernamePasswordAuthenticationToken(user.getUsername(),
+			// req.getPassword(), user.getAuthorities());
+			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(req.getEmail(),
+					req.getPassword());
 			System.out.println("Passwort im Token: " + token.getCredentials());
 			request.getSession();
 
