@@ -19,6 +19,13 @@ import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 import web.jsonwrappers.UserJSONWrapper;
 
+/**
+ * Controller for managing the registration of new users.
+ * 
+ * @author Christian
+ * @author Ludwig
+ *
+ */
 @Controller
 @RequestMapping(path = "/registrierung")
 public class RegisterController {
@@ -29,19 +36,48 @@ public class RegisterController {
 	@Autowired
 	private DaoAuthenticationProvider authProvider;
 
+	/**
+	 * Setter injection for the {@link UserService}.
+	 * 
+	 * @param userService
+	 *            the {@link UserService} to inject
+	 */
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
 
+	/**
+	 * Setter injection for the {@link DaoAuthenticationProvider}.
+	 * 
+	 * @param authProvider
+	 *            the {@link DaoAuthenticationProvider} to inject
+	 */
 	public void setAuthProvider(DaoAuthenticationProvider authProvider) {
 		this.authProvider = authProvider;
 	}
 
+	/**
+	 * Handles a GET request and returns the name of the associated view.
+	 * 
+	 * @return the name of the view which displays the registration
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String registerGet() {
 		return "register";
 	}
 
+	/**
+	 * Handles a JSON request with the data of a new user. Request must be of
+	 * type POST. It returns the passed data as JSON, the password field of the
+	 * response will be empty. If registering a new user was not successful, an
+	 * error code as status code is returned, a success code otherwise.
+	 * 
+	 * @param req
+	 *            the {@link UserJSONWrapper} with the data of the new user to
+	 *            register
+	 * @return a {@link ResponseEntity} with a {@link UserJSONWrapper} either
+	 *         with a success or an error status code
+	 */
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<UserJSONWrapper> add(@RequestBody final UserJSONWrapper req) {
 		System.out.println(req.getName());
