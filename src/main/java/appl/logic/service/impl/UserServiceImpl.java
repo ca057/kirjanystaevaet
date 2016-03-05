@@ -49,30 +49,22 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int createAccount(Map<Userfields, String> data, byte[] image) throws DatabaseException {
-		UserBuilder userBuilder = getUserBuilder();
-		userBuilder.setImage(image);
-		return createAccount(userBuilder, data);
+		return createAccount(getUserBuilder().setImage(image), data);
 	}
 
 	@Override
 	public int createAccount(Map<Userfields, String> data, PLZ plz, byte[] image) throws DatabaseException {
-		UserBuilder userBuilder = getUserBuilder();
-		userBuilder.setPLZ(plz);
-		userBuilder.setImage(image);
-		return createAccount(userBuilder, data);
+		return createAccount(getUserBuilder().setPLZ(plz).setImage(image), data);
 	}
 
 	@Override
 	public int createAccount(Map<Userfields, String> data, PLZ plz) throws DatabaseException {
-		UserBuilder userBuilder = getUserBuilder();
-		userBuilder.setPLZ(plz);
-		return createAccount(userBuilder, data);
+		return createAccount(getUserBuilder().setPLZ(plz), data);
 	}
 
 	@Override
 	public int createAccount(Map<Userfields, String> data) throws DatabaseException {
-		UserBuilder userBuilder = getUserBuilder();
-		return createAccount(userBuilder, data);
+		return createAccount(getUserBuilder(), data);
 	}
 
 	private int createAccount(UserBuilder userBuilder, Map<Userfields, String> data) throws DatabaseException {
@@ -115,8 +107,7 @@ public class UserServiceImpl implements UserService {
 			throws DatabaseException {
 		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
 				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
-		UserBuilder userBuilder = getUserBuilder();
-		userBuilder = saveOldValues(user, userBuilder);
+		UserBuilder userBuilder = saveOldValues(user, getUserBuilder());
 
 		if (image.isPresent()) {
 			userBuilder.setImage(image.orElse(null));
@@ -136,17 +127,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private UserBuilder saveOldValues(User user, UserBuilder userBuilder) {
-		userBuilder.setEmail(user.getEmail());
-		userBuilder.setImage(user.getImage());
-		userBuilder.setName(user.getName());
-		userBuilder.setPassword(user.getPassword());
-		userBuilder.setPLZ(user.getPlz());
-		userBuilder.setRole(UserRoles.ADMIN.toString().equals(user.getRole()) ? UserRoles.ADMIN : UserRoles.USER);
-		userBuilder.setStreet(user.getStreet());
-		userBuilder.setStreetnumber(user.getStreetnumber());
-		userBuilder.setSurname(user.getSurname());
-		userBuilder.setId(user.getUserId());
-		return userBuilder;
+		return userBuilder.setEmail(user.getEmail()).setImage(user.getImage()).setName(user.getName())
+				.setPassword(user.getPassword()).setPLZ(user.getPlz())
+				.setRole(UserRoles.ADMIN.toString().equals(user.getRole()) ? UserRoles.ADMIN : UserRoles.USER)
+				.setStreet(user.getStreet()).setStreetnumber(user.getStreetnumber()).setSurname(user.getSurname())
+				.setId(user.getUserId());
 	}
 
 	@Override
@@ -218,7 +203,9 @@ public class UserServiceImpl implements UserService {
 			break;
 		case password:
 			System.out.println("Im Service angekommenes Passwort: " + information);
-			userBuilder.setPassword(pswEncoder.encode(information));
+			String psw = pswEncoder.encode(information);
+			System.out.println("Verschlüsseltes Passwort: " + psw);
+			userBuilder.setPassword(psw);
 			break;
 		default:
 			break;
