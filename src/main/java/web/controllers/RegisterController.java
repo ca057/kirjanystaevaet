@@ -13,9 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -101,30 +103,24 @@ public class RegisterController {
 		userMap.put(Userfields.street, req.getStreet());
 		userMap.put(Userfields.streetnumber, req.getStreetnumber());
 
-		UserJSONWrapper returnWrapper = req;
-		returnWrapper.setPassword("");
-
 		try {
 			userService.createAccount(userMap);
 			// TODO log user in and redirect to start page
-			// UserDetails user =
-			// userDetailsService.loadUserByUsername(req.getEmail());
-			// UsernamePasswordAuthenticationToken token = new
-			// UsernamePasswordAuthenticationToken(user.getUsername(),
-			// req.getPassword(), user.getAuthorities());
-			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(req.getEmail(),
-					req.getPassword());
-			System.out.println("Passwort im Token: " + token.getCredentials());
-			request.getSession();
+			UserDetails user = userDetailsService.loadUserByUsername(req.getEmail());
+			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(),
+					req.getPassword(), user.getAuthorities());
+			Authentication authentication = authProvider.authenticate(token);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
 
-			token.setDetails(new WebAuthenticationDetails(request));
-			SecurityContextHolder.getContext().setAuthentication(authProvider.authenticate(token));
+			request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+					SecurityContextHolder.getContext());
 
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setLocation(new URI("/"));
+			req.setPassword("");
 			return new ResponseEntity<UserJSONWrapper>(httpHeaders, HttpStatus.OK);
 		} catch (DatabaseException | URISyntaxException e) {
-			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
+			return new ResponseEntity<UserJSONWrapper>(req, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}
 }
