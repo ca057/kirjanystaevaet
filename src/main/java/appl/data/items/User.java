@@ -97,7 +97,7 @@ public class User {
 			String role, byte[] image, Set<Orderx> orders) {
 
 		setPassword(password);
-		setName(surname);
+		setName(name);
 		setSurname(surname);
 		setEmail(email);
 		setStreet(street);
@@ -113,7 +113,7 @@ public class User {
 
 		setUserId(id);
 		setPassword(password);
-		setName(surname);
+		setName(name);
 		setSurname(surname);
 		setEmail(email);
 		setStreet(street);
