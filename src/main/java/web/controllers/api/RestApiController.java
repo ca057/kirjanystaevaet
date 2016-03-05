@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.data.items.Book;
 import appl.logic.service.BookService;
@@ -33,9 +34,11 @@ public class RestApiController {
 	}
 
 	@RequestMapping(value = "/api/v1/books", produces = "application/json", method = RequestMethod.GET)
-	public ResponseEntity<List<BookJSONWrapper>> getAllBooks() {
+	public ResponseEntity<List<BookJSONWrapper>> getAllBooks(
+			@RequestParam(value = "limit", required = false) String limit) {
 		try {
 			List<BookJSONWrapper> allBooks = bookService.getAllBooks().stream().filter(b -> b.getStock() > 0)
+					.limit((limit == null || limit.isEmpty()) ? Long.MAX_VALUE : Long.parseLong(limit))
 					.map(b -> new BookJSONWrapper(b)).collect(Collectors.toList());
 			return new ResponseEntity<List<BookJSONWrapper>>(allBooks, HttpStatus.OK);
 		} catch (DatabaseException e) {
@@ -44,14 +47,15 @@ public class RestApiController {
 	}
 
 	@RequestMapping(value = "/api/v1/books/{param}", produces = "application/json", method = RequestMethod.GET)
-	public ResponseEntity<?> getBooksByParamter(@PathVariable("param") String param) {
+	public ResponseEntity<?> getBooksByParamter(@PathVariable("param") String param,
+			@RequestParam(value = "limit", required = false) String limit) {
 		if (param == null || param.isEmpty()) {
 			throw new IllegalArgumentException("The passed parameter is null or an empty string.");
 		}
 		try {
 			if (bookService.getAllCategoryNames().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
 					.contains(param.toUpperCase())) {
-				return getBooksByCategory(param);
+				return getBooksByCategory(param, limit);
 			} else {
 				return getBookByIsbn(param);
 			}
@@ -60,13 +64,16 @@ public class RestApiController {
 		}
 	}
 
-	private ResponseEntity<List<BookJSONWrapper>> getBooksByCategory(String category) throws DatabaseException {
+	private ResponseEntity<List<BookJSONWrapper>> getBooksByCategory(String category, String limit)
+			throws DatabaseException {
 		if (category == null || category.isEmpty()) {
 			throw new IllegalArgumentException("The passed category is null or an empty string.");
 		}
-		List<BookJSONWrapper> allBooks = bookService.getBooksByCategory(category).stream().filter(b -> b.getStock() > 0)
-				.map(b -> new BookJSONWrapper(b)).collect(Collectors.toList());
-		return new ResponseEntity<List<BookJSONWrapper>>(allBooks, HttpStatus.OK);
+		return new ResponseEntity<List<BookJSONWrapper>>(
+				bookService.getBooksByCategory(category).stream().filter(b -> b.getStock() > 0)
+						.limit((limit == null || limit.isEmpty()) ? Long.MAX_VALUE : Long.parseLong(limit))
+						.map(b -> new BookJSONWrapper(b)).collect(Collectors.toList()),
+				HttpStatus.OK);
 	}
 
 	private ResponseEntity<BookJSONWrapper> getBookByIsbn(String isbn) throws DatabaseException {
