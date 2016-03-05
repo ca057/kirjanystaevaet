@@ -1,14 +1,13 @@
 package web.controllers;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,11 +21,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.data.enums.UserRoles;
 import appl.data.enums.Userfields;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
+import web.jsonwrappers.PlzJSONWrapper;
 import web.jsonwrappers.UserJSONWrapper;
 
 /**
@@ -37,7 +38,6 @@ import web.jsonwrappers.UserJSONWrapper;
  *
  */
 @Controller
-@RequestMapping(path = "/registrierung")
 public class RegisterController {
 
 	@Autowired
@@ -74,7 +74,7 @@ public class RegisterController {
 	 * 
 	 * @return the name of the view which displays the registration
 	 */
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/registrierung", method = RequestMethod.GET)
 	public String registerGet() {
 		return "register";
 	}
@@ -91,7 +91,7 @@ public class RegisterController {
 	 * @return a {@link ResponseEntity} with a {@link UserJSONWrapper} either
 	 *         with a success or an error status code
 	 */
-	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	@RequestMapping(value = "/registrierung", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<UserJSONWrapper> add(@RequestBody final UserJSONWrapper req, HttpServletRequest request) {
 		Map<Userfields, String> userMap = new HashMap<Userfields, String>();
 		userMap.put(Userfields.email, req.getEmail());
@@ -105,7 +105,6 @@ public class RegisterController {
 
 		try {
 			userService.createAccount(userMap);
-			// TODO log user in and redirect to start page
 			UserDetails user = userDetailsService.loadUserByUsername(req.getEmail());
 			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(),
 					req.getPassword(), user.getAuthorities());
@@ -114,13 +113,25 @@ public class RegisterController {
 
 			request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
 					SecurityContextHolder.getContext());
-
-			HttpHeaders httpHeaders = new HttpHeaders();
-			httpHeaders.setLocation(new URI("/"));
 			req.setPassword("");
-			return new ResponseEntity<UserJSONWrapper>(httpHeaders, HttpStatus.OK);
-		} catch (DatabaseException | URISyntaxException e) {
+			return new ResponseEntity<UserJSONWrapper>(req, HttpStatus.OK);
+		} catch (DatabaseException e) {
 			return new ResponseEntity<UserJSONWrapper>(req, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	}
+
+	@RequestMapping(value = "/registrierung/plz", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<List<PlzJSONWrapper>> getPLZs(@RequestParam(value = "code", required = false) String code) {
+		if (code == null || code.isEmpty()) {
+			throw new IllegalArgumentException(
+					"No postalcode was passed, so no PLZs can be retrieved from the server.");
+		}
+		try {
+			return new ResponseEntity<List<PlzJSONWrapper>>(
+					userService.getPLZs(code).stream().map(plz -> new PlzJSONWrapper(plz)).collect(Collectors.toList()),
+					HttpStatus.OK);
+		} catch (DatabaseException e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }
