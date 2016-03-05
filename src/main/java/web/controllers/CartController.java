@@ -1,6 +1,8 @@
 package web.controllers;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import appl.data.items.Book;
 import appl.data.items.Cart;
 import appl.data.items.User;
 import appl.logic.service.BookService;
@@ -79,12 +82,23 @@ public class CartController {
 
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.GET)
 	public String getCart(Model m) {
-		m.addAttribute("bookItems", cart.getBooks());
-		// m.addAttribute("sum", cart.getPrice());
+		Book b = null;
+		Map<Book, Integer> tempBooks = new HashMap<Book, Integer>();
 		Set<String> isbns = cart.getBooks().keySet();
 		for (String s : isbns) {
-
+			try {
+				b = bookService.getBookByIsbn(s);
+			} catch (DatabaseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			tempBooks.put(b, tempBooks.get(b.getIsbn()) + 1);
 		}
+		// TODO schau nach, wie du diese map dem Model übergibst! Vergiss den
+		// View nicht, da noch über die map drüberiterieren!
+		m.addAttribute("bookItems", tempBooks.entrySet());
+		// m.addAttribute("sum", cart.getPrice());
+
 		return "cart";
 	}
 
