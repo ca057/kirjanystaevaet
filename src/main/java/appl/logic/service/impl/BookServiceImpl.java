@@ -543,6 +543,12 @@ public class BookServiceImpl implements BookService {
 		}
 
 	}
+	
+	@Override
+	public void updateBook(Map<Searchfields, String> data) throws DatabaseException {
+		
+	}
+	
 	@Override
 	public void deleteCategoryOfBook(String isbn, int categoryId) throws DatabaseException {
 		Book book = bookDao.getBookByIsbn(isbn);
@@ -655,6 +661,8 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+
+	
 
 
 

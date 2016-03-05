@@ -115,6 +115,8 @@ public interface BookService {
 			throws DatabaseException;
 	// Update
 	
+	public void updateBook(Map<Searchfields, String> data) throws DatabaseException;
+	
 	public void deleteCategoryOfBook(String isbn, int categoryId) throws DatabaseException;
 	
 	public void addCategoryToBook(String isbn, int categoryId) throws DatabaseException;
