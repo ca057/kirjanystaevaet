@@ -543,6 +543,31 @@ public class BookServiceImpl implements BookService {
 		}
 
 	}
+	@Override
+	public void deleteCategoryOfBook(String isbn, int categoryId) throws DatabaseException {
+		Book book = bookDao.getBookByIsbn(isbn);
+		Set<Category> categories = book.getCategories();
+		boolean flag = false;
+		Category toBeDeleted = null;
+		for(Category c : categories){
+			if (c.getCategoryID()== categoryId){
+				flag = true;
+				toBeDeleted = c;
+				break;
+			}
+			
+		}
+		if (flag){
+			categories.remove(toBeDeleted);
+		} else {
+			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category"));
+		}
+		try{  
+		bookDao.updateBook(book);
+		}catch(HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+	}
 
 	@Override
 	public int updateStock(String isbn, int additional) throws DatabaseException {
@@ -617,6 +642,8 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+
+
 
 	
 

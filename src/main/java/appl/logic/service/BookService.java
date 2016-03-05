@@ -74,7 +74,6 @@ public interface BookService {
 	// Update
 
 	// Delete
-	// TODO Was soll hier angegeben werden?
 	/**
 	 * 
 	 * @param id
@@ -115,6 +114,8 @@ public interface BookService {
 	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds)
 			throws DatabaseException;
 	// Update
+	
+	public void deleteCategoryOfBook(String isbn, int categoryId) throws DatabaseException;
 
 	// Update Stock
 	/**

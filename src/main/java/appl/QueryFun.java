@@ -132,9 +132,9 @@ public class QueryFun {
 			System.out.println(b.toString());
 		}
 		try {
-			int authorId = service.insertAuthor("Madeleine", "Rosenhagen", true);
+			int authorId = service.insertAuthor("Joan K.", "Rowling", true);
 			Map<Searchfields, String> bookMap = new HashMap<Searchfields, String>();
-			bookMap.put(Searchfields.title, "Die unendliche Geschichte");
+			bookMap.put(Searchfields.title, "Harry Potter");
 			bookMap.put(Searchfields.description, "Fantasy Children's book");
 			bookMap.put(Searchfields.price, "34.56");
 			bookMap.put(Searchfields.isbn, "0101010101");
@@ -143,8 +143,10 @@ public class QueryFun {
 
 			try {
 				int categoryId = service.insertCategory("Children's Fantasy");
+				int categoryId2 = service.insertCategory("Bestseller");
 				Set<Integer> catSet = new HashSet<Integer>();
 				catSet.add(categoryId);
+				catSet.add(categoryId2);
 				Set<Integer> authorSet = new HashSet<Integer>();
 				authorSet.add(authorId);
 
@@ -344,6 +346,39 @@ public class QueryFun {
 		for (Map.Entry<String, Integer> m : bestseller){
 			System.out.println(m.getKey() + " " + m.getValue());
 		}
+	}
+	
+	public void testDeleteCategoryOfBook(ApplicationContext ctx) throws DatabaseException{
+		BookService dataService = ctx.getBean(BookService.class);
+		Book book = dataService.getBookByIsbn("0101010101");
+		Set<Category> cats = book.getCategories();
+		System.out.println("Categories of Book\n");
+		for (Category c : cats){
+			System.out.println(c.toString());
+		}
+		List<Book> books = dataService.getBooksByCategory("Bestseller");
+		System.out.println("Books with that Category");	
+		for(Book b: books){
+			System.out.println(b.getTitle());
+		}
+//		
+		
+		Category cat = dataService.getCategoryByExactName("Bestseller");
+		dataService.deleteCategoryOfBook("0101010101", cat.getCategoryID());
+		
+//		book = dataService.getBookByIsbn("0101010101");
+//		cats = book.getCategories();
+//		System.out.println("Categories of Book\n");
+//		for (Category c : cats){
+//			System.out.println(c.toString());
+//		}
+		
+//		List<Book> books = dataService.getBooksByCategory("Bestseller");
+//		System.out.println("Books with that Category");	
+//		for(Book b: books){
+//			System.out.println(b.getTitle());
+//		}
+		
 	}
 	/*
 	 * 
