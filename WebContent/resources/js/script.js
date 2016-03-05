@@ -25,8 +25,6 @@ function handleRegistration () {
 			url: "/kirjanystaevaet/registrierung",
 			type: "POST",
 			data: JSON.stringify(userData),
-			dataType: 'json',
-			contentType: 'application/json',
 		    processData: false,
 			headers: { 
 		        'Accept': 'application/json',
@@ -39,7 +37,7 @@ function handleRegistration () {
 		.done(function (data, status, jqXHR) {
 			clearOrDisableInputs("clear");
 			// TODO commented this to redirect via the controller
-			// window.location.replace("/kirjanystaevaet/login");
+			// window.location.replace("/kirjanystaevaet/meinkonto");
 		})
 		.fail(function (jqXHR, status, err) {
 			$("#password").val("");
