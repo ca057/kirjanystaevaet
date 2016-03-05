@@ -90,7 +90,7 @@ public class RegisterController {
 		userMap.put(Userfields.streetnumber, req.getStreetnumber());
 
 		UserJSONWrapper returnWrapper = req;
-		req.setPassword("");
+		returnWrapper.setPassword("");
 
 		try {
 			int id = userService.createAccount(userMap);
