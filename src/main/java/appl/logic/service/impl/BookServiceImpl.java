@@ -568,6 +568,19 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+	
+	@Override
+	public void addCategoryToBook(String isbn, int categoryId) throws DatabaseException {
+		try{
+		Book book = bookDao.getBookByIsbn(isbn);
+		Category toBeAdded = categoryDao.getCategoryById(categoryId);
+		book.getCategories().add(toBeAdded);
+		bookDao.updateBook(book);
+		}
+		catch(HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+	}
 
 	@Override
 	public int updateStock(String isbn, int additional) throws DatabaseException {
@@ -642,6 +655,8 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+
+
 
 
 

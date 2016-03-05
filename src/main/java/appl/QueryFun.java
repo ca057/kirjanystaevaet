@@ -361,6 +361,7 @@ public class QueryFun {
 		for(Book b: books){
 			System.out.println(b.getTitle());
 		}
+		
 //		
 		
 		Category cat = dataService.getCategoryByExactName("Bestseller");
@@ -379,6 +380,20 @@ public class QueryFun {
 //			System.out.println(b.getTitle());
 //		}
 		
+	}
+	public void testAddCategoryToBook(ApplicationContext ctx) throws DatabaseException{
+		BookService dataService = ctx.getBean(BookService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
+		UserService userService = ctx.getBean(UserService.class);
+		
+		Category category = dataService.getCategoryByExactName("PHP");
+		dataService.addCategoryToBook("0101010101", category.getCategoryID());
+		Book book = dataService.getBookByIsbn("0101010101");
+		Set<Category> cats = book.getCategories();
+		System.out.println("Categories of Book\n");
+		for (Category c : cats){
+			System.out.println(c.toString());
+		}
 	}
 	/*
 	 * 

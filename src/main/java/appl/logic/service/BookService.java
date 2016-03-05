@@ -116,6 +116,8 @@ public interface BookService {
 	// Update
 	
 	public void deleteCategoryOfBook(String isbn, int categoryId) throws DatabaseException;
+	
+	public void addCategoryToBook(String isbn, int categoryId) throws DatabaseException;
 
 	// Update Stock
 	/**
