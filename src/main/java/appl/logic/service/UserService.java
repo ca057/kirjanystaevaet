@@ -54,50 +54,6 @@ public interface UserService {
 	 * @param data
 	 *            A map with the field name as key and the belonging information
 	 *            as value
-	 * @param plz
-	 *            the {@link PLZ} of the user
-	 * @param image
-	 *            the image of the user as {@code byte[]}
-	 * @return the {@code id} of the user
-	 * @throws DatabaseException
-	 *             if an error occurs while interacting with the underlying DAO
-	 * 
-	 * @see {@link Userfields}
-	 * @see {@link User}
-	 * @see {@link PLZ}
-	 */
-	public int createAccount(Map<Userfields, String> data, PLZ plz, byte[] image) throws DatabaseException;
-
-	/**
-	 * Method to save a new user without postal code.
-	 * 
-	 * For further information on the fields available and/or necessary, see the
-	 * documentation of {@link User} or the available {@link Userfields}.
-	 * 
-	 * @param data
-	 *            A map with the field name as key and the belonging information
-	 *            as value
-	 * @param plz
-	 *            the {@link PLZ} of the user
-	 * @return the {@code id} of the user
-	 * @throws DatabaseException
-	 *             if an error occurs while interacting with the underlying DAO
-	 * 
-	 * @see {@link Userfields}
-	 * @see {@link User}
-	 * @see {@link PLZ}
-	 */
-	public int createAccount(Map<Userfields, String> data, PLZ plz) throws DatabaseException;
-
-	/**
-	 * Method to save a new user without postal code.
-	 * 
-	 * For further information on the fields available and/or necessary, see the
-	 * documentation of {@link User} or the available {@link Userfields}.
-	 * 
-	 * @param data
-	 *            A map with the field name as key and the belonging information
-	 *            as value
 	 * @return the {@code id} of the user
 	 * @throws DatabaseException
 	 *             if an error occurs while interacting with the underlying DAO
@@ -119,39 +75,6 @@ public interface UserService {
 	 *             or if the user cannot be found
 	 */
 	public boolean updateAccount(int userId, Map<Userfields, String> map) throws DatabaseException;
-
-	/**
-	 * @param userId
-	 *            the id of the user who is to be updated
-	 * @param map
-	 *            a map containing the {@link Userfields} as key and updated
-	 *            value as {@link String}.
-	 * @param plz
-	 *            the new place of the user as {@link PLZ}
-	 * @return true if successful
-	 * @throws DatabaseException
-	 *             if an error occurs while interacting with the underlying DAO
-	 *             or if the user cannot be found
-	 */
-	public boolean updateAccount(int userId, Map<Userfields, String> map, PLZ plz) throws DatabaseException;
-
-	/**
-	 * @param userId
-	 *            the id of the user who is to be updated
-	 * @param map
-	 *            a map containing the {@link Userfields} as key and updated
-	 *            value as {@link String}.
-	 * @param plz
-	 *            the new place of the user as {@link PLZ}
-	 * @param image
-	 *            the new image of the user as {@code byte[]}
-	 * @return true if successful
-	 * @throws DatabaseException
-	 *             if an error occurs while interacting with the underlying DAO
-	 *             or if the user cannot be found
-	 */
-	public boolean updateAccount(int userId, Map<Userfields, String> map, PLZ plz, byte[] image)
-			throws DatabaseException;
 
 	/**
 	 * @param userId
@@ -249,16 +172,5 @@ public interface UserService {
 	 *             if an error occurs while interacting with the underlying DAO
 	 */
 	public List<PLZ> getPLZs(String postalCode) throws DatabaseException;
-
-	/**
-	 * Getter to find a {@link PLZ} object by its {@code id} in the database.
-	 * 
-	 * @param plzId
-	 *            the id of the {@link PLZ} object
-	 * @return an optional with the resulting {@code PLZ} if existent
-	 * @throws DatabaseException
-	 *             if an error occurs while interacting with the underlying DAO
-	 */
-	public Optional<PLZ> getPLZ(int plzId) throws DatabaseException;
 
 }
