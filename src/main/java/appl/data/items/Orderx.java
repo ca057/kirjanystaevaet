@@ -1,5 +1,7 @@
 package appl.data.items;
-
+/**
+ * @author Madeleine
+ */
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,8 +25,7 @@ public class Orderx {
 	private int orderId;
 	private Set<OrderItem> orderItems = new HashSet<OrderItem>();
 	private User user;
-	//private boolean payed; // Brauchen wir das?
-	// Date: Java.utils.Date oder eigene Klasse?
+
 	private Calendar date;
 	
 	// Required Constructor, may be private

@@ -1,5 +1,7 @@
 package appl.logic.service;
-
+/**
+ * @author Madeleine, Johannes
+ */
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
