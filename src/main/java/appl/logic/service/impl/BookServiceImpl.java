@@ -545,8 +545,29 @@ public class BookServiceImpl implements BookService {
 	}
 	
 	@Override
-	public void updateBook(Map<Searchfields, String> data) throws DatabaseException {
+	public void updateBook(String isbn, Map<Searchfields, String> data) throws DatabaseException {
+		Book book = bookDao.getBookByIsbn(isbn);
+		for(Searchfields s : data.keySet()){
+			if (s == Searchfields.isbn || s == Searchfields.edition || s == Searchfields.pubdate || s == Searchfields.publisher){
+				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated());
+			} else if(s == Searchfields.title){
+				book.setTitle(data.get(s));
+			} else if (s == Searchfields.description){
+				book.setDescription(data.get(s));
+			} else if (s == Searchfields.price){
+				double price = Double.parseDouble( data.get(s).replace(",",".") );
+				book.setPrice(price);
+			} else if (s == Searchfields.pages){
+				book.setPages(data.get(s));
+			}
+			
+		}
 		
+		try {
+			bookDao.updateBook(book);
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 	
 	@Override
