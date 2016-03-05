@@ -1,0 +1,5 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Einleitung}{2}{section.1}
+\contentsline {section}{\numberline {2}Systemarchitektur}{2}{section.2}
+\contentsline {section}{\numberline {3}Anforderungskatalog}{2}{section.3}
+\contentsline {subsection}{\numberline {3.1}REST-API}{2}{subsection.3.1}
