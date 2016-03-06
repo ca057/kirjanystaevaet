@@ -49,8 +49,7 @@ public class BackendUsersController {
 		userMap.put(Userfields.name, req.getName());
 		userMap.put(Userfields.surname, req.getSurname());
 		userMap.put(Userfields.password, "magic");
-		// FIXME implement PLZ
-		// userMap.put(Userfields.plz, req.getPlz());
+		userMap.put(Userfields.plzId, req.getPlz());
 		userMap.put(Userfields.role,
 				req.getRole().equals("ADMIN") ? UserRoles.ADMIN.toString() : UserRoles.USER.toString());
 		userMap.put(Userfields.street, req.getStreet());
@@ -83,8 +82,7 @@ public class BackendUsersController {
 		} else if (!req.getStreetnumber().isEmpty()) {
 			userMap.put(Userfields.streetnumber, "");
 		} else if (!req.getPlz().isEmpty()) {
-			// TODO implement PLZ querying
-			// userMap.put(Userfields.plz, "");
+			userMap.put(Userfields.plzId, "");
 		} else if (!req.getEmail().isEmpty()) {
 			userMap.put(Userfields.email, "");
 		} else if (!req.getRole().isEmpty()) {

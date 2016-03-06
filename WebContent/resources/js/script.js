@@ -4,8 +4,8 @@ const handle = function () {
 		const inputs = ["name", "surname", "street", "streetnumber", "plz", "email", "password"];
 		$('#plz').on('input', function(e) {
 			if ($(this).val().length < 5) {
+				$('#plz-info-wrapper').slideUp();
 				$('#plz-selection').empty();
-				$('#plz-info-wrapper').hide();
 				return;
 			}
 			console.log("Request all PLZs from the server.");
@@ -16,16 +16,16 @@ const handle = function () {
 					data.forEach(e => {
 						$('#plz-selection').append("<span><input type='radio' name='plz' value='" + e.plzId + "'>" + e.postcode + ": " + e.place + "</span>");
 					});					
-					$('#plz-info-wrapper').show();
+					$('#plz-info-wrapper').slideDown();
 				}).fail((jqXHR, status, err) => {
 					console.log("An error occured with status [" + status + "] and error [" + err + "].");
-					$('#plz-info-wrapper').show();
 					$('#plz-info').text("Die PLZ scheint nicht korrekt zu sein.").css("color", "red").show();
+					$('#plz-info-wrapper').slideDown();
 				});
 		});
 
 		$("#register-submit").on("click", function (e) {
-			if (!KY.inputsAreNotEmpty(inputs) && !KY.MAIL.test($("#email").val().trim())) {
+			if (!KY.inputsAreNotEmpty(inputs) && $("#email").val().trim().length < 6 && !KY.MAIL.test($("#email").val().trim())) {
 				console.error('Something with the inputs of adding a user is wrong...');
 				return;
 			}

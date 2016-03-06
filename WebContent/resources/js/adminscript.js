@@ -1,12 +1,57 @@
 console.log('¯\\_(ツ)_/¯');
 
-const handle = function() {
+const manage = function() {
 	const userManagement = function () {
 		console.info("USERS ARE MANAGED");
 		const addInputs = ["name", "surname", "street", "streetnumber", "plz", "email", "role"];
 		const editInputs = ["edit-id", "edit-name", "edit-surname", "edit-street", "edit-streetnumber",
 			"edit-plz", "edit-email", "edit-role", "edit-password"];
 		// handles adding a user
+		
+		$('#plz').on('input', function(e) {
+			if ($(this).val().length < 5) {
+				$('#plz-info-wrapper').slideUp();
+				$('#plz-selection').empty();
+				return;
+			}
+			console.log("Request all PLZs from the server.");
+			KY.request('/kirjanystaevaet/registrierung/plz')
+				.GET_PARAM("code=" + $(this).val()).done(data => {
+					console.log("Server send data: " + data.toString());
+					$('#plz-info').text("Wählen Sie den korrekten Ort.").css("color", "#727272").show();
+					data.forEach(e => {
+						$('#plz-selection').append("<span><input type='radio' name='plz' value='" + e.plzId + "'>" + e.postcode + ": " + e.place + "</span>");
+					});					
+					$('#plz-info-wrapper').slideDown();
+				}).fail((jqXHR, status, err) => {
+					console.log("An error occured with status [" + status + "] and error [" + err + "].");
+					$('#plz-info').text("Die PLZ scheint nicht korrekt zu sein.").css("color", "red").show();
+					$('#plz-info-wrapper').slideDown();
+				});
+		});
+		
+		$('#edit-plz').on('input', function(e) {
+			if ($(this).val().length < 5) {
+				$('#edit-plz-info-wrapper').slideUp();
+				$('#edit-plz-selection').empty();
+				return;
+			}
+			console.log("Request all PLZs from the server.");
+			KY.request('/kirjanystaevaet/registrierung/plz')
+				.GET_PARAM("code=" + $(this).val()).done(data => {
+					console.log("Server send data: " + data.toString());
+					$('#edit-plz-info').text("Wählen Sie den korrekten Ort.").css("color", "#727272").show();
+					data.forEach(e => {
+						$('#edit-plz-selection').append("<span><input type='radio' name='plz' value='" + e.plzId + "'>" + e.postcode + ": " + e.place + "</span>");
+					});					
+					$('#edit-plz-info-wrapper').slideDown();
+				}).fail((jqXHR, status, err) => {
+					console.log("An error occured with status [" + status + "] and error [" + err + "].");
+					$('#edit-plz-info').text("Die PLZ scheint nicht korrekt zu sein.").css("color", "red").show();
+					$('#edit-plz-info-wrapper').slideDown();
+				});
+		});
+		
 		$("#add-user-submit").on('click', (e) => {
 			if (!KY.inputsAreNotEmpty(addInputs) && !KY.MAIL.test($("#email").val().trim())) {
 				console.error('Something with the inputs of adding a user is wrong...');
@@ -41,6 +86,7 @@ const handle = function() {
 		});
 		// handles editing a user
 		$('#edit-user-submit').on('click', (e) => {
+			// TODO check password
 			e.preventDefault();
 			const data = {};
 
@@ -112,12 +158,12 @@ const handle = function() {
 	};
 		
 	return {
-		userManagement: () => userManagement(),
-		stockManagement: () => stockManagement()
+		users: () => userManagement(),
+		stock: () => stockManagement()
 	};
 };
 
 $(document).ready(function () {
-	handle().userManagement();
-	handle().stockManagement();
+	manage().users();
+	manage().stock();
 });
