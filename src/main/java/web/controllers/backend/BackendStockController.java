@@ -13,7 +13,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -39,9 +38,6 @@ import web.jsonwrappers.AuthorJSONWrapper;
  */
 @Controller
 public class BackendStockController {
-
-	@Autowired
-	private ResourceLoader resourceLoader;
 
 	private BookService bookService;
 
@@ -170,10 +166,9 @@ public class BackendStockController {
 				|| publisher == null || publisher.isEmpty() || day == null || day.isEmpty() || month == null
 				|| month.isEmpty() || year == null || year.isEmpty() || edition == null || edition.isEmpty()
 				|| pages == null || pages.isEmpty() || authors == null || authors.isEmpty() || stock == null
-				|| stock.isEmpty()) {
+				|| stock.isEmpty() || file.isEmpty()) {
 			// TODO check if pages, categories and authors only contains
 			// numerical values
-			// TODO Darf das Bild leer sein? Auf Datei-Endung checken.
 			throw new IllegalArgumentException("One of the passed values for adding a book is null or empty.");
 		}
 		Map<Searchfields, String> book = new HashMap<Searchfields, String>();
@@ -195,31 +190,24 @@ public class BackendStockController {
 		Set<Integer> categoryIds = new HashSet<Integer>(1);
 		categories.stream().forEach(id -> categoryIds.add(Integer.parseInt(id)));
 
-		try {
+		File dir = new File(request.getSession().getServletContext()
+				.getRealPath(File.separator + "resources" + File.separator + "img" + File.separator + "cover"));
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		File serverFile = new File(dir.getAbsolutePath() + File.separator + isbn + File.separator
+				+ file.getOriginalFilename().split("\\.")[1]);
+
+		try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
 			bookService.insertBook(book, authorIds, categoryIds);
-		} catch (DatabaseException e) {
+			stream.write(file.getBytes());
+			stream.close();
+			System.out.println("Bild gespeichert unter" + request.getSession().getServletContext()
+					.getRealPath("/resources/img/cover" + File.separator + isbn));
+		} catch (DatabaseException | IOException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 
-		if (!file.isEmpty()) {
-			try {
-
-				File dir = new File(request.getSession().getServletContext()
-						.getRealPath(File.separator + "resources" + File.separator + "img" + File.separator + "cover"));
-				if (!dir.exists()) {
-					dir.mkdirs();
-				}
-				File serverFile = new File(dir.getAbsolutePath() + File.separator + isbn + File.separator
-						+ file.getOriginalFilename().split("\\.")[1]);
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-				stream.write(file.getBytes());
-				stream.close();
-				System.out.println("Bild gespeichert unter" + request.getSession().getServletContext()
-						.getRealPath("/resources/img/cover" + File.separator + isbn));
-			} catch (IOException e) {
-				return "redirect:/backend/bestand?error&msg=" + e.getMessage();
-			}
-		}
 		return "redirect:/backend/bestand";
 	}
 
