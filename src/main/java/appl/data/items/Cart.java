@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 //@Scope("session")
+// TODO use line below
 //@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
 @Component
 public class Cart {
