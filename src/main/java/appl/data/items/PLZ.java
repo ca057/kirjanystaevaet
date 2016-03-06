@@ -52,7 +52,7 @@ public class PLZ {
 		return plzId;
 	}
 
-	@Column(name = "postcode", unique = false, nullable = false)
+	@Column(name = "postcode", unique = false, nullable = false, length = 5)
 	public String getPostcode() {
 		return postcode;
 	}

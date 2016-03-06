@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import appl.data.dao.PlzDAO;
-import appl.data.enums.Userfields;
 import appl.data.items.PLZ;
+import appl.enums.Userfields;
 
 @Repository
 public class PlzDAOImpl implements PlzDAO {

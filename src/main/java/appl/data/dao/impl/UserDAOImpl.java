@@ -16,10 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import appl.data.dao.UserDAO;
-import appl.data.enums.Userfields;
 import appl.data.items.Book;
 import appl.data.items.User;
 import appl.data.items.UserBookStatistic;
+import appl.enums.Userfields;
 import exceptions.data.DatabaseException;
 import exceptions.data.ErrorMessageHelper;
 

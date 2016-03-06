@@ -2,7 +2,7 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <ul class="footer-content list-inline">
-	<li><a href="#" title="zurück nach oben">nach oben</a></li>
+	<li><a href="#" title="zurück nach oben" class="to-top">nach oben</a></li>
 	<li><a href="<c:url value='/'/>" title="zur Startseite">Startseite</a></li>
 	<li>zum Login</li>
 	<li><a href="<c:url value='/kontakt'/>" title="Kontakt und Impressum">Kontakt/Impressum</a></li>

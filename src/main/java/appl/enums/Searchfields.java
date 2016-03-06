@@ -1,4 +1,4 @@
-package appl.data.enums;
+package appl.enums;
 
 public enum Searchfields {
 	authorId, nameF, nameL, 
