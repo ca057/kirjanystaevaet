@@ -30,8 +30,11 @@ public class UserController {
 	 */
 	@RequestMapping(method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String userGet(Model m) {
-		if (getUser() != null) {
-			m.addAttribute("lastOrders", getUser().getOrders());
+		User user = getUser();
+		System.out.println("USER: " + user.toString());
+		if (user != null) {
+			System.out.println(user.getOrders());
+			m.addAttribute("lastOrders", user.getOrders());
 		}
 		return "user";
 	}
