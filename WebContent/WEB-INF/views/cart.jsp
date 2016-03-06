@@ -33,7 +33,6 @@
 	 			<p>Du kannst leider nichts bestellen. Tue doch erst etwas in Deinen Warenkorb :)</p>
 	 		</c:when>
 	 			<c:otherwise>
-	 				<p>Hier dein Warenkorb</p>
  		 			<p id="confirmOrder" style="display:none">Bestellung aufgegeben</p>
 				</c:otherwise>
 			</c:choose>
