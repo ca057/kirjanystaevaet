@@ -8,10 +8,10 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import appl.data.enums.Userfields;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.data.items.UserBookStatistic;
+import appl.enums.Userfields;
 import exceptions.data.DatabaseException;
 
 /**

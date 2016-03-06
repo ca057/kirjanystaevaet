@@ -5,11 +5,11 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 import appl.data.builder.UserBuilder;
-import appl.data.enums.UserRoles;
 import appl.data.items.Orderx;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.data.items.UserBookStatistic;
+import appl.enums.UserRoles;
 
 @Component
 public class UserBuilderImpl implements UserBuilder {

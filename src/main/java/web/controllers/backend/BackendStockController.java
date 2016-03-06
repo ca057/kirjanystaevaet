@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import appl.data.enums.Searchfields;
+import appl.enums.Searchfields;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
