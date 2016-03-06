@@ -85,6 +85,9 @@ public class RegisterController {
 	 * response will be empty. If registering a new user was not successful, an
 	 * error code as status code is returned, a success code otherwise.
 	 * 
+	 * The user will get logged in, so when the client performs a redirect to
+	 * e.g. "/meinkonto", the user does not need to log in first.
+	 * 
 	 * @param req
 	 *            the {@link UserJSONWrapper} with the data of the new user to
 	 *            register
