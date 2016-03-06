@@ -4,6 +4,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import appl.enums.Searchfields;
@@ -209,34 +210,6 @@ public class BackendStockController {
 		return "redirect:/backend/bestand";
 	}
 
-	@RequestMapping(value = "/backend/bestand/buecher/upload", method = RequestMethod.POST)
-	public @ResponseBody String uploadFileHandler(@RequestParam("name") String name,
-			@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-
-		if (!file.isEmpty()) {
-			try {
-				byte[] bytes = file.getBytes();
-
-				File dir = new File(
-						request.getSession().getServletContext().getRealPath("/WEB-INF/resources/img/cover"));
-				if (!dir.exists())
-					dir.mkdirs();
-
-				// Create the file on server
-				File serverFile = new File(dir.getAbsolutePath() + File.separator + name);
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-				stream.write(bytes);
-				stream.close();
-
-				return "You successfully uploaded file=" + name;
-			} catch (Exception e) {
-				return "You failed to upload " + name + " => " + e.getMessage();
-			}
-		} else {
-			return "You failed to upload " + name + " because the file was empty.";
-		}
-	}
-
 	/**
 	 * 
 	 * @return
@@ -252,14 +225,20 @@ public class BackendStockController {
 	 * @return
 	 */
 	@RequestMapping(value = "/backend/bestand/buecher/delete", method = RequestMethod.POST)
-	public String deleteBook(@RequestParam(value = "isbn") String isbn) {
+	public String deleteBook(@RequestParam(value = "isbn") String isbn, HttpServletRequest request) {
 		if (isbn == null || isbn.isEmpty()) {
 			throw new IllegalArgumentException(
 					"The passed ISBN for the book to delete is either null or an empty string.");
 		}
 		try {
 			bookService.deleteBook(isbn);
-		} catch (DatabaseException e) {
+			Path path = new File(request.getSession().getServletContext()
+					.getRealPath(File.separator + "resources" + File.separator + "img" + File.separator + "cover"))
+							.toPath();
+			Files.walk(path).filter(tmpPath -> tmpPath.toString().contains(isbn))
+					.forEach(tmpPath -> tmpPath.toFile().delete());
+
+		} catch (DatabaseException | IOException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 		return "redirect:/backend/bestand";
