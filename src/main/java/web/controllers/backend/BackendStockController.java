@@ -172,6 +172,9 @@ public class BackendStockController {
 			// numerical values
 			throw new IllegalArgumentException("One of the passed values for adding a book is null or empty.");
 		}
+		if (!file.getContentType().contains("image")) {
+			throw new IllegalArgumentException("The uploaded file is not an image");
+		}
 		Map<Searchfields, String> book = new HashMap<Searchfields, String>();
 		book.put(Searchfields.title, title);
 		book.put(Searchfields.isbn, isbn);
@@ -192,7 +195,6 @@ public class BackendStockController {
 		categories.stream().forEach(id -> categoryIds.add(Integer.parseInt(id)));
 
 		File dir = new File(request.getSession().getServletContext()
-				// File.separator + "resources" +
 				.getRealPath(File.separator + "uploaded" + File.separator + "img" + File.separator + "cover"));
 		if (!dir.exists()) {
 			dir.mkdirs();
