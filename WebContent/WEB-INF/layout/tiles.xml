@@ -62,6 +62,10 @@
 		<put-attribute name="content" value="/WEB-INF/views/backend/users.jsp"></put-attribute>
 	</definition>
 
+	<definition name="backend/orders" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/backend/orders.jsp"></put-attribute>
+	</definition>
+
 	<definition name="backend/usage" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/backend/usage.jsp"></put-attribute>
 	</definition>
