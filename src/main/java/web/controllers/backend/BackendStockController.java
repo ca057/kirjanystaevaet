@@ -167,7 +167,7 @@ public class BackendStockController {
 				|| publisher == null || publisher.isEmpty() || day == null || day.isEmpty() || month == null
 				|| month.isEmpty() || year == null || year.isEmpty() || edition == null || edition.isEmpty()
 				|| pages == null || pages.isEmpty() || authors == null || authors.isEmpty() || stock == null
-				|| stock.isEmpty() || file.isEmpty()) {
+				|| stock.isEmpty() || file == null || file.isEmpty()) {
 			// TODO check if pages, categories and authors only contains
 			// numerical values
 			throw new IllegalArgumentException("One of the passed values for adding a book is null or empty.");
