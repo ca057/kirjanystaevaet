@@ -4,7 +4,8 @@ import java.util.Map;
 
 /**
  * The kraken is hungry. Let him eat all the data from your services and be
- * aware of his attack.
+ * aware of his attack. In the moment it only collects all the data, but it
+ * should be able to do more in the future.
  * 
  * @author Davy Jones
  *

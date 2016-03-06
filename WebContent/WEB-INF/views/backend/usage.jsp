@@ -33,4 +33,66 @@
 			</c:choose>
 		</p>
 	</article>
+	
+	<article>
+		<h3>Verkaufszahlen</h3>
+		<h4>Die 5 meist verkauften Bücher</h4>
+		<c:choose>
+			<c:when test="${topSellers.isEmpty()}">
+				<p>Es liegen leider noch keine Daten vor.</p>
+			</c:when>
+			<c:otherwise>
+				<ol>
+					<c:forEach var="t" items="${topSellers}" >
+						<li>Test</li>
+						<li><c:out value="${t.key.getTitle()}"></c:out>: <c:out value="${t.value.toString()}"></c:out></li>
+					</c:forEach>	
+				</ol>
+			</c:otherwise>
+		</c:choose>
+
+		<h4>Die 5 am schlechtesten verkauften Bücher</h4>
+		<c:choose>
+			<c:when test="${shelfWarmers.isEmpty()}">
+				<p>Es liegen leider noch keine Daten vor.</p>
+			</c:when>
+			<c:otherwise>
+				<ol>
+					<c:forEach var="s" items="${shelfWarmers}" >
+						<li><c:out value="${s.key.getTitle()}"></c:out>: <c:out value="${s.value.toString()}"></c:out></li>
+					</c:forEach>	
+				</ol>
+			</c:otherwise>
+		</c:choose>
+	</article>
+	<article>
+		<h3>Besuchszahlen</h3>
+		<h4>Die 5 am häufigsten besuchten Bücher</h4>
+		<c:choose>
+			<c:when test="${mostVisitedBooks.isEmpty()}">
+				<p>Es liegen leider noch keine Daten vor.</p>
+			</c:when>
+			<c:otherwise>
+				<ol>
+					<c:forEach var="m" items="${mostVisitedBooks}" >
+						<li><c:out value="${m.key.getTitle()}"></c:out>: <c:out value="${m.value}"></c:out></li>
+					</c:forEach>	
+				</ol>
+			</c:otherwise>
+		</c:choose>
+		
+		<h4>Die 5 am seltensten besuchten Bücher</h4>
+		<c:choose>
+			<c:when test="${leastVisitedBooks.isEmpty()}">
+				<p>Es liegen leider noch keine Daten vor.</p>
+			</c:when>
+			<c:otherwise>
+				<ol>
+					<c:forEach var="l" items="${leastVisitedBooks}" >
+						<li><c:out value="${l.key.getTitle()}"></c:out>: <c:out value="${l.value}"></c:out></li>
+					</c:forEach>	
+				</ol>
+			</c:otherwise>
+		</c:choose>
+	</article>
 </section>

@@ -3,13 +3,18 @@ package appl.admin.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import appl.admin.DataKraken;
+import appl.data.items.Book;
 import appl.data.items.User;
 import appl.logic.service.BookService;
+import appl.logic.service.OrderService;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 
@@ -25,6 +30,8 @@ public class Cephalopoda implements DataKraken {
 
 	private UserService userService;
 
+	private OrderService orderService;
+
 	@Autowired
 	public void setBookService(BookService bookService) {
 		this.bookService = bookService;
@@ -33,6 +40,11 @@ public class Cephalopoda implements DataKraken {
 	@Autowired
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	@Autowired
+	public void setOrderService(OrderService orderService) {
+		this.orderService = orderService;
 	}
 
 	@Override
@@ -81,22 +93,26 @@ public class Cephalopoda implements DataKraken {
 	 */
 	private void consumeComplexData(Map<String, Object> map) {
 		computeTopSellersAndShelfWarmers(map);
-		computeMostAndLeastActiveUsers(map);
 		computeMostAndLeastVisitedBooks(map);
 	}
 
 	private void computeTopSellersAndShelfWarmers(Map<String, Object> map) {
-
-	}
-
-	private void computeMostAndLeastActiveUsers(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-
+		try {
+			List<Entry<String, Integer>> topSellers = orderService.getBestsellers();
+			SortedMap<Book, Integer> fiveMost = new TreeMap<>();
+			for (int i = 0; i < (topSellers.size() > 5 ? 5 : topSellers.size()); i++) {
+				fiveMost.put(bookService.getBookByIsbn(topSellers.get(i).getKey()), topSellers.get(i).getValue());
+			}
+			map.put("topSellers", fiveMost);
+			// TODO add shelfWarmers
+			map.put("shelfWarmers", fiveMost);
+		} catch (DatabaseException ignore) {
+		}
 	}
 
 	private void computeMostAndLeastVisitedBooks(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-
+		map.put("mostVisitedBooks", bookService.getMostVisitedBooks(5));
+		map.put("leastVisitedBooks", bookService.getMostVisitedBooks(5));
 	}
 
 }

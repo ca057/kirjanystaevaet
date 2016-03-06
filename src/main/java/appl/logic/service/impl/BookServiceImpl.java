@@ -1,12 +1,15 @@
 package appl.logic.service.impl;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.hibernate.HibernateException;
 import org.hibernate.exception.ConstraintViolationException;
@@ -135,6 +138,7 @@ public class BookServiceImpl implements BookService {
 
 	}
 
+	@Override
 	public void deleteCategory(String name) throws DatabaseException {
 		// Prüfen, ob Category vorhanden
 		/*
@@ -294,14 +298,14 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+
 	@Override
 	public List<Author> getAuthorByIsbn(String isbn) throws DatabaseException {
-		try{
+		try {
 			List<Author> authors = authorDao.getAuthorsByIsbn(isbn);
 			return authors;
 
-			
-		} catch(HibernateException e){
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
@@ -557,8 +561,9 @@ public class BookServiceImpl implements BookService {
 	public void deleteBook(String isbn) throws DatabaseException {
 		try {
 			Book book = getBookByIsbn(isbn);
-			//bookDao.deleteBook(isbn);
-			// Es wird nicht gelöscht, sondern der Stock auf -1 gesetzt, so bleibt die Archivierungsfunktion der Bestellungen erhalten
+			// bookDao.deleteBook(isbn);
+			// Es wird nicht gelöscht, sondern der Stock auf -1 gesetzt, so
+			// bleibt die Archivierungsfunktion der Bestellungen erhalten
 			bookDao.setStockToNegative(isbn);
 
 		} catch (EntityDoesNotExistException e) {
@@ -618,7 +623,41 @@ public class BookServiceImpl implements BookService {
 		}
 	}
 
-	
+	@Override
+	public SortedMap<Book, Integer> getMostVisitedBooks(int range) {
+		if (range < 0) {
+			throw new IllegalArgumentException("The passed range must be greater 0.");
+		}
+		SortedMap<Book, Integer> map = new TreeMap<>(new Comparator<Book>() {
+
+			@Override
+			public int compare(Book b1, Book b2) {
+				return Integer.compare(b1.getVisitCount(), b2.getVisitCount());
+			}
+		});
+		for (Book b : bookDao.getMostVisitedBooks(range)) {
+			map.put(b, b.getVisitCount());
+		}
+		return map;
+	}
+
+	@Override
+	public SortedMap<Book, Integer> getLeastVisitedBooks(int range) {
+		if (range < 0) {
+			throw new IllegalArgumentException("The passed range must be greater 0.");
+		}
+		SortedMap<Book, Integer> map = new TreeMap<>(new Comparator<Book>() {
+
+			@Override
+			public int compare(Book b1, Book b2) {
+				return Integer.compare(b2.getVisitCount(), b1.getVisitCount());
+			}
+		});
+		for (Book b : bookDao.getMostVisitedBooks(range)) {
+			map.put(b, b.getVisitCount());
+		}
+		return map;
+	}
 
 	/*
 	 * @Override public void insertBook(Map<Searchfields, String> map, boolean
