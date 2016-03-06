@@ -33,7 +33,7 @@ const handle = function () {
 			const data = {};
 			inputs.forEach(e => {
 				$('#' + e).prop('disabled', true);
-				data[e] = $('#' + e).val();
+				data[e] = $( "[name="+ e +"]").val();
 			});
 			showMessage("Ihre Eingabe wird verarbeitet.", false);
 			$("#register-submit").prop('disabled', true);
