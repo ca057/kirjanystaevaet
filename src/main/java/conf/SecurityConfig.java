@@ -1,5 +1,7 @@
 package conf;
 
+import javax.servlet.Filter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.support.MultipartFilter;
 
 import appl.enums.UserRoles;
 
@@ -25,7 +28,7 @@ import appl.enums.UserRoles;
  *
  */
 @Configuration
-@ComponentScan(basePackages = { "appl.logic.security" })
+@ComponentScan(basePackages = { "appl.logic.security", "conf" })
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -54,13 +57,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage("/login").defaultSuccessUrl("/").failureUrl("/login?error").and().logout()
 				.deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/?logout")
 				.permitAll();
-		// TODO Delete this.
-		http.antMatcher("/upload").csrf().disable();
 	}
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
+	}
+
+	@Bean
+	public Filter getMultiPartFilter() {
+		return new MultipartFilter();
 	}
 
 	@Bean
