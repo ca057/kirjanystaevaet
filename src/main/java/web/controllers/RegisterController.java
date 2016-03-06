@@ -123,6 +123,14 @@ public class RegisterController {
 		}
 	}
 
+	/**
+	 * When a postal code is passed as parameter, a JSON object with all
+	 * matching places is returned.
+	 * 
+	 * @param code
+	 *            the requested postal code
+	 * @return a JSON object with a list of the matching places and ids
+	 */
 	@RequestMapping(value = "/registrierung/plz", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<List<PlzJSONWrapper>> getPLZs(@RequestParam(value = "code", required = false) String code) {
 		if (code == null || code.isEmpty()) {
