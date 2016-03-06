@@ -70,6 +70,10 @@
 		<put-attribute name="content" value="/WEB-INF/views/backend/settings.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="upload" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/upload.jsp"></put-attribute>
+	</definition>
+	
 	<!-- all views for displaying errors -->
 	<definition name="404" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/error/404.jsp"></put-attribute>

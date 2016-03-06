@@ -7,6 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -50,6 +52,24 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public ViewResolver resolver() {
 		return new TilesViewResolver();
 	}
+
+	@Bean
+	public MultipartResolver multipartResolver() {
+		CommonsMultipartResolver res = new CommonsMultipartResolver();
+		res.setMaxUploadSize(10000);
+		return res;
+	}
+
+	// @Bean
+	// public ViewResolver resourceViewResolver() {
+	// InternalResourceViewResolver resolver = new
+	// InternalResourceViewResolver();
+	// HashMap<String, String> attributes = new HashMap<String, String>();
+	// attributes.put("prefix", "/WEB-INF/views/");
+	// attributes.put("suffix", ".jsp");
+	// resolver.setAttributesMap(attributes);
+	// return resolver;
+	// }
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

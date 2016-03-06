@@ -48,12 +48,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/", "/kategorien", "/kategorie/**", "/buch/**", "/suche", "/kontakt", "/login", "/logout",
-						"/warenkorb", "/registrierung", "/registrierung/**", "/api/**")
+						"/warenkorb", "/registrierung", "/registrierung/**", "/api/**", "/hochladen", "/hochladen/**",
+						"/uploadFile", "/uploadFile/**", "/upload", "/upload/**")
 				.permitAll().antMatchers("/meinkonto", "/meinkonto/**").hasRole(UserRoles.USER.toString())
 				.antMatchers("/backend", "/backend/**").hasRole("ADMIN").anyRequest().authenticated().and().formLogin()
 				.loginPage("/login").defaultSuccessUrl("/").failureUrl("/login?error").and().logout()
 				.deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/?logout")
 				.permitAll();
+		// TODO Delete this.
+		http.antMatcher("/upload/**").csrf().disable();
+		http.antMatcher("/upload").csrf().disable();
+		http.antMatcher("/uploadFile").csrf().disable();
+		http.antMatcher("/uploadFile/**").csrf().disable();
 	}
 
 	@Override
