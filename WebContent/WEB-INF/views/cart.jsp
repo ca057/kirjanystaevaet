@@ -1,8 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %> 
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<script src="WebContent/resources/js/jquery-2.2.1.min.js"></script>
-<script src="WebContent/resources/js/confirmOrder.js"></script>
+<script src="../WebContent/resources/js/jquery-2.2.1.min.js"></script>
+<script src="../WebContent/resources/js/confirmOrder.js"></script>
 
 
 <section>
@@ -34,7 +34,7 @@
 	 		</c:when>
 	 			<c:otherwise>
 	 				<p>Hier dein Warenkorb</p>
-<!-- 		 			<p>Bestellung aufgegeben</p> -->
+ 		 			<p id="confirmOrder" style="display:none">Bestellung aufgegeben</p>
 				</c:otherwise>
 			</c:choose>
  		<sec:csrfInput/>
