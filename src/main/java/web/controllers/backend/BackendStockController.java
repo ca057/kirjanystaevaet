@@ -195,15 +195,13 @@ public class BackendStockController {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		File serverFile = new File(dir.getAbsolutePath() + File.separator + isbn + File.separator
-				+ file.getOriginalFilename().split("\\.")[1]);
+		File serverFile = new File(
+				dir.getAbsolutePath() + File.separator + isbn + "." + file.getOriginalFilename().split("\\.")[1]);
 
 		try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
 			bookService.insertBook(book, authorIds, categoryIds);
 			stream.write(file.getBytes());
 			stream.close();
-			System.out.println("Bild gespeichert unter" + request.getSession().getServletContext()
-					.getRealPath("/resources/img/cover" + File.separator + isbn));
 		} catch (DatabaseException | IOException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
