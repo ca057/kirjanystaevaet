@@ -47,7 +47,7 @@ public class HomeController {
 	public String homepage(Model m) {
 		try {
 			List<Book> books = bookService.getAllBooks();
-			m.addAttribute("bookOfTheDay", books.get((int) (Math.random() * books.size())));
+			m.addAttribute("bookOfTheMoment", books.get((int) (Math.random() * books.size())));
 		} catch (DatabaseException ignore) {
 		}
 		return "homepage";
