@@ -36,7 +36,9 @@ import exceptions.data.DatabaseInitializationException;
  *
  */
 @Configuration
-@ComponentScan({ "appl.logic.service", "appl.data.dao", "appl.data.builder", "appl.admin" })
+
+@ComponentScan({ "appl.logic.service", "appl.data.dao", "appl.data.builder", "appl.admin", "appl.data.items" })
+
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
 public class RootConfig {

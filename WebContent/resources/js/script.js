@@ -52,6 +52,7 @@ const handle = function () {
 					inputs.forEach(e => {
 						$('#' + e).prop('disabled', false);
 					});
+					$("#register-submit").prop('disabled', false);
 				});
 		});
  	};
@@ -73,5 +74,12 @@ const handle = function () {
 $(document).ready(function () {
 	if (window.location.pathname.indexOf("/registrierung") != -1) {
 		handle().registration();
+	}
+	window.onload = function() {
+		var elevator = new Elevator({
+			element: document.querySelector('.to-top'),
+			mainAudio: 'http://tholman.com/elevator.js/music/elevator.mp3',
+			endAudio: 'http://tholman.com/elevator.js/music/ding.mp3'
+		});
 	}
 });

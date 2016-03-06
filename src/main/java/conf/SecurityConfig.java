@@ -1,7 +1,5 @@
 package conf;
 
-import javax.servlet.Filter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.multipart.support.MultipartFilter;
 
 import appl.enums.UserRoles;
 
@@ -51,8 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/", "/kategorien", "/kategorie/**", "/buch/**", "/suche", "/kontakt", "/login", "/logout",
-						"/warenkorb", "/registrierung", "/registrierung/**", "/api/**", "/upload")
-				.permitAll().antMatchers("/meinkonto", "/meinkonto/**").hasRole(UserRoles.USER.toString())
+						"/registrierung", "/registrierung/**", "/api/**", "/upload")
+				.permitAll().antMatchers("/meinkonto", "/meinkonto/**", "/warenkorb").hasRole(UserRoles.USER.toString())
 				.antMatchers("/backend", "/backend/**").hasRole("ADMIN").anyRequest().authenticated().and().formLogin()
 				.loginPage("/login").defaultSuccessUrl("/").failureUrl("/login?error").and().logout()
 				.deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/?logout")
@@ -62,11 +59,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
-	}
-
-	@Bean
-	public Filter getMultiPartFilter() {
-		return new MultipartFilter();
 	}
 
 	@Bean
