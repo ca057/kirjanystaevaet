@@ -557,7 +557,9 @@ public class BookServiceImpl implements BookService {
 	public void deleteBook(String isbn) throws DatabaseException {
 		try {
 			Book book = getBookByIsbn(isbn);
-			bookDao.deleteBook(isbn);
+			//bookDao.deleteBook(isbn);
+			// Es wird nicht gelöscht, sondern der Stock auf -1 gesetzt, so bleibt die Archivierungsfunktion der Bestellungen erhalten
+			bookDao.setStockToNegative(isbn);
 
 		} catch (EntityDoesNotExistException e) {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));

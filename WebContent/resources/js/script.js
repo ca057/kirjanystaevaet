@@ -38,7 +38,8 @@ function handleRegistration () {
 		})
 		.done(function (data, status, jqXHR) {
 			clearOrDisableInputs("clear");
-			window.location.replace("/kirjanystaevaet/login");
+			// TODO commented this to redirect via the controller
+			// window.location.replace("/kirjanystaevaet/login");
 		})
 		.fail(function (jqXHR, status, err) {
 			$("#password").val("");

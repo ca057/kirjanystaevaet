@@ -21,7 +21,14 @@
 				<c:otherwise>
 					<h2><c:out value='${name}'/></h2>
 					<article>
-						<p>Folgende Bücher haben wir zu <c:out value='${name}' /></p>
+						<p>Folgende Bücher haben wir zu <c:out value='${name}' />:</p>
+						<c:forEach var="book" items="${books}">
+							<h4><c:out value="${book.getTitle()}" /></h4>
+							<p>von
+								<c:set var="delimiter" value="" scope="request"></c:set><c:forEach var="a" items="${book.getAuthors()}">${delimiter}<c:out value="${a.getNameF()}" /> <c:out value="${a.getNameL()}" /><c:set var="delimiter" value=", " scope="request"></c:set></c:forEach>
+							</p>
+							<p><c:out value="${book.getPrice()}" />€ - <a href="<c:url value='/buch/${book.getIsbn()}' />" title="zum Buch <c:out value='${book.getTitle()}' />">zum Buch</a></p>
+						</c:forEach>
 					</article>
 				</c:otherwise>
 			</c:choose>
