@@ -3,9 +3,11 @@ package appl.data.items;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
-//@Scope("session")
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
 @Component
 public class Cart {
 

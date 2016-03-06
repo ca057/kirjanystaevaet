@@ -18,6 +18,8 @@
 	<script type="text/javascript" src="<s:url value='/js/elevator.min.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/js/helpme.js'/>"></script>
 	<script type="text/javascript" src="<s:url value='/js/script.js'/>"></script>
+	<script type="text/javascript" src="<s:url value='/js/confirmOrder.js'/>"></script>
+	
 	
 	<sec:authorize access="hasRole('ADMIN')">
 		<script type="text/javascript" src="<s:url value='/js/adminscript.js'/>"></script>

@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %> 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 
 
 <section>
@@ -23,14 +25,16 @@
 			</c:otherwise>
 		</c:choose>
 	
- 	<a href="<c:url value='/bestellen'/>">bestellen</a> 
- 	<c:choose>
- 		<c:when test="${cart.isEmpty()} ">
- 			<p>Du kannst leider nichts bestellen. Tue doch erst etwas in Deinen Warenkorb :)</p>
- 		</c:when>
- 		<c:otherwise>
- 			<p>Bestellung aufgegeben</p>
- 		</c:otherwise>
- 	</c:choose>
- 	
-</section>  
+	<form id="orderForm" method="post">
+		<button id="orderButton" type="submit" formaction="<c:url value='/bestellen'/>">bestellen</button> 
+	 	<c:choose>
+	 		<c:when test="${cart.isEmpty()}">
+	 			<p>Du kannst leider nichts bestellen. Tue doch erst etwas in Deinen Warenkorb :)</p>
+	 		</c:when>
+	 			<c:otherwise>
+ 		 			<p id="confirmOrder" style="display:none">Bestellung aufgegeben</p>
+				</c:otherwise>
+			</c:choose>
+ 		<sec:csrfInput/>
+	</form>
+ </section>  

@@ -52,6 +52,7 @@ const handle = function () {
 					inputs.forEach(e => {
 						$('#' + e).prop('disabled', false);
 					});
+					$("#register-submit").prop('disabled', false);
 				});
 		});
  	};
