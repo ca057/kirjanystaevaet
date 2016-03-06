@@ -48,15 +48,6 @@ public class CartController {
 		this.bookService = bookService;
 	}
 
-	private User getUser() {
-		Authentication a = SecurityContextHolder.getContext().getAuthentication();
-		if (a == null) {
-			return null;
-		} else {
-			return (User) a.getPrincipal();
-		}
-	}
-
 	// public void setOrderService(OrderService orderService) {
 	// this.setOrderService = orderService;
 	// }
@@ -118,16 +109,26 @@ public class CartController {
 	@RequestMapping(value = "/bestellen", method = RequestMethod.POST)
 	public String orderContent() throws DatabaseException {
 		User user = getUser();
-		if (user.getStreet() != null && user.getStreetnumber() != null) {
+		System.out.println(user.toString());
+		if (user.getStreet() != null && user.getStreetnumber() != null && user.getPlz() != null) {
 			// TODO: In der Bedingung user.getPlz() != null ergänzen, wenn sie
-			// gesetzt wird
+			// gesetzt ist
 			Calendar cal = Calendar.getInstance();
 			orderService.createOrder(cart.getBooks(), user.getUserId(), cal);
 			cart.deleteContent();
 		} else {
 			System.out.println("User has no data.");
 		}
-		return "cart";
-		// return "redirect:/warenkorb";
+		System.out.println("bestellung ausgeführt");
+		return "redirect:/warenkorb";
+	}
+
+	private User getUser() {
+		Authentication a = SecurityContextHolder.getContext().getAuthentication();
+		if (a == null) {
+			return null;
+		} else {
+			return (User) a.getPrincipal();
+		}
 	}
 }
