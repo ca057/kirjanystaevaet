@@ -7,6 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -49,6 +51,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public ViewResolver resolver() {
 		return new TilesViewResolver();
+	}
+
+	@Bean
+	public MultipartResolver filterMultipartResolver() {
+		CommonsMultipartResolver res = new CommonsMultipartResolver();
+		res.setMaxUploadSize((long) (5 * Math.pow(2, 20)));
+		return res;
 	}
 
 	@Override

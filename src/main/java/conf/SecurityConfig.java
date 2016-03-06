@@ -1,4 +1,3 @@
-
 package conf;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ import appl.enums.UserRoles;
  *
  */
 @Configuration
-@ComponentScan(basePackages = { "appl.logic.security" })
+@ComponentScan(basePackages = { "appl.logic.security", "conf" })
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
