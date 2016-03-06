@@ -48,15 +48,6 @@ public class CartController {
 		this.bookService = bookService;
 	}
 
-	private User getUser() {
-		Authentication a = SecurityContextHolder.getContext().getAuthentication();
-		if (a == null) {
-			return null;
-		} else {
-			return (User) a.getPrincipal();
-		}
-	}
-
 	// public void setOrderService(OrderService orderService) {
 	// this.setOrderService = orderService;
 	// }
@@ -120,14 +111,23 @@ public class CartController {
 		User user = getUser();
 		if (user.getStreet() != null && user.getStreetnumber() != null) {
 			// TODO: In der Bedingung user.getPlz() != null ergänzen, wenn sie
-			// gesetzt wird
+			// gesetzt ist
 			Calendar cal = Calendar.getInstance();
 			orderService.createOrder(cart.getBooks(), user.getUserId(), cal);
 			cart.deleteContent();
 		} else {
 			System.out.println("User has no data.");
 		}
-		return "cart";
-		// return "redirect:/warenkorb";
+		System.out.println("bestellung ausgeführt");
+		return "redirect:/warenkorb";
+	}
+
+	private User getUser() {
+		Authentication a = SecurityContextHolder.getContext().getAuthentication();
+		if (a == null) {
+			return null;
+		} else {
+			return (User) a.getPrincipal();
+		}
 	}
 }

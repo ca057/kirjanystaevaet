@@ -42,10 +42,9 @@ public class Cart {
 	// }
 
 	// TODO: adjust getPrice!!!!
-	// public double getPrice() {
-	// return books.stream().parallel().mapToDouble(book ->
-	// book.getPrice()).sum();
-	// }
+	public double getPrice() {
+		return 0;
+	}
 
 	// Item aus Warenkorb entfernen
 	public void deleteBook(Book book) {
