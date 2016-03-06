@@ -56,20 +56,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public MultipartResolver multipartResolver() {
 		CommonsMultipartResolver res = new CommonsMultipartResolver();
-		res.setMaxUploadSize(10000);
+		res.setMaxUploadSize((long) (5 * Math.pow(2, 20)));
 		return res;
 	}
-
-	// @Bean
-	// public ViewResolver resourceViewResolver() {
-	// InternalResourceViewResolver resolver = new
-	// InternalResourceViewResolver();
-	// HashMap<String, String> attributes = new HashMap<String, String>();
-	// attributes.put("prefix", "/WEB-INF/views/");
-	// attributes.put("suffix", ".jsp");
-	// resolver.setAttributesMap(attributes);
-	// return resolver;
-	// }
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
