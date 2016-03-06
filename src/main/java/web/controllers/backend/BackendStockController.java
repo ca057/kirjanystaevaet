@@ -192,7 +192,8 @@ public class BackendStockController {
 		categories.stream().forEach(id -> categoryIds.add(Integer.parseInt(id)));
 
 		File dir = new File(request.getSession().getServletContext()
-				.getRealPath(File.separator + "resources" + File.separator + "img" + File.separator + "cover"));
+				// File.separator + "resources" +
+				.getRealPath(File.separator + "uploaded" + File.separator + "img" + File.separator + "cover"));
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
@@ -232,15 +233,22 @@ public class BackendStockController {
 		}
 		try {
 			bookService.deleteBook(isbn);
-			Path path = new File(request.getSession().getServletContext()
-					.getRealPath(File.separator + "resources" + File.separator + "img" + File.separator + "cover"))
-							.toPath();
-			Files.walk(path).filter(tmpPath -> tmpPath.toString().contains(isbn))
-					.forEach(tmpPath -> tmpPath.toFile().delete());
-
+			deleteImage(
+					new File(request.getSession().getServletContext().getRealPath(
+							File.separator + "resources" + File.separator + "img" + File.separator + "cover")).toPath(),
+					isbn);
+			deleteImage(
+					new File(request.getSession().getServletContext().getRealPath(
+							File.separator + "uploaded" + File.separator + "img" + File.separator + "cover")).toPath(),
+					isbn);
 		} catch (DatabaseException | IOException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 		return "redirect:/backend/bestand";
+	}
+
+	private void deleteImage(Path path, String title) throws IOException {
+		Files.walk(path).parallel().filter(tmpPath -> tmpPath.toString().contains(title))
+				.forEach(tmpPath -> tmpPath.toFile().delete());
 	}
 }
