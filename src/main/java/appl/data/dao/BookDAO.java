@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import appl.data.enums.Searchfields;
 import appl.data.items.Book;
+import appl.enums.Searchfields;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
 

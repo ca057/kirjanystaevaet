@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import appl.data.enums.UserRoles;
+import appl.enums.UserRoles;
 
 /**
  * Holds configuration of beans and implementation of methods connected to

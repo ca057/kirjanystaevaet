@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import appl.data.enums.UserRoles;
-import appl.data.enums.Userfields;
+import appl.enums.UserRoles;
+import appl.enums.Userfields;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 import web.jsonwrappers.PlzJSONWrapper;

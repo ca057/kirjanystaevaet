@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import appl.data.dao.BookDAO;
-import appl.data.enums.Searchfields;
 import appl.data.items.Book;
+import appl.enums.Searchfields;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
 import exceptions.data.ErrorMessageHelper;
