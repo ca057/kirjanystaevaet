@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("web")
+@ComponentScan({ "web", "exceptions.controller" })
 public class WebConfig extends WebMvcConfigurerAdapter {
 
 	@Override
