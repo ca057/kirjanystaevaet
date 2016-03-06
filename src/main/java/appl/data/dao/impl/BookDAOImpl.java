@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -36,7 +37,7 @@ public class BookDAOImpl implements BookDAO {
 		Criteria cr = s.createCriteria(Book.class);
 		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return cr;
-		//return cr.createAlias("categories", "c").createAlias("authors", "a");
+		// return cr.createAlias("categories", "c").createAlias("authors", "a");
 	}
 
 	@Override
@@ -91,7 +92,7 @@ public class BookDAOImpl implements BookDAO {
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
 				break;
 			case pubdate:
-				//TODO Nur das Jahr
+				// TODO Nur das Jahr
 				// Siehe Issue #13
 				break;
 			case edition:
@@ -104,54 +105,44 @@ public class BookDAOImpl implements BookDAO {
 
 			}
 		}
-			/*
-			if ((key.contains("category"))) { // Wieso contains und nicht
-												// equals, wollen wir das
-												// wirklich zulassen?
-				cr.add(Restrictions.ilike("c." + key, "%" + entry.getValue() + "%"));
-			} else if (key.contains("name") || key.contains("author")) { // Wieso
-																			// verodert?
-																			// Wieso
-																			// legen
-																			// wir
-																			// nicht
-																			// feste
-																			// keys
-																			// fest?
-				cr.add(Restrictions.ilike("a." + key, "%" + entry.getValue() + "%"));
-			} else {
-				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
-				System.out.println("in Dao: else-case, Searchfield = " + key);
-			}
-		}
-		*/
+		/*
+		 * if ((key.contains("category"))) { // Wieso contains und nicht //
+		 * equals, wollen wir das // wirklich zulassen?
+		 * cr.add(Restrictions.ilike("c." + key, "%" + entry.getValue() + "%"));
+		 * } else if (key.contains("name") || key.contains("author")) { // Wieso
+		 * // verodert? // Wieso // legen // wir // nicht // feste // keys //
+		 * fest? cr.add(Restrictions.ilike("a." + key, "%" + entry.getValue() +
+		 * "%")); } else { cr.add(Restrictions.ilike(key, "%" + entry.getValue()
+		 * + "%")); System.out.println("in Dao: else-case, Searchfield = " +
+		 * key); } }
+		 */
 		// System.out.println("Criteria to String " + cr.toString());
-		List<Book> result = (List<Book>) cr.list();
+		List<Book> result = cr.list();
 		// sessionFactory.getCurrentSession().getTransaction().commit();
 		// System.out.println("In DAO: Resultsize: " + result.size());
 		return result;
 	}
+
 	@Override
-	public Book getBookByIsbn(String isbn) throws EntityDoesNotExistException{
+	public Book getBookByIsbn(String isbn) throws EntityDoesNotExistException {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq("isbn", isbn));
 		Object result = cr.uniqueResult();
-		if ( result != null){
+		if (result != null) {
 			Book book = (Book) result;
 			return book;
 		} else {
 			throw new EntityDoesNotExistException();
 		}
-	}	
+	}
 
 	@Override
-	//public String insertBook(Book book) throws IsbnAlreadyExistsException {
-	public String insertBook(Book book) throws DatabaseException{
+	// public String insertBook(Book book) throws IsbnAlreadyExistsException {
+	public String insertBook(Book book) throws DatabaseException {
 		Object id = getSession().save(book);
-			
-		
-		//if (id instanceof String){
-		if (id != null && id instanceof String ){	
+
+		// if (id instanceof String){
+		if (id != null && id instanceof String) {
 			return (String) id;
 		} else {
 			throw new DatabaseException(ErrorMessageHelper.insertFailed("book"));
@@ -161,7 +152,7 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public void deleteBook(String isbn) {
-		Book book = (Book) getSession().get(Book.class, isbn);
+		Book book = getSession().get(Book.class, isbn);
 		getSession().delete(book);
 	}
 
@@ -172,21 +163,37 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public void decrementStock(String isbn, int decrement) throws DatabaseException {
-		Book book = (Book) getSession().get(Book.class, isbn);
-		if (book.getStock()>0){
+		Book book = getSession().get(Book.class, isbn);
+		if (book.getStock() > 0) {
 			book.decrementStock(decrement);
 			getSession().update(book);
 		} else {
 			throw new DatabaseException(ErrorMessageHelper.stockIsNull(book.getTitle()));
 		}
-		
+
 	}
 
 	@Override
 	public void setStockToNegative(String isbn) {
-		Book book = (Book) getSession().get(Book.class, isbn);
+		Book book = getSession().get(Book.class, isbn);
 		book.setStock(-1);
 		getSession().update(book);
+	}
+
+	@Override
+	public List<Book> getMostVisitedBooks(int range) {
+		if (range < 0) {
+			throw new IllegalArgumentException("The passed range must be greater than 0.");
+		}
+		return setupAndGetCriteria().addOrder(Order.desc("visitCount")).setMaxResults(range).list();
+	}
+
+	@Override
+	public List<Book> getLeastVisitedBooks(int range) {
+		if (range < 0) {
+			throw new IllegalArgumentException("The passed range must be greater than 0.");
+		}
+		return setupAndGetCriteria().addOrder(Order.asc("visitCount")).setMaxResults(range).list();
 	}
 
 }
