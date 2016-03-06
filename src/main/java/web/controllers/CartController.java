@@ -40,9 +40,9 @@ public class CartController {
 	@Autowired
 	private Cart cart;
 
-	// public void setCart(Cart cart) {
-	// this.cart = cart;
-	// }
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
 
 	public void setBookService(BookService bookService) {
 		this.bookService = bookService;
