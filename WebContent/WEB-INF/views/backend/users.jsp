@@ -21,6 +21,10 @@
 			<input type="text" id="streetnumber" name="streetnumber" required/>
 			<label for="plz">PLZ</label>
 			<input type="text" id="plz" name="plz" required/>
+			<div class="hidden-info" id="plz-info-wrapper">
+				<p id="plz-info"></p>
+				<div id="plz-selection"></div>
+			</div>
 			<label for="email">E-Mail</label>
 			<input type="email" id="email" name="email" required/>
 			<label for="role">Rolle</label>
@@ -63,11 +67,15 @@
 					
 					<label for="edit-plz">PLZ</label>
 					<input type="text" id="edit-plz" name="edit-plz" required/>
+					<div class="hidden-info" id="edit-plz-info-wrapper">
+						<p id="edit-plz-info"></p>
+						<div id="edit-plz-selection"></div>
+					</div>
 					
 					<label for="edit-email">E-Mail</label>
 					<input type="email" id="edit-email" name="edit-email" required/>
 					
-					<label for="edit-password">Passwort</label>
+					<label for="edit-password">Passwort (mindestens 6 Zeichen lang)</label>
 					<input type="password" id="edit-password" name="edit-password" required/>
 					
 					<label for="edit-role">Rolle</label>

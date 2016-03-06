@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import appl.data.enums.Searchfields;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.enums.Searchfields;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
 

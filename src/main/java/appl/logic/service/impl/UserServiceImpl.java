@@ -14,12 +14,12 @@ import appl.data.builder.BuilderFactory;
 import appl.data.builder.UserBuilder;
 import appl.data.dao.PlzDAO;
 import appl.data.dao.UserDAO;
-import appl.data.enums.UserRoles;
-import appl.data.enums.Userfields;
 import appl.data.items.Book;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.data.items.UserBookStatistic;
+import appl.enums.UserRoles;
+import appl.enums.Userfields;
 import appl.logic.service.BookService;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
@@ -53,16 +53,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int createAccount(Map<Userfields, String> data, PLZ plz, byte[] image) throws DatabaseException {
-		return createAccount(getUserBuilder().setPLZ(plz).setImage(image), data);
-	}
-
-	@Override
-	public int createAccount(Map<Userfields, String> data, PLZ plz) throws DatabaseException {
-		return createAccount(getUserBuilder().setPLZ(plz), data);
-	}
-
-	@Override
 	public int createAccount(Map<Userfields, String> data) throws DatabaseException {
 		return createAccount(getUserBuilder(), data);
 	}
@@ -81,18 +71,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean updateAccount(int userId, Map<Userfields, String> data) throws DatabaseException {
-		return updateAccount(userId, data, Optional.empty(), Optional.empty());
-	}
-
-	@Override
-	public boolean updateAccount(int userId, Map<Userfields, String> data, PLZ plz) throws DatabaseException {
-		return updateAccount(userId, data, Optional.empty(), Optional.empty());
-	}
-
-	@Override
-	public boolean updateAccount(int userId, Map<Userfields, String> data, PLZ plz, byte[] image)
-			throws DatabaseException {
-		return updateAccount(userId, data, Optional.ofNullable(plz), Optional.ofNullable(image));
+		return updateAccount(userId, data, Optional.empty());
 	}
 
 	@Override
@@ -100,10 +79,10 @@ public class UserServiceImpl implements UserService {
 		if (image == null) {
 			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("image"));
 		}
-		return updateAccount(userId, data, Optional.empty(), Optional.ofNullable(image));
+		return updateAccount(userId, data, Optional.ofNullable(image));
 	}
 
-	private boolean updateAccount(int userId, Map<Userfields, String> data, Optional<PLZ> plz, Optional<byte[]> image)
+	private boolean updateAccount(int userId, Map<Userfields, String> data, Optional<byte[]> image)
 			throws DatabaseException {
 		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
 				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
@@ -111,9 +90,6 @@ public class UserServiceImpl implements UserService {
 
 		if (image.isPresent()) {
 			userBuilder.setImage(image.orElse(null));
-		}
-		if (plz.isPresent()) {
-			userBuilder.setPLZ(plz.orElse(null));
 		}
 
 		System.out.println("Map-Größe: " + data.size());
@@ -170,13 +146,13 @@ public class UserServiceImpl implements UserService {
 		return userDao.updateUserBookStatistic(user, book, date);
 	}
 
+	// TODO In PLZ-Service/-DAO verschieben?
 	@Override
 	public List<PLZ> getPLZs(String postalCode) throws DatabaseException {
 		return plzDAO.getPLZByPostalCode(postalCode);
 	}
 
-	@Override
-	public Optional<PLZ> getPLZ(int plzId) throws DatabaseException {
+	private Optional<PLZ> getPLZ(int plzId) throws DatabaseException {
 		return plzDAO.getPLZ(plzId);
 	}
 
@@ -207,6 +183,10 @@ public class UserServiceImpl implements UserService {
 			System.out.println("Verschlüsseltes Passwort: " + psw);
 			userBuilder.setPassword(psw);
 			break;
+		case plzId:
+			PLZ plz = getPLZ(Integer.parseInt(information))
+					.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("PLZ")));
+			userBuilder.setPLZ(plz);
 		default:
 			break;
 		}

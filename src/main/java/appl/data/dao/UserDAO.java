@@ -7,10 +7,10 @@ import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import appl.data.enums.Userfields;
 import appl.data.items.Book;
 import appl.data.items.User;
 import appl.data.items.UserBookStatistic;
+import appl.enums.Userfields;
 import exceptions.data.DatabaseException;
 
 /**

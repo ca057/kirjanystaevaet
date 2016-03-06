@@ -1,68 +1,62 @@
-/**
- * Script for client-side-logic for handling user input, input validation etc. 
- */
-
-function handleRegistration () {
-	var userData = {};
-	$("#register-submit").on("click", function (e) {
-		if (!allInputsAreValid()) {
-			// TODO validate plz
-			return;
-		}
-		e.preventDefault();
-		clearOrDisableInputs("disable", true);
-		userData = {
-			name: $('#name').val(),
-			surname: $('#surname').val(),
-			street: $('#street').val(),
-			streetnumber: $('#streetnumber').val(),
-			plz: $('#plz').val(),
-			email: $('#email').val(),
-			password: $('#password').val()
-		};
-		showMessage("Ihre Eingabe wird verarbeitet.", false);
-		$.ajax({
-			url: "/kirjanystaevaet/registrierung",
-			type: "POST",
-			data: JSON.stringify(userData),
-			dataType: 'json',
-			contentType: 'application/json',
-		    processData: false,
-			headers: { 
-		        'Accept': 'application/json',
-		        'Content-Type': 'application/json' 
-		    },
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader("X-CSRF-TOKEN", $('[name=_csrf]').val());
+const handle = function () {
+ 	const registration = function () {
+ 		console.log("Registration is active.")
+		const inputs = ["name", "surname", "street", "streetnumber", "plz", "email", "password"];
+		$('#plz').on('input', function(e) {
+			if ($(this).val().length < 5) {
+				$('#plz-info-wrapper').slideUp();
+				$('#plz-selection').empty();
+				return;
 			}
-		})
-		.done(function (data, status, jqXHR) {
-			clearOrDisableInputs("clear");
-			// TODO commented this to redirect via the controller
-			// window.location.replace("/kirjanystaevaet/login");
-		})
-		.fail(function (jqXHR, status, err) {
-			$("#password").val("");
-			showMessage("Der Account konnte nicht angelegt werden, versuchen Sie es mit einer anderen Email-Adresse.", true)
-			clearOrDisableInputs("disable", false);
+			console.log("Request all PLZs from the server.");
+			KY.request('/kirjanystaevaet/registrierung/plz')
+				.GET_PARAM("code=" + $(this).val()).done(data => {
+					console.log("Server send data: " + data.toString());
+					$('#plz-info').text("Wählen Sie den korrekten Ort.").css("color", "#727272").show();
+					data.forEach(e => {
+						$('#plz-selection').append("<span><input type='radio' name='plz' value='" + e.plzId + "'>" + e.postcode + ": " + e.place + "</span>");
+					});					
+					$('#plz-info-wrapper').slideDown();
+				}).fail((jqXHR, status, err) => {
+					console.log("An error occured with status [" + status + "] and error [" + err + "].");
+					$('#plz-info').text("Die PLZ scheint nicht korrekt zu sein.").css("color", "red").show();
+					$('#plz-info-wrapper').slideDown();
+				});
 		});
-	});
-	
-	function clearOrDisableInputs (task, disable) {
-		var inputs = ["#name", "#surname", "#street", "#streetnumber", "#plz", "#email", "#password"];
-		if (task === "clear") {
-			for (var i = 0; i < inputs.length; i++) {
-				$(inputs[i]).val("");
+
+		$("#register-submit").on("click", function (e) {
+			if (!KY.inputsAreNotEmpty(inputs) && $("#email").val().trim().length < 6 && !KY.MAIL.test($("#email").val().trim())) {
+				console.error('Something with the inputs of adding a user is wrong...');
+				return;
 			}
-		} else if (task === "disable") {
-			$("#register-submit").prop("disabled", disable);
-			for (var i = 0; i < inputs.length; i++) {
-				$(inputs[i]).prop("disabled", disable);
-			}
-		}
-	}
-	
-	function showMessage (text, error) {
+			e.preventDefault();
+			const data = {};
+			inputs.forEach(e => {
+				$('#' + e).prop('disabled', true);
+				data[e] = $( "[name="+ e +"]").val();
+			});
+			showMessage("Ihre Eingabe wird verarbeitet.", false);
+			$("#register-submit").prop('disabled', true);
+			KY.request('/kirjanystaevaet/registrierung')
+				.POST(data).done(function (data, status, jqXHR) {
+					console.log("Registration of user was successful.");
+					inputs.forEach(e => {
+						$('#' + e).prop('disabled', false).val('');
+					});
+					$('#plz-info-wrapper').hide();
+					window.location.replace("/kirjanystaevaet/meinkonto");
+				}).fail(function (jqXHR, status, err) {
+					console.error("The registration was not successful. Try again with a different email.")
+					$("#password").val("");
+					showMessage("Der Account konnte nicht angelegt werden, versuchen Sie es mit einer anderen Email-Adresse.", true)
+					inputs.forEach(e => {
+						$('#' + e).prop('disabled', false);
+					});
+				});
+		});
+ 	};
+
+ 	var showMessage = function (text, error) {
 		$("#info-message").show().text(text);
 		if (error) {
 			$("#info-message").css("color", "red");
@@ -70,24 +64,21 @@ function handleRegistration () {
 			$("#info-message").css("color", "#727272");
 		}
 	}
-	
-	function allInputsAreValid () {
-		var regex = /[A-Za-z0-9\.\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]+\@[A-Za-z0-9\_\-]+\.[A-Za-z]{2,3}/g;
-		return $("#name").val().trim() !== "" && 
-			$("#surname").val().trim() !== "" && 
-			$("#street").val().trim() !== "" && 
-			$("#streetnumber").val().trim() !== "" && 
-			$("#plz").val().trim() !== "" && 
-			$("#email").val().trim() !== "" && 
-			regex.test($("#email").val().trim()) &&
-			$("#password").val().trim() !== "";
-	}
-}
+
+ 	return {
+ 		registration: () => registration()
+ 	};
+ };
 
 $(document).ready(function () {
-	// DOM loaded, check what we have to do
 	if (window.location.pathname.indexOf("/registrierung") != -1) {
-		// we are on the register page, handle the registration
-		handleRegistration();
+		handle().registration();
+	}
+	window.onload = function() {
+		var elevator = new Elevator({
+			element: document.querySelector('.to-top'),
+			mainAudio: 'http://tholman.com/elevator.js/music/elevator.mp3',
+			endAudio: 'http://tholman.com/elevator.js/music/ding.mp3'
+		});
 	}
 });

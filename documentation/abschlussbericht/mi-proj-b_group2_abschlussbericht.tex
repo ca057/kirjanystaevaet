@@ -1,8 +1,13 @@
 \documentclass{lni}
+\let\ifpdf\relax
 
 \IfFileExists{latin1.sty}{\usepackage{latin1}}{\usepackage{isolatin1}}
 
+\usepackage{listings}
 \usepackage{graphicx}
+\usepackage{hyperref}
+
+\lstset{basicstyle=\ttfamily,breaklines=true}
 
 \author{
 	Christian Ost, Madeleine Rosenhagen, Ludwig Thormann, Johannes Trepesch \\ 
@@ -16,38 +21,62 @@
 }
 \title{Abschlusdokumentation -- kirjanystaevaet}
 
+
 \begin{document}
 \maketitle
+\tableofcontents
+\newpage
 
 \begin{abstract}
-Es folgt ein kurzer Überblick über die Arbeit. Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
+Es folgt ein kurzer Überblick über die Arbeit.
 \end{abstract}
 
-\section{Kapitelüberschrift}
+\section{Einleitung}
 
-Dies ist ein Kapitel. Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
+\section{Systemarchitektur}
 
-Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
+\section{Umsetzung des Anforderungskatalogs}
+	\subsection{REST-API}
+	Die REST-API liefert Bestandsdaten im JSON-Format über die zum Verkauf stehenden Bücher. Tabelle \ref{rest-api} gibt Auskunft über das verwendete URL-Schema, dabei muss der angegebenen URL \lstinline|http://localhost:8080/kirjanystaevaet/api/v1| vorangestellt werden.
+	
+	\begin{table}[h]
+		\caption{URL-Schema der REST-API}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			URL & (optionale) Parameter & Methode & Beschreibung \\ \hline \hline
+			\lstinline|/books| & \lstinline|limit (long)| & \lstinline|GET| & alle verfügbaren Bücher \\ \hline
+			\lstinline|/books/{category}| & \lstinline|limit (long)| & \lstinline|GET| & alle verfügbaren Bücher der übergebenen Kategorie \\ \hline
+			\lstinline|/books/{isbn}| & & \lstinline|GET| & das Buch mit der übergebenen ISBN \\ \hline
+		\end{tabular} 
+		\label{rest-api}
+	\end{table}
+	
+\section{User Stories}
+	\subsection{Registrierung und Login}
+	\dots
+	
+	Da es zu einer Postleitzahl mehrere Orte geben kann, zum Beispiel bei \lstinline|37627|, wird dem Nutzer nach Eingabe einer Postleitzahl eine Liste mit allen zutreffenden Ortsnamen angezeigt. Aus dieser ist der korrekte Ort auszuwählen. Die möglichen Orte werden im Hintergrund über eine AJAX-Abfrage vom Server geholt und als Radio-Buttons in die HTML-Seite eingefügt.
+	
+	\dots
+	
+	\subsection{Buchauswahl und Bestellung}
+	
+	\subsection{Administration des Web-Shops}
 
-\section{Kapitelüberschrift}
-
-Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
-
-\subsection{Unterkapitelüberschrift}
-
-Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
-
-\begin{figure}[htb]
-  \begin{center}
-    \includegraphics[width=2cm]{}
-    \caption{\label{logo}Beschreibung der Abbildung}
-  \end{center}
-\end{figure}
-
-Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
-
-Text mit Fußnote.\footnote{Dies ist eine Fußnote. Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.} Text \cite{Ez99,ABC01} Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
-
+\section{Zusammenarbeit}
+	\begin{itemize}
+		\item git
+		\item GitHub-Issues
+		\item Austausch/Updates per Mail
+		\item wöchentliche Treffen
+	\end{itemize}
+	
+\section{Lessons Learned}
+	\begin{itemize}
+		\item[Git] Wie lösen wir Merge-Konflikte? Wie teilen wir die Arbeit auf unterschiedliche Branches aus? Wie halten wir unseren Master einigermaßen fehlerfrei?
+		\item[Naming Conventions] Wie benennen wir unsere Feature-Branches? Wie benennen wir unsere Klassen? Wie benennen wir unsere Packages?
+	\end{itemize}
+	
 \bibliography{lnitemplate}
 
 \end{document}
