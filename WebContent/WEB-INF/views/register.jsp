@@ -19,10 +19,14 @@
 		<label for="streetnumber">Hausnummer</label>
 		<input type="text" id="streetnumber" name="streetnumber" required/>
 		<label for="plz">PLZ</label>
-		<input type="text" id="plz" name="plz" required/>
+		<input type="text" id="plz" maxlength="5" required/>
+		<div class="hidden-info" id="plz-info-wrapper">
+			<p id="plz-info"></p>
+			<div id="plz-selection"></div>
+		</div>
 		<label for="email">E-Mail</label>
 		<input type="email" id="email" name="email" required/>
-		<label for="password">Passwort</label>
+		<label for="password">Passwort (mindestens 6 Zeichen lang)</label>
 		<input type="password" id="password" name="password" required/>
 		<button type="submit" id="register-submit" title="Registrieren">Registrieren</button>
 		<sec:csrfInput/>

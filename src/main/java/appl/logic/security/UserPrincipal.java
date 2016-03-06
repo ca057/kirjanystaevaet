@@ -28,7 +28,7 @@ public class UserPrincipal extends User implements UserDetails {
 	public UserPrincipal(User user, List<GrantedAuthority> authorities) {
 		super(user.getUserId(), user.getPassword(), user.getName(), user.getSurname(), user.getEmail(),
 				user.getStreet(), user.getStreetnumber(), user.getPlz(), user.getRole(), user.getImage(),
-				user.getOrders());
+				user.getOrders(), user.getUserBookStatistics());
 		this.authorities = authorities;
 	}
 

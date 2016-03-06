@@ -1,14 +1,16 @@
 package appl.data.dao;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import appl.data.enums.Userfields;
 import appl.data.items.Book;
 import appl.data.items.User;
+import appl.data.items.UserBookStatistic;
+import appl.enums.Userfields;
 import exceptions.data.DatabaseException;
 
 /**
@@ -121,7 +123,8 @@ public interface UserDAO {
 	 *             if an error occurs while accessing the database or if the
 	 *             user cannot be found
 	 */
-	List<Book> getVisitedBooks(int userId) throws DatabaseException;
+	// TODO Update Javadoc
+	List<UserBookStatistic> getUserBookStatistics(int userId) throws DatabaseException;
 
 	/**
 	 * Updates the list of visited books. Takes the ISBN of the recently seen
@@ -136,5 +139,6 @@ public interface UserDAO {
 	 *             if an error occurs while accessing the database or if the
 	 *             user cannot be found
 	 */
-	boolean updateVisitedBooks(int userId, Book book) throws DatabaseException;
+	// TODO Update Javadoc
+	boolean updateUserBookStatistic(User user, Book book, Calendar date) throws DatabaseException;
 }

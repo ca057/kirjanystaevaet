@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="<s:url value='/css/style.css'/>">
 	
 	<script type="text/javascript" src="<s:url value='/js/jquery-2.2.1.min.js' />"></script>
+	<script type="text/javascript" src="<s:url value='/js/elevator.min.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/js/helpme.js'/>"></script>
 	<script type="text/javascript" src="<s:url value='/js/script.js'/>"></script>
 	

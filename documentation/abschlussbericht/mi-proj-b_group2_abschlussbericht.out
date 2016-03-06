@@ -1,0 +1,10 @@
+\BOOKMARK [1][-]{section.1}{Einleitung}{}% 1
+\BOOKMARK [1][-]{section.2}{Systemarchitektur}{}% 2
+\BOOKMARK [1][-]{section.3}{Umsetzung des Anforderungskatalogs}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{REST-API}{section.3}% 4
+\BOOKMARK [1][-]{section.4}{User Stories}{}% 5
+\BOOKMARK [2][-]{subsection.4.1}{Registrierung und Login}{section.4}% 6
+\BOOKMARK [2][-]{subsection.4.2}{Buchauswahl und Bestellung}{section.4}% 7
+\BOOKMARK [2][-]{subsection.4.3}{Administration des Web-Shops}{section.4}% 8
+\BOOKMARK [1][-]{section.5}{Zusammenarbeit}{}% 9
+\BOOKMARK [1][-]{section.6}{Lessons Learned}{}% 10

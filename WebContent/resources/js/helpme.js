@@ -23,7 +23,7 @@ KY = {
 		
 		const sendParam = function (type, param) {
 			return $.ajax({
-				url: (url.charAt(url.length -1) !== "?" ? url + "?" : url) + $(param),
+				url: (url.charAt(url.length -1) !== "?" ? url + "?" : url) + param,
 				type: type,
 				beforeSend: function (xhr) {
 					xhr.setRequestHeader("X-CSRF-TOKEN", $('[name=_csrf]').val());
@@ -35,6 +35,7 @@ KY = {
 			POST: (data) => ajax('POST', data),
 			GET: () => ajax('GET'),
 			DELETE: (data) => ajax('DELETE', data),
+			GET_PARAM: (param) => sendParam('GET', param),
 			POST_PARAM: (param) => sendParam('POST', param)
 		};
 	},

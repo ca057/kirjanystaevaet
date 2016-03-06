@@ -20,80 +20,66 @@ import exceptions.data.DatabaseException;
 public class CategoriesController {
 
 	@Autowired
-	private BookService service;
+	private BookService bookService;
 
 	/**
 	 * Setter injection for the {@link CategoryService} bean.
 	 * 
-	 * @param service
+	 * @param bookService
 	 */
-	public void setService(BookService service) {
-		this.service = service;
+	public void setService(BookService bookService) {
+		this.bookService = bookService;
 	}
 
+	/**
+	 * Adds a list with all existing categories to the model. If an exception
+	 * occurs while querying the category names, the exception is ignored. In
+	 * this case, no list is added to the model and the view will render an
+	 * error message.
+	 * 
+	 * @param m
+	 *            the model for the view
+	 * @return the name of the view responsible for displaying the categories
+	 */
 	@RequestMapping(value = "/kategorien", method = RequestMethod.GET)
 	public String getCategoryOverview(Model m) {
 		try {
-			m.addAttribute("allCategories", service.getAllCategoryNames());
-		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			m.addAttribute("allCategories", bookService.getAllCategoryNames());
+		} catch (DatabaseException ignore) {
+			// if the view doesn't have a list with the category names, it will
+			// render an error message
 		}
 		return "categories";
 	}
 
+	/**
+	 * If the URL contains a category name as path variable, this method tries
+	 * to resolve it to an existing one. If an existing category is found, its
+	 * correct name and all its books are added to the model.
+	 * 
+	 * If an exception occurs, this method will return a redirect to the
+	 * category overview.
+	 * 
+	 * @param category
+	 *            the name of the category, upper or lower case does not matter
+	 * @param m
+	 *            the model for the view
+	 * @return the name of the view responsible for displaying a category and
+	 *         its books or a redirect to the category overview
+	 */
 	@RequestMapping(value = "/kategorie/{category}", method = RequestMethod.GET)
 	public String getCategory(@PathVariable("category") String category, Model m) {
 		try {
-			m.addAttribute("name", getCorrectCategoryName(category));
+			m.addAttribute("name",
+					bookService.getAllCategoryNames().stream()
+							.filter(c -> c.toUpperCase().equals(category.toUpperCase())).findFirst().orElseThrow(
+									() -> new CategoryNotFoundException("The searched category could not be found.")));
+			// TODO change method for querying book
+			m.addAttribute("books", bookService.getBooksByCategory(category).stream().filter(b -> b.getStock() > 0)
+					.collect(Collectors.toList()));
 			return "categories";
-		} catch (CategoryNotFoundException e) {
+		} catch (CategoryNotFoundException | DatabaseException e) {
 			return "redirect:/kategorien";
 		}
-	}
-
-	/**
-	 * Checks if the passed category is existing, upper/lower cases are ignored.
-	 * 
-	 * @param category
-	 * @return {@code true} if the category exists, {@code false} otherwise
-	 */
-	private boolean checkIfExistingCategory(String category) {
-		if (service == null) {
-			throw new IllegalArgumentException("Service is null");
-		}
-		try {
-			return service.getAllCategoryNames().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
-					.contains(category.toUpperCase());
-		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false; // Eingefügt von MAdeleine, was wollt ihr wirklich machen?
-		}
-	}
-
-	/**
-	 * Returns the correct formatted category name for displaying it in the
-	 * views.
-	 * 
-	 * @param category
-	 * @return the correct formatted category as {@code String}
-	 * @throws CategoryNotFoundException
-	 *             if the given category does not exist
-	 */
-	private String getCorrectCategoryName(String category) throws CategoryNotFoundException {
-		if (checkIfExistingCategory(category)) {
-			try {
-				for (String c : service.getAllCategoryNames()) {
-					if (category.toUpperCase().equals(c.toUpperCase())) {
-						return c;
-					}
-				}
-			} catch (DatabaseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		throw new CategoryNotFoundException("Die Kategorie " + category + " wurde nicht gefunden.");
 	}
 }

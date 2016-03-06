@@ -120,6 +120,14 @@ public abstract class ErrorMessageHelper {
 	public static String entityDoesAlreadyExist(String entity){
 		return String.format("%s does already exist", entity);
 	}
+	
+	public static String insertFailed(String entity){
+		return String.format("Insert of %s failed", entity);
+		
+	}
+	public static String stockIsNull(String bookTitle){
+		return String.format("Sorry, someone else was faster, the %s is not available anymore. Stock = 0", bookTitle);
+	}
 
 
 }

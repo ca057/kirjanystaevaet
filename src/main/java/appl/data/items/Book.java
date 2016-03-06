@@ -15,8 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import appl.data.dao.ArchiveBook;
-
 /**
  * Book is a POJO marked as persistent entity with table name
  * "bookdescriptions". It represents a book object with different variables:
@@ -37,6 +35,7 @@ import appl.data.dao.ArchiveBook;
  * @author Madeleine
  *
  */
+// TODO Javadoc updaten
 @Entity
 @Table(name = "bookdescriptions", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "isbn") })
 public class Book {
@@ -48,13 +47,13 @@ public class Book {
 	private String pubdate;
 	private String edition;
 	private String pages;
+	private int stock;
+	private int visitCount;
 
 	private Set<Category> categories = new HashSet<Category>(0);
 	private Set<Author> authors = new HashSet<Author>(0);
-	// TODO In Javadoc erwähnen.
-	// private Set<Order> orders = new HashSet<Order>(0);
-	private Set<ArchiveBook> archiveItems = new HashSet<ArchiveBook>(0);
-	private Set<User> visitingUsers = new HashSet<User>(0);
+	private Set<OrderItem> orderItems = new HashSet<OrderItem>(0);
+	private Set<UserBookStatistic> userBookStatistics = new HashSet<UserBookStatistic>(0);
 
 	public Book() {
 	}
@@ -74,7 +73,7 @@ public class Book {
 	 * @param authors
 	 */
 	public Book(String isbn, String title, String description, double price, String publisher, String pubdate,
-			String edition, String pages, Set<Category> categories, Set<Author> authors) {
+			String edition, String pages, int stock, Set<Category> categories, Set<Author> authors) {
 		this.isbn = isbn;
 		this.title = title;
 		this.description = description;
@@ -85,6 +84,7 @@ public class Book {
 		this.pages = pages;
 		this.categories = categories;
 		this.authors = authors;
+		this.stock = stock;
 	}
 
 	@Id
@@ -128,36 +128,37 @@ public class Book {
 		return pages;
 	}
 
-	//@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@ManyToMany(fetch = FetchType.LAZY)// Wenn das letzte Buch einer Kategorie gelöscht wird, wird die Kategorie nicht gelöscht
+	@Column(name = "stock", nullable = false, length = 8)
+	public int getStock() {
+		return stock;
+	}
+
+	@Column(name = "visitCount", nullable = false, length = 8, columnDefinition = "int default 0")
+	public int getVisitCount() {
+		return visitCount;
+	}
+
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "bookcategoriesbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "categoryId") )
 	public Set<Category> getCategories() {
 		return categories;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "bookauthorsbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "authorId") )
 	public Set<Author> getAuthors() {
 		return authors;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
-	public Set<ArchiveBook> getArchiveItems() {
-		return archiveItems;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
+	public Set<OrderItem> getOrderItems() {
+		return orderItems;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "userbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "userId") )
-	public Set<User> getVisitingUsers() {
-		return visitingUsers;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
+	public Set<UserBookStatistic> getUserBookStatistics() {
+		return userBookStatistics;
 	}
-	/*
-	 * @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	 * 
-	 * @JoinTable(name = "bookorder", schema = "public", joinColumns
-	 * = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name =
-	 * "orderId") ) public Set<Order> getOrders() { return orders; }
-	 */
 
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
@@ -191,36 +192,45 @@ public class Book {
 		this.pages = pages;
 	}
 
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public void setVisitCount(int visitCount) {
+		this.visitCount = visitCount;
+	}
+
 	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
 	}
-
-	/*
-	 * public void setOrders(Set<Order> orders) { this.orders = orders; }
-	 */
 
 	public void setAuthors(Set<Author> authors) {
 		this.authors = authors;
 	}
 
-	public void setArchiveItems(Set<ArchiveBook> archiveItems) {
-		this.archiveItems = archiveItems;
+	public void setOrderItems(Set<OrderItem> orderItems) {
+		this.orderItems = orderItems;
 	}
 
-	private void setVisitingUsers(Set<User> visitingUsers) {
-		this.visitingUsers = visitingUsers;
+	public void setUserBookStatistics(Set<UserBookStatistic> userBookStatistics) {
+		this.userBookStatistics = userBookStatistics;
+	}
+
+	public void decrementStock(int decrement) {
+		stock -= decrement;
+	}
+
+	public int addToStock(int add) {
+		stock += add;
+		return stock;
 	}
 
 	@Override
 	public String toString() {
-		String categoryString = "";
-		/*
-		 * for (Category c : categories){ categoryString = categoryString + " "
-		 * + c.toString(); }
-		 */
+		// TODO Category
 		return "Book [isbn=" + isbn + ", title=" + title + ", description=" + description + ", price=" + price
 				+ ", publisher=" + publisher + ", pubdate=" + pubdate + ", edition=" + edition + ", pages=" + pages
-				+ ", category= " + categoryString + "]";
+				+ ", stock=" + stock + "]";
 	}
 
 }

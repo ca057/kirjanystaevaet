@@ -4,25 +4,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import appl.data.enums.Searchfields;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.enums.Searchfields;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
 
 public interface BookService {
-	//Category Methoden
-	
+	// Category Methoden
+
 	// Abfragen
-	
-	public Category getCategoryByExactName (String name) throws DatabaseException;
-	
+
+	public Category getCategoryByExactName(String name) throws DatabaseException;
+
 	public Category getCategoryById(int id) throws DatabaseException;
-	
-	
+
 	public List<String> getAllCategoryNames() throws DatabaseException;
-	
+
 	public List<Category> getAllCategories() throws DatabaseException;
 
 	// Insert
@@ -30,55 +29,60 @@ public interface BookService {
 	 * 
 	 * @param name
 	 * @return Die neu erzeugte ID
-	 * @throws DatabaseException E.G. Thrown if one tries to insert an Category that already exists 
+	 * @throws DatabaseException
+	 *             E.G. Thrown if one tries to insert an Category that already
+	 *             exists
 	 */
 	public int insertCategory(String name) throws DatabaseException;
-	
+
 	// Update
-	
-	
-	
+
 	// Delete
-	
+
 	public void deleteCategory(String name) throws DatabaseException;
-	
-	
+
 	// Author Methoden
-	//Abfragen
-
-
+	// Abfragen
 	
+	public List<Author> getAuthorByIsbn(String isbn)throws DatabaseException;
+ 
 	public List<Author> getAuthorByExactName(String NameF, String NameL) throws DatabaseException;
-	
-	public Author getAuthorById (int id) throws DatabaseException;
-	
+
+	public Author getAuthorById(int id) throws DatabaseException;
+
 	public List<Author> getAllAuthors() throws DatabaseException;
-	
+
 	// Insert
 	/**
 	 * 
 	 * @param nameF
 	 * @param nameL
-	 * @param newAuthor Wird auf TRUE gesetzt, wenn man auf jeden Fall einen neuen Autoren in die Datenbank einfügen will, auch wenn es schon einen mit diesem Namen gibt. In diesem Fall kann die Exception ignoriert werden, weil sie nie geworfen werden wird
+	 * @param newAuthor
+	 *            Wird auf TRUE gesetzt, wenn man auf jeden Fall einen neuen
+	 *            Autoren in die Datenbank einfügen will, auch wenn es schon
+	 *            einen mit diesem Namen gibt. In diesem Fall kann die Exception
+	 *            ignoriert werden, weil sie nie geworfen werden wird
 	 * @return Die ID des neu erstellten Eintrags
-	 * @throws AuthorMayExistException Wenn newAuthor = false und wenn es schon mindestens einen Autoren mit Exakt dem angegeben Vor- und Nachnamen gibt
+	 * @throws AuthorMayExistException
+	 *             Wenn newAuthor = false und wenn es schon mindestens einen
+	 *             Autoren mit Exakt dem angegeben Vor- und Nachnamen gibt
 	 */
 	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws AuthorMayExistException;
 
 	// Update
-	
+
 	// Delete
-	//TODO Was soll hier angegeben werden?
+	// TODO Was soll hier angegeben werden?
 	/**
 	 * 
 	 * @param id
-	 * @throws DatabaseException If Author does not exist, or if a general DB-Error Happens
+	 * @throws DatabaseException
+	 *             If Author does not exist, or if a general DB-Error Happens
 	 */
 	void deleteAuthor(int id) throws DatabaseException;
 
 	// Book Methoden
-	
-	
+
 	// Abfragen
 	public List<Book> getAllBooks() throws DatabaseException;
 
@@ -89,22 +93,63 @@ public interface BookService {
 	public List<Book> getBooksByOpenSearch(String searchTerm);
 
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) throws DatabaseException;
-	
-
 
 	// Insert
 	/**
 	 * 
-	 * @param map contains information about simple fields
-	 * @param authorIds may only contain ids of existing authors
-	 * @param categoryIds may only contain ids of existing categories
-	 * @throws DatabaseException thrown when categories or authors do not exist in the Database, also thrown in case of general Database Errors. Errormessage gives more Details.
+	 * @param map
+	 *            contains information about simple fields
+	 * @param authorIds
+	 *            may only contain ids of existing authors
+	 * @param categoryIds
+	 *            may only contain ids of existing categories
+	 * @throws DatabaseException
+	 *             thrown when categories or authors do not exist in the
+	 *             Database, also thrown in case of general Database Errors.
+	 *             Errormessage gives more Details.
 	 */
-	//public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds)throws IsbnAlreadyExistsException ;
-	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds) throws DatabaseException;
+	// public void insertBook(Map<Searchfields, String> map, Set<Integer>
+	// authorIds, Set<Integer> categoryIds)throws IsbnAlreadyExistsException ;
+	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds)
+			throws DatabaseException;
 	// Update
+
+	// Update Stock
+	/**
+	 * 
+	 * @param isbn
+	 * @param additional
+	 * @return the new Stock
+	 * @throws DatabaseException
+	 */
+	public int updateStock(String isbn, int additional) throws DatabaseException;
+
 	// Delete
 	public void deleteBook(String isbn) throws DatabaseException;
 
-	
+	/**
+	 * Returns the number of times the page of a specific {@link Book} was
+	 * visited.
+	 * 
+	 * @param isbn
+	 *            the ISBN number of the book
+	 * @return the number of visits
+	 * @throws DatabaseException
+	 *             if an error occurs while interacting with the underlying DAO
+	 */
+	public int getVisitCount(String isbn) throws DatabaseException;
+
+	/**
+	 * Updates the number of visits of a specific book.
+	 * 
+	 * @param isbn
+	 *            the ISBN number of the book
+	 * @param additional
+	 *            the number to increase the visitCount with
+	 * @return the new value of the {@code visitCount}
+	 * @throws DatabaseException
+	 *             if an error occurs while interacting with the underlying DAO
+	 */
+	public int increaseVisitCount(String isbn, int additional) throws DatabaseException;
+
 }

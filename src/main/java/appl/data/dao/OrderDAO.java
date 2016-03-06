@@ -1,34 +1,31 @@
 package appl.data.dao;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import appl.data.items.Order;
+import appl.data.items.Book;
+import appl.data.items.Orderx;
+import exceptions.data.DatabaseException;
+import exceptions.data.EntityDoesNotExistException;
 
 @Transactional
 public interface OrderDAO {
-	public void insertOrder(Order order);
+	public int insertOrder(Orderx order) throws DatabaseException;
 
-	public List<Order> getOrdersByUserId(int userId);
+	public List<Orderx> getOrdersByUserId(int userId);
+	
+	public List<Orderx> getAllOrders();
+	
+	public Orderx getOrderByOrderId(int id) throws DatabaseException;
+	
+	public void updateOrder(Orderx order);
+	
+	public int createOrder(Map<String, Integer> isbnsNumberOf, int userId, Calendar cal) throws EntityDoesNotExistException, DatabaseException;
+	
+	public List<Book> getOrderedBook(int userId);
 
-	public void updateOrder(); // TODO Wie sieht Signatur genau aus?
 
 }
-/*
- * public List<Book> getBooksByCategory(String categoryName);
- * 
- * public Book getBookByIsbn(int isbn);
- * 
- * public List<Book> getBooksByOpenSearch(String searchTerm);
- * 
- * public List<Book> getBooksByMetadata(Map<Searchfields, String> map);
- * 
- * public boolean insertBook(Book book);
- * 
- * public boolean deleteBook(Book book);
- * 
- * public boolean updateBook(Book book, Map<Searchfields, String> map);
- * 
- * public Book executeQuery(String query);
- */

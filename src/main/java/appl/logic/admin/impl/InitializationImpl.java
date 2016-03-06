@@ -7,9 +7,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import appl.data.enums.UserRoles;
-import appl.data.enums.Userfields;
-import appl.logic.admin.Initialization;
+import appl.enums.UserRoles;
+import appl.enums.Userfields;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 
@@ -18,7 +17,7 @@ import exceptions.data.DatabaseException;
  *
  */
 @Component
-public class InitializationImpl implements Initialization, InitializingBean {
+public class InitializationImpl implements InitializingBean {
 
 	@Autowired
 	UserService userService;

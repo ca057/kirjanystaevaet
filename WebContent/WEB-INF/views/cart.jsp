@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %> 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 
 
 <section>
@@ -12,24 +14,27 @@
 			</c:when>
 			<c:otherwise>
 				<c:forEach var="book" items="${bookItems}">
-<%-- 					<p><c:out value="<c:url value="/img/cover/${book.getIsbn()}.jpg"/>"/></p> --%>
-					<h4><c:out value="${book.getTitle()}"/></h4>
-<%--				<p><c:out value="${book.getDescription()}" escapeXml="false"/></p>
-					<p><c:out value="${book.getPages()}"/></p>
-					<p><c:out value="${book.getPublisher()}"/></p> --%>
-					<p>ISBN: <c:out value="${book.getIsbn()}"/>; Preis: <c:out value="${book.getPrice()}"/></p>
+					<img class="book-cover" src="<c:url value="/img/cover/${book.key.getIsbn()}.jpg"/>" title="<c:out value="Cover des Buchs '${book.key.getTitle()}'"/>">
+					<h4><c:out value="${book.key.getTitle()}"/></h4>
+					<p><c:out value="${book.key.getDescription()}" escapeXml="false"/></p>
+					<p><c:out value="${book.key.getPages()}"/></p>
+					<p><c:out value="${book.key.getPublisher()}"/></p>
+	 				<p>ISBN: <c:out value="${book.key.getIsbn()}"/></p>
+<%-- 					<p>Preis: <c:out value="${book.getPrice()}"/></p> --%>
 				</c:forEach> 
 			</c:otherwise>
 		</c:choose>
 	
- 	<a href="<c:url value='/bestellen'/>">bestellen</a> 
- 	<c:choose>
- 		<c:when test="${cart.isEmpty()} ">
- 			<p>Du kannst leider nichts bestellen. Tue doch erst etwas in Deinen Warenkorb :)</p>
- 		</c:when>
- 		<c:otherwise>
- 			<p>Bestellung aufgegeben</p>
- 		</c:otherwise>
- 	</c:choose>
- 	
-</section>  
+	<form method="post">
+		<button type="submit" formaction="<c:url value='/bestellen'/>">bestellen</button> 
+	 	<c:choose>
+	 		<c:when test="${cart.isEmpty()}">
+	 			<p>Du kannst leider nichts bestellen. Tue doch erst etwas in Deinen Warenkorb :)</p>
+	 		</c:when>
+	 			<c:otherwise>
+		 			<p>Bestellung aufgegeben</p>
+				</c:otherwise>
+			</c:choose>
+ 		<sec:csrfInput/>
+	</form>
+ </section>  

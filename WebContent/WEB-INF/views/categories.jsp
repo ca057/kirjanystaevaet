@@ -13,11 +13,25 @@
 			</ul>
 		</c:when>
 		<c:otherwise>
-			<!-- es gibt kein Attribut mit allen Kategorien, also muss es eine einzelne Kategorie sein -->
-			<h2><c:out value='${name}'/></h2>
-			<article>
-				<p>Folgende Bücher haben wir zu <c:out value='${name}' /></p>
-			</article>
+			<!-- es gibt kein Attribut mit allen Kategorien, also muss es ein Fehler oder eine einzelne Kategorie sein -->
+			<c:choose>
+				<c:when test="${param.error != null}">
+					<p>Es ist ein Fehler bei der Abfrage aufgetreten. Versuchen Sie es zu einem späteren Zeitpunkt noch einmal.</p>
+				</c:when>
+				<c:otherwise>
+					<h2><c:out value='${name}'/></h2>
+					<article>
+						<p>Folgende Bücher haben wir zu <c:out value='${name}' />:</p>
+						<c:forEach var="book" items="${books}">
+							<h4><c:out value="${book.getTitle()}" /></h4>
+							<p>von
+								<c:set var="delimiter" value="" scope="request"></c:set><c:forEach var="a" items="${book.getAuthors()}">${delimiter}<c:out value="${a.getNameF()}" /> <c:out value="${a.getNameL()}" /><c:set var="delimiter" value=", " scope="request"></c:set></c:forEach>
+							</p>
+							<p><c:out value="${book.getPrice()}" />€ - <a href="<c:url value='/buch/${book.getIsbn()}' />" title="zum Buch <c:out value='${book.getTitle()}' />">zum Buch</a></p>
+						</c:forEach>
+					</article>
+				</c:otherwise>
+			</c:choose>
 		</c:otherwise>	
 	</c:choose>
 </section>

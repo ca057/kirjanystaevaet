@@ -1,6 +1,6 @@
 package web.controllers;
 
-import java.util.HashSet;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,53 +9,74 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.logic.service.BookService;
+import exceptions.data.DatabaseException;
 
+/**
+ * Controller used for displaying a single book by passing a ISBN number as path
+ * variable.
+ * 
+ * @author Christian
+ * @author Ludwig
+ *
+ */
 @Controller
-@RequestMapping(value = "/buch/{isbn}")
 public class SingleBookController {
 
-	@Autowired
-	private BookService service;
+	private BookService bookService;
 
-	public void setService(BookService service) {
-		this.service = service;
+	@Autowired
+	public void setService(BookService bookService) {
+		this.bookService = bookService;
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String getBook(@PathVariable("isbn") String isbn, Model m) {
-		if (isbn != null && !isbn.isEmpty()) {
-			// TODO do something when there is no book returned, because the
-			// isbn does not exists --> what will bookservice return if no book
-			// is found?
-			// TODO return correct book
-			m.addAttribute("book", getBookFromDatabase(isbn));
-			m.addAttribute("cover", "/resources/img/cover/" + getBookFromDatabase(isbn).getIsbn() + ".jpg");
-		}
+	/**
+	 * The URL should always contain an ISBN-number, so a book can be displayed.
+	 * If no ISBN is passed, this is treated as an error, a error message is
+	 * passed to the model for informing the user.
+	 * 
+	 * @param m
+	 *            the model
+	 * @return the name of the view associated with displaying a single book
+	 */
+	@RequestMapping(value = "/buch", method = RequestMethod.GET)
+	public String getBook(Model m) {
+		m.addAttribute("error", "Die URL enthält keine ISBN, daher kann hier kein Buch angezeigt werden. "
+				+ "Möglicherweise ist der Ursprungslink fehlerhaft.");
 		return "book";
 	}
 
-	private Book getBookFromDatabase(String isbn) {
-		Book dummyBook = new Book();
-		dummyBook.setTitle("Service Oriented Architecture");
-		dummyBook.setIsbn("0131428985");
-		dummyBook.setDescription(
-				"This is a comprehensive tutorial that teaches fundamental and advanced SOA design principles, supplemented with detailed case studies and technologies used to implement SOAs in the real world. ***We'll have cover endorsements from Tom Glover, who leads IBM's Web Services Standards initiatives; Dave Keogh, Program Manager for Visual Studio Enterprise Tools at Microsoft, and Sameer Tyagi, Senior Staff Engineer, Sun Microsystems. All major software manufacturers and vendors are promoting support for SOA. As a result, every major development platform now officially supports the creation of service-oriented solutions. Parts I, II, and III cover basic and advanced SOA concepts and theory that prepare you for Parts IV and V, which provide a series of step-by-step 'how to' instructions for building an SOA. Part V further contains coverage of WS-* technologies and SOA platform support provided by J2EE and .NET.");
-		HashSet<Author> authorSet = new HashSet();
-		Author author = new Author();
-		author.setNameF("Hans");
-		author.setNameL("Müller");
-		authorSet.add(author);
-		Author author2 = new Author();
-		author2.setNameF("Petra");
-		author2.setNameL("Maier");
-		authorSet.add(author2);
-		dummyBook.setAuthors(authorSet);
-
-		return dummyBook;
-		// return service.getBookByIsbn(isbn);
+	/**
+	 * If a ISBN is found in the URL as path variable, the book with this ISBN
+	 * is added to model for displaying its information.
+	 * 
+	 * If an error occurs, an error message is passed to the {@code error}
+	 * attribute of the model; if the book is out of stock, an info message is
+	 * passed to the {@code info} attribute of the model.
+	 * 
+	 * @param isbn
+	 *            the isbn of the book to display
+	 * @param m
+	 *            the model for the view
+	 * @return the name of the view responsible for displaying a single book
+	 */
+	@RequestMapping(value = "/buch/{isbn}", method = RequestMethod.GET)
+	public String getBookByIsbn(@PathVariable("isbn") String isbn, Model m) {
+		if (isbn != null && !isbn.isEmpty()) {
+			try {
+				Book book = bookService.getBookByIsbn(isbn);
+				if (book.getStock() > 0) {
+					m.addAttribute("book", book);
+					m.addAttribute("authors", book.getAuthors().stream().collect(Collectors.toList()));
+				} else {
+					m.addAttribute("info", "Das Buch steht derzeit nicht zum Verkauf!");
+				}
+			} catch (DatabaseException e) {
+				m.addAttribute("error",
+						"Ein Fehler ist aufgetreten. Versuchen Sie es zu einem späteren Zeitpunkt noch einmal.");
+			}
+		}
+		return "book";
 	}
-
 }
