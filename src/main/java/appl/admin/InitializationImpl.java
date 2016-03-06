@@ -51,6 +51,9 @@ public class InitializationImpl implements InitializingBean {
 		data.put(Userfields.name, name);
 		data.put(Userfields.surname, "Nachname");
 		data.put(Userfields.email, name + "@ky.de");
+		data.put(Userfields.street, "baker street");
+		data.put(Userfields.streetnumber, "1");
+		data.put(Userfields.plzId, "300");
 		data.put(Userfields.password, name);
 		data.put(Userfields.role, UserRoles.USER.toString());
 		return data;
