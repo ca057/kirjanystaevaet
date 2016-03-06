@@ -41,9 +41,9 @@
 		<put-attribute name="content" value="/WEB-INF/views/user.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="cart" extends="base">
+ 	<definition name="cart" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/cart.jsp"></put-attribute>
-	</definition>
+	</definition> 
 	
 	<!-- views for the backend -->
 	<definition name="backend" extends="base">
