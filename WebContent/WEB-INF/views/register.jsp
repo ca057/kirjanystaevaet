@@ -26,7 +26,7 @@
 		</div>
 		<label for="email">E-Mail</label>
 		<input type="email" id="email" name="email" required/>
-		<label for="password">Passwort</label>
+		<label for="password">Passwort (mindestens 6 Zeichen lang)</label>
 		<input type="password" id="password" name="password" required/>
 		<button type="submit" id="register-submit" title="Registrieren">Registrieren</button>
 		<sec:csrfInput/>
