@@ -1,8 +1,6 @@
 package web.controllers.backend;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,7 +38,7 @@ import web.jsonwrappers.AuthorJSONWrapper;
 @Controller
 public class BackendStockController {
 
-	private BookService bookService;
+	public BookService bookService;
 
 	@Autowired
 	private void setBookService(BookService bookService) {
@@ -194,18 +192,9 @@ public class BackendStockController {
 		Set<Integer> categoryIds = new HashSet<Integer>(1);
 		categories.stream().forEach(id -> categoryIds.add(Integer.parseInt(id)));
 
-		File dir = new File(request.getSession().getServletContext()
-				.getRealPath(File.separator + "uploaded" + File.separator + "img" + File.separator + "cover"));
-		if (!dir.exists()) {
-			dir.mkdirs();
-		}
-		File serverFile = new File(
-				dir.getAbsolutePath() + File.separator + isbn + "." + file.getOriginalFilename().split("\\.")[1]);
-
-		try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
+		try {
 			bookService.insertBook(book, authorIds, categoryIds);
-			stream.write(file.getBytes());
-			stream.close();
+			new ProcessUpload().saveImage(isbn, file, request, false);
 		} catch (DatabaseException | IOException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
