@@ -92,11 +92,15 @@ public class CartController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			tempBooks.put(b, tempBooks.get(b.getIsbn()) + 1);
+			if (tempBooks.containsKey(b)) {
+				tempBooks.put(b, tempBooks.get(b) + 1);
+			} else {
+				tempBooks.put(b, 1);
+			}
 		}
 		// TODO schau nach, wie du diese map dem Model übergibst! Vergiss den
 		// View nicht, da noch über die map drüberiterieren!
-		m.addAttribute("bookItems", tempBooks.entrySet());
+		m.addAttribute("bookItems", tempBooks);
 		// m.addAttribute("sum", cart.getPrice());
 
 		return "cart";

@@ -22,13 +22,6 @@ public class Cart {
 		}
 	}
 
-	// private String getIsbns() {
-	// for (Book book : books.keySet()) {
-	// String isbns = book.getIsbn();
-	// }
-	// return getIsbns();
-	// }
-
 	public Map<String, Integer> getBooks() {
 		return books;
 	}
