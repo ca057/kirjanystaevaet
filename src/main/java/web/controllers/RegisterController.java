@@ -98,7 +98,7 @@ public class RegisterController {
 		userMap.put(Userfields.name, req.getName());
 		userMap.put(Userfields.surname, req.getSurname());
 		userMap.put(Userfields.password, req.getPassword());
-		userMap.put(Userfields.plz, req.getPlz());
+		userMap.put(Userfields.plzId, req.getPlz());
 		userMap.put(Userfields.role, UserRoles.USER.toString());
 		userMap.put(Userfields.street, req.getStreet());
 		userMap.put(Userfields.streetnumber, req.getStreetnumber());
