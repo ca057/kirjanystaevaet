@@ -1,7 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %> 
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
+<script src="WebContent/resources/js/jquery-2.2.1.min.js"></script>
+<script src="WebContent/resources/js/confirmOrder.js"></script>
 
 
 <section>
@@ -25,14 +26,15 @@
 			</c:otherwise>
 		</c:choose>
 	
-	<form method="post">
-		<button type="submit" formaction="<c:url value='/bestellen'/>">bestellen</button> 
+	<form id="orderForm" method="post">
+		<button id="orderButton" type="submit" formaction="<c:url value='/bestellen'/>">bestellen</button> 
 	 	<c:choose>
 	 		<c:when test="${cart.isEmpty()}">
 	 			<p>Du kannst leider nichts bestellen. Tue doch erst etwas in Deinen Warenkorb :)</p>
 	 		</c:when>
 	 			<c:otherwise>
-		 			<p>Bestellung aufgegeben</p>
+	 				<p>Hier dein Warenkorb</p>
+<!-- 		 			<p>Bestellung aufgegeben</p> -->
 				</c:otherwise>
 			</c:choose>
  		<sec:csrfInput/>
