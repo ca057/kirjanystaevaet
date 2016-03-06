@@ -109,7 +109,7 @@ public class CartController {
 	@RequestMapping(value = "/bestellen", method = RequestMethod.POST)
 	public String orderContent() throws DatabaseException {
 		User user = getUser();
-		if (user.getStreet() != null && user.getStreetnumber() != null) {
+		if (user.getStreet() != null && user.getStreetnumber() != null && user.getPlz() != null) {
 			// TODO: In der Bedingung user.getPlz() != null ergänzen, wenn sie
 			// gesetzt ist
 			Calendar cal = Calendar.getInstance();
