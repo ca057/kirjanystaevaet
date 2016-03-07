@@ -305,7 +305,7 @@ public class QueryFun {
 
 //		// Zweite Order
 		Map<String, Integer> isbns2 = new HashMap<String, Integer>();
-		isbns2.put("9101010101", 1);
+		isbns2.put("9101010101", 6);
 		isbns2.put("0101010101", 5);
 		isbns2.put("1590595726", 1);
 
@@ -415,7 +415,7 @@ public class QueryFun {
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
 		
-		List<Book> allBooks = dataService.getAllBooks(SearchMode.ALL);
+		List<Book> allBooks = dataService.getAllBooks(SearchMode.AVAILABLE);
 		System.out.println("\nAll\n");
 		for (Book b : allBooks){
 			System.out.println(b.toString());
