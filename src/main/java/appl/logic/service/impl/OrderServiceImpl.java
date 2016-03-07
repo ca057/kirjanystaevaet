@@ -176,6 +176,11 @@ public class OrderServiceImpl implements OrderService{
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+	@Override
+	public LinkedHashMap<String, Integer> getShelveWarmers(int range) throws DatabaseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 
