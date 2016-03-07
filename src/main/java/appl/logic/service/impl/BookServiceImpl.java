@@ -368,6 +368,7 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+
 	// ToDo die MEthode funktioniert nur darüber, dass man über CategoryNAme
 	// bekommt, nicht über die ID, -> Umbenennen!
 	/*
@@ -389,6 +390,7 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+
 	@Override
 	public List<Book> getBooksByCategory(String category, SearchMode mode) throws DatabaseException {
 		try {
@@ -399,7 +401,7 @@ public class BookServiceImpl implements BookService {
 			// return null;
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}		
+		}
 	}
 
 	@Override
@@ -419,7 +421,7 @@ public class BookServiceImpl implements BookService {
 		 * 
 		 * List<Book> bookList = bookDao.getBooksByMetadata(map); if
 		 * (bookList.size() > 1){
-		 *  
+		 * 
 		 * }
 		 */
 	}
@@ -441,7 +443,7 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
-	
+
 	@Override
 	public List<Book> getBooksByMetdata(Map<Searchfields, String> map, SearchMode mode) throws DatabaseException {
 		try {
@@ -451,7 +453,6 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
-
 
 	/*
 	 * @Override public void insertBook(Map<Searchfields, String> map, boolean
@@ -579,68 +580,68 @@ public class BookServiceImpl implements BookService {
 		}
 
 	}
-	
+
 	@Override
 	public void updateBook(String isbn, Map<Searchfields, String> data) throws DatabaseException {
 		Book book = bookDao.getBookByIsbn(isbn);
-		for(Searchfields s : data.keySet()){
-			if (s == Searchfields.isbn || s == Searchfields.edition || s == Searchfields.pubdate || s == Searchfields.publisher){
+		for (Searchfields s : data.keySet()) {
+			if (s == Searchfields.isbn || s == Searchfields.edition || s == Searchfields.pubdate
+					|| s == Searchfields.publisher) {
 				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated());
-			} else if(s == Searchfields.title){
+			} else if (s == Searchfields.title) {
 				book.setTitle(data.get(s));
-			} else if (s == Searchfields.description){
+			} else if (s == Searchfields.description) {
 				book.setDescription(data.get(s));
-			} else if (s == Searchfields.price){
-				double price = Double.parseDouble( data.get(s).replace(",",".") );
+			} else if (s == Searchfields.price) {
+				double price = Double.parseDouble(data.get(s).replace(",", "."));
 				book.setPrice(price);
-			} else if (s == Searchfields.pages){
+			} else if (s == Searchfields.pages) {
 				book.setPages(data.get(s));
 			}
-			
+
 		}
-		
+
 		try {
 			bookDao.updateBook(book);
-		} catch (HibernateException e){
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
-	
+
 	@Override
 	public void deleteCategoryOfBook(String isbn, int categoryId) throws DatabaseException {
 		Book book = bookDao.getBookByIsbn(isbn);
 		Set<Category> categories = book.getCategories();
 		boolean flag = false;
 		Category toBeDeleted = null;
-		for(Category c : categories){
-			if (c.getCategoryID()== categoryId){
+		for (Category c : categories) {
+			if (c.getCategoryID() == categoryId) {
 				flag = true;
 				toBeDeleted = c;
 				break;
 			}
-			
+
 		}
-		if (flag){
+		if (flag) {
 			categories.remove(toBeDeleted);
 		} else {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category"));
 		}
-		try{  
-		bookDao.updateBook(book);
-		}catch(HibernateException e){
+		try {
+			bookDao.updateBook(book);
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
-	
+
 	@Override
 	public void addCategoryToBook(String isbn, int categoryId) throws DatabaseException {
-		try{
-		Book book = bookDao.getBookByIsbn(isbn);
-		Category toBeAdded = categoryDao.getCategoryById(categoryId);
-		book.getCategories().add(toBeAdded);
-		bookDao.updateBook(book);
-		}
-		catch(HibernateException e){
+		try {
+			Book book = bookDao.getBookByIsbn(isbn);
+			Category toBeAdded = categoryDao.getCategoryById(categoryId);
+			book.getCategories().add(toBeAdded);
+			bookDao.updateBook(book);
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
@@ -712,6 +713,7 @@ public class BookServiceImpl implements BookService {
 		try {
 			Book book = bookDao.getBookByIsbn(isbn);
 			book.setVisitCount(book.getVisitCount() + additional);
+			bookDao.updateBook(book);
 			return bookDao.getBookByIsbn(isbn).getVisitCount();
 		} catch (EntityDoesNotExistException e) {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
@@ -755,17 +757,6 @@ public class BookServiceImpl implements BookService {
 		}
 		return map;
 	}
-
-	
-
-
-
-	
-
-
-
-
-	
 
 	/*
 	 * @Override public void insertBook(Map<Searchfields, String> map, boolean
