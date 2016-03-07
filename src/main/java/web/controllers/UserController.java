@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import appl.data.items.User;
 import appl.logic.service.UserService;
+import exceptions.controller.ControllerOvertaxedException;
 import exceptions.data.DatabaseException;
 
 /**
@@ -40,15 +41,18 @@ public class UserController {
 	 * Handles a GET request for rendering the page of a single user.
 	 * 
 	 * @return the name of the view
+	 * @throws ControllerOvertaxedException
+	 *             if the logged in user can not be retrieved
 	 */
 	@RequestMapping(method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
-	public String userGet(Model m) {
+	public String userGet(Model m) throws ControllerOvertaxedException {
 		try {
-			User user = getUser().get();
-			System.out.println(user.getOrders());
+			User user = getUser().orElseThrow(() -> new ControllerOvertaxedException(
+					"A controller is called by an unidentifyable user. This should not be happen and seems to be a major error which can not be handled by the controller."));
 			m.addAttribute("lastOrders", user.getOrders());
 		} catch (DatabaseException e) {
-			// TODO throw Controller is blablabla-Exception
+			throw new ControllerOvertaxedException(
+					"An unknown error occured which should not happen. This can not be handled by the controller.");
 		}
 		return "user";
 	}
