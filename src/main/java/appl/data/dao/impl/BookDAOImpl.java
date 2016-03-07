@@ -61,14 +61,17 @@ public class BookDAOImpl implements BookDAO {
 		Criteria cr = setupAndGetCriteria();
 		switch (mode) {
 		case ALL: 
-			return getSession().createCriteria(Book.class).list();
+			break;
 		case SELL:
-			
+			cr = getCriteriaForSell(cr);
 			break;
 		
-		case AVAILABLE: break;
+		case AVAILABLE:
+			cr = getCriteriaForAvailable(cr);
+			break;
 		}
-		return null;
+		
+		return cr.list();
 	}
 
 	@Override
