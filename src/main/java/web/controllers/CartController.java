@@ -3,6 +3,7 @@ package web.controllers;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +20,21 @@ import appl.data.items.Cart;
 import appl.data.items.User;
 import appl.logic.service.BookService;
 import appl.logic.service.OrderService;
+import appl.logic.service.UserService;
+import exceptions.controller.ControllerOvertaxedException;
 import exceptions.data.DatabaseException;
 
 @Controller
 public class CartController {
-
-	// public void setCurrentUser(User user) {
-	// this.user = user;
-	// }
-
-	// private User user = (User)
-	// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 	@Autowired
 	private BookService bookService;
 
 	@Autowired
 	private OrderService orderService;
+
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	private Cart cart;
@@ -55,7 +54,11 @@ public class CartController {
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.POST)
 	public String addToCart(@RequestParam(value = "isbn") String isbn) {
 		System.out.println(isbn);
-		System.out.println("User in Cart: " + getUser());
+		try {
+			System.out.println("User in Cart: " + getUser());
+		} catch (ControllerOvertaxedException e1) {
+			e1.printStackTrace();
+		}
 		if (isbn != null && !isbn.isEmpty()) {
 			try {
 				cart.addBook(bookService.getBookByIsbn(isbn));
@@ -98,37 +101,58 @@ public class CartController {
 				tempBooks.put(b, 1);
 			}
 		}
-		// TODO schau nach, wie du diese map dem Model übergibst! Vergiss den
-		// View nicht, da noch über die map drüberiterieren!
+
 		m.addAttribute("bookItems", tempBooks);
 		// m.addAttribute("sum", cart.getPrice());
 
 		return "cart";
 	}
 
-	@RequestMapping(value = "/bestellen", method = RequestMethod.POST)
-	public String orderContent() throws DatabaseException {
-		User user = getUser();
-		System.out.println(user.toString());
-		if (user.getStreet() != null && user.getStreetnumber() != null && user.getPlz() != null) {
-			// TODO: In der Bedingung user.getPlz() != null ergänzen, wenn sie
-			// gesetzt ist
-			Calendar cal = Calendar.getInstance();
-			orderService.createOrder(cart.getBooks(), user.getUserId(), cal);
-			cart.deleteContent();
-		} else {
-			System.out.println("User has no data.");
+	@RequestMapping(value = "/bestellung_aufgegeben", method = RequestMethod.POST)
+	public String orderContent(Model m) {
+		try {
+			User user = getUser();
+			System.out.println(user.toString());
+			if (!cart.isEmpty()) {
+				if (user.getStreet() != null && user.getStreetnumber() != null && user.getPlz() != null) {
+					Calendar cal = Calendar.getInstance();
+					orderService.createOrder(cart.getBooks(), user.getUserId(), cal);
+					cart.deleteContent();
+				} else {
+					System.out.println("User has no data.");
+				}
+				m.addAttribute("name", user.getName());
+				m.addAttribute("surname", user.getSurname());
+				m.addAttribute("street", user.getStreet());
+				m.addAttribute("streetnumber", user.getStreetnumber());
+				m.addAttribute("plz", user.getPlz());
+				return "orderConducted";
+			} else {
+				return "redirect:/warenkorb";
+			}
+		} catch (DatabaseException | ControllerOvertaxedException e) {
+			return "redirect:/warenkorb";
 		}
-		System.out.println("bestellung ausgeführt");
-		return "redirect:/warenkorb";
+
 	}
 
-	private User getUser() {
+	// @RequestMapping(value = "/bestellung_aufgegeben", method =
+	// RequestMethod.POST)
+	// public String getAdress(Model m) {
+	// return "orderConducted";
+	// }
+
+	private User getUser() throws ControllerOvertaxedException {
 		Authentication a = SecurityContextHolder.getContext().getAuthentication();
 		if (a == null) {
-			return null;
+			throw new ControllerOvertaxedException("Authentication is null");
 		} else {
-			return (User) a.getPrincipal();
+			try {
+				return userService.findByID(((User) a.getPrincipal()).getUserId()).get();
+			} catch (DatabaseException | NoSuchElementException e) {
+				throw new ControllerOvertaxedException(e.getMessage());
+			}
 		}
 	}
+
 }

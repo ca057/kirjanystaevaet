@@ -26,15 +26,8 @@
 		</c:choose>
 	
 	<form id="orderForm" method="post">
-		<button id="orderButton" type="submit" formaction="<c:url value='/bestellen'/>">bestellen</button> 
-	 	<c:choose>
-	 		<c:when test="${cart.isEmpty()}">
-	 			<p>Du kannst leider nichts bestellen. Tue doch erst etwas in Deinen Warenkorb :)</p>
-	 		</c:when>
-	 			<c:otherwise>
- 		 			<p id="confirmOrder" style="display:none">Bestellung aufgegeben</p>
-				</c:otherwise>
-			</c:choose>
- 		<sec:csrfInput/>
-	</form>
+		<button id="orderButton" type="submit" formaction="<c:url value='/bestellung_aufgegeben'/>">bestellen</button> 
+		<sec:csrfInput/>
+	</form>	
+	
  </section>  
