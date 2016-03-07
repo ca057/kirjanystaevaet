@@ -44,6 +44,7 @@ public class Main {
 		qf.testBestsellers(ctx);
 		qf.testDeleteCategoryOfBook(ctx);
 		qf.testAddCategoryToBook(ctx);
+		qf.testUpdateBook(ctx);
 
 		//qf.testUser(ctx);
 		//qf.testStatistics(ctx);

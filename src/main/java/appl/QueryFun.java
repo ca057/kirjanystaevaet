@@ -395,6 +395,19 @@ public class QueryFun {
 			System.out.println(c.toString());
 		}
 	}
+	public void testUpdateBook(ApplicationContext ctx) throws DatabaseException{
+		BookService dataService = ctx.getBean(BookService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
+		UserService userService = ctx.getBean(UserService.class);
+		
+		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
+		map.put(Searchfields.description, "New Description");
+		map.put(Searchfields.price, "100,11");
+		dataService.updateBook("0101010101", map);
+		Book book = dataService.getBookByIsbn("0101010101");
+		System.out.println(book.toString());
+		
+	}
 	/*
 	 * 
 	 * public void doSomeOrderTesting(ApplicationContext ctx) { SessionFactory
