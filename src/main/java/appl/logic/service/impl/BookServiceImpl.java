@@ -27,6 +27,7 @@ import appl.data.dao.CategoryDAO;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.enums.SearchMode;
 import appl.enums.Searchfields;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
@@ -358,6 +359,11 @@ public class BookServiceImpl implements BookService {
 		}
 	}
 
+	@Override
+	public List<Book> getAllBooks(SearchMode mode) throws DatabaseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	// ToDo die MEthode funktioniert nur darüber, dass man über CategoryNAme
 	// bekommt, nicht über die ID, -> Umbenennen!
 	/*
@@ -378,6 +384,11 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
+	}
+	@Override
+	public List<Book> getBooksByCategory(String category, SearchMode mode) throws DatabaseException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -420,6 +431,13 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+	
+	@Override
+	public List<Book> getBooksByMetdata(Map<Searchfields, String> map, SearchMode mode) throws DatabaseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	/*
 	 * @Override public void insertBook(Map<Searchfields, String> map, boolean
@@ -724,6 +742,11 @@ public class BookServiceImpl implements BookService {
 		return map;
 	}
 
+	
+
+
+
+	
 
 
 
