@@ -8,10 +8,9 @@
 	<div>
 	<!-- TODO: how to get user-methods using jstl?!? -->
 		<h2>Versandadresse:</h2>
-		<c:out value="${user.getName()}"/>
-		<c:out value="${user.getStreet()}"/>
-		<c:out value="${user.getStreetnumber()}"/>
-		<c:out value="${book.getPlz()}"/>
+		<p><c:out value="${name}"/>&nbsp;<c:out value="${surname}"/></p>
+		<p><c:out value="${street}"/>&nbsp;<c:out value="${streetnumber}"/></p>
+		<p><c:out value="${plz}"/></p>
 	</div>
 	<a href="<c:url value='/'/>" title="Homepage">Zur Startseite</a>
 	<a href="<c:url value='/suche'/>" title="Suche">Zur Suche</a>
