@@ -419,8 +419,7 @@ public class BookServiceImpl implements BookService {
 		 * 
 		 * List<Book> bookList = bookDao.getBooksByMetadata(map); if
 		 * (bookList.size() > 1){
-		 * 
-		 * 
+		 *  
 		 * }
 		 */
 	}
