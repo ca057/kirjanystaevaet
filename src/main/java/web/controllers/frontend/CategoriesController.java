@@ -1,4 +1,4 @@
-package web.controllers;
+package web.controllers.frontend;
 
 import java.util.stream.Collectors;
 
