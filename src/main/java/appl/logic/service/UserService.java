@@ -138,15 +138,15 @@ public interface UserService {
 	public List<User> getUsers() throws DatabaseException;
 
 	/**
-	 * Lists all accounts with the specified authority.
+	 * Counts the accounts with the specified authority.
 	 * 
 	 * @param role
 	 *            the {@link UserRoles}
-	 * @return a {@code list} with the specified users
+	 * @return the amount of {@link User}s with the specified authority.
 	 * @throws DatabaseException
 	 *             if an error occurs while interacting with the underlying DAO
 	 */
-	public List<User> getAllUserByRole(UserRoles role) throws DatabaseException;
+	public int getNumberOf(UserRoles role) throws DatabaseException;
 
 	/**
 	 * Lists the books an user was interested in.
