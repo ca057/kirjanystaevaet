@@ -10,22 +10,20 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class ProcessUpload {
 
 	public ProcessUpload() {
 	}
 
-	void saveImage(String title, MultipartFile file, HttpServletRequest request, boolean createThumbnail)
-			throws IOException {
+	void saveImage(String title, String extension, byte[] inputFile, HttpServletRequest request,
+			boolean createThumbnail) throws IOException {
 		File dir = new File(request.getSession().getServletContext()
 				.getRealPath(File.separator + "uploaded" + File.separator + "img" + File.separator + "cover"));
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		File serverFile = new File(
-				dir.getAbsolutePath() + File.separator + title + "." + file.getOriginalFilename().split("\\.")[1]);
+		// extension: MultipartFile..getOriginalFilename().split("\\.")[1]
+		File serverFile = new File(dir.getAbsolutePath() + File.separator + title + "." + extension);
 
 		if (createThumbnail) {
 			try {
@@ -35,7 +33,7 @@ public class ProcessUpload {
 		}
 
 		try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
-			stream.write(file.getBytes());
+			stream.write(inputFile);
 			stream.close();
 		}
 	}
