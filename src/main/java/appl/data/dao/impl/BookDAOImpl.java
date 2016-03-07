@@ -47,9 +47,27 @@ public class BookDAOImpl implements BookDAO {
 	public List<Book> getAllBooks() {
 		return getSession().createCriteria(Book.class).list();
 	}
+
+	private Criteria getCriteriaForSell(Criteria cr){
+		cr.add(Restrictions.ge("stock", 0));
+		return cr;
+	}
+	private Criteria getCriteriaForAvailable(Criteria cr){
+		cr.add(Restrictions.gt("stock", 0));
+		return cr;
+	}
 	@Override
 	public List<Book> getAllBooks(SearchMode mode) {
-		// TODO Auto-generated method stub
+		Criteria cr = setupAndGetCriteria();
+		switch (mode) {
+		case ALL: 
+			return getSession().createCriteria(Book.class).list();
+		case SELL:
+			
+			break;
+		
+		case AVAILABLE: break;
+		}
 		return null;
 	}
 
