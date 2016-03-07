@@ -391,8 +391,15 @@ public class BookServiceImpl implements BookService {
 	}
 	@Override
 	public List<Book> getBooksByCategory(String category, SearchMode mode) throws DatabaseException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			Map<Searchfields, String> map = new HashMap<Searchfields, String>();
+			map.put(Searchfields.categoryName, category);
+			return bookDao.getBooksByMetadata(map, mode);
+			// return dao.getBooksByCategory(category);
+			// return null;
+		} catch (HibernateException e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}		
 	}
 
 	@Override
@@ -438,8 +445,12 @@ public class BookServiceImpl implements BookService {
 	
 	@Override
 	public List<Book> getBooksByMetdata(Map<Searchfields, String> map, SearchMode mode) throws DatabaseException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return bookDao.getBooksByMetadata(map, mode);
+
+		} catch (HibernateException e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 
 
