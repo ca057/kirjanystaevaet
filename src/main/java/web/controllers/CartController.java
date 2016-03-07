@@ -106,21 +106,18 @@ public class CartController {
 		return "cart";
 	}
 
-	@RequestMapping(value = "/bestellen", method = RequestMethod.POST)
+	@RequestMapping(value = "/bestellung_aufgegeben", method = RequestMethod.POST)
 	public String orderContent() throws DatabaseException {
 		User user = getUser();
 		System.out.println(user.toString());
 		if (user.getStreet() != null && user.getStreetnumber() != null && user.getPlz() != null) {
-			// TODO: In der Bedingung user.getPlz() != null ergänzen, wenn sie
-			// gesetzt ist
 			Calendar cal = Calendar.getInstance();
 			orderService.createOrder(cart.getBooks(), user.getUserId(), cal);
 			cart.deleteContent();
 		} else {
 			System.out.println("User has no data.");
 		}
-		System.out.println("bestellung ausgeführt");
-		return "redirect:/warenkorb";
+		return "orderConducted";
 	}
 
 	private User getUser() {
@@ -131,4 +128,5 @@ public class CartController {
 			return (User) a.getPrincipal();
 		}
 	}
+
 }
