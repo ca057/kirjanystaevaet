@@ -22,6 +22,9 @@
 	
 	<h3>Suchergebnisse</h3>
 	<!-- Suchanfrage wird nur angezeigt, wenn der übergebene String nicht leer ist. -->
+	<c:if test="${error != null}">
+		<p><c:out value="${error}"></c:out></p>
+	</c:if>
 	<c:choose>
 		<c:when test="${query.isEmpty()}">
 			<p>Noch keine Suchanfrage gestellt.</p>

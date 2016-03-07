@@ -4,7 +4,6 @@ import java.util.Properties;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +20,6 @@ import appl.data.items.Orderx;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.data.items.UserBookStatistic;
-import appl.logic.admin.Initialization;
 import exceptions.data.DatabaseInitializationException;
 
 /**
@@ -38,13 +36,12 @@ import exceptions.data.DatabaseInitializationException;
  *
  */
 @Configuration
-@ComponentScan({ "appl.logic.service", "appl.data.dao", "appl.data.builder", "appl.logic.admin" })
+
+@ComponentScan({ "appl.logic.service", "appl.data.dao", "appl.data.builder", "appl.admin", "appl.data.items" })
+
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
 public class RootConfig {
-
-	@Autowired
-	Initialization init;
 
 	/**
 	 * This bean is necessary for the performance of transactions on the
@@ -90,7 +87,6 @@ public class RootConfig {
 			return cfg.setProperties(createProperties()).buildSessionFactory();
 		} catch (HibernateException e) {
 			System.err.println("Initial SessionFactory creation failed." + e.getMessage());
-			e.printStackTrace();
 			throw new DatabaseInitializationException(e.getMessage());
 		}
 	}
@@ -98,9 +94,7 @@ public class RootConfig {
 	private Properties createProperties() {
 		Properties prop = new Properties();
 		prop.setProperty("hibernate.hbm2ddl.auto", "create");
-		// FIXME Johannes, you know what to do!
 		prop.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
-		// TODO Autoserver (automatic mixed mode)
 		prop.setProperty("hibernate.connection.url", "jdbc:h2:./database/kirjanystaevaet;AUTO_SERVER=TRUE");
 		prop.setProperty("hibernate.c3p0.idle_test_period", "10");
 		prop.setProperty("hibernate.c3p0.testConnectionOnCheckin", "true");
@@ -110,10 +104,5 @@ public class RootConfig {
 		prop.setProperty("show_sql", "true");
 		return prop;
 	}
-
-	// @Bean
-	// public PasswordEncoder encoder() {
-	// return new BCryptPasswordEncoder(11);
-	// }
 
 }

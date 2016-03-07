@@ -7,6 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -20,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("web")
+@ComponentScan({ "web", "exceptions.controller" })
 public class WebConfig extends WebMvcConfigurerAdapter {
 
 	@Override
@@ -51,6 +53,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return new TilesViewResolver();
 	}
 
+	@Bean
+	public MultipartResolver filterMultipartResolver() {
+		CommonsMultipartResolver res = new CommonsMultipartResolver();
+		res.setMaxUploadSize((long) (5 * Math.pow(2, 20)));
+		return res;
+	}
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		if (registry != null) {
@@ -59,7 +68,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 			// registry.addResourceHandler("/resources/js/**").addResourceLocations("/resources/js/").setCachePeriod(3600);
 			registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
 			registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
-			registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/");
+			registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/", "/uploaded/img/");
 		}
 	}
 }

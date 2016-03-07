@@ -14,11 +14,11 @@ import java.util.Set;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import appl.data.enums.Searchfields;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
 import appl.data.items.User;
+import appl.enums.Searchfields;
 import appl.logic.service.BookService;
 import appl.logic.service.OrderService;
 import appl.logic.service.UserService;

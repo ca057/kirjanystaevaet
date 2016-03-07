@@ -12,15 +12,15 @@
 		</form>
 	</div>
 
-	<c:if test="${bookOfTheDay != null}">
+	<c:if test="${bookOfTheMoment != null}">
 		<article>
 			<h3>Unser Buch des Moments</h3>
-			<h4><c:out value="${bookOfTheDay.getTitle()}"></c:out></h4>
+			<h4><c:out value="${bookOfTheMoment.getTitle()}"></c:out></h4>
 			<p>von
-				<c:set var="delimiter" value="" scope="request"></c:set><c:forEach var="a" items="${bookOfTheDay.getAuthors()}">${delimiter}<c:out value="${a.getNameF()}" /> <c:out value="${a.getNameL()}" /><c:set var="delimiter" value=", " scope="request"></c:set></c:forEach>
+				<c:set var="delimiter" value="" scope="request"></c:set><c:forEach var="a" items="${bookOfTheMoment.getAuthors()}">${delimiter}<c:out value="${a.getNameF()}" /> <c:out value="${a.getNameL()}" /><c:set var="delimiter" value=", " scope="request"></c:set></c:forEach>
 			</p>
-			<p><c:out value="${bookOfTheDay.getDescription()}" escapeXml="false" ></c:out></p>
-			<p><c:out value="${bookOfTheDay.getPrice()}" />€ - <a href="<c:url value='/buch/${bookOfTheDay.getIsbn()}' />" title="zum Buch <c:out value='${book.getTitle()}' />">zum Buch</a></p>
+			<p><c:out value="${bookOfTheMoment.getDescription()}" escapeXml="false" ></c:out></p>
+			<p><c:out value="${bookOfTheMoment.getPrice()}" />€ - <a href="<c:url value='/buch/${bookOfTheMoment.getIsbn()}' />" title="zum Buch <c:out value='${bookOfTheMoment.getTitle()}' />">zum Buch</a></p>
 		</article>
 	</c:if>	
 </section>

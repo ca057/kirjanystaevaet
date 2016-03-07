@@ -5,11 +5,12 @@ package appl.logic.service;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
 
-import appl.data.enums.Searchfields;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.enums.Searchfields;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
 
@@ -45,9 +46,9 @@ public interface BookService {
 
 	// Author Methoden
 	// Abfragen
-	
-	public List<Author> getAuthorByIsbn(String isbn)throws DatabaseException;
- 
+
+	public List<Author> getAuthorByIsbn(String isbn) throws DatabaseException;
+
 	public List<Author> getAuthorByExactName(String NameF, String NameL) throws DatabaseException;
 
 	public Author getAuthorById(int id) throws DatabaseException;
@@ -113,6 +114,7 @@ public interface BookService {
 	// authorIds, Set<Integer> categoryIds)throws IsbnAlreadyExistsException ;
 	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds)
 			throws DatabaseException;
+
 	// Update
 	
 	public void updateBook(String isbn, Map<Searchfields, String> data) throws DatabaseException;
@@ -120,6 +122,7 @@ public interface BookService {
 	public void deleteCategoryOfBook(String isbn, int categoryId) throws DatabaseException;
 	
 	public void addCategoryToBook(String isbn, int categoryId) throws DatabaseException;
+
 
 	// Update Stock
 	/**
@@ -158,5 +161,29 @@ public interface BookService {
 	 *             if an error occurs while interacting with the underlying DAO
 	 */
 	public int increaseVisitCount(String isbn, int additional) throws DatabaseException;
+
+	/**
+	 * Returns a {@link SortedMap} with the most visited {@link Book}s sorted
+	 * descending by their visit count. The number of books can be limited by
+	 * the passed range.
+	 * 
+	 * @param range
+	 *            the amount of books the returned map should contain
+	 * @return the map with the amount of books passed as range sorted
+	 *         descending by their visit count
+	 */
+	public SortedMap<Book, Integer> getMostVisitedBooks(int range);
+
+	/**
+	 * Returns a {@link SortedMap} with the least visited {@link Book}s sorted
+	 * ascending by their visit count. The number of books can be limited by the
+	 * passed range.
+	 * 
+	 * @param range
+	 *            the amount of books the returned map should contain
+	 * @return the map with the amount of books passed as range sorted ascending
+	 *         by their visit count
+	 */
+	public SortedMap<Book, Integer> getLeastVisitedBooks(int range);
 
 }

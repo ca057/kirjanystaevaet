@@ -1,10 +1,16 @@
 package web.controllers.backend;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +21,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import appl.data.enums.Searchfields;
+import appl.enums.Searchfields;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
@@ -31,7 +38,7 @@ import web.jsonwrappers.AuthorJSONWrapper;
 @Controller
 public class BackendStockController {
 
-	private BookService bookService;
+	public BookService bookService;
 
 	@Autowired
 	private void setBookService(BookService bookService) {
@@ -151,16 +158,20 @@ public class BackendStockController {
 			@RequestParam(value = "edition", required = true) String edition,
 			@RequestParam(value = "pages", required = true) String pages,
 			@RequestParam(value = "stock", required = true) String stock,
-			@RequestParam(value = "authors", required = true) List<String> authors) {
+			@RequestParam(value = "authors", required = true) List<String> authors,
+			@RequestParam("file") MultipartFile file, HttpServletRequest request) {
 		if (categories == null || categories.isEmpty() || title == null || title.isEmpty() || isbn == null
 				|| isbn.isEmpty() || description == null || description.isEmpty() || price == null || price.isEmpty()
 				|| publisher == null || publisher.isEmpty() || day == null || day.isEmpty() || month == null
 				|| month.isEmpty() || year == null || year.isEmpty() || edition == null || edition.isEmpty()
 				|| pages == null || pages.isEmpty() || authors == null || authors.isEmpty() || stock == null
-				|| stock.isEmpty()) {
+				|| stock.isEmpty() || file == null || file.isEmpty()) {
 			// TODO check if pages, categories and authors only contains
 			// numerical values
 			throw new IllegalArgumentException("One of the passed values for adding a book is null or empty.");
+		}
+		if (!file.getContentType().contains("image")) {
+			throw new IllegalArgumentException("The uploaded file is not an image");
 		}
 		Map<Searchfields, String> book = new HashMap<Searchfields, String>();
 		book.put(Searchfields.title, title);
@@ -183,7 +194,8 @@ public class BackendStockController {
 
 		try {
 			bookService.insertBook(book, authorIds, categoryIds);
-		} catch (DatabaseException e) {
+			new ProcessUpload().saveImage(isbn, file, request, false);
+		} catch (DatabaseException | IOException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 
@@ -205,16 +217,29 @@ public class BackendStockController {
 	 * @return
 	 */
 	@RequestMapping(value = "/backend/bestand/buecher/delete", method = RequestMethod.POST)
-	public String deleteBook(@RequestParam(value = "isbn") String isbn) {
+	public String deleteBook(@RequestParam(value = "isbn") String isbn, HttpServletRequest request) {
 		if (isbn == null || isbn.isEmpty()) {
 			throw new IllegalArgumentException(
 					"The passed ISBN for the book to delete is either null or an empty string.");
 		}
 		try {
 			bookService.deleteBook(isbn);
-		} catch (DatabaseException e) {
+			deleteImage(
+					new File(request.getSession().getServletContext().getRealPath(
+							File.separator + "resources" + File.separator + "img" + File.separator + "cover")).toPath(),
+					isbn);
+			deleteImage(
+					new File(request.getSession().getServletContext().getRealPath(
+							File.separator + "uploaded" + File.separator + "img" + File.separator + "cover")).toPath(),
+					isbn);
+		} catch (DatabaseException | IOException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 		return "redirect:/backend/bestand";
+	}
+
+	private void deleteImage(Path path, String title) throws IOException {
+		Files.walk(path).parallel().filter(tmpPath -> tmpPath.toString().contains(title))
+				.forEach(tmpPath -> tmpPath.toFile().delete());
 	}
 }

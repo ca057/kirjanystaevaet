@@ -1,15 +1,24 @@
 package appl.data.builder;
 
+import java.util.Set;
+
 import org.springframework.stereotype.Component;
 
-import appl.data.enums.UserRoles;
+import appl.data.items.Orderx;
 import appl.data.items.PLZ;
 import appl.data.items.User;
+import appl.data.items.UserBookStatistic;
+import appl.enums.UserRoles;;
 
 /**
  * Builder to create a new object of the {@link User} class.
  * 
+ * It is essential to use a new instance of this class every time a new
+ * {@link User} is to be created!
+ * 
  * @author Johannes
+ * 
+ * @see {@link User}
  *
  */
 @Component
@@ -33,6 +42,10 @@ public interface UserBuilder {
 
 	public UserBuilder setImage(byte[] image);
 
+	public UserBuilder setUserBookStatistics(Set<UserBookStatistic> userBookStatistics);
+
+	public UserBuilder setOrders(Set<Orderx> orders);
+
 	public UserBuilder setId(int id);
 
 	public UserRoles getRole();
@@ -52,6 +65,10 @@ public interface UserBuilder {
 	public PLZ getPlz();
 
 	public byte[] getImage();
+
+	public Set<UserBookStatistic> getUserBookStatistics();
+
+	public Set<Orderx> getOrders();
 
 	public int getId();
 

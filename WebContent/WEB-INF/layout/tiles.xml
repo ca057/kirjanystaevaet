@@ -41,9 +41,9 @@
 		<put-attribute name="content" value="/WEB-INF/views/user.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="cart" extends="base">
+ 	<definition name="cart" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/cart.jsp"></put-attribute>
-	</definition>
+	</definition> 
 	
 	<!-- views for the backend -->
 	<definition name="backend" extends="base">
@@ -62,6 +62,10 @@
 		<put-attribute name="content" value="/WEB-INF/views/backend/users.jsp"></put-attribute>
 	</definition>
 
+	<definition name="backend/orders" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/backend/orders.jsp"></put-attribute>
+	</definition>
+
 	<definition name="backend/usage" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/backend/usage.jsp"></put-attribute>
 	</definition>
@@ -70,8 +74,12 @@
 		<put-attribute name="content" value="/WEB-INF/views/backend/settings.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="upload" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/upload.jsp"></put-attribute>
+	</definition>
+	
 	<!-- all views for displaying errors -->
-	<definition name="404" extends="base">
-		<put-attribute name="content" value="/WEB-INF/views/error/404.jsp"></put-attribute>
+	<definition name="error" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/error/error.jsp"></put-attribute>
 	</definition>
 </tiles-definitions>

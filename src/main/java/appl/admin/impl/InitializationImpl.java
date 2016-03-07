@@ -1,4 +1,4 @@
-package appl.logic.admin.impl;
+package appl.admin.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,9 +7,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import appl.data.enums.UserRoles;
-import appl.data.enums.Userfields;
-import appl.logic.admin.Initialization;
+import appl.enums.UserRoles;
+import appl.enums.Userfields;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 
@@ -18,7 +17,7 @@ import exceptions.data.DatabaseException;
  *
  */
 @Component
-public class InitializationImpl implements Initialization, InitializingBean {
+public class InitializationImpl implements InitializingBean {
 
 	@Autowired
 	UserService userService;
@@ -39,13 +38,25 @@ public class InitializationImpl implements Initialization, InitializingBean {
 	}
 
 	private void createUser() throws DatabaseException {
+		userService.createAccount(getNewUser("user"));
+		userService.createAccount(getNewUser("peter"));
+		userService.createAccount(getNewUser("klaus"));
+		userService.createAccount(getNewUser("fin"));
+		userService.createAccount(getNewUser("lena"));
+		userService.createAccount(getNewUser("martina"));
+	}
+
+	private Map<Userfields, String> getNewUser(String name) {
 		Map<Userfields, String> data = new HashMap<>();
-		data.put(Userfields.name, "user");
-		data.put(Userfields.surname, "user");
-		data.put(Userfields.email, "user@ky.de");
-		data.put(Userfields.password, "user");
+		data.put(Userfields.name, name);
+		data.put(Userfields.surname, "Nachname");
+		data.put(Userfields.email, name + "@ky.de");
+		data.put(Userfields.street, "baker street");
+		data.put(Userfields.streetnumber, "1");
+		data.put(Userfields.plzId, "300");
+		data.put(Userfields.password, name);
 		data.put(Userfields.role, UserRoles.USER.toString());
-		userService.createAccount(data);
+		return data;
 	}
 
 	private void createAdmin() throws DatabaseException {

@@ -8,10 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/backend")
 public class BackendController {
 
-	public BackendController() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@RequestMapping(method = RequestMethod.GET)
 	public String getBackend() {
 		return "backend";

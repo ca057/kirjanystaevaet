@@ -36,6 +36,10 @@ p {
 	animation:rainbow 1s infinite;
 }
 
+.hidden-info {
+	display: none;
+}
+
 h1 {
 	font-size: 2em;
 	margin: 1em 0 1em 0;
