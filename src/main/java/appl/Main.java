@@ -5,6 +5,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import conf.RootConfig;
 import conf.SecurityConfig;
+import conf.WebConfig;
 import exceptions.data.CategoryExistsException;
 import exceptions.data.DatabaseException;
 import exceptions.data.PrimaryKeyViolationException;
@@ -15,7 +16,7 @@ public class Main {
 			throws PrimaryKeyViolationException, CategoryExistsException, DatabaseException {
 		// ApplicationContext ctx = new
 		// AnnotationConfigApplicationContext(RootConfig.class);
-		ApplicationContext ctx = new AnnotationConfigApplicationContext(RootConfig.class, SecurityConfig.class);
+		ApplicationContext ctx = new AnnotationConfigApplicationContext(RootConfig.class, SecurityConfig.class, WebConfig.class);
 
 		// new QueryFun().doSomeTesting2(ctx);
 		// new QueryFun().doSomeTesting(sessionFactory);
@@ -45,6 +46,7 @@ public class Main {
 		qf.testDeleteCategoryOfBook(ctx);
 		qf.testAddCategoryToBook(ctx);
 		qf.testUpdateBook(ctx);
+		qf.testGetBooksSell(ctx);
 
 		//qf.testUser(ctx);
 		//qf.testStatistics(ctx);

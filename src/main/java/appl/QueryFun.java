@@ -18,6 +18,7 @@ import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
 import appl.data.items.User;
+import appl.enums.SearchMode;
 import appl.enums.Searchfields;
 import appl.logic.service.BookService;
 import appl.logic.service.OrderService;
@@ -407,6 +408,18 @@ public class QueryFun {
 		Book book = dataService.getBookByIsbn("0101010101");
 		System.out.println(book.toString());
 		
+	}
+	
+	public void testGetBooksSell(ApplicationContext ctx) throws DatabaseException{
+		BookService dataService = ctx.getBean(BookService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
+		UserService userService = ctx.getBean(UserService.class);
+		
+		List<Book> allBooks = dataService.getAllBooks(SearchMode.ALL);
+		System.out.println("\nAll\n");
+		for (Book b : allBooks){
+			System.out.println(b.toString());
+		}
 	}
 	/*
 	 * 

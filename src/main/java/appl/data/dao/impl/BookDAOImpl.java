@@ -82,8 +82,73 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map, SearchMode mode) {
-		// TODO Auto-generated method stub
-		return null;
+		Criteria cr = setupAndGetCriteria();
+		switch(mode){
+		case ALL: 
+			break;
+		case SELL:
+			cr = getCriteriaForSell(cr);
+			break;
+		
+		case AVAILABLE:
+			cr = getCriteriaForAvailable(cr);
+			break;
+		}
+		
+		cr.createAlias("categories", "c").createAlias("authors", "a");
+		for (Entry<Searchfields, String> entry : map.entrySet()) {
+			String key = entry.getKey().toString();
+
+			switch (entry.getKey()) {
+			case nameF:
+				cr.add(Restrictions.ilike("a." + key, "%" + entry.getValue() + "%"));
+				break;
+			case nameL:
+				cr.add(Restrictions.ilike("a." + key, "%" + entry.getValue() + "%"));
+				break;
+			case title:
+				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
+				break;
+			case isbn:
+				cr.add(Restrictions.eq(key, entry.getValue()));
+				break;
+			case categoryName:
+				cr.add(Restrictions.ilike("c." + key, "%" + entry.getValue() + "%"));
+				break;
+			case authorId:
+				cr.add(Restrictions.eq("a." + key, entry.getValue()));
+				break;
+			case categoryId:
+				cr.add(Restrictions.eq("c." + key, entry.getValue()));
+				break;
+			case description:
+				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
+				break;
+			case price:
+				// TODO
+				// Siehe Issue #14
+				break;
+			case publisher:
+				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
+				break;
+			case pubdate:
+				// TODO Nur das Jahr
+				// Siehe Issue #13
+				break;
+			case edition:
+				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
+				break;
+			case pages:
+				// TODO
+				// Range? Überhaupt in der Suche?
+				break;
+
+			}
+		}
+		List<Book> result = cr.list();
+
+		return result;
+			
 	}
 	@Override
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) {
@@ -139,21 +204,9 @@ public class BookDAOImpl implements BookDAO {
 
 			}
 		}
-		/*
-		 * if ((key.contains("category"))) { // Wieso contains und nicht //
-		 * equals, wollen wir das // wirklich zulassen?
-		 * cr.add(Restrictions.ilike("c." + key, "%" + entry.getValue() + "%"));
-		 * } else if (key.contains("name") || key.contains("author")) { // Wieso
-		 * // verodert? // Wieso // legen // wir // nicht // feste // keys //
-		 * fest? cr.add(Restrictions.ilike("a." + key, "%" + entry.getValue() +
-		 * "%")); } else { cr.add(Restrictions.ilike(key, "%" + entry.getValue()
-		 * + "%")); System.out.println("in Dao: else-case, Searchfield = " +
-		 * key); } }
-		 */
-		// System.out.println("Criteria to String " + cr.toString());
+
 		List<Book> result = cr.list();
-		// sessionFactory.getCurrentSession().getTransaction().commit();
-		// System.out.println("In DAO: Resultsize: " + result.size());
+
 		return result;
 	}
 
