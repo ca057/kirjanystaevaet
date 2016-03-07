@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import appl.data.dao.BookDAO;
 import appl.data.items.Book;
+import appl.enums.SearchMode;
 import appl.enums.Searchfields;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
@@ -46,6 +47,11 @@ public class BookDAOImpl implements BookDAO {
 	public List<Book> getAllBooks() {
 		return getSession().createCriteria(Book.class).list();
 	}
+	@Override
+	public List<Book> getAllBooks(SearchMode mode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public List<Book> getBooksByOpenSearch(String searchTerm) {
@@ -53,6 +59,11 @@ public class BookDAOImpl implements BookDAO {
 		return null;
 	}
 
+	@Override
+	public List<Book> getBooksByMetadata(Map<Searchfields, String> map, SearchMode mode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) {
 		// sessionFactory.getCurrentSession().beginTransaction();
@@ -197,5 +208,9 @@ public class BookDAOImpl implements BookDAO {
 		}
 		return setupAndGetCriteria().addOrder(Order.asc("visitCount")).setMaxResults(range).list();
 	}
+
+
+
+
 
 }
