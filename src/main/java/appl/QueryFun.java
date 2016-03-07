@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -342,9 +343,10 @@ public class QueryFun {
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
 		
-		List<Map.Entry<String, Integer>> bestseller = orderService.getBestsellers();
+		//List<Map.Entry<String, Integer>> bestseller = orderService.getBestsellers(2);
+		LinkedHashMap<String, Integer> bestseller = orderService.getBestsellers(1);
 		System.out.println("\nBestsellers\n");
-		for (Map.Entry<String, Integer> m : bestseller){
+		for (Map.Entry<String, Integer> m : bestseller.entrySet()){
 			System.out.println(m.getKey() + " " + m.getValue());
 		}
 	}

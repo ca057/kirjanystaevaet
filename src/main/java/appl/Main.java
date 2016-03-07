@@ -42,10 +42,10 @@ public class Main {
 		//qf.testDeleteBook(ctx);
 		qf.testInsertOrder(ctx);
 		qf.testBestsellers(ctx);
-		qf.testDeleteCategoryOfBook(ctx);
-		qf.testAddCategoryToBook(ctx);
-		qf.testUpdateBook(ctx);
-		qf.testGetBooksSell(ctx);
+//		qf.testDeleteCategoryOfBook(ctx);
+//		qf.testAddCategoryToBook(ctx);
+//		qf.testUpdateBook(ctx);
+//		qf.testGetBooksSell(ctx);
 
 		//qf.testUser(ctx);
 		//qf.testStatistics(ctx);

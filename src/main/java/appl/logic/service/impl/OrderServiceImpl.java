@@ -109,8 +109,44 @@ public class OrderServiceImpl implements OrderService{
 	
 	@Override
 	public LinkedHashMap<String, Integer> getBestsellers(int range) throws DatabaseException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Map.Entry<String, Integer>> bestsellerList = new ArrayList<Map.Entry<String, Integer>>();
+		Map<String, Integer> tmpMap = new HashMap<String, Integer>();
+		try {
+			List<OrderItem> orderItems = orderItemDao.getAllOrderItems();
+			for (OrderItem o : orderItems){
+				if(tmpMap.get(o.getBook().getIsbn())!= null){
+					tmpMap.put(o.getBook().getIsbn(), tmpMap.get(o.getBook().getIsbn()) + o.getNumberOf());
+				} else {
+					tmpMap.put(o.getBook().getIsbn(), o.getNumberOf());
+				}
+			}
+			bestsellerList.addAll(tmpMap.entrySet());
+			// Sortieren
+			
+			Collections.sort(bestsellerList, new Comparator<Map.Entry<String, Integer>>() {
+				public int compare(Map.Entry<String, Integer> o1,
+	                                           Map.Entry<String, Integer> o2) {
+					return (o2.getValue()).compareTo(o1.getValue());
+				}
+			});
+			LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+			int i = range;
+			for (Map.Entry<String, Integer> e : bestsellerList){
+				sortedMap.put(e.getKey(), e.getValue());
+				i--;
+				if (i < 1){
+					break;
+				}
+			}
+//			for (Iterator<Map.Entry<String, Integer>> it = bestsellerList.iterator(); it.hasNext();) {
+//				Map.Entry<String, Integer> entry = it.next();
+//				sortedMap.put(entry.getKey(), entry.getValue());
+//			}
+			return sortedMap;
+			
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 	@Override
 	public List<Map.Entry<String, Integer>> getBestsellers() throws DatabaseException {
