@@ -24,13 +24,6 @@ import exceptions.data.DatabaseException;
 @Controller
 public class CartController {
 
-	// public void setCurrentUser(User user) {
-	// this.user = user;
-	// }
-
-	// private User user = (User)
-	// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
 	@Autowired
 	private BookService bookService;
 

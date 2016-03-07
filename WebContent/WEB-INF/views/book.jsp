@@ -26,7 +26,7 @@
 				<form action="../warenkorb" method="post" id="cartForm">
 					<button type="submit" form="cartForm" value='<c:out value="${book.getIsbn()}"></c:out>' name="isbn">
 						<img src="<c:url value="/img/icons/ic_add_shopping_cart_black_36dp.png" />" title="Zum Warenkorb hinzufügen" />
-						<p>Zum Warenkorb hinzufügen</p>
+						<p>In den Warenkorb</p>
 					</button>
 					<sec:csrfInput/>
 				</form>
