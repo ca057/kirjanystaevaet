@@ -3,6 +3,7 @@ package appl.logic.service;
  * @author Madeleine
  */
 import java.util.Calendar;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,4 +32,5 @@ public interface OrderService {
 	public Set<Orderx> getOrdersByUserid(int userId) throws DatabaseException;
 	public List<Book> getOrderedBooksOfUser(int userId) throws DatabaseException;
 	public List<Map.Entry<String, Integer>> getBestsellers() throws DatabaseException;
+	public LinkedHashMap<String, Integer> getBestsellers(int range) throws DatabaseException;
 }

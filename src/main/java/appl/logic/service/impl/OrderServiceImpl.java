@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -105,6 +106,12 @@ public class OrderServiceImpl implements OrderService{
 //		}
 		//return books;
 	}
+	
+	@Override
+	public LinkedHashMap<String, Integer> getBestsellers(int range) throws DatabaseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public List<Map.Entry<String, Integer>> getBestsellers() throws DatabaseException {
 		List<Map.Entry<String, Integer>> bestsellers = new ArrayList<Map.Entry<String, Integer>>();
@@ -133,6 +140,7 @@ public class OrderServiceImpl implements OrderService{
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+	
 	
 
 }
