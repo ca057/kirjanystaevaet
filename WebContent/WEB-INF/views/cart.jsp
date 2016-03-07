@@ -28,15 +28,5 @@
 	<form id="orderForm" method="post">
 		<button id="orderButton" type="submit" formaction="<c:url value='/bestellung_aufgegeben'/>">bestellen</button> 
 		<sec:csrfInput/>
-	</form>
-	 	<c:choose>
-	 		<c:when test="${cart.isEmpty()}">
-	 			<p>Du kannst leider nichts bestellen. Tue doch erst etwas in Deinen Warenkorb :)</p>
-	 		</c:when>
-	 			<c:otherwise>
- 		 			<p style="display:none">cart not empty</p>
-				</c:otherwise>
-			</c:choose>
- 	<p id="confirmOrder" style="display:none">Bestellung aufgegeben</p>	
-	
+	</form>	
  </section>  

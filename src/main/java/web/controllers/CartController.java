@@ -110,14 +110,18 @@ public class CartController {
 	public String orderContent() throws DatabaseException {
 		User user = getUser();
 		System.out.println(user.toString());
-		if (user.getStreet() != null && user.getStreetnumber() != null && user.getPlz() != null) {
-			Calendar cal = Calendar.getInstance();
-			orderService.createOrder(cart.getBooks(), user.getUserId(), cal);
-			cart.deleteContent();
+		if (!cart.isEmpty()) {
+			if (user.getStreet() != null && user.getStreetnumber() != null && user.getPlz() != null) {
+				Calendar cal = Calendar.getInstance();
+				orderService.createOrder(cart.getBooks(), user.getUserId(), cal);
+				cart.deleteContent();
+			} else {
+				System.out.println("User has no data.");
+			}
+			return "orderConducted";
 		} else {
-			System.out.println("User has no data.");
+			return "redirect:/warenkorb";
 		}
-		return "orderConducted";
 	}
 
 	private User getUser() {
