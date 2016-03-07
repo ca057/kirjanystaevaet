@@ -10,6 +10,7 @@ import java.util.SortedMap;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.enums.SearchMode;
 import appl.enums.Searchfields;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
@@ -87,15 +88,19 @@ public interface BookService {
 
 	// Abfragen
 	public List<Book> getAllBooks() throws DatabaseException;
+	public List<Book> getAllBooks(SearchMode mode) throws DatabaseException;
+
 
 	public List<Book> getBooksByCategory(String category) throws DatabaseException;
+	public List<Book> getBooksByCategory(String category, SearchMode mode) throws DatabaseException;
+
 
 	public Book getBookByIsbn(String isbn) throws DatabaseException;
 
 	public List<Book> getBooksByOpenSearch(String searchTerm);
 
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) throws DatabaseException;
-
+	public List<Book> getBooksByMetdata(Map<Searchfields, String> map, SearchMode mode) throws DatabaseException;
 	// Insert
 	/**
 	 * 
