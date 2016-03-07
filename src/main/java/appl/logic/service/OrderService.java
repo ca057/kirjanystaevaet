@@ -1,5 +1,7 @@
 package appl.logic.service;
-
+/**
+ * @author Madeleine
+ */
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;

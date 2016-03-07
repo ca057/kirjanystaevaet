@@ -1,5 +1,7 @@
 package appl.logic.service;
-
+/**
+ * @author Madeleine, Johannes
+ */
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -73,7 +75,6 @@ public interface BookService {
 	// Update
 
 	// Delete
-	// TODO Was soll hier angegeben werden?
 	/**
 	 * 
 	 * @param id
@@ -113,7 +114,15 @@ public interface BookService {
 	// authorIds, Set<Integer> categoryIds)throws IsbnAlreadyExistsException ;
 	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds)
 			throws DatabaseException;
-			// Update
+
+	// Update
+	
+	public void updateBook(String isbn, Map<Searchfields, String> data) throws DatabaseException;
+	
+	public void deleteCategoryOfBook(String isbn, int categoryId) throws DatabaseException;
+	
+	public void addCategoryToBook(String isbn, int categoryId) throws DatabaseException;
+
 
 	// Update Stock
 	/**

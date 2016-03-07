@@ -129,5 +129,8 @@ public abstract class ErrorMessageHelper {
 		return String.format("Sorry, someone else was faster, the %s is not available anymore. Stock = 0", bookTitle);
 	}
 
+	public static String mayNotBeUpdated(){
+		return String.format("These fields may not be updated: isbn, edition, pubdate, publisher");
+	}
 
 }
