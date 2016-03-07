@@ -1,6 +1,7 @@
 package appl.logic.service.impl;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -130,6 +131,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getUsers() throws DatabaseException {
 		return userDao.getUsers();
+	}
+
+	@Override
+	public int getNumberOf(UserRoles role) throws DatabaseException {
+		Map<Userfields, String> map = new HashMap<Userfields, String>();
+		map.put(Userfields.role, role.toString());
+		return userDao.getUserByMetadata(map).size();
 	}
 
 	@Override
