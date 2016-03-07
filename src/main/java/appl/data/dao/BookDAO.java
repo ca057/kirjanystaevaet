@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.transaction.annotation.Transactional;
 
 import appl.data.items.Book;
+import appl.enums.SearchMode;
 import appl.enums.Searchfields;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
@@ -16,7 +17,12 @@ public interface BookDAO {
 	public List<Book> getBooksByOpenSearch(String searchTerm);
 
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map);
+	public List<Book> getBooksByMetadata(Map<Searchfields, String> map, SearchMode mode);
 
+	public List<Book> getAllBooks();
+	public List<Book> getAllBooks(SearchMode mode);
+
+	
 	public Book getBookByIsbn(String isbn) throws EntityDoesNotExistException;
 
 	// public String insertBook(Book book)throws IsbnAlreadyExistsException;
@@ -26,7 +32,6 @@ public interface BookDAO {
 
 	public void updateBook(Book book);
 
-	public List<Book> getAllBooks();
 
 	public void decrementStock(String isbn, int decrement) throws DatabaseException;
 
