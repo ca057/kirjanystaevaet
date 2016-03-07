@@ -65,7 +65,6 @@ public class SingleBookController {
 			try {
 				Book book = bookService.getBookByIsbn(isbn);
 				if (book.getStock() > 0) {
-					System.out.println("OLD: " + bookService.getVisitCount(isbn));
 					bookService.increaseVisitCount(isbn, 1);
 					m.addAttribute("book", book);
 				} else {
