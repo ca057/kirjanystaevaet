@@ -361,8 +361,12 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<Book> getAllBooks(SearchMode mode) throws DatabaseException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return bookDao.getAllBooks(mode);
+
+		} catch (HibernateException e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 	// ToDo die MEthode funktioniert nur darüber, dass man über CategoryNAme
 	// bekommt, nicht über die ID, -> Umbenennen!
