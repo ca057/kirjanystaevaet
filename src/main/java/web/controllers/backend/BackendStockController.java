@@ -194,7 +194,8 @@ public class BackendStockController {
 
 		try {
 			bookService.insertBook(book, authorIds, categoryIds);
-			new ProcessUpload().saveImage(isbn, file, request, false);
+			new ProcessUpload().saveImage(isbn, file.getOriginalFilename().split("\\.")[1], file.getBytes(), request,
+					false);
 		} catch (DatabaseException | IOException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
