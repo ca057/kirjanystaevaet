@@ -5,7 +5,7 @@
 <section>
 	<h1>Die Bestellung wurde ausgeführt</h1> 
 	<p>Bald hast Du Deine neuen Bücher!</p>
-	<a>Zur Startseite</a>
-	<a href="<c:url value='/suche' />" title="Suche">Zur Suche</a>
-	<a>Zum Konto</a>
+	<a href="<c:url value='/'/>" title="Homepage">Zur Startseite</a>
+	<a href="<c:url value='/suche'/>" title="Suche">Zur Suche</a>
+	<a href="<c:url value='/meinkonto'/>" title="Konto">Zum Konto</a>
 </section>
