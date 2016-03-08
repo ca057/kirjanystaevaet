@@ -25,13 +25,15 @@
 					<article>
 						<p>Folgende Bücher haben wir zu <c:out value='${name}' />:</p>
 						<c:forEach var="book" items="${books}">
-						<div id="wrapper">
+						<div class="row">
+						<div id="wrapper" class="col-sm-8">
 							<h4><c:out value="${book.getTitle()}" /></h4>
 							<p>von
 								<c:set var="delimiter" value="" scope="request"></c:set><c:forEach var="a" items="${book.getAuthors()}">${delimiter}<c:out value="${a.getNameF()}" /> <c:out value="${a.getNameL()}" /><c:set var="delimiter" value=", " scope="request"></c:set></c:forEach>
 							</p>
 							<p><c:out value="${book.getPrice()}" />€ - <a href="<c:url value='/buch/${book.getIsbn()}' />" title="zum Buch <c:out value='${book.getTitle()}' />">zum Buch</a></p>
-					<div class="add-to-cart">
+					</div>
+					<div class="add-to-cart col-sm-4">
 					<!-- hier brauchen wir noch ein form-element, welches das buch zum Warenkorb hinzufügt -->
 						<form action="../warenkorb" method="post" id="cartForm">
 							<button type="submit" form="cartForm" value='<c:out value="${book.getIsbn()}"></c:out>' name="isbn">

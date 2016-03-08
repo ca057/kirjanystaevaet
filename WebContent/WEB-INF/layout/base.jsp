@@ -34,11 +34,11 @@
 				</a>
 			</header>
 	
-			<nav class="shadow-1 navigation">
+			<nav class="shadow-1">
 				<t:insertAttribute name="navigation"></t:insertAttribute>
 			</nav>
 		
-			<div id="content" class="row">
+			<div id="content">
 				<t:insertAttribute name="content"></t:insertAttribute>
 			</div>
 		</div>

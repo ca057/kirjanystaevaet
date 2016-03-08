@@ -4,21 +4,35 @@
 
 <section>
 	<h2>Suche</h2>
-	<form>
-		<label for="title">Titel</label>
-		<input type="text" id="title" name="title">
+	
+	<form class="form-inline well">
+		<div class="form-group">
+			<label for="title">Titel</label>
+			<input type="text" id="title" name="title">
+		</div>
+		<div class="form-group">
 		<label for="authorFirst">Vorname</label>
 		<input type="text" id="authorFirst" name="authorFirst">
+		</div>
+		<div class="form-group">
 		<label for="authorLast">Nachname</label>
 		<input type="text" id="authorLast" name="authorLast">
+		</div>
+		<div class="form-group">
 		<label for="isbn">ISBN</label>
 		<input type="text" id="isbn" name="isbn">
+		</div>
+		<div class="form-group">
 		<label for="year">Erscheinungsjahr</label>
 		<input type="text" id="year" name="year">
+		</div>
+		<div class="form-group">
 		<label for="category">Kategorie</label>
 		<input type="text" id="category" name="category">
-		<input type="submit" value="Los gehts :)">
+		</div>
+		<input type="submit" value="Suche">
 	</form>
+	
 	
 	<h3>Suchergebnisse</h3>
 	<!-- Suchanfrage wird nur angezeigt, wenn der übergebene String nicht leer ist. -->
@@ -38,12 +52,20 @@
 				<c:otherwise>
 				
 					<c:forEach var="book" items="${results}">
-						<h4><c:out value="${book.getTitle()}"/></h4>
-						<p><c:out value="${book.getDescription()}" escapeXml="false"/></p>
-						<p><c:out value="${book.getPages()}"/></p>
-						<p><c:out value="${book.getPublisher()}"/></p>
-						<p><c:out value="${book.getIsbn()}"/></p>
-						<p><c:out value="${book.getPrice()}"/></p>
+					<h4><c:out value="${book.getTitle()}"/></h4>
+						<div class="row">
+							<div class="col-sm-8">
+								<h5>Inhalt</h5>
+								<c:out value="${book.getDescription()}" escapeXml="false"/>
+							</div>
+							<div class="col-sm-4">
+								<h5>Details</h5>
+								<p>Seitenzahl: <c:out value="${book.getPages()}"/></p>
+								<p>Verlag: <c:out value="${book.getPublisher()}"/></p>
+								<p>ISBN: <c:out value="${book.getIsbn()}"/></p>
+								<p>Preis <c:out value="${book.getPrice()}"/></p>
+							</div>
+						</div>
 					</c:forEach> 
 				</c:otherwise>
 			</c:choose>
