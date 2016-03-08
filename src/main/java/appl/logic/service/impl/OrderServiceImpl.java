@@ -231,6 +231,8 @@ public class OrderServiceImpl implements OrderService{
 			System.out.println(o.toString());
 			price = price + (o.getPrice()) * o.getNumberOf();
 		}
+	    price = Math.round(price * 100) / 100.0;
+
 		return price;
 	}
 	
