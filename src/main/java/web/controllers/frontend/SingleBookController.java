@@ -22,12 +22,8 @@ import exceptions.data.DatabaseException;
 @Controller
 public class SingleBookController {
 
-	private BookService bookService;
-
 	@Autowired
-	public void setService(BookService bookService) {
-		this.bookService = bookService;
-	}
+	private BookService bookService;
 
 	/**
 	 * The URL should always contain an ISBN-number, so a book can be displayed.

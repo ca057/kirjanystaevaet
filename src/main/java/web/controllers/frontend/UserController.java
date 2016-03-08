@@ -25,16 +25,8 @@ public class UserController {
 	@Autowired
 	private ControllerHelper helper;
 
-	public void setControllerHelper(ControllerHelper helper) {
-		this.helper = helper;
-	}
-
 	@Autowired
 	private OrderService orderService;
-
-	public void setOrderService(OrderService orderService) {
-		this.orderService = orderService;
-	}
 
 	/**
 	 * Handles a GET request for rendering the page of a single user.

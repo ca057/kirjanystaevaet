@@ -38,12 +38,8 @@ import web.jsonwrappers.AuthorJSONWrapper;
 @Controller
 public class BackendStockController {
 
-	public BookService bookService;
-
 	@Autowired
-	private void setBookService(BookService bookService) {
-		this.bookService = bookService;
-	}
+	public BookService bookService;
 
 	/**
 	 * Handles a simple GET request and returns the name of the backend view for

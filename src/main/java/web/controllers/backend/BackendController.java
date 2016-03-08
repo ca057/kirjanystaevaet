@@ -17,10 +17,6 @@ public class BackendController {
 	@Autowired
 	private ControllerHelper helper;
 
-	public void setControllerHelper(ControllerHelper helper) {
-		this.helper = helper;
-	}
-
 	@RequestMapping(method = RequestMethod.GET)
 	public String getBackend(Model m) throws ControllerOvertaxedException {
 		try {

@@ -28,19 +28,11 @@ import web.jsonwrappers.BookJSONWrapper;
 @Controller
 public class RestApiController {
 
+	@Autowired
 	private BookService bookService;
 
 	@Autowired
-	public void setBookService(BookService bookService) {
-		this.bookService = bookService;
-	}
-
 	private ControllerHelper helper;
-
-	@Autowired
-	public void setControllerHelper(ControllerHelper helper) {
-		this.helper = helper;
-	}
 
 	@RequestMapping(value = "/api/v1/books", produces = "application/json", method = RequestMethod.GET)
 	public ResponseEntity<List<BookJSONWrapper>> getAllBooks(

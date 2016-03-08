@@ -22,20 +22,8 @@ public class CategoriesController {
 	@Autowired
 	private BookService bookService;
 
-	/**
-	 * Setter injection for the {@link CategoryService} bean.
-	 * 
-	 * @param bookService
-	 */
-	public void setService(BookService bookService) {
-		this.bookService = bookService;
-	}
-
+	@Autowired
 	private ControllerHelper helper;
-
-	public void setControllerHelper(ControllerHelper helper) {
-		this.helper = helper;
-	}
 
 	/**
 	 * Adds a list with all existing categories to the model. If an exception

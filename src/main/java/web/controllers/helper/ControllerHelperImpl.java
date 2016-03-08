@@ -21,16 +21,8 @@ public class ControllerHelperImpl implements ControllerHelper {
 	@Autowired
 	private UserService userService;
 
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
 	@Autowired
 	private BookService bookService;
-
-	public void setBookService(BookService bookService) {
-		this.bookService = bookService;
-	}
 
 	private Optional<Authentication> getAuthentication() {
 		return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication());
