@@ -1,4 +1,4 @@
-package web.controllers;
+package web.controllers.frontend;
 
 import java.util.stream.Collectors;
 
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import appl.logic.service.BookService;
-import exceptions.controller.ControllerOvertaxedException;
 import exceptions.data.DatabaseException;
+import exceptions.web.ControllerOvertaxedException;
 
 /**
  * Controller for the route to the categories.

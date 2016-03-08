@@ -5,12 +5,6 @@
 	<c:if test="${param.logout != null}">
 	    <p class="good-bye">Danke für deinen Besuch &ndash; bis zum nächsten Mal!</p>
 	</c:if>
-	<div id="searchfield">
-		<form action="suche" method="get">
-			<input type="text" name="all" placeholder="Welches Buch suchst du?" required/>
-			<input type="submit" value="Suchen" />
-		</form>
-	</div>
 
 	<c:if test="${bookOfTheMoment != null}">
 		<article>
