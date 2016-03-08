@@ -1,16 +1,11 @@
 package appl.logic.service.impl;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import appl.data.items.Book;
 import appl.enums.UserRoles;
 import appl.logic.service.BookService;
 import appl.logic.service.DataKraken;
@@ -20,7 +15,7 @@ import exceptions.data.DatabaseException;
 
 /**
  * 
- * @author ca
+ * @author Christian
  *
  */
 @Component
@@ -96,17 +91,12 @@ public class Cephalopoda implements DataKraken {
 	}
 
 	private void computeTopSellersAndShelfWarmers(Map<String, Object> map) {
-		try {
-			List<Entry<String, Integer>> topSellers = orderService.getBestsellers();
-			SortedMap<Book, Integer> fiveMost = new TreeMap<>();
-			for (int i = 0; i < (topSellers.size() > 5 ? 5 : topSellers.size()); i++) {
-				fiveMost.put(bookService.getBookByIsbn(topSellers.get(i).getKey()), topSellers.get(i).getValue());
-			}
-			map.put("topSellers", fiveMost);
-			// TODO add shelfWarmers
-			map.put("shelfWarmers", fiveMost);
-		} catch (DatabaseException ignore) {
-		}
+		// TODO implement me
+		// try {
+		// map.put("topSellers", orderService.getBestsellers(5));
+		// map.put("shelfWarmers", orderService.getShelveWarmers(5));
+		// } catch (DatabaseException ignore) {
+		// }
 	}
 
 	private void computeMostAndLeastVisitedBooks(Map<String, Object> map) {
