@@ -27,13 +27,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ComponentScan({ "web", "exceptions.web" })
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-	// @Override
-	// public void
-	// configureDefaultServletHandling(DefaultServletHandlerConfigurer
-	// configurer) {
-	// configurer.enable();
-	// }
-
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		final MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
