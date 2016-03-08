@@ -77,9 +77,9 @@ public class Cephalopoda implements DataKraken {
 		} catch (DatabaseException ignore) {
 		}
 		try {
-			map.put("amountOfUsers", userService.getUsers().size());
-			map.put("amountOfUsersUSER", userService.getNumberOf(UserRoles.USER));
-			map.put("amountOfUsersADMIN", userService.getNumberOf(UserRoles.ADMIN));
+			map.put("amountOfUsers", userService.getNumberOfAccounts());
+			map.put("amountOfUsersUSER", userService.getNumberOfAccounts(UserRoles.USER));
+			map.put("amountOfUsersADMIN", userService.getNumberOfAccounts(UserRoles.ADMIN));
 		} catch (DatabaseException ignore) {
 		}
 	}

@@ -46,6 +46,7 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String userGet(Model m) throws ControllerOvertaxedException {
 		try {
+			m.addAttribute("user", helper.getUser().get());
 			m.addAttribute("lastOrders", orderService.getOrdersByUserid(helper.getUserId()));
 		} catch (DatabaseException e) {
 			throw new ControllerOvertaxedException(

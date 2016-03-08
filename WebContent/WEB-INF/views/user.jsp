@@ -4,7 +4,7 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <section>
-	<h2>Hallo <sec:authentication property="principal.username"/>!</h2>
+	<h2>Hallo <c:out value="${user.getName()}" /> <c:out value="${user.getSurname()}" />!</h2>
 	<article>
 		<c:choose>
 			<c:when test="${lastOrders.isEmpty()}">
