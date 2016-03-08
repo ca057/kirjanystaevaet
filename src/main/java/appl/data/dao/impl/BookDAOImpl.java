@@ -1,4 +1,5 @@
 package appl.data.dao.impl;
+
 /**
  * @author Madeleine
  */
@@ -38,7 +39,7 @@ public class BookDAOImpl implements BookDAO {
 		}
 		Session s = getSession();
 		Criteria cr = s.createCriteria(Book.class);
-		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		// cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return cr;
 		// return cr.createAlias("categories", "c").createAlias("authors", "a");
 	}
@@ -48,29 +49,31 @@ public class BookDAOImpl implements BookDAO {
 		return getSession().createCriteria(Book.class).list();
 	}
 
-	private Criteria getCriteriaForSell(Criteria cr){
+	private Criteria getCriteriaForSell(Criteria cr) {
 		cr.add(Restrictions.ge("stock", 0));
 		return cr;
 	}
-	private Criteria getCriteriaForAvailable(Criteria cr){
+
+	private Criteria getCriteriaForAvailable(Criteria cr) {
 		cr.add(Restrictions.gt("stock", 0));
 		return cr;
 	}
+
 	@Override
 	public List<Book> getAllBooks(SearchMode mode) {
 		Criteria cr = setupAndGetCriteria();
 		switch (mode) {
-		case ALL: 
+		case ALL:
 			break;
 		case SELL:
 			cr = getCriteriaForSell(cr);
 			break;
-		
+
 		case AVAILABLE:
 			cr = getCriteriaForAvailable(cr);
 			break;
 		}
-		
+
 		return cr.list();
 	}
 
@@ -83,18 +86,18 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map, SearchMode mode) {
 		Criteria cr = setupAndGetCriteria();
-		switch(mode){
-		case ALL: 
+		switch (mode) {
+		case ALL:
 			break;
 		case SELL:
 			cr = getCriteriaForSell(cr);
 			break;
-		
+
 		case AVAILABLE:
 			cr = getCriteriaForAvailable(cr);
 			break;
 		}
-		
+
 		cr.createAlias("categories", "c").createAlias("authors", "a");
 		for (Entry<Searchfields, String> entry : map.entrySet()) {
 			String key = entry.getKey().toString();
@@ -148,8 +151,9 @@ public class BookDAOImpl implements BookDAO {
 		List<Book> result = cr.list();
 
 		return result;
-			
+
 	}
+
 	@Override
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) {
 		// sessionFactory.getCurrentSession().beginTransaction();
@@ -280,11 +284,10 @@ public class BookDAOImpl implements BookDAO {
 		if (range < 0) {
 			throw new IllegalArgumentException("The passed range must be greater than 0.");
 		}
-		return setupAndGetCriteria().addOrder(Order.asc("visitCount")).setMaxResults(range).list();
+		System.out.println("Range: " + range);
+		List result = setupAndGetCriteria().addOrder(Order.asc("visitCount")).setMaxResults(range).list();
+		System.out.println("Least Visited: " + result);
+		return result;
 	}
-
-
-
-
 
 }
