@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import appl.data.items.User;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
+import exceptions.web.ControllerOvertaxedException;
 import web.controllers.ControllerHelper;
 
 @Component
@@ -27,12 +28,13 @@ public class ControllerHelperImpl implements ControllerHelper {
 	}
 
 	@Override
-	public int getUserId() {
-		return ((User) getAuthentication().get().getPrincipal()).getUserId();
+	public int getUserId() throws ControllerOvertaxedException {
+		return ((User) getAuthentication().orElseThrow(() -> new ControllerOvertaxedException()).getPrincipal())
+				.getUserId();
 	}
 
 	@Override
-	public Optional<User> getUser() throws DatabaseException {
+	public Optional<User> getUser() throws DatabaseException, ControllerOvertaxedException {
 		return userService.findByID(getUserId());
 	}
 
