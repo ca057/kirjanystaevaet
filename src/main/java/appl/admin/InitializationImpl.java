@@ -1,4 +1,4 @@
-package appl.admin.impl;
+package appl.admin;
 
 import java.util.ArrayList;
 import java.util.HashMap;

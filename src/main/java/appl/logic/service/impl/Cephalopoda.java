@@ -1,4 +1,4 @@
-package appl.admin.impl;
+package appl.logic.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,10 +10,10 @@ import java.util.TreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import appl.admin.DataKraken;
 import appl.data.items.Book;
 import appl.enums.UserRoles;
 import appl.logic.service.BookService;
+import appl.logic.service.DataKraken;
 import appl.logic.service.OrderService;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;

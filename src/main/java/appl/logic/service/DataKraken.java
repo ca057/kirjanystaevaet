@@ -1,4 +1,4 @@
-package appl.admin;
+package appl.logic.service;
 
 import java.util.Map;
 
