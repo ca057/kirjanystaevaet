@@ -138,7 +138,8 @@ public interface UserService {
 	public List<User> getUsers() throws DatabaseException;
 
 	/**
-	 * Counts the accounts with the specified authority.
+	 * Counts the accounts with the specified authority. If no authority
+	 * specified, the number of all users is returned.
 	 * 
 	 * @param role
 	 *            the {@link UserRoles}
