@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.springframework.context.ApplicationContext;
@@ -428,7 +429,11 @@ public class QueryFun {
 		BookService dataService = ctx.getBean(BookService.class);
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
-		orderService.getShelveWarmers(1000);
+		LinkedHashMap<String, Integer> shelveWarmers = orderService.getShelveWarmers(19);
+		System.out.println("\n Shelve Warmers \n");
+		for (Entry<String, Integer> e : shelveWarmers.entrySet()){
+			System.out.println("Isbn: " + e.getKey() + " anzahl " + e.getValue());
+		}
 		
 //		List<Book> allBooks = dataService.getAllBooks(SearchMode.AVAILABLE);
 //		System.out.println("\nAll\n");
