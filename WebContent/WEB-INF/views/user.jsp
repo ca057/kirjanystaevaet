@@ -5,6 +5,20 @@
 
 <section>
 	<h2>Hallo <c:out value="${user.getName()}" /> <c:out value="${user.getSurname()}" />!</h2>
+	<c:choose>
+		<c:when test="{user.getImage() != null}">
+			<img class="profilepicture" src="/meinkonto/profilbild/${user.getUserId()}" alt="Profilbild" />
+		</c:when>
+		<c:otherwise>
+			<form action="meinkonto/bildhochladen" method="POST"
+			enctype="multipart/form-data">
+			<label for="image">Lade ein Profilbild!</label>
+			<input type="file" accept="image/*" name="file" />
+			<button type="submit" id="profilepicture-submit" title="Hochladen">Hochladen</button>
+			<sec:csrfInput/>
+		</form>
+		</c:otherwise>
+	</c:choose>
 	<article>
 		<c:choose>
 			<c:when test="${lastOrders.isEmpty()}">
