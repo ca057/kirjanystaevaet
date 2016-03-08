@@ -33,6 +33,6 @@ public interface OrderService {
 	public List<Book> getOrderedBooksOfUser(int userId) throws DatabaseException;
 	public List<Map.Entry<String, Integer>> getBestsellers() throws DatabaseException;
 	public LinkedHashMap<String, Integer> getBestsellers(int range) throws DatabaseException;
-	public LinkedHashMap<String, Integer> getShelveWarmers(int range) throws DatabaseException;
+	public LinkedHashMap<String, Integer> getShelfWarmers(int range) throws DatabaseException;
 	public double getPriceOfOrder(int orderId) throws DatabaseException;
 }

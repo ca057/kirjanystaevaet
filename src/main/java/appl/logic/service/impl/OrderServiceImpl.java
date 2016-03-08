@@ -107,11 +107,11 @@ public class OrderServiceImpl implements OrderService{
 		//return books;
 	}
 	@Override
-	public LinkedHashMap<String, Integer> getShelveWarmers(int range) throws DatabaseException {
-		List<Book> shelveWarmers = orderDao.getBooksWithoutOrderItem();
+	public LinkedHashMap<String, Integer> getShelfWarmers(int range) throws DatabaseException {
+		List<Book> shelfWarmers = orderDao.getBooksWithoutOrderItem();
 		LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
 		// sortedMap zunächst mit allen Books auffüllen, die gar nicht bestellt wurden
-		for (Book b : shelveWarmers){
+		for (Book b : shelfWarmers){
 			sortedMap.put(b.getIsbn(), 0);
 			range--;
 			if (range < 1){
