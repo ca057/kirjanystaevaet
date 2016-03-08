@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +27,6 @@ import web.controllers.ProcessUpload;
  *
  */
 @Controller
-@RequestMapping(value = "/meinkonto")
 public class UserController {
 
 	@Autowired
@@ -44,7 +42,7 @@ public class UserController {
 	 * @throws ControllerOvertaxedException
 	 *             if the logged in user can not be retrieved
 	 */
-	@RequestMapping(method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+	@RequestMapping(value = "/meinkonto", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String userGet(Model m) throws ControllerOvertaxedException {
 		try {
 			m.addAttribute("user", helper.getUser().get());
@@ -57,8 +55,8 @@ public class UserController {
 		return "user";
 	}
 
-	@RequestMapping("/meinkonto/profilbild/{id}")
-	public @ResponseBody byte[] getPicture(@PathVariable("id") final String id) {
+	@RequestMapping(value = "/meinkonto/profilbild")
+	public @ResponseBody byte[] getPicture() {
 		byte[] imageBytes;
 		try {
 			imageBytes = helper.getUser().get().getImage();
