@@ -37,7 +37,12 @@ Es folgt ein kurzer Überblick über die Arbeit.
 
 \section{Umsetzung des Anforderungskatalogs}
 	\subsection{Datenmanagement}
-	Dies ist ein Dummytext um Commit auszuprobieren. Noch ein Test um GitGui auszuprobieren
+	TODO: Allgemeines, zu Hibernate und weshalb wir das verwendet haben.
+	\subsubsection{Datenbankschema}
+	Überprüfen und Einfügen von Johannes Bild
+	\subsubsection{Architektur der Datenbankfunktionen}
+	Da in diesem Projekt Hibernate verwendet wird, wurde für jede Entität eine Klasse erstellt, die alle Daten anhand von Instanzvariablen enthält. Verknüpfungen zu anderen Entitäten werden hergestellt, indem eine Entität eine Collection einer anderen Entität hält. Über Annotationen werden die Eigenschaften der einzelnen Spalten definiert. So lässt sich beispielsweise über \textit{@Id} angeben, dass es sich bei dieser Variable um den Primärschlüssel handelt. In den meisten Fällen werden die Ids beim Einfügen automatisch generiert. Nur in der Klasse \textit{book} fungiert die ISBN als Schlüssel. Weiterhin werden über die Annotationen die Beziehungen zu anderen Entitäten definiert. Hierbei können ebenfalls verschiedene Einstellungen vorgenommen werden.\\
+	Zum einen werden die \textit{FetchTypes} festgelegt. \textit{LAZY} bedeutet hierbei, dass die verknüpften Entitäten bei einer Datenbankabfrage nicht mitgeladen werden. Das wurde hier bei \textit{books} in \textit{Category} so gehandhabt. Wenn man z.B. nur die Liste aller vorhanden Kategorien aus der Datenbank abfragen will, werden die einzelnen Bücher häufig gar nicht benötigt. Bei dieser Einstellung werden sie nicht mitgeladen und so der Datentransfer klein gehalten. Um die Bücher einer Kategorie zu bekommen, wird eine gesonderte Abfrage gemacht. Anders sieht es bei \textit{authors} in \textit{Book} aus. Diese werden häufig benötigt und da es sich nicht um viele Autor-Datensätze pro Buch handelt, stellt es keinen Nachteil dar, sie sofort aus der Datenbank zu laden. Dafür wird der \textit{FetchType} auf \textit{EAGER} gesetzt. Bei allen Verknüpfungen, die mit \textit{User} und \textit{Order} zusammenhängen verhält es sich ebenso.
 	\subsection{REST-API}
 	Die REST-API liefert Bestandsdaten im JSON-Format über die zum Verkauf stehenden Bücher. Tabelle \ref{rest-api} gibt Auskunft über das verwendete URL-Schema, dabei muss der angegebenen URL \lstinline|http://localhost:8080/kirjanystaevaet/api/v1| vorangestellt werden.
 	
