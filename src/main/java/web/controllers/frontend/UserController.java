@@ -17,7 +17,7 @@ import appl.logic.service.OrderService;
 import exceptions.data.DatabaseException;
 import exceptions.web.ControllerOvertaxedException;
 import web.controllers.ControllerHelper;
-import web.controllers.ProcessUpload;
+import web.controllers.UploadHelper;
 
 /**
  * Controller responsible for displaying the page of a single user.
@@ -31,6 +31,9 @@ public class UserController {
 
 	@Autowired
 	private ControllerHelper helper;
+
+	@Autowired
+	private UploadHelper uploadHelper;
 
 	@Autowired
 	private OrderService orderService;
@@ -55,14 +58,17 @@ public class UserController {
 		return "user";
 	}
 
-	@RequestMapping(value = "/meinkonto/profilbild")
-	public @ResponseBody byte[] getPicture() {
+	@RequestMapping(value = "/meinkonto/profilbild", method = RequestMethod.GET)
+	public @ResponseBody byte[] getPicture(/* HttpServletResponse response */) {
 		byte[] imageBytes;
 		try {
+			// response.setContentType("image/jpeg");
 			imageBytes = helper.getUser().get().getImage();
+			// response.getOutputStream().write(imageBytes);
+			// response.getOutputStream().flush();
 			return imageBytes;
-		} catch (DatabaseException | ControllerOvertaxedException e) {
-			// TODO Handle this
+		} catch (DatabaseException | ControllerOvertaxedException /* | IOException */ e) {
+			System.err.println("Fehler beim Bild holen");
 		}
 		return null;
 	}
@@ -73,7 +79,7 @@ public class UserController {
 			throw new IllegalArgumentException("The uploaded file is not an image");
 		}
 		try {
-			new ProcessUpload().saveProfilePicture(helper.getUserId(), file.getBytes(), true);
+			uploadHelper.saveProfilePicture(helper.getUserId(), file.getBytes(), true);
 		} catch (IOException | ControllerOvertaxedException | DatabaseException e) {
 			// TODO Handle this
 		}

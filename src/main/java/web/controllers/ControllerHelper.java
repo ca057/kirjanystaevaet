@@ -63,4 +63,6 @@ public interface ControllerHelper {
 	 * @throws ControllerOvertaxedException
 	 */
 	public String getCorrectCategoryName(String category) throws ControllerOvertaxedException, DatabaseException;
+
+	void saveProfilePicture(int userId, byte[] inputFile, boolean createThumbnail) throws DatabaseException;
 }

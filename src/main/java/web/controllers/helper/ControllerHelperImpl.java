@@ -52,4 +52,14 @@ public class ControllerHelperImpl implements ControllerHelper {
 				.orElseThrow(() -> new ControllerOvertaxedException("The searched category could not be found."));
 	}
 
+	@Override
+	public void saveProfilePicture(int userId, byte[] inputFile, boolean createThumbnail) throws DatabaseException {
+		if (createThumbnail) {
+			// TODO implement this
+			// result = resize(new File(inputFile), 50, 50);
+		}
+		System.out.println("Service: " + userService);
+		System.out.println("Bild upload: " + userService.updateAccount(userId, inputFile));
+	}
+
 }

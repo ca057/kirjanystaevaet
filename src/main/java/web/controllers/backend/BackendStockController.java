@@ -27,7 +27,7 @@ import appl.enums.Searchfields;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
-import web.controllers.ProcessUpload;
+import web.controllers.helper.ProcessUpload;
 import web.jsonwrappers.AuthorJSONWrapper;
 
 /**

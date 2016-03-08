@@ -1,4 +1,4 @@
-package web.controllers;
+package web.controllers.helper;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -11,15 +11,19 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
+import web.controllers.UploadHelper;
 
-public class ProcessUpload {
+@Component
+public class ProcessUpload implements UploadHelper {
 
 	@Autowired
 	private UserService userService;
 
+	@Override
 	public void saveBookCover(String title, String extension, byte[] inputFile, HttpServletRequest request,
 			boolean createThumbnail) throws IOException {
 		File dir = new File(request.getSession().getServletContext()
@@ -44,13 +48,14 @@ public class ProcessUpload {
 		}
 	}
 
+	@Override
 	public void saveProfilePicture(int userId, byte[] inputFile, boolean createThumbnail) throws DatabaseException {
-		BufferedImage result;
 		if (createThumbnail) {
 			// TODO implement this
 			// result = resize(new File(inputFile), 50, 50);
 		}
-		userService.updateAccount(userId, null, inputFile);
+		System.out.println("Service: " + userService);
+		System.out.println("Bild upload: " + userService.updateAccount(userId, inputFile));
 	}
 
 	public static BufferedImage resize(File inputFile, int scaledWidth, int scaledHeight) throws IOException {
