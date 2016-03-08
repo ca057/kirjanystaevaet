@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import appl.data.items.Book;
+import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
 
@@ -46,7 +47,7 @@ public class HomeController {
 	@RequestMapping(method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String homepage(Model m) {
 		try {
-			List<Book> books = bookService.getAllBooks();
+			List<Book> books = bookService.getAllBooks(SearchMode.AVAILABLE);
 			m.addAttribute("bookOfTheMoment", books.get((int) (Math.random() * books.size())));
 		} catch (DatabaseException ignore) {
 		}
