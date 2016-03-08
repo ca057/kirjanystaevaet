@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import appl.enums.SearchMode;
 import appl.enums.Searchfields;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
@@ -53,7 +54,7 @@ public class BackendStockController {
 		try {
 			m.addAttribute("categories", bookService.getAllCategories());
 			m.addAttribute("authors", bookService.getAllAuthors());
-			m.addAttribute("books", bookService.getAllBooks());
+			m.addAttribute("books", bookService.getAllBooks(SearchMode.ALL));
 		} catch (DatabaseException e) {
 			m.addAttribute("errormsg", e.getMessage());
 			return "backend/stock?error";
