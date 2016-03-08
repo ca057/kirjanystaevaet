@@ -6,8 +6,8 @@
 <section>
 	<h2>Hallo <c:out value="${user.getName()}" /> <c:out value="${user.getSurname()}" />!</h2>
 	<c:choose>
-		<c:when test="{user.getImage() != null}">
-			<img class="profilepicture" src="/meinkonto/profilbild/${user.getUserId()}" alt="Profilbild" />
+		<c:when test="${user.getImage() != null}">
+			<img class="profilepicture" src="/meinkonto/profilbild" alt="Profilbild" />
 		</c:when>
 		<c:otherwise>
 			<form action="meinkonto/bildhochladen" method="POST"

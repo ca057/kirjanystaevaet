@@ -93,6 +93,18 @@ public interface UserService {
 	public boolean updateAccount(int userId, Map<Userfields, String> map, byte[] image) throws DatabaseException;
 
 	/**
+	 * @param userId
+	 *            the id of the user who is to be updated
+	 * @param image
+	 *            the new image of the user as {@code byte[]}
+	 * @return true if successful
+	 * @throws DatabaseException
+	 *             if an error occurs while interacting with the underlying DAO
+	 *             or if the user cannot be found
+	 */
+	public boolean updateAccount(int userId, byte[] image) throws DatabaseException;
+
+	/**
 	 * Deletes the user with an specific {@code id}.
 	 * 
 	 * @param userId
