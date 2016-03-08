@@ -752,7 +752,7 @@ public class BookServiceImpl implements BookService {
 				return Integer.compare(b2.getVisitCount(), b1.getVisitCount());
 			}
 		});
-		for (Book b : bookDao.getMostVisitedBooks(range)) {
+		for (Book b : bookDao.getLeastVisitedBooks(range)) {
 			map.put(b, b.getVisitCount());
 		}
 		return map;
