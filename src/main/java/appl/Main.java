@@ -46,8 +46,8 @@ public class Main {
 //		qf.testDeleteCategoryOfBook(ctx);
 //		qf.testAddCategoryToBook(ctx);
 //		qf.testUpdateBook(ctx);
-		qf.testGetBooksSell(ctx);
-//		qf.testGetShelveWarmers(ctx);
+//		qf.testGetBooksSell(ctx);
+		qf.testGetShelveWarmers(ctx);
 		
 
 		//qf.testUser(ctx);

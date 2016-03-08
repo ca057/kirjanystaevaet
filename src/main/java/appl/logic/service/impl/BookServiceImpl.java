@@ -316,6 +316,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<Author> getAuthorByIsbn(String isbn) throws DatabaseException {
 		try {
+			isbn = onlyLeaveLettersAndNumbers(isbn);			
 			List<Author> authors = authorDao.getAuthorsByIsbn(isbn);
 			return authors;
 
@@ -584,7 +585,7 @@ public class BookServiceImpl implements BookService {
 
 		BookBuilder bb = builderFactory.getBookBuilder();
 		double price = Double.parseDouble(map.get(Searchfields.price));
-
+		//String isbn = only
 		Set<Category> categories = new HashSet<Category>();
 		for (int i : categoryIds) {
 			try {

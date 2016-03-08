@@ -106,13 +106,59 @@ public class OrderServiceImpl implements OrderService{
 //		}
 		//return books;
 	}
+//	@Override
+//	public LinkedHashMap<String, Integer> getShelfWarmers(int range) throws DatabaseException {
+//		List<Book> shelfWarmers = orderDao.getBooksWithoutOrderItem();
+//		LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+//		// sortedMap zunächst mit allen Books auffüllen, die gar nicht bestellt wurden
+//		for (Book b : shelfWarmers){
+//			sortedMap.put(b.getIsbn(), 0);
+//			range--;
+//			if (range < 1){
+//				break;
+//			}
+//		
+//		}
+//		// Wenn vom range noch was übrig ist, mit der umgekehrten BestsellerListe auffüllen
+//		if (range > 0){
+//			List<OrderItem> orderItems = orderItemDao.getAllOrderItems();
+//			Map<String, Integer> tmpMap = new HashMap<String, Integer>();
+//			List<Map.Entry<String, Integer>> bestsellerList = new ArrayList<Map.Entry<String, Integer>>();
+//
+//
+//			for (OrderItem o : orderItems){
+//				if(tmpMap.get(o.getBook().getIsbn())!= null){
+//					tmpMap.put(o.getBook().getIsbn(), tmpMap.get(o.getBook().getIsbn()) + o.getNumberOf());
+//				} else {
+//					tmpMap.put(o.getBook().getIsbn(), o.getNumberOf());
+//				}
+//			}
+//			bestsellerList.addAll(tmpMap.entrySet());
+//			// Sortieren
+//			
+//			Collections.sort(bestsellerList, new Comparator<Map.Entry<String, Integer>>() {
+//				public int compare(Map.Entry<String, Integer> o1,
+//	                                           Map.Entry<String, Integer> o2) {
+//					return (o1.getValue()).compareTo(o2.getValue());
+//				}
+//			});
+//			for (Map.Entry<String, Integer> e : bestsellerList){
+//				sortedMap.put(e.getKey(), e.getValue());
+//				range--;
+//				if (range < 1){
+//					break;
+//				}
+//			}
+//		}
+//		return sortedMap;
+//	}
 	@Override
-	public LinkedHashMap<String, Integer> getShelfWarmers(int range) throws DatabaseException {
+	public LinkedHashMap<Book, Integer> getShelfWarmers(int range) throws DatabaseException {
 		List<Book> shelfWarmers = orderDao.getBooksWithoutOrderItem();
-		LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+		LinkedHashMap<Book, Integer> sortedMap = new LinkedHashMap<Book, Integer>();
 		// sortedMap zunächst mit allen Books auffüllen, die gar nicht bestellt wurden
 		for (Book b : shelfWarmers){
-			sortedMap.put(b.getIsbn(), 0);
+			sortedMap.put(b, 0);
 			range--;
 			if (range < 1){
 				break;
@@ -122,27 +168,27 @@ public class OrderServiceImpl implements OrderService{
 		// Wenn vom range noch was übrig ist, mit der umgekehrten BestsellerListe auffüllen
 		if (range > 0){
 			List<OrderItem> orderItems = orderItemDao.getAllOrderItems();
-			Map<String, Integer> tmpMap = new HashMap<String, Integer>();
-			List<Map.Entry<String, Integer>> bestsellerList = new ArrayList<Map.Entry<String, Integer>>();
+			Map<Book, Integer> tmpMap = new HashMap<Book, Integer>();
+			List<Map.Entry<Book, Integer>> bestsellerList = new ArrayList<Map.Entry<Book, Integer>>();
 
 
 			for (OrderItem o : orderItems){
-				if(tmpMap.get(o.getBook().getIsbn())!= null){
-					tmpMap.put(o.getBook().getIsbn(), tmpMap.get(o.getBook().getIsbn()) + o.getNumberOf());
+				if(tmpMap.get(o.getBook())!= null){
+					tmpMap.put(o.getBook(), tmpMap.get(o.getBook()) + o.getNumberOf());
 				} else {
-					tmpMap.put(o.getBook().getIsbn(), o.getNumberOf());
+					tmpMap.put(o.getBook(), o.getNumberOf());
 				}
 			}
 			bestsellerList.addAll(tmpMap.entrySet());
 			// Sortieren
 			
-			Collections.sort(bestsellerList, new Comparator<Map.Entry<String, Integer>>() {
-				public int compare(Map.Entry<String, Integer> o1,
-	                                           Map.Entry<String, Integer> o2) {
+			Collections.sort(bestsellerList, new Comparator<Map.Entry<Book, Integer>>() {
+				public int compare(Map.Entry<Book, Integer> o1,
+	                                           Map.Entry<Book, Integer> o2) {
 					return (o1.getValue()).compareTo(o2.getValue());
 				}
 			});
-			for (Map.Entry<String, Integer> e : bestsellerList){
+			for (Map.Entry<Book, Integer> e : bestsellerList){
 				sortedMap.put(e.getKey(), e.getValue());
 				range--;
 				if (range < 1){
