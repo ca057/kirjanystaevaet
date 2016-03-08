@@ -228,7 +228,8 @@ public class OrderServiceImpl implements OrderService{
 		Set<OrderItem> orderItems = order.getOrderItems();
 		double price = 0.0;
 		for (OrderItem o : orderItems){
-			price += o.getPrice();
+			System.out.println(o.toString());
+			price = price + (o.getPrice()) * o.getNumberOf();
 		}
 		return price;
 	}
