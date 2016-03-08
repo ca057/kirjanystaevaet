@@ -11,6 +11,7 @@ import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
 import exceptions.web.ControllerOvertaxedException;
+import web.controllers.ControllerHelper;
 
 /**
  * Controller for the route to the categories.
@@ -28,6 +29,12 @@ public class CategoriesController {
 	 */
 	public void setService(BookService bookService) {
 		this.bookService = bookService;
+	}
+
+	private ControllerHelper helper;
+
+	public void setControllerHelper(ControllerHelper helper) {
+		this.helper = helper;
 	}
 
 	/**
@@ -69,11 +76,7 @@ public class CategoriesController {
 	@RequestMapping(value = "/kategorie/{category}", method = RequestMethod.GET)
 	public String getCategory(@PathVariable("category") String category, Model m) {
 		try {
-			m.addAttribute("name",
-					bookService.getAllCategoryNames().stream().filter(
-							c -> c.toUpperCase().equals(category.toUpperCase())).findFirst()
-					.orElseThrow(() -> new ControllerOvertaxedException("The searched category could not be found.")));
-			// TODO change method for querying book
+			m.addAttribute("name", helper.getCorrectCategoryName(category));
 			m.addAttribute("books", bookService.getBooksByCategory(category, SearchMode.AVAILABLE));
 			return "categories";
 		} catch (ControllerOvertaxedException | DatabaseException e) {

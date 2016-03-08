@@ -16,6 +16,7 @@ import appl.data.items.Book;
 import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
+import web.controllers.ControllerHelper;
 import web.jsonwrappers.BookJSONWrapper;
 
 /**
@@ -32,6 +33,13 @@ public class RestApiController {
 	@Autowired
 	public void setBookService(BookService bookService) {
 		this.bookService = bookService;
+	}
+
+	private ControllerHelper helper;
+
+	@Autowired
+	public void setControllerHelper(ControllerHelper helper) {
+		this.helper = helper;
 	}
 
 	@RequestMapping(value = "/api/v1/books", produces = "application/json", method = RequestMethod.GET)
@@ -54,8 +62,7 @@ public class RestApiController {
 			throw new IllegalArgumentException("The passed parameter is null or an empty string.");
 		}
 		try {
-			if (bookService.getAllCategoryNames().stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
-					.contains(param.toUpperCase())) {
+			if (helper.isExistingCategory(param)) {
 				return getBooksByCategory(param, limit);
 			} else {
 				return getBookByIsbn(param);
