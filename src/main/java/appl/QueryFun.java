@@ -313,12 +313,13 @@ public class QueryFun {
 
 		Calendar cal2 = Calendar.getInstance();
 		int orderId2 = orderService.createOrder(isbns2, 1, cal2);
+		System.out.println("Price of Order: " + orderService.getPriceOfOrder(orderId2));
 		//System.out.println("OrderId " + orderId2 + " ");
-		List<Book> orderedBooks = orderService.getOrderedBooksOfUser(1);
-		System.out.println("\nOrdered Books of User 1\n");
-		for (Book b : orderedBooks){
-			System.out.println(b.toString());
-		}
+//		List<Book> orderedBooks = orderService.getOrderedBooksOfUser(1);
+//		System.out.println("\nOrdered Books of User 1\n");
+//		for (Book b : orderedBooks){
+//			System.out.println(b.toString());
+//		}
 		//Set<Orderx> userOrders = userService.findByID(1).get().getOrders();
 //		System.out.println("\n\nGet Order of user\nSize " + userOrders.size() + "\n");
 //		for (Orderx o : userOrders) {

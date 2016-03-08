@@ -34,4 +34,5 @@ public interface OrderService {
 	public List<Map.Entry<String, Integer>> getBestsellers() throws DatabaseException;
 	public LinkedHashMap<String, Integer> getBestsellers(int range) throws DatabaseException;
 	public LinkedHashMap<String, Integer> getShelveWarmers(int range) throws DatabaseException;
+	public double getPriceOfOrder(int orderId) throws DatabaseException;
 }

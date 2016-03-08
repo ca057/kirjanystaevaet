@@ -222,6 +222,16 @@ public class OrderServiceImpl implements OrderService{
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+	@Override
+	public double getPriceOfOrder(int orderId) throws DatabaseException {
+		Orderx order = orderDao.getOrderByOrderId(orderId);
+		Set<OrderItem> orderItems = order.getOrderItems();
+		double price = 0.0;
+		for (OrderItem o : orderItems){
+			price += o.getPrice();
+		}
+		return price;
+	}
 	
 	
 	
