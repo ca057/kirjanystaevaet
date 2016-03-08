@@ -1,5 +1,6 @@
 package web.controllers.backend;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,11 +12,8 @@ import appl.logic.service.DataKraken;
 @RequestMapping(value = "/backend/nutzungsstatistiken")
 public class BackendUsageController {
 
+	@Autowired
 	private DataKraken dataKraken;
-
-	public void summoningTheKraken(DataKraken dataKraken) {
-		this.dataKraken = dataKraken;
-	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getUsage(Model m) {
