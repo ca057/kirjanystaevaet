@@ -5,7 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import appl.data.items.User;
-import exceptions.controller.ControllerOvertaxedException;
+import exceptions.web.ControllerOvertaxedException;
 import web.controllers.ControllerHelper;
 
 @Component

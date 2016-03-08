@@ -1,6 +1,6 @@
 package web.controllers;
 
-import exceptions.controller.ControllerOvertaxedException;
+import exceptions.web.ControllerOvertaxedException;
 
 /**
  * Simple bean which has supporting methods for the controllers to handle daily

@@ -21,8 +21,8 @@ import appl.data.items.User;
 import appl.logic.service.BookService;
 import appl.logic.service.OrderService;
 import appl.logic.service.UserService;
-import exceptions.controller.ControllerOvertaxedException;
 import exceptions.data.DatabaseException;
+import exceptions.web.ControllerOvertaxedException;
 
 @Controller
 public class CartController {

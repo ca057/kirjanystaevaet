@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import appl.logic.service.OrderService;
-import exceptions.controller.ControllerOvertaxedException;
 import exceptions.data.DatabaseException;
+import exceptions.web.ControllerOvertaxedException;
 import web.controllers.ControllerHelper;
 
 /**

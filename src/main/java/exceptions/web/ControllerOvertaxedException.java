@@ -1,4 +1,4 @@
-package exceptions.controller;
+package exceptions.web;
 
 public class ControllerOvertaxedException extends Exception {
 
