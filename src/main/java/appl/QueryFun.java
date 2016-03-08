@@ -346,10 +346,10 @@ public class QueryFun {
 		UserService userService = ctx.getBean(UserService.class);
 		
 		//List<Map.Entry<String, Integer>> bestseller = orderService.getBestsellers(2);
-		LinkedHashMap<String, Integer> bestseller = orderService.getBestsellers(1);
+		LinkedHashMap<Book, Integer> bestseller = orderService.getBestsellers(3);
 		System.out.println("\nBestsellers\n");
-		for (Map.Entry<String, Integer> m : bestseller.entrySet()){
-			System.out.println(m.getKey() + " " + m.getValue());
+		for (Map.Entry<Book, Integer> m : bestseller.entrySet()){
+			System.out.println(m.getKey().getTitle() + " " + m.getValue());
 		}
 	}
 	
