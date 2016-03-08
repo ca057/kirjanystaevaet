@@ -3,8 +3,13 @@ package web.controllers.frontend;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,15 +64,18 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/meinkonto/profilbild", method = RequestMethod.GET)
-	public @ResponseBody byte[] getPicture(/* HttpServletResponse response */) {
+	public @ResponseBody ResponseEntity<byte[]> getPicture(HttpServletResponse response) {
 		byte[] imageBytes;
 		try {
-			// response.setContentType("image/jpeg");
+			response.setContentType("image/jpeg");
 			imageBytes = helper.getUser().get().getImage();
-			// response.getOutputStream().write(imageBytes);
-			// response.getOutputStream().flush();
-			return imageBytes;
-		} catch (DatabaseException | ControllerOvertaxedException /* | IOException */ e) {
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.IMAGE_PNG);
+			response.getOutputStream().write(imageBytes);
+			response.getOutputStream().flush();
+			// return imageBytes;
+			return new ResponseEntity<byte[]>(imageBytes, headers, HttpStatus.CREATED);
+		} catch (DatabaseException | ControllerOvertaxedException /* | IOException */ | IOException e) {
 			System.err.println("Fehler beim Bild holen");
 		}
 		return null;

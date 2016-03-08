@@ -1,13 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <section>
 	<h2>Hallo <c:out value="${user.getName()}" /> <c:out value="${user.getSurname()}" />!</h2>
 	<c:choose>
 		<c:when test="${user.getImage() != null}">
-			<img class="profilepicture" src="/meinkonto/profilbild" alt="Profilbild" />
+			<img class="profilepicture" src=<s:url value='/meinkonto/profilbild'/> alt="Profilbild" width=30%/>
 		</c:when>
 		<c:otherwise>
 			<form action="meinkonto/bildhochladen" method="POST"
