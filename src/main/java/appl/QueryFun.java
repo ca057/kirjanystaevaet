@@ -447,10 +447,10 @@ public class QueryFun {
 		BookService dataService = ctx.getBean(BookService.class);
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
-		LinkedHashMap<String, Integer> shelveWarmers = orderService.getShelfWarmers(19);
+		LinkedHashMap<Book, Integer> shelveWarmers = orderService.getShelfWarmers(19);
 		System.out.println("\n Shelve Warmers \n");
-		for (Entry<String, Integer> e : shelveWarmers.entrySet()){
-			System.out.println("Isbn: " + e.getKey() + " anzahl " + e.getValue());
+		for (Entry<Book, Integer> e : shelveWarmers.entrySet()){
+			System.out.println("Isbn: " + e.getKey().getIsbn() + " anzahl " + e.getValue());
 		}
 		
 //		List<Book> allBooks = dataService.getAllBooks(SearchMode.AVAILABLE);

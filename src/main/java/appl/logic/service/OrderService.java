@@ -35,6 +35,7 @@ public interface OrderService {
 	//public LinkedHashMap<String, Integer> getBestsellers(int range) throws DatabaseException;
 	public LinkedHashMap<Book, Integer> getBestsellers(int range) throws DatabaseException;
 
-	public LinkedHashMap<String, Integer> getShelfWarmers(int range) throws DatabaseException;
+	//public LinkedHashMap<String, Integer> getShelfWarmers(int range) throws DatabaseException;
+	public LinkedHashMap<Book, Integer> getShelfWarmers(int range) throws DatabaseException;
 	public double getPriceOfOrder(int orderId) throws DatabaseException;
 }
