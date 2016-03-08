@@ -21,12 +21,8 @@ import web.jsonwrappers.UserJSONWrapper;
 @Controller
 public class BackendUsersController {
 
-	private UserService userService;
-
 	@Autowired
-	private void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+	private UserService userService;
 
 	@RequestMapping(value = "/backend/nutzerinnen", method = RequestMethod.GET)
 	public String getUsers(Model m) {

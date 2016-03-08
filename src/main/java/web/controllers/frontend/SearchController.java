@@ -31,10 +31,6 @@ public class SearchController {
 	@Autowired
 	private BookService bookService;
 
-	public void setBookService(BookService bookService) {
-		this.bookService = bookService;
-	}
-
 	/**
 	 * Handles a GET request with the search terms as parameters. The results
 	 * will be added to the {@link Model} as list, the search terms will be

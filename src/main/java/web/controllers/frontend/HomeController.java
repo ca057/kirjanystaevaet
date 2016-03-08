@@ -28,15 +28,6 @@ public class HomeController {
 	private BookService bookService;
 
 	/**
-	 * Setter injection for the {@link CategoryService} bean.
-	 * 
-	 * @param bookService
-	 */
-	public void setService(BookService bookService) {
-		this.bookService = bookService;
-	}
-
-	/**
 	 * Returns the view to display the homepage. A random book of the day is
 	 * added to the model. If an exception occurs, it will be ignored.
 	 * 

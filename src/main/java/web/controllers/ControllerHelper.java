@@ -39,4 +39,28 @@ public interface ControllerHelper {
 	 *             {@code Authentication}
 	 */
 	public Optional<User> getUser() throws DatabaseException, ControllerOvertaxedException;
+
+	/**
+	 * Checks if a requested category is a existing one. The formatting of the
+	 * passed category does not matter.
+	 * 
+	 * @param category
+	 *            the category as {@link String}
+	 * @return {@code true} it it exists, {@code false} otherwise
+	 * @throws DatabaseException
+	 */
+	public boolean isExistingCategory(String category) throws DatabaseException;
+
+	/**
+	 * As a category in the URL can be wrong formatted (MYSQL instead of MySQL),
+	 * this method returns the correct formatted name, e.g. for displaying it to
+	 * the user.
+	 * 
+	 * @param category
+	 *            the category as {@link String} to convert
+	 * @return the correct formatted category name as {@link String}
+	 * @throws DatabaseException
+	 * @throws ControllerOvertaxedException
+	 */
+	public String getCorrectCategoryName(String category) throws ControllerOvertaxedException, DatabaseException;
 }

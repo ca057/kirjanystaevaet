@@ -39,18 +39,6 @@ public class CartController {
 	@Autowired
 	private Cart cart;
 
-	public void setCart(Cart cart) {
-		this.cart = cart;
-	}
-
-	public void setBookService(BookService bookService) {
-		this.bookService = bookService;
-	}
-
-	// public void setOrderService(OrderService orderService) {
-	// this.setOrderService = orderService;
-	// }
-
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.POST)
 	public String addToCart(@RequestParam(value = "isbn") String isbn) {
 		System.out.println(isbn);

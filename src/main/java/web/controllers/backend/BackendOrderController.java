@@ -12,12 +12,8 @@ import exceptions.data.DatabaseException;
 @Controller
 public class BackendOrderController {
 
-	private OrderService orderService;
-
 	@Autowired
-	public void setOrderService(OrderService orderService) {
-		this.orderService = orderService;
-	}
+	private OrderService orderService;
 
 	@RequestMapping(value = "/backend/bestellungen", method = RequestMethod.GET)
 	public String getBackend(Model m) {

@@ -1,6 +1,5 @@
 package web.controllers.backend;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +13,6 @@ public class BackendUsageController {
 
 	private DataKraken dataKraken;
 
-	@Autowired
 	public void summoningTheKraken(DataKraken dataKraken) {
 		this.dataKraken = dataKraken;
 	}
