@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.data.items.Book;
+import appl.enums.SearchMode;
 import appl.enums.Searchfields;
 import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
@@ -114,6 +115,6 @@ public class SearchController {
 			searchMap.put(Searchfields.categoryName, category.trim());
 			queryTerm += " Kategorie: " + category;
 		}
-		return bookService.getBooksByMetadata(searchMap);
+		return bookService.getBooksByMetdata(searchMap, SearchMode.AVAILABLE);
 	}
 }

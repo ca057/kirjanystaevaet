@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import appl.data.items.Book;
+import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
 
@@ -59,7 +60,7 @@ public class SingleBookController {
 	public String getBookByIsbn(@PathVariable("isbn") String isbn, Model m) {
 		if (isbn != null && !isbn.isEmpty()) {
 			try {
-				Book book = bookService.getBookByIsbn(isbn);
+				Book book = bookService.getBookByIsbn(isbn, SearchMode.AVAILABLE);
 				if (book.getStock() > 0) {
 					bookService.increaseVisitCount(isbn, 1);
 					m.addAttribute("book", book);
