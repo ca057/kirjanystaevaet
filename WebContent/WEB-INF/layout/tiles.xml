@@ -86,4 +86,8 @@
 	<definition name="error" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/error/error.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="error/404" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/error/404.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>
