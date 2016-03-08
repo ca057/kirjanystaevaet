@@ -39,7 +39,7 @@ public class BookDAOImpl implements BookDAO {
 		}
 		Session s = getSession();
 		Criteria cr = s.createCriteria(Book.class);
-		// cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return cr;
 		// return cr.createAlias("categories", "c").createAlias("authors", "a");
 	}
