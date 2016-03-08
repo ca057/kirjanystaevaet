@@ -585,7 +585,7 @@ public class BookServiceImpl implements BookService {
 
 		BookBuilder bb = builderFactory.getBookBuilder();
 		double price = Double.parseDouble(map.get(Searchfields.price));
-		//String isbn = only
+		//String isbn = onlyLeaveLettersAndNumbers(m)
 		Set<Category> categories = new HashSet<Category>();
 		for (int i : categoryIds) {
 			try {
