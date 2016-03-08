@@ -142,7 +142,7 @@ public class QueryFun {
 			bookMap.put(Searchfields.price, "34.56");
 			bookMap.put(Searchfields.isbn, "0101010101");
 			bookMap.put(Searchfields.pages, "1234");
-			bookMap.put(Searchfields.stock, "8");
+			bookMap.put(Searchfields.stock, "0");
 
 			try {
 				int categoryId = service.insertCategory("Children's Fantasy");
@@ -433,11 +433,14 @@ public class QueryFun {
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
 		
-		List<Book> allBooks = dataService.getAllBooks(SearchMode.AVAILABLE);
+		List<Book> allBooks = dataService.getAllBooks(SearchMode.ALL);
 		System.out.println("\nAll\n");
 		for (Book b : allBooks){
 			System.out.println(b.toString());
 		}
+		
+		Book book = dataService.getBookByIsbn("0101010101", SearchMode.AVAILABLE);
+		System.out.println(book.toString());
 	}
 	
 	public void testGetShelveWarmers(ApplicationContext ctx) throws DatabaseException{

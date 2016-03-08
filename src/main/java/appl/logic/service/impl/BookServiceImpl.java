@@ -438,6 +438,31 @@ public class BookServiceImpl implements BookService {
 		 * }
 		 */
 	}
+	@Override
+	public Book getBookByIsbn(String isbn, SearchMode mode) throws DatabaseException {
+		isbn = onlyLeaveLettersAndNumbers(isbn);
+		Book book = getBookByIsbn(isbn);
+		switch (mode){
+			case ALL:
+				break;
+			case SELL:
+				if (book.getStock() < 0){
+					throw new DatabaseException(ErrorMessageHelper.bookNotSold(isbn));
+				}
+				break;
+				
+			case AVAILABLE: 
+				if (book.getStock() == 0){
+					throw new DatabaseException(ErrorMessageHelper.bookNotAvailable(isbn));
+				} else if (book.getStock() < 0){
+					throw new DatabaseException(ErrorMessageHelper.bookNotSold(isbn));
+				}
+				break;
+				
+		}
+		return book;
+		
+	}
 
 	@Override
 	public List<Book> getBooksByOpenSearch(String searchTerm) {
@@ -770,6 +795,8 @@ public class BookServiceImpl implements BookService {
 		}
 		return map;
 	}
+
+
 
 	
 
