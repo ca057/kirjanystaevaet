@@ -146,7 +146,7 @@ public interface UserService {
 	 * @throws DatabaseException
 	 *             if an error occurs while interacting with the underlying DAO
 	 */
-	public int getNumberOf(UserRoles role) throws DatabaseException;
+	public int getNumberOfAccounts(UserRoles role) throws DatabaseException;
 
 	public int getNumberOfAccounts() throws DatabaseException;
 
