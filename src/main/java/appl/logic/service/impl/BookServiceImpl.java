@@ -585,7 +585,7 @@ public class BookServiceImpl implements BookService {
 
 		BookBuilder bb = builderFactory.getBookBuilder();
 		double price = Double.parseDouble(map.get(Searchfields.price));
-		//String isbn = onlyLeaveLettersAndNumbers(m)
+		String isbn = onlyLeaveLettersAndNumbers(map.get(Searchfields.isbn));
 		Set<Category> categories = new HashSet<Category>();
 		for (int i : categoryIds) {
 			try {
@@ -604,7 +604,7 @@ public class BookServiceImpl implements BookService {
 				throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Author"));
 			}
 		}
-		Book newBook = bb.setAuthors(authors).setIsbn(map.get(Searchfields.isbn)).setTitle(map.get(Searchfields.title))
+		Book newBook = bb.setAuthors(authors).setIsbn(isbn).setTitle(map.get(Searchfields.title))
 				.setDescription(map.get(Searchfields.description)).setPrice(price)
 				.setPublisher(map.get(Searchfields.publisher)).setPubdate(map.get(Searchfields.pubdate))
 				.setEdition(map.get(Searchfields.edition)).setPages(map.get(Searchfields.pages))
@@ -622,7 +622,10 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void updateBook(String isbn, Map<Searchfields, String> data) throws DatabaseException {
+		isbn = onlyLeaveLettersAndNumbers(isbn);
+
 		Book book = bookDao.getBookByIsbn(isbn);
+		
 		for (Searchfields s : data.keySet()) {
 			if (s == Searchfields.isbn || s == Searchfields.edition || s == Searchfields.pubdate
 					|| s == Searchfields.publisher) {
@@ -649,6 +652,8 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void deleteCategoryOfBook(String isbn, int categoryId) throws DatabaseException {
+		isbn = onlyLeaveLettersAndNumbers(isbn);
+
 		Book book = bookDao.getBookByIsbn(isbn);
 		Set<Category> categories = book.getCategories();
 		boolean flag = false;
@@ -675,6 +680,8 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void addCategoryToBook(String isbn, int categoryId) throws DatabaseException {
+		isbn = onlyLeaveLettersAndNumbers(isbn);
+
 		try {
 			Book book = bookDao.getBookByIsbn(isbn);
 			Category toBeAdded = categoryDao.getCategoryById(categoryId);
@@ -687,6 +694,8 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public int updateStock(String isbn, int additional) throws DatabaseException {
+		isbn = onlyLeaveLettersAndNumbers(isbn);
+
 		Book book = bookDao.getBookByIsbn(isbn);
 		int newStock = book.addToStock(additional);
 		bookDao.updateBook(book);
@@ -696,6 +705,8 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void deleteBook(String isbn) throws DatabaseException {
+		isbn = onlyLeaveLettersAndNumbers(isbn);
+
 		try {
 			Book book = getBookByIsbn(isbn);
 			// bookDao.deleteBook(isbn);
@@ -736,6 +747,8 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public int getVisitCount(String isbn) throws DatabaseException {
+		isbn = onlyLeaveLettersAndNumbers(isbn);
+
 		try {
 			Book book = bookDao.getBookByIsbn(isbn);
 			return book.getVisitCount();
@@ -749,6 +762,8 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public int increaseVisitCount(String isbn, int additional) throws DatabaseException {
+		isbn = onlyLeaveLettersAndNumbers(isbn);
+
 		try {
 			Book book = bookDao.getBookByIsbn(isbn);
 			book.setVisitCount(book.getVisitCount() + additional);

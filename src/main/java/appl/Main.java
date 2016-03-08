@@ -32,21 +32,21 @@ public class Main {
 		// new QueryFun().testExceptions(ctx);
 		QueryFun qf = new QueryFun();
 
-		// qf.testCategoryInsert(ctx);
-		// qf.testCategoryDelete(ctx);
+		qf.testCategoryInsert(ctx);
+		qf.testCategoryDelete(ctx);
 
-		// qf.testAuthorInsert(ctx);
-		// qf.testAuthorDelete(ctx);
+		qf.testAuthorInsert(ctx);
+		qf.testAuthorDelete(ctx);
 
 		qf.testInsertBook(ctx);
 //		qf.testDeleteBook(ctx);
-		//qf.testInsertOrder(ctx);
-//		qf.testBestsellers(ctx);
-//		qf.testExistingCategory(ctx);
-//		qf.testDeleteCategoryOfBook(ctx);
-//		qf.testAddCategoryToBook(ctx);
-//		qf.testUpdateBook(ctx);
-//		qf.testGetBooksSell(ctx);
+		qf.testInsertOrder(ctx);
+		qf.testBestsellers(ctx);
+		qf.testExistingCategory(ctx);
+		qf.testDeleteCategoryOfBook(ctx);
+		qf.testAddCategoryToBook(ctx);
+		qf.testUpdateBook(ctx);
+		qf.testGetBooksSell(ctx);
 		qf.testGetShelveWarmers(ctx);
 		
 
