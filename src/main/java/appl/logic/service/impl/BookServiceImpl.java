@@ -114,6 +114,12 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	public String getCategoryName(String name) throws DatabaseException {
+		Category cat = getCategoryByExactName(name);
+		
+		return cat.getCategoryName();
+	}
+	@Override
 	public boolean isExistingCategory(String category) throws DatabaseException {
 		if (categoryDao.getCategoriesByExactName(category) != null){
 			return true;
@@ -764,6 +770,8 @@ public class BookServiceImpl implements BookService {
 		}
 		return map;
 	}
+
+	
 
 
 

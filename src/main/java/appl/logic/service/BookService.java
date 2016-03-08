@@ -27,6 +27,14 @@ public interface BookService {
 	public List<String> getAllCategoryNames() throws DatabaseException;
 
 	public List<Category> getAllCategories() throws DatabaseException;
+	
+	/**
+	 * Gets the exact name of a category in a case-insensitive Search
+	 * @param name
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public String getCategoryName(String name) throws DatabaseException;
 
 	/**
 	 * Search is case insensitive here

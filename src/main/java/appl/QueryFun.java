@@ -395,6 +395,9 @@ public class QueryFun {
 		}else{
 			System.out.println("Something went wrong");
 		}
+		
+		String exactName = dataService.getCategoryName("children's fantasy");
+		System.out.println(exactName + " exactName");
 	}
 	
 	public void testAddCategoryToBook(ApplicationContext ctx) throws DatabaseException{
