@@ -26,6 +26,9 @@ public interface OrderDAO {
 	public int createOrder(Map<String, Integer> isbnsNumberOf, int userId, Calendar cal) throws EntityDoesNotExistException, DatabaseException;
 	
 	public List<Book> getOrderedBook(int userId);
+	
+	
+	public List<Book> getBooksWithoutOrderItem();
 
 
 }

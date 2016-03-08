@@ -146,6 +146,15 @@ public class OrderDAOImpl implements OrderDAO {
 		return (List<Book>) cr.list();
 	}
 
+	@Override
+	public List<Book> getBooksWithoutOrderItem() {
+		Session s = getSession();
+		Criteria cr = s.createCriteria(Book.class, "book");
+		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		cr.add(Restrictions.isEmpty("book.orderItems"));
+		return (List<Book>) cr.list();
+	}
+
 	
 
 }
