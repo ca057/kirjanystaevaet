@@ -1,7 +1,5 @@
 package web.controllers.frontend;
 
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
 import exceptions.web.ControllerOvertaxedException;
@@ -71,12 +70,11 @@ public class CategoriesController {
 	public String getCategory(@PathVariable("category") String category, Model m) {
 		try {
 			m.addAttribute("name",
-					bookService.getAllCategoryNames().stream()
-							.filter(c -> c.toUpperCase().equals(category.toUpperCase())).findFirst().orElseThrow(
-									() -> new ControllerOvertaxedException("The searched category could not be found.")));
+					bookService.getAllCategoryNames().stream().filter(
+							c -> c.toUpperCase().equals(category.toUpperCase())).findFirst()
+					.orElseThrow(() -> new ControllerOvertaxedException("The searched category could not be found.")));
 			// TODO change method for querying book
-			m.addAttribute("books", bookService.getBooksByCategory(category).stream().filter(b -> b.getStock() > 0)
-					.collect(Collectors.toList()));
+			m.addAttribute("books", bookService.getBooksByCategory(category, SearchMode.AVAILABLE));
 			return "categories";
 		} catch (ControllerOvertaxedException | DatabaseException e) {
 			return "redirect:/kategorien";

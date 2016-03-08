@@ -68,7 +68,8 @@ public class SingleBookController {
 					bookService.increaseVisitCount(isbn, 1);
 					m.addAttribute("book", book);
 				} else {
-					m.addAttribute("info", "Das Buch steht derzeit nicht zum Verkauf!");
+					m.addAttribute("info",
+							String.format("Das Buch '%s' steht derzeit nicht zum Verkauf!", book.getTitle()));
 				}
 			} catch (DatabaseException e) {
 				m.addAttribute("error",
