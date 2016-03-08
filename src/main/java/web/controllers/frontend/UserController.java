@@ -1,17 +1,15 @@
 package web.controllers.frontend;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import appl.data.items.User;
 import appl.logic.service.OrderService;
-import appl.logic.service.UserService;
 import exceptions.controller.ControllerOvertaxedException;
 import exceptions.data.DatabaseException;
+import web.controllers.ControllerHelper;
 
 /**
  * Controller responsible for displaying the page of a single user.
@@ -25,10 +23,10 @@ import exceptions.data.DatabaseException;
 public class UserController {
 
 	@Autowired
-	private UserService userService;
+	private ControllerHelper helper;
 
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+	public void setControllerHelper(ControllerHelper helper) {
+		this.helper = helper;
 	}
 
 	@Autowired
@@ -36,10 +34,6 @@ public class UserController {
 
 	public void setOrderService(OrderService orderService) {
 		this.orderService = orderService;
-	}
-
-	private int getUserId() {
-		return ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId();
 	}
 
 	/**
@@ -52,7 +46,7 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String userGet(Model m) throws ControllerOvertaxedException {
 		try {
-			m.addAttribute("lastOrders", orderService.getOrdersByUserid(getUserId()));
+			m.addAttribute("lastOrders", orderService.getOrdersByUserid(helper.getUserId()));
 		} catch (DatabaseException e) {
 			throw new ControllerOvertaxedException(
 					"An unknown error occured which should not happen. This can not be handled by the controller.");
