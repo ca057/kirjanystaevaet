@@ -423,6 +423,19 @@ public class QueryFun {
 			System.out.println(b.toString());
 		}
 	}
+	
+	public void testGetShelveWarmers(ApplicationContext ctx) throws DatabaseException{
+		BookService dataService = ctx.getBean(BookService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
+		UserService userService = ctx.getBean(UserService.class);
+		orderService.getShelveWarmers(1000);
+		
+//		List<Book> allBooks = dataService.getAllBooks(SearchMode.AVAILABLE);
+//		System.out.println("\nAll\n");
+//		for (Book b : allBooks){
+//			System.out.println(b.toString());
+//		}
+	}
 	/*
 	 * 
 	 * public void doSomeOrderTesting(ApplicationContext ctx) { SessionFactory

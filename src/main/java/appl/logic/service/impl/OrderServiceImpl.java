@@ -106,6 +106,15 @@ public class OrderServiceImpl implements OrderService{
 //		}
 		//return books;
 	}
+	@Override
+	public LinkedHashMap<String, Integer> getShelveWarmers(int range) throws DatabaseException {
+		List<Book> shelveWarmers = orderDao.getBooksWithoutOrderItem();
+		System.out.println("ShelveWarmers size " + shelveWarmers.size());
+		for (Book b : shelveWarmers){
+			System.out.println(b.toString());
+		}
+		return null;
+	}
 	
 	@Override
 	public LinkedHashMap<String, Integer> getBestsellers(int range) throws DatabaseException {
@@ -176,6 +185,7 @@ public class OrderServiceImpl implements OrderService{
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+	
 	
 	
 
