@@ -386,7 +386,7 @@ public class QueryFun {
 //		}
 		
 	}
-	public void testExistinCategory(ApplicationContext ctx) throws DatabaseException{
+	public void testExistingCategory(ApplicationContext ctx) throws DatabaseException{
 		BookService dataService = ctx.getBean(BookService.class);
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
