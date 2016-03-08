@@ -16,6 +16,12 @@ public interface CategoryDAO {
 	public List<Category> getCategories();
 
 	public List<Category> getCategoriesByName(String categoryName);
+	/**
+	 * Needs exact Name but is still case-insensitive
+	 * @param name
+	 * @return
+	 * @throws EntityDoesNotExistException
+	 */
 	
 	public Category getCategoriesByExactName(String name) throws EntityDoesNotExistException;
 	

@@ -114,6 +114,13 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	public boolean isExistingCategory(String category) throws DatabaseException {
+		if (categoryDao.getCategoriesByExactName(category) != null){
+			return true;
+		}
+		return false;
+	}
+	@Override
 	public int insertCategory(String name) throws DatabaseException {
 		// Prüfen, ob es Category schon gibt
 
@@ -757,6 +764,8 @@ public class BookServiceImpl implements BookService {
 		}
 		return map;
 	}
+
+
 
 	/*
 	 * @Override public void insertBook(Map<Searchfields, String> map, boolean

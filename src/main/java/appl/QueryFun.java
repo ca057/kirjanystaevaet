@@ -386,6 +386,17 @@ public class QueryFun {
 //		}
 		
 	}
+	public void testExistinCategory(ApplicationContext ctx) throws DatabaseException{
+		BookService dataService = ctx.getBean(BookService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
+		UserService userService = ctx.getBean(UserService.class);
+		if (dataService.isExistingCategory("children's fantasy")){
+			System.out.println("true");
+		}else{
+			System.out.println("Something went wrong");
+		}
+	}
+	
 	public void testAddCategoryToBook(ApplicationContext ctx) throws DatabaseException{
 		BookService dataService = ctx.getBean(BookService.class);
 		OrderService orderService = ctx.getBean(OrderService.class);

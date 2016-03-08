@@ -28,6 +28,13 @@ public interface BookService {
 
 	public List<Category> getAllCategories() throws DatabaseException;
 
+	/**
+	 * Search is case insensitive here
+	 * @param category
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public boolean isExistingCategory(String category) throws DatabaseException;
 	// Insert
 	/**
 	 * 
