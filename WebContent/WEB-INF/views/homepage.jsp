@@ -2,10 +2,13 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <section>
+	<div class="col-md-12">
 	<c:if test="${param.logout != null}">
 	    <p class="good-bye">Danke für deinen Besuch &ndash; bis zum nächsten Mal!</p>
 	</c:if>
-
+	</div>
+	
+	<div class="col-md-12">
 	<c:if test="${bookOfTheMoment != null}">
 		<article>
 			<h3>Unser Buch des Moments</h3>
@@ -17,4 +20,5 @@
 			<p><c:out value="${bookOfTheMoment.getPrice()}" />€ - <a href="<c:url value='/buch/${bookOfTheMoment.getIsbn()}' />" title="zum Buch <c:out value='${bookOfTheMoment.getTitle()}' />">zum Buch</a></p>
 		</article>
 	</c:if>	
+	</div>
 </section>
