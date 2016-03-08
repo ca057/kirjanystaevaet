@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int getNumberOf(UserRoles role) throws DatabaseException {
+	public int getNumberOfAccounts(UserRoles role) throws DatabaseException {
 		Map<Userfields, String> map = new HashMap<Userfields, String>();
 		map.put(Userfields.role, role.toString());
 		return userDao.getUserByMetadata(map).size();

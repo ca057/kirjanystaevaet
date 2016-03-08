@@ -1,7 +1,7 @@
 // TODO add documentation
 
 KY = {
-	// wrapper for performing AJAX-requests
+	// wrapper for performing AJAX-requests 
 	request: function(url) {
 		const ajax = function (type, data) {
 			return $.ajax({

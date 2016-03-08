@@ -3,7 +3,7 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <section>
-	<h2>Hallo <sec:authentication property="principal.username"/>!</h2>
+	<h2>Hallo <c:out value="${admin.getName()}" /> <c:out value="${admin.getSurname()}" />!</h2>
 	<article>
 		<p>Hier kann der Shop verwaltet werden.</p>
 	</article>
