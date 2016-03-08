@@ -27,6 +27,7 @@ import appl.enums.Searchfields;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
+import web.controllers.ProcessUpload;
 import web.jsonwrappers.AuthorJSONWrapper;
 
 /**
@@ -194,8 +195,8 @@ public class BackendStockController {
 
 		try {
 			bookService.insertBook(book, authorIds, categoryIds);
-			new ProcessUpload().saveImage(isbn, file.getOriginalFilename().split("\\.")[1], file.getBytes(), request,
-					false);
+			new ProcessUpload().saveBookCover(isbn, file.getOriginalFilename().split("\\.")[1], file.getBytes(),
+					request, false);
 		} catch (DatabaseException | IOException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}

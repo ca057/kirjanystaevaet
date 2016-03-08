@@ -1,10 +1,13 @@
 package conf;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.multipart.MultipartResolver;
@@ -58,6 +61,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		CommonsMultipartResolver res = new CommonsMultipartResolver();
 		res.setMaxUploadSize((long) (5 * Math.pow(2, 20)));
 		return res;
+	}
+
+	@Bean
+	public ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
+		ByteArrayHttpMessageConverter converter = new ByteArrayHttpMessageConverter();
+		ArrayList<MediaType> mediaTypes = new ArrayList<MediaType>();
+		mediaTypes.add(MediaType.IMAGE_GIF);
+		mediaTypes.add(MediaType.IMAGE_JPEG);
+		mediaTypes.add(MediaType.IMAGE_PNG);
+		converter.setSupportedMediaTypes(mediaTypes);
+		return converter;
 	}
 
 	@Override
