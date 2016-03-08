@@ -1,4 +1,4 @@
-package web.controllers;
+package web.controllers.frontend;
 
 import java.util.stream.Collectors;
 
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import appl.logic.service.BookService;
-import exceptions.controller.CategoryNotFoundException;
 import exceptions.data.DatabaseException;
+import exceptions.web.ControllerOvertaxedException;
 
 /**
  * Controller for the route to the categories.
@@ -73,12 +73,12 @@ public class CategoriesController {
 			m.addAttribute("name",
 					bookService.getAllCategoryNames().stream()
 							.filter(c -> c.toUpperCase().equals(category.toUpperCase())).findFirst().orElseThrow(
-									() -> new CategoryNotFoundException("The searched category could not be found.")));
+									() -> new ControllerOvertaxedException("The searched category could not be found.")));
 			// TODO change method for querying book
 			m.addAttribute("books", bookService.getBooksByCategory(category).stream().filter(b -> b.getStock() > 0)
 					.collect(Collectors.toList()));
 			return "categories";
-		} catch (CategoryNotFoundException | DatabaseException e) {
+		} catch (ControllerOvertaxedException | DatabaseException e) {
 			return "redirect:/kategorien";
 		}
 	}

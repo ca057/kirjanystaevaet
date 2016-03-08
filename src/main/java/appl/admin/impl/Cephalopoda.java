@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import appl.admin.DataKraken;
 import appl.data.items.Book;
-import appl.data.items.User;
+import appl.enums.UserRoles;
 import appl.logic.service.BookService;
 import appl.logic.service.OrderService;
 import appl.logic.service.UserService;
@@ -77,10 +77,9 @@ public class Cephalopoda implements DataKraken {
 		} catch (DatabaseException ignore) {
 		}
 		try {
-			List<User> users = userService.getUsers();
-			map.put("amountOfUsers", users.size());
-			map.put("amountOfUsersUSER", (int) users.stream().filter(u -> "USER".equals(u.getRole())).count());
-			map.put("amountOfUsersADMIN", (int) users.stream().filter(u -> "ADMIN".equals(u.getRole())).count());
+			map.put("amountOfUsers", userService.getUsers().size());
+			map.put("amountOfUsersUSER", userService.getNumberOf(UserRoles.USER));
+			map.put("amountOfUsersADMIN", userService.getNumberOf(UserRoles.ADMIN));
 		} catch (DatabaseException ignore) {
 		}
 	}
@@ -112,7 +111,7 @@ public class Cephalopoda implements DataKraken {
 
 	private void computeMostAndLeastVisitedBooks(Map<String, Object> map) {
 		map.put("mostVisitedBooks", bookService.getMostVisitedBooks(5));
-		map.put("leastVisitedBooks", bookService.getMostVisitedBooks(5));
+		map.put("leastVisitedBooks", bookService.getLeastVisitedBooks(5));
 	}
 
 }

@@ -1,6 +1,4 @@
-package web.controllers;
-
-import java.util.stream.Collectors;
+package web.controllers.frontend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,8 +65,8 @@ public class SingleBookController {
 			try {
 				Book book = bookService.getBookByIsbn(isbn);
 				if (book.getStock() > 0) {
+					bookService.increaseVisitCount(isbn, 1);
 					m.addAttribute("book", book);
-					m.addAttribute("authors", book.getAuthors().stream().collect(Collectors.toList()));
 				} else {
 					m.addAttribute("info", "Das Buch steht derzeit nicht zum Verkauf!");
 				}

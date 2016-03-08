@@ -67,7 +67,7 @@
 	</article>
 	<article>
 		<h3>Besuchszahlen</h3>
-		<h4>Die 5 am häufigsten besuchten Bücher</h4>
+		<h4>Die 5 am häufigsten besuchten Bücher (in der Einzelansicht)</h4>
 		<c:choose>
 			<c:when test="${mostVisitedBooks.isEmpty()}">
 				<p>Es liegen leider noch keine Daten vor.</p>
@@ -81,7 +81,7 @@
 			</c:otherwise>
 		</c:choose>
 		
-		<h4>Die 5 am seltensten besuchten Bücher</h4>
+		<h4>Die 5 am seltensten besuchten Bücher (in der Einzelansicht)</h4>
 		<c:choose>
 			<c:when test="${leastVisitedBooks.isEmpty()}">
 				<p>Es liegen leider noch keine Daten vor.</p>

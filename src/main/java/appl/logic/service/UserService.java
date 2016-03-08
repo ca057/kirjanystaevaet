@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.data.items.UserBookStatistic;
+import appl.enums.UserRoles;
 import appl.enums.Userfields;
 import exceptions.data.DatabaseException;
 
@@ -135,6 +136,18 @@ public interface UserService {
 	 *             if an error occurs while interacting with the underlying DAO
 	 */
 	public List<User> getUsers() throws DatabaseException;
+
+	/**
+	 * Counts the accounts with the specified authority. If no authority
+	 * specified, the number of all users is returned.
+	 * 
+	 * @param role
+	 *            the {@link UserRoles}
+	 * @return the amount of {@link User}s with the specified authority.
+	 * @throws DatabaseException
+	 *             if an error occurs while interacting with the underlying DAO
+	 */
+	public int getNumberOf(UserRoles role) throws DatabaseException;
 
 	/**
 	 * Lists the books an user was interested in.
