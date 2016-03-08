@@ -91,12 +91,11 @@ public class Cephalopoda implements DataKraken {
 	}
 
 	private void computeTopSellersAndShelfWarmers(Map<String, Object> map) {
-		// TODO implement me
-		// try {
-		// map.put("topSellers", orderService.getBestsellers(5));
-		// map.put("shelfWarmers", orderService.getShelveWarmers(5));
-		// } catch (DatabaseException ignore) {
-		// }
+		try {
+			map.put("topSellers", orderService.getBestsellers(5));
+			map.put("shelfWarmers", orderService.getShelfWarmers(5));
+		} catch (DatabaseException ignore) {
+		}
 	}
 
 	private void computeMostAndLeastVisitedBooks(Map<String, Object> map) {

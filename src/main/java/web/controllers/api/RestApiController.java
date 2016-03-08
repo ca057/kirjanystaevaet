@@ -54,7 +54,7 @@ public class RestApiController {
 			throw new IllegalArgumentException("The passed parameter is null or an empty string.");
 		}
 		try {
-			if (helper.isExistingCategory(param)) {
+			if (bookService.isExistingCategory(param)) {
 				return getBooksByCategory(param, limit);
 			} else {
 				return getBookByIsbn(param);

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
-import exceptions.web.ControllerOvertaxedException;
 import web.controllers.ControllerHelper;
 
 /**
@@ -64,10 +63,10 @@ public class CategoriesController {
 	@RequestMapping(value = "/kategorie/{category}", method = RequestMethod.GET)
 	public String getCategory(@PathVariable("category") String category, Model m) {
 		try {
-			m.addAttribute("name", helper.getCorrectCategoryName(category));
+			m.addAttribute("name", bookService.getCategoryName(category));
 			m.addAttribute("books", bookService.getBooksByCategory(category, SearchMode.AVAILABLE));
 			return "categories";
-		} catch (ControllerOvertaxedException | DatabaseException e) {
+		} catch (DatabaseException e) {
 			return "redirect:/kategorien";
 		}
 	}
