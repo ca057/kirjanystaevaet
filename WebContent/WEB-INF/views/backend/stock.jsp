@@ -217,10 +217,10 @@
 					<label for="buecher-anlegen-stock">Bestand:</label>
 					<input type="number" min="0" id="buecher-anlegen-stock"
 						name="stock" placeholder="Bestand eingeben" required />
-					
+
 					<label for="buecher-anlegen-cover">Cover:</label>
-					<input type="file" name="file" />
-					
+					<input type="file" accept="image/*" name="file" required/>
+
 					<button type="submit">Buch anlegen</button>
 					<sec:csrfInput />
 				</c:otherwise>

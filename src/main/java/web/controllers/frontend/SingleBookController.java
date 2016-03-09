@@ -1,6 +1,4 @@
-package web.controllers;
-
-import java.util.stream.Collectors;
+package web.controllers.frontend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import appl.data.items.Book;
+import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
 
@@ -24,12 +23,8 @@ import exceptions.data.DatabaseException;
 @Controller
 public class SingleBookController {
 
-	private BookService bookService;
-
 	@Autowired
-	public void setService(BookService bookService) {
-		this.bookService = bookService;
-	}
+	private BookService bookService;
 
 	/**
 	 * The URL should always contain an ISBN-number, so a book can be displayed.
@@ -65,12 +60,13 @@ public class SingleBookController {
 	public String getBookByIsbn(@PathVariable("isbn") String isbn, Model m) {
 		if (isbn != null && !isbn.isEmpty()) {
 			try {
-				Book book = bookService.getBookByIsbn(isbn);
+				Book book = bookService.getBookByIsbn(isbn, SearchMode.AVAILABLE);
 				if (book.getStock() > 0) {
+					bookService.increaseVisitCount(isbn, 1);
 					m.addAttribute("book", book);
-					m.addAttribute("authors", book.getAuthors().stream().collect(Collectors.toList()));
 				} else {
-					m.addAttribute("info", "Das Buch steht derzeit nicht zum Verkauf!");
+					m.addAttribute("info",
+							String.format("Das Buch '%s' steht derzeit nicht zum Verkauf!", book.getTitle()));
 				}
 			} catch (DatabaseException e) {
 				m.addAttribute("error",

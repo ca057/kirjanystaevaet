@@ -16,7 +16,7 @@
 				</c:when>			
 			</c:choose>
 			<p>von
-				<c:set var="delimiter" value="" scope="request"></c:set><c:forEach var="a" items="${authors}">${delimiter}<c:out value="${a.getNameF()}" /> <c:out value="${a.getNameL()}" /><c:set var="delimiter" value=", " scope="request"></c:set></c:forEach>
+				<c:set var="delimiter" value="" scope="request"></c:set><c:forEach var="a" items="${book.getAuthors()}">${delimiter}<c:out value="${a.getNameF()}" /> <c:out value="${a.getNameL()}" /><c:set var="delimiter" value=", " scope="request"></c:set></c:forEach>
 			</p>
 			<img class="book-cover" src="<c:url value="/img/cover/${book.getIsbn()}.jpg"/>" title="<c:out value="Cover des Buchs '${book.getTitle()}'"/>">
 			<h4>Beschreibung</h4>

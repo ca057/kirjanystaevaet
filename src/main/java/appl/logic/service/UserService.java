@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.data.items.UserBookStatistic;
+import appl.enums.UserRoles;
 import appl.enums.Userfields;
 import exceptions.data.DatabaseException;
 
@@ -92,6 +93,18 @@ public interface UserService {
 	public boolean updateAccount(int userId, Map<Userfields, String> map, byte[] image) throws DatabaseException;
 
 	/**
+	 * @param userId
+	 *            the id of the user who is to be updated
+	 * @param image
+	 *            the new image of the user as {@code byte[]}
+	 * @return true if successful
+	 * @throws DatabaseException
+	 *             if an error occurs while interacting with the underlying DAO
+	 *             or if the user cannot be found
+	 */
+	public boolean updateAccount(int userId, byte[] image) throws DatabaseException;
+
+	/**
 	 * Deletes the user with an specific {@code id}.
 	 * 
 	 * @param userId
@@ -135,6 +148,19 @@ public interface UserService {
 	 *             if an error occurs while interacting with the underlying DAO
 	 */
 	public List<User> getUsers() throws DatabaseException;
+
+	/**
+	 * Counts the accounts with the specified authority.
+	 * 
+	 * @param role
+	 *            the {@link UserRoles}
+	 * @return the amount of {@link User}s with the specified authority.
+	 * @throws DatabaseException
+	 *             if an error occurs while interacting with the underlying DAO
+	 */
+	public int getNumberOfAccounts(UserRoles role) throws DatabaseException;
+
+	public int getNumberOfAccounts() throws DatabaseException;
 
 	/**
 	 * Lists the books an user was interested in.

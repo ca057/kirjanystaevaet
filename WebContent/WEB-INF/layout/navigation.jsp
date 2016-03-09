@@ -58,6 +58,7 @@
 				<li><a href="<c:url value='/backend/nutzerinnen#loeschen' />" title="Bestehende Nutzer:in löschen">Löschen</a></li>
 			</ul>
 		</li>
+		<li><a href="<c:url value='/backend/bestellungen' />" title="Bestellungen">Bestellungen</a></li>
 		<li><a href="<c:url value='/backend/nutzungsstatistiken' />" title="Nutzungsstatistiken">Nutzungsstatistiken</a></li>
 		<li><a href="<c:url value='/backend/einstellungen' />" title="Einstellungen">Einstellungen</a></li>
 	</ul>

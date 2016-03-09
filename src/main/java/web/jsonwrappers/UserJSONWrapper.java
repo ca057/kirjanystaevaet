@@ -1,5 +1,7 @@
 package web.jsonwrappers;
 
+import java.io.File;
+
 public class UserJSONWrapper {
 	private String name;
 	private String surname;
@@ -10,6 +12,7 @@ public class UserJSONWrapper {
 	private String plz;
 	private String role;
 	private String id;
+	private File image;
 
 	public UserJSONWrapper() {
 
@@ -87,11 +90,19 @@ public class UserJSONWrapper {
 		this.id = id;
 	}
 
+	public File getImage() {
+		return image;
+	}
+
+	public void setImage(File image) {
+		this.image = image;
+	}
+
 	@Override
 	public String toString() {
 		return "UserJSONWrapper [name=" + name + ", surname=" + surname + ", email=" + email + ", password=" + password
 				+ ", street=" + street + ", streetnumber=" + streetnumber + ", plz=" + plz + ", role=" + role + ", id="
-				+ id + "]";
+				+ id + ", image=" + (image != null) + "]";
 	}
 
 }

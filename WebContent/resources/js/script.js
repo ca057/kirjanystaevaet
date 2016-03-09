@@ -25,7 +25,7 @@ const handle = function () {
 		});
 
 		$("#register-submit").on("click", function (e) {
-			if (!KY.inputsAreNotEmpty(inputs) && $("#email").val().trim().length < 6 && !KY.MAIL.test($("#email").val().trim())) {
+			if (!KY.inputsAreNotEmpty(inputs) && $("#password").val().trim().length < 6 && !KY.MAIL.test($("#email").val().trim())) {
 				console.error('Something with the inputs of adding a user is wrong...');
 				return;
 			}

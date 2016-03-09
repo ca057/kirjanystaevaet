@@ -1,4 +1,4 @@
-package web.controllers;
+package web.controllers.frontend;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,26 +48,6 @@ public class RegisterController {
 
 	@Autowired
 	private DaoAuthenticationProvider authProvider;
-
-	/**
-	 * Setter injection for the {@link UserService}.
-	 * 
-	 * @param userService
-	 *            the {@link UserService} to inject
-	 */
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
-	 * Setter injection for the {@link DaoAuthenticationProvider}.
-	 * 
-	 * @param authProvider
-	 *            the {@link DaoAuthenticationProvider} to inject
-	 */
-	public void setAuthProvider(DaoAuthenticationProvider authProvider) {
-		this.authProvider = authProvider;
-	}
 
 	/**
 	 * Handles a GET request and returns the name of the associated view.

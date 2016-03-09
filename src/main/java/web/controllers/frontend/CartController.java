@@ -1,4 +1,4 @@
-package web.controllers;
+package web.controllers.frontend;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -21,8 +21,8 @@ import appl.data.items.User;
 import appl.logic.service.BookService;
 import appl.logic.service.OrderService;
 import appl.logic.service.UserService;
-import exceptions.controller.ControllerOvertaxedException;
 import exceptions.data.DatabaseException;
+import exceptions.web.ControllerOvertaxedException;
 
 @Controller
 public class CartController {
@@ -38,18 +38,6 @@ public class CartController {
 
 	@Autowired
 	private Cart cart;
-
-	public void setCart(Cart cart) {
-		this.cart = cart;
-	}
-
-	public void setBookService(BookService bookService) {
-		this.bookService = bookService;
-	}
-
-	// public void setOrderService(OrderService orderService) {
-	// this.setOrderService = orderService;
-	// }
 
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.POST)
 	public String addToCart(@RequestParam(value = "isbn") String isbn) {
