@@ -19,6 +19,7 @@ import appl.data.items.Book;
 import appl.data.items.PLZ;
 import appl.data.items.User;
 import appl.data.items.UserBookStatistic;
+import appl.enums.SearchMode;
 import appl.enums.UserRoles;
 import appl.enums.Userfields;
 import appl.logic.service.BookService;
@@ -159,7 +160,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean updateUserBookStatistic(int userId, String isbn, Calendar date) throws DatabaseException {
-		Book book = bookService.getBookByIsbn(isbn);
+		Book book = bookService.getBookByIsbn(isbn, SearchMode.ALL);
 		User user = findByID(userId)
 				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.updateError("UserBookStatistic",
 						String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));

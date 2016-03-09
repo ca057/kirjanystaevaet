@@ -16,7 +16,6 @@ public interface BookDAO {
 
 	public List<Book> getBooksByOpenSearch(String searchTerm);
 
-	public List<Book> getBooksByMetadata(Map<Searchfields, String> map);
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map, SearchMode mode);
 
 	public List<Book> getAllBooks();

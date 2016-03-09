@@ -130,7 +130,7 @@ public abstract class ErrorMessageHelper {
 	}
 
 	public static String mayNotBeUpdated(){
-		return String.format("These fields may not be updated: isbn, edition, pubdate, publisher");
+		return String.format("These fields may not be updated: isbn, edition, pubdate, publisher, title");
 	}
 	
 	public static String bookNotSold(String isbn){

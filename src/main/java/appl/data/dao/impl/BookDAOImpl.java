@@ -135,6 +135,10 @@ public class BookDAOImpl implements BookDAO {
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
 				break;
 			case pubdate:
+				System.out.println("\n\nI am in pubdate\n\nEntry: " + entry.getValue());
+				System.out.println("Key: " + key);
+//				cr.add(Restrictions.ilike(key, "%" + entry.getValue()));
+				cr.add(Restrictions.ilike(key, "%2006%"));
 				// TODO Nur das Jahr
 				// Siehe Issue #13
 				break;
@@ -154,65 +158,7 @@ public class BookDAOImpl implements BookDAO {
 
 	}
 
-	@Override
-	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) {
-		// sessionFactory.getCurrentSession().beginTransaction();
-		Criteria cr = setupAndGetCriteria();
-		cr.createAlias("categories", "c").createAlias("authors", "a");
-		for (Entry<Searchfields, String> entry : map.entrySet()) {
-			String key = entry.getKey().toString();
 
-			switch (entry.getKey()) {
-			case nameF:
-				cr.add(Restrictions.ilike("a." + key, "%" + entry.getValue() + "%"));
-				break;
-			case nameL:
-				cr.add(Restrictions.ilike("a." + key, "%" + entry.getValue() + "%"));
-				break;
-			case title:
-				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
-				break;
-			case isbn:
-				cr.add(Restrictions.eq(key, entry.getValue()));
-				break;
-			case categoryName:
-				cr.add(Restrictions.ilike("c." + key, "%" + entry.getValue() + "%"));
-				break;
-			case authorId:
-				cr.add(Restrictions.eq("a." + key, entry.getValue()));
-				break;
-			case categoryId:
-				cr.add(Restrictions.eq("c." + key, entry.getValue()));
-				break;
-			case description:
-				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
-				break;
-			case price:
-				// TODO
-				// Siehe Issue #14
-				break;
-			case publisher:
-				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
-				break;
-			case pubdate:
-				// TODO Nur das Jahr
-				// Siehe Issue #13
-				break;
-			case edition:
-				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
-				break;
-			case pages:
-				// TODO
-				// Range? Überhaupt in der Suche?
-				break;
-
-			}
-		}
-
-		List<Book> result = cr.list();
-
-		return result;
-	}
 
 	@Override
 	public Book getBookByIsbn(String isbn) throws EntityDoesNotExistException {

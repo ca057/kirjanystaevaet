@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import appl.data.items.Book;
 import appl.data.items.Cart;
 import appl.data.items.User;
+import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import appl.logic.service.OrderService;
 import appl.logic.service.UserService;
@@ -49,7 +50,7 @@ public class CartController {
 		}
 		if (isbn != null && !isbn.isEmpty()) {
 			try {
-				cart.addBook(bookService.getBookByIsbn(isbn));
+				cart.addBook(bookService.getBookByIsbn(isbn, SearchMode.AVAILABLE));
 			} catch (DatabaseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -58,11 +59,12 @@ public class CartController {
 		return "redirect:/warenkorb";
 	}
 
+
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.DELETE)
 	public String deleteFromCart(@RequestParam(value = "isbn") String isbn) {
 		if (isbn != null && !isbn.isEmpty()) {
 			try {
-				cart.deleteBook(bookService.getBookByIsbn(isbn));
+				cart.deleteBook(bookService.getBookByIsbn(isbn, SearchMode.ALL));
 			} catch (DatabaseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -70,6 +72,20 @@ public class CartController {
 		}
 		return "redirect:/warenkorb";
 	}
+
+	// @RequestMapping(value = "/warenkorb", method = RequestMethod.DELETE)
+	// public String deleteFromCart(@RequestParam(value = "isbn") String isbn) {
+	// if (isbn != null && !isbn.isEmpty()) {
+	// try {
+	// cart.deleteBook(bookService.getBookByIsbn(isbn));
+	// } catch (DatabaseException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
+	// return "redirect:/warenkorb";
+	// }
+
 
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.GET)
 	public String getCart(Model m) {
@@ -78,7 +94,7 @@ public class CartController {
 		Set<String> isbns = cart.getBooks().keySet();
 		for (String s : isbns) {
 			try {
-				b = bookService.getBookByIsbn(s);
+				b = bookService.getBookByIsbn(s, SearchMode.ALL);
 			} catch (DatabaseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -91,7 +107,11 @@ public class CartController {
 		}
 
 		m.addAttribute("bookItems", tempBooks);
-		// m.addAttribute("sum", cart.getPrice());
+		try {
+			m.addAttribute("sum", cart.getPrice());
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
 
 		return "cart";
 	}
@@ -124,11 +144,16 @@ public class CartController {
 
 	}
 
-	// @RequestMapping(value = "/bestellung_aufgegeben", method =
-	// RequestMethod.POST)
-	// public String getAdress(Model m) {
-	// return "orderConducted";
-	// }
+	@RequestMapping(value = "/buch_geloescht", method = RequestMethod.POST)
+	public String deleteBook(@RequestParam(value = "isbn") String isbn) {
+		try {
+			cart.deleteBook(isbn);
+		} catch (NoSuchElementException e) {
+			return "redirect:/warenkorb";
+		}
+
+		return "redirect:/warenkorb";
+	}
 
 	private User getUser() throws ControllerOvertaxedException {
 		Authentication a = SecurityContextHolder.getContext().getAuthentication();
