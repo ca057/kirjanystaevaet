@@ -1,4 +1,4 @@
-package web.controllers;
+package web.controllers.frontend;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import appl.data.items.Book;
+import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
 
@@ -27,15 +28,6 @@ public class HomeController {
 	private BookService bookService;
 
 	/**
-	 * Setter injection for the {@link CategoryService} bean.
-	 * 
-	 * @param bookService
-	 */
-	public void setService(BookService bookService) {
-		this.bookService = bookService;
-	}
-
-	/**
 	 * Returns the view to display the homepage. A random book of the day is
 	 * added to the model. If an exception occurs, it will be ignored.
 	 * 
@@ -46,8 +38,8 @@ public class HomeController {
 	@RequestMapping(method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String homepage(Model m) {
 		try {
-			List<Book> books = bookService.getAllBooks();
-			m.addAttribute("bookOfTheDay", books.get((int) (Math.random() * books.size())));
+			List<Book> books = bookService.getAllBooks(SearchMode.AVAILABLE);
+			m.addAttribute("bookOfTheMoment", books.get((int) (Math.random() * books.size())));
 		} catch (DatabaseException ignore) {
 		}
 		return "homepage";

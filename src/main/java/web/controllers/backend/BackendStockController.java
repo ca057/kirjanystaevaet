@@ -1,9 +1,9 @@
 package web.controllers.backend;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -21,13 +21,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import appl.enums.SearchMode;
 import appl.enums.Searchfields;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
+import web.controllers.helper.ProcessUpload;
 import web.jsonwrappers.AuthorJSONWrapper;
 
 /**
@@ -39,12 +40,8 @@ import web.jsonwrappers.AuthorJSONWrapper;
 @Controller
 public class BackendStockController {
 
-	private BookService bookService;
-
 	@Autowired
-	private void setBookService(BookService bookService) {
-		this.bookService = bookService;
-	}
+	public BookService bookService;
 
 	/**
 	 * Handles a simple GET request and returns the name of the backend view for
@@ -57,7 +54,7 @@ public class BackendStockController {
 		try {
 			m.addAttribute("categories", bookService.getAllCategories());
 			m.addAttribute("authors", bookService.getAllAuthors());
-			m.addAttribute("books", bookService.getAllBooks());
+			m.addAttribute("books", bookService.getAllBooks(SearchMode.ALL));
 		} catch (DatabaseException e) {
 			m.addAttribute("errormsg", e.getMessage());
 			return "backend/stock?error";
@@ -166,10 +163,13 @@ public class BackendStockController {
 				|| publisher == null || publisher.isEmpty() || day == null || day.isEmpty() || month == null
 				|| month.isEmpty() || year == null || year.isEmpty() || edition == null || edition.isEmpty()
 				|| pages == null || pages.isEmpty() || authors == null || authors.isEmpty() || stock == null
-				|| stock.isEmpty() || file.isEmpty()) {
+				|| stock.isEmpty() || file == null || file.isEmpty()) {
 			// TODO check if pages, categories and authors only contains
 			// numerical values
 			throw new IllegalArgumentException("One of the passed values for adding a book is null or empty.");
+		}
+		if (!file.getContentType().contains("image")) {
+			throw new IllegalArgumentException("The uploaded file is not an image");
 		}
 		Map<Searchfields, String> book = new HashMap<Searchfields, String>();
 		book.put(Searchfields.title, title);
@@ -190,51 +190,15 @@ public class BackendStockController {
 		Set<Integer> categoryIds = new HashSet<Integer>(1);
 		categories.stream().forEach(id -> categoryIds.add(Integer.parseInt(id)));
 
-		File dir = new File(request.getSession().getServletContext()
-				.getRealPath(File.separator + "resources" + File.separator + "img" + File.separator + "cover"));
-		if (!dir.exists()) {
-			dir.mkdirs();
-		}
-		File serverFile = new File(
-				dir.getAbsolutePath() + File.separator + isbn + "." + file.getOriginalFilename().split("\\.")[1]);
-
-		try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
+		try {
 			bookService.insertBook(book, authorIds, categoryIds);
-			stream.write(file.getBytes());
-			stream.close();
+			new ProcessUpload().saveBookCover(isbn, file.getOriginalFilename().split("\\.")[1], file.getBytes(),
+					request, false);
 		} catch (DatabaseException | IOException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 
 		return "redirect:/backend/bestand";
-	}
-
-	@RequestMapping(value = "/backend/bestand/buecher/upload", method = RequestMethod.POST)
-	public @ResponseBody String uploadFileHandler(@RequestParam("name") String name,
-			@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-
-		if (!file.isEmpty()) {
-			try {
-				byte[] bytes = file.getBytes();
-
-				File dir = new File(
-						request.getSession().getServletContext().getRealPath("/WEB-INF/resources/img/cover"));
-				if (!dir.exists())
-					dir.mkdirs();
-
-				// Create the file on server
-				File serverFile = new File(dir.getAbsolutePath() + File.separator + name);
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-				stream.write(bytes);
-				stream.close();
-
-				return "You successfully uploaded file=" + name;
-			} catch (Exception e) {
-				return "You failed to upload " + name + " => " + e.getMessage();
-			}
-		} else {
-			return "You failed to upload " + name + " because the file was empty.";
-		}
 	}
 
 	/**
@@ -252,16 +216,29 @@ public class BackendStockController {
 	 * @return
 	 */
 	@RequestMapping(value = "/backend/bestand/buecher/delete", method = RequestMethod.POST)
-	public String deleteBook(@RequestParam(value = "isbn") String isbn) {
+	public String deleteBook(@RequestParam(value = "isbn") String isbn, HttpServletRequest request) {
 		if (isbn == null || isbn.isEmpty()) {
 			throw new IllegalArgumentException(
 					"The passed ISBN for the book to delete is either null or an empty string.");
 		}
 		try {
 			bookService.deleteBook(isbn);
-		} catch (DatabaseException e) {
+			deleteImage(
+					new File(request.getSession().getServletContext().getRealPath(
+							File.separator + "resources" + File.separator + "img" + File.separator + "cover")).toPath(),
+					isbn);
+			deleteImage(
+					new File(request.getSession().getServletContext().getRealPath(
+							File.separator + "uploaded" + File.separator + "img" + File.separator + "cover")).toPath(),
+					isbn);
+		} catch (DatabaseException | IOException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 		return "redirect:/backend/bestand";
+	}
+
+	private void deleteImage(Path path, String title) throws IOException {
+		Files.walk(path).parallel().filter(tmpPath -> tmpPath.toString().contains(title))
+				.forEach(tmpPath -> tmpPath.toFile().delete());
 	}
 }

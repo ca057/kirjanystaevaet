@@ -1,7 +1,9 @@
 package appl.admin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +41,8 @@ public class InitializationImpl implements InitializingBean {
 
 	private void createUser() throws DatabaseException {
 		userService.createAccount(getNewUser("user"));
-		userService.createAccount(getNewUser("peter"));
-		userService.createAccount(getNewUser("klaus"));
+		userService.createAccount(getNewUser("philipp"));
+		userService.createAccount(getNewUser("sigmar"));
 		userService.createAccount(getNewUser("fin"));
 		userService.createAccount(getNewUser("lena"));
 		userService.createAccount(getNewUser("martina"));
@@ -48,15 +50,50 @@ public class InitializationImpl implements InitializingBean {
 
 	private Map<Userfields, String> getNewUser(String name) {
 		Map<Userfields, String> data = new HashMap<>();
-		data.put(Userfields.name, name);
-		data.put(Userfields.surname, "Nachname");
+		data.put(Userfields.name, name.substring(0, 1).toUpperCase() + name.substring(1));
+		data.put(Userfields.surname, chooseSurname());
 		data.put(Userfields.email, name + "@ky.de");
-		data.put(Userfields.street, "baker street");
-		data.put(Userfields.streetnumber, "1");
-		data.put(Userfields.plzId, "300");
+		data.put(Userfields.street, chooseStreet());
+		data.put(Userfields.streetnumber, "" + new Random().nextInt(100));
+		data.put(Userfields.plzId, "" + new Random().nextInt(200));
 		data.put(Userfields.password, name);
 		data.put(Userfields.role, UserRoles.USER.toString());
 		return data;
+	}
+
+	private String chooseSurname() {
+		ArrayList<String> list = new ArrayList<String>();
+		list.add("Ost");
+		list.add("Thormann");
+		list.add("Rosenhagen");
+		list.add("Trepesch");
+		list.add("Boosz");
+		list.add("Plank");
+		list.add("Büchner");
+		list.add("Unicorn");
+		list.add("Unicorn");
+		list.add("Arendt");
+		list.add("Brandt");
+		list.add("Liebknecht");
+		list.add("Noske");
+
+		Random generator = new Random();
+		return list.get(generator.nextInt(list.size()));
+	}
+
+	private String chooseStreet() {
+		ArrayList<String> list = new ArrayList<String>();
+		list.add("An der Weberei");
+		list.add("Star Destroyer");
+		list.add("Baker Street");
+		list.add("ISS");
+		list.add("Einhornstraße");
+		list.add("Friedrich-Ebert-Platz");
+		list.add("Platz des Sozialismus");
+		list.add("Scheidemannstraße");
+
+		Random generator = new Random();
+		return list.get(generator.nextInt(list.size()));
 	}
 
 	private void createAdmin() throws DatabaseException {

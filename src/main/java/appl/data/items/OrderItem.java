@@ -1,5 +1,7 @@
 package appl.data.items;
-
+/**
+ * @author Madeleine
+ */
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -89,7 +91,7 @@ public class OrderItem {
 	public String toString(){
 		String s = "OrderItemId=" + orderItemId + " BookTitle=" + book.getTitle() + 
 				" Price at Order=" + price + " number=" + numberOf + " User Name=" + 
-				" orderId=" + order.getId() + 
+				" orderId=" + order.getOrderId() + 
 				order.getUser().getName() + " User Id=" +
 				order.getUser().getUserId();
 		return s;

@@ -1,16 +1,18 @@
 package conf;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -22,13 +24,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("web")
+@ComponentScan({ "web", "exceptions.web" })
 public class WebConfig extends WebMvcConfigurerAdapter {
-
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
-	}
 
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -60,6 +57,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return res;
 	}
 
+	@Bean
+	public ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
+		ByteArrayHttpMessageConverter converter = new ByteArrayHttpMessageConverter();
+		ArrayList<MediaType> mediaTypes = new ArrayList<MediaType>();
+		mediaTypes.add(MediaType.IMAGE_GIF);
+		mediaTypes.add(MediaType.IMAGE_JPEG);
+		mediaTypes.add(MediaType.IMAGE_PNG);
+		converter.setSupportedMediaTypes(mediaTypes);
+		return converter;
+	}
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		if (registry != null) {
@@ -68,7 +76,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 			// registry.addResourceHandler("/resources/js/**").addResourceLocations("/resources/js/").setCachePeriod(3600);
 			registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
 			registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
-			registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/");
+			registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/", "/uploaded/img/");
 		}
 	}
 }

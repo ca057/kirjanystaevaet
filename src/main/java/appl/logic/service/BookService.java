@@ -1,12 +1,16 @@
 package appl.logic.service;
-
+/**
+ * @author Madeleine, Johannes
+ */
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
 
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.enums.SearchMode;
 import appl.enums.Searchfields;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
@@ -23,7 +27,22 @@ public interface BookService {
 	public List<String> getAllCategoryNames() throws DatabaseException;
 
 	public List<Category> getAllCategories() throws DatabaseException;
+	
+	/**
+	 * Gets the exact name of a category in a case-insensitive Search
+	 * @param name
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public String getCategoryName(String name) throws DatabaseException;
 
+	/**
+	 * Search is case insensitive here
+	 * @param category
+	 * @return
+	 * @throws DatabaseException
+	 */
+	public boolean isExistingCategory(String category) throws DatabaseException;
 	// Insert
 	/**
 	 * 
@@ -43,9 +62,9 @@ public interface BookService {
 
 	// Author Methoden
 	// Abfragen
-	
-	public List<Author> getAuthorByIsbn(String isbn)throws DatabaseException;
- 
+
+	public List<Author> getAuthorByIsbn(String isbn) throws DatabaseException;
+
 	public List<Author> getAuthorByExactName(String NameF, String NameL) throws DatabaseException;
 
 	public Author getAuthorById(int id) throws DatabaseException;
@@ -72,7 +91,6 @@ public interface BookService {
 	// Update
 
 	// Delete
-	// TODO Was soll hier angegeben werden?
 	/**
 	 * 
 	 * @param id
@@ -85,15 +103,19 @@ public interface BookService {
 
 	// Abfragen
 	public List<Book> getAllBooks() throws DatabaseException;
+	public List<Book> getAllBooks(SearchMode mode) throws DatabaseException;
+
 
 	public List<Book> getBooksByCategory(String category) throws DatabaseException;
+	public List<Book> getBooksByCategory(String category, SearchMode mode) throws DatabaseException;
 
+	public Book getBookByIsbn(String isbn, SearchMode mode) throws DatabaseException;
 	public Book getBookByIsbn(String isbn) throws DatabaseException;
 
 	public List<Book> getBooksByOpenSearch(String searchTerm);
 
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) throws DatabaseException;
-
+	public List<Book> getBooksByMetdata(Map<Searchfields, String> map, SearchMode mode) throws DatabaseException;
 	// Insert
 	/**
 	 * 
@@ -112,7 +134,15 @@ public interface BookService {
 	// authorIds, Set<Integer> categoryIds)throws IsbnAlreadyExistsException ;
 	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds)
 			throws DatabaseException;
+
 	// Update
+	
+	public void updateBook(String isbn, Map<Searchfields, String> data) throws DatabaseException;
+	
+	public void deleteCategoryOfBook(String isbn, int categoryId) throws DatabaseException;
+	
+	public void addCategoryToBook(String isbn, int categoryId) throws DatabaseException;
+
 
 	// Update Stock
 	/**
@@ -151,5 +181,29 @@ public interface BookService {
 	 *             if an error occurs while interacting with the underlying DAO
 	 */
 	public int increaseVisitCount(String isbn, int additional) throws DatabaseException;
+
+	/**
+	 * Returns a {@link SortedMap} with the most visited {@link Book}s sorted
+	 * descending by their visit count. The number of books can be limited by
+	 * the passed range.
+	 * 
+	 * @param range
+	 *            the amount of books the returned map should contain
+	 * @return the map with the amount of books passed as range sorted
+	 *         descending by their visit count
+	 */
+	public SortedMap<Book, Integer> getMostVisitedBooks(int range);
+
+	/**
+	 * Returns a {@link SortedMap} with the least visited {@link Book}s sorted
+	 * ascending by their visit count. The number of books can be limited by the
+	 * passed range.
+	 * 
+	 * @param range
+	 *            the amount of books the returned map should contain
+	 * @return the map with the amount of books passed as range sorted ascending
+	 *         by their visit count
+	 */
+	public SortedMap<Book, Integer> getLeastVisitedBooks(int range);
 
 }

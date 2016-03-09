@@ -1,5 +1,7 @@
 package appl.data.dao.impl;
-
+/**
+ * @author Madeleine
+ */
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -112,9 +114,9 @@ public class OrderDAOImpl implements OrderDAO {
 				orderItemDao.insert(orderItem);
 				
 				// Stock in Books updaten
-				
 				bookDao.decrementStock(isbn, isbnsNumberOf.get(isbn));
-				
+
+
 			}
 			
 			// Verbindung zwischen User und Order herstellen
@@ -141,6 +143,15 @@ public class OrderDAOImpl implements OrderDAO {
 		cr.createAlias("book.orderItems", "oi").createAlias("oi.order", "o").createAlias("o.user", "u");
 		System.out.println("Created Aliasse\n");
 		cr.add(Restrictions.eq("u.userId", userId));
+		return (List<Book>) cr.list();
+	}
+
+	@Override
+	public List<Book> getBooksWithoutOrderItem() {
+		Session s = getSession();
+		Criteria cr = s.createCriteria(Book.class, "book");
+		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		cr.add(Restrictions.isEmpty("book.orderItems"));
 		return (List<Book>) cr.list();
 	}
 

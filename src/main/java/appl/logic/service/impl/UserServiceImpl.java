@@ -1,6 +1,7 @@
 package appl.logic.service.impl;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean updateAccount(int userId, Map<Userfields, String> data) throws DatabaseException {
-		return updateAccount(userId, data, Optional.empty());
+		return updateAccount(userId, Optional.ofNullable(data), Optional.empty());
 	}
 
 	@Override
@@ -79,10 +80,15 @@ public class UserServiceImpl implements UserService {
 		if (image == null) {
 			throw new IllegalArgumentException(ErrorMessageHelper.nullOrEmptyMessage("image"));
 		}
-		return updateAccount(userId, data, Optional.ofNullable(image));
+		return updateAccount(userId, Optional.ofNullable(data), Optional.ofNullable(image));
 	}
 
-	private boolean updateAccount(int userId, Map<Userfields, String> data, Optional<byte[]> image)
+	@Override
+	public boolean updateAccount(int userId, byte[] image) throws DatabaseException {
+		return updateAccount(userId, Optional.empty(), Optional.ofNullable(image));
+	}
+
+	private boolean updateAccount(int userId, Optional<Map<Userfields, String>> dataOpt, Optional<byte[]> image)
 			throws DatabaseException {
 		User user = findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.removeError("User",
 				String.valueOf(userId), ErrorMessageHelper.entityDoesNotExist("User"))));
@@ -91,14 +97,16 @@ public class UserServiceImpl implements UserService {
 		if (image.isPresent()) {
 			userBuilder.setImage(image.orElse(null));
 		}
-
-		System.out.println("Map-Größe: " + data.size());
-		System.out.println(data.toString());
-		for (Entry<Userfields, String> entry : data.entrySet()) {
-			System.out.println("Update: " + entry.getKey() + ": " + entry.getValue());
-			readData(userBuilder, entry.getKey(), entry.getValue());
+		if (dataOpt.isPresent()) {
+			Map<Userfields, String> data = dataOpt.get();
+			System.out.println("Map-Größe: " + data.size());
+			System.out.println(data.toString());
+			for (Entry<Userfields, String> entry : data.entrySet()) {
+				System.out.println("Update: " + entry.getKey() + ": " + entry.getValue());
+				readData(userBuilder, entry.getKey(), entry.getValue());
+			}
+			System.out.println("Rolle: " + userBuilder.getRole());
 		}
-		System.out.println("Rolle: " + userBuilder.getRole());
 		return userDao.updateUser(userBuilder.createUser());
 	}
 
@@ -130,6 +138,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getUsers() throws DatabaseException {
 		return userDao.getUsers();
+	}
+
+	@Override
+	public int getNumberOfAccounts(UserRoles role) throws DatabaseException {
+		Map<Userfields, String> map = new HashMap<Userfields, String>();
+		map.put(Userfields.role, role.toString());
+		return userDao.getUserByMetadata(map).size();
+	}
+
+	@Override
+	public int getNumberOfAccounts() throws DatabaseException {
+		return userDao.getUsers().size();
 	}
 
 	@Override

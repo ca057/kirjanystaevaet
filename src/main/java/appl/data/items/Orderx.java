@@ -1,5 +1,7 @@
 package appl.data.items;
-
+/**
+ * @author Madeleine
+ */
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,8 +25,7 @@ public class Orderx {
 	private int orderId;
 	private Set<OrderItem> orderItems = new HashSet<OrderItem>();
 	private User user;
-	//private boolean payed; // Brauchen wir das?
-	// Date: Java.utils.Date oder eigene Klasse?
+
 	private Calendar date;
 	
 	// Required Constructor, may be private
@@ -52,7 +53,7 @@ public class Orderx {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "orderId", unique = true, nullable = false)
-	public int getId() {
+	public int getOrderId() {
 		return this.orderId;
 	}
 
@@ -81,8 +82,8 @@ public class Orderx {
 	
 
 
-	private void setId(int OrderId) {
-		this.orderId = OrderId;
+	private void setOrderId(int orderId) {
+		this.orderId = orderId;
 	}
 
 	private void setOrderItems(Set<OrderItem> orderItems) {
@@ -104,14 +105,7 @@ public class Orderx {
 		this.date = date;
 	}
 
-	public double calcPrice() {
-		double price = 0.0;
-		for (OrderItem b : orderItems) {
-			price += b.getPrice();
-		}
-		return price;
 
-	}
 	public String toString(){
 		String s = "OrderId + " +orderId + " UserId" +user.getUserId() + " UserSurName " + user.getSurname() + "\n" + "Amount of Ordered Items " +orderItems.size() + "\n";
 		for (OrderItem a : orderItems){

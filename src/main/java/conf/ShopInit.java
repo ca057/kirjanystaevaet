@@ -1,5 +1,7 @@
 package conf;
 
+import javax.servlet.ServletRegistration;
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class ShopInit extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -12,7 +14,6 @@ public class ShopInit extends AbstractAnnotationConfigDispatcherServletInitializ
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		return new Class<?>[] { RootConfig.class, SecurityConfig.class };
-		//return new Class<?>[] { RootConfig.class};
 	}
 
 	@Override
@@ -20,4 +21,8 @@ public class ShopInit extends AbstractAnnotationConfigDispatcherServletInitializ
 		return new Class<?>[] { WebConfig.class };
 	}
 
+	@Override
+	protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+		registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
+	}
 }

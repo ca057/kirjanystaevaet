@@ -1,6 +1,4 @@
-package web.controllers;
-
-import java.util.stream.Collectors;
+package web.controllers.frontend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,9 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import appl.enums.SearchMode;
 import appl.logic.service.BookService;
-import exceptions.controller.ControllerOvertaxedException;
 import exceptions.data.DatabaseException;
+import web.controllers.ControllerHelper;
 
 /**
  * Controller for the route to the categories.
@@ -22,14 +21,8 @@ public class CategoriesController {
 	@Autowired
 	private BookService bookService;
 
-	/**
-	 * Setter injection for the {@link CategoryService} bean.
-	 * 
-	 * @param bookService
-	 */
-	public void setService(BookService bookService) {
-		this.bookService = bookService;
-	}
+	@Autowired
+	private ControllerHelper helper;
 
 	/**
 	 * Adds a list with all existing categories to the model. If an exception
@@ -70,15 +63,10 @@ public class CategoriesController {
 	@RequestMapping(value = "/kategorie/{category}", method = RequestMethod.GET)
 	public String getCategory(@PathVariable("category") String category, Model m) {
 		try {
-			m.addAttribute("name",
-					bookService.getAllCategoryNames().stream()
-							.filter(c -> c.toUpperCase().equals(category.toUpperCase())).findFirst().orElseThrow(
-									() -> new ControllerOvertaxedException("The searched category could not be found.")));
-			// TODO change method for querying book
-			m.addAttribute("books", bookService.getBooksByCategory(category).stream().filter(b -> b.getStock() > 0)
-					.collect(Collectors.toList()));
+			m.addAttribute("name", bookService.getCategoryName(category));
+			m.addAttribute("books", bookService.getBooksByCategory(category, SearchMode.AVAILABLE));
 			return "categories";
-		} catch (ControllerOvertaxedException | DatabaseException e) {
+		} catch (DatabaseException e) {
 			return "redirect:/kategorien";
 		}
 	}
