@@ -10,7 +10,7 @@
 	<title>WebShop</title>
 
 	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
-	<meta name="viewport" content="initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<link href="<s:url value='/css/bootstrap.min.css'/>" rel="stylesheet">
 	<link rel="stylesheet" href="<s:url value='/css/style.css'/>">
