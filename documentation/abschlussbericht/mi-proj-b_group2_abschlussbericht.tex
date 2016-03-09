@@ -46,7 +46,10 @@ Es folgt ein kurzer Überblick über die Arbeit.
 	Außerdem wird der \texttt{CascadeType} bestimmt. So wird geregelt, dass wenn z.B. das letzte Buch einer Kategorie gelöscht werden sollte, die entsprechende \textit{Category} nicht ebenfalls gelöscht wird, da diese einen hohen Wiederverwendungswert haben. Andererseits würde ein \texttt{Author} eines Buches gelöscht werden, wenn er mit keinem Buch sonst mehr verknüpft ist (allgemein zum Löschen von Büchern siehe \textbf{REF}).
 	\\
 	\\
-	Die Entitäten werden über die \textit{Data Access Objects (DAOs)} abgefragt. Diese sind \textit{Trans\-actio\-nal}. \textbf{Johannes, kannst du mehr dazu sagen?}\\To be continued
+	Die Datenbankzugriffe finden in den \textit{Data Access Objects (DAOs)} statt, die es für jede Entität gibt. Diese sind \textit{Trans\-actio\-nal} \textbf{Johannes, kannst du mehr dazu sagen?} und werden möglichst klein gehalten. Nur in seltenen Fällen enthalten diese Logik. Eine Ausnahme ist die \texttt{createOrder}-Methode im \texttt{OrderDao}, da im Zuge einer Bestellung auch der Bestand angepasst werden muss und Konsistenz sichergestellt sein muss (siehe \textbf{REF}).\\
+	Der Aufruf der \textit{DAOs} erfolgt über die \textit{Services}. Diese enthalten sehr viel mehr Logik und das Exception Handling (siehe \textbf{ref}). An dieser Stelle werden Daten verarbeitet, in eine andere Form gebracht und bei Bedarf sortiert und dann eine Schicht weiter nach oben gegeben. Unter anderem deshalb sind die \textit{Services} sehr viel umfangreicher als die \textit{DAOs}. Außerdem fassen sie mehr zusammen, da beispielsweise der \texttt{DataService} alles Funktionen für die Verarbeitung der Entitäten \texttt{Book}, \texttt{Category} und \texttt{Author} enthält, da diese sehr stark zusammenhänngen. Weiterhin gibt es einen \texttt{OrderService} für die Verwaltung der Entitäten \texttt{Order} und \texttt{OrderItem}. Die Funktionalität, die den \texttt{User} betreffen, befinden sich im \texttt{UserService}. \textbf{Johannes} 
+	
+	To be continued
 	\subsection{REST-API}
 	Die REST-API liefert Bestandsdaten im JSON-Format über die zum Verkauf stehenden Bücher. Tabelle \ref{rest-api} gibt Auskunft über das verwendete URL-Schema, dabei muss der angegebenen URL \lstinline|http://localhost:8080/kirjanystaevaet/api/v1| vorangestellt werden.
 	
