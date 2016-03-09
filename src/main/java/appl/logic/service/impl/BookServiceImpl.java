@@ -400,7 +400,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public Book getBookByIsbn(String isbn, SearchMode mode) throws DatabaseException {
 		isbn = onlyLeaveLettersAndNumbers(isbn);
-		Book book = getBookByIsbn(isbn, mode);
+		Book book = bookDao.getBookByIsbn(isbn);
 		switch (mode){
 			case ALL:
 				break;
