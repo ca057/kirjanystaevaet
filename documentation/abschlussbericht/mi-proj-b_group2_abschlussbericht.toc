@@ -1,18 +1,18 @@
 \select@language {ngerman}
 \contentsline {section}{\numberline {1}Einleitung}{2}{section.1}
-\contentsline {section}{\numberline {2}Systemarchitektur}{2}{section.2}
-\contentsline {section}{\numberline {3}Umsetzung des Anforderungskatalogs}{2}{section.3}
-\contentsline {subsection}{\numberline {3.1}Datenmanagement}{2}{subsection.3.1}
-\contentsline {subsubsection}{\numberline {3.1.1}Datenbankschema}{2}{subsubsection.3.1.1}
-\contentsline {subsubsection}{\numberline {3.1.2}Architektur der Datenbankfunktionen}{2}{subsubsection.3.1.2}
-\contentsline {subsubsection}{\numberline {3.1.3}Einf\"ugen von Daten}{3}{subsubsection.3.1.3}
-\contentsline {subsubsection}{\numberline {3.1.4}L\"oschen von Daten}{3}{subsubsection.3.1.4}
-\contentsline {subsubsection}{\numberline {3.1.5}\"Andern von Daten}{4}{subsubsection.3.1.5}
-\contentsline {subsubsection}{\numberline {3.1.6}Exception Handling}{4}{subsubsection.3.1.6}
-\contentsline {subsection}{\numberline {3.2}REST-API}{4}{subsection.3.2}
-\contentsline {section}{\numberline {4}User Stories}{4}{section.4}
-\contentsline {subsection}{\numberline {4.1}Registrierung und Login}{4}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Buchauswahl und Bestellung}{5}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Administration des Web-Shops}{5}{subsection.4.3}
-\contentsline {section}{\numberline {5}Zusammenarbeit}{5}{section.5}
-\contentsline {section}{\numberline {6}Lessons Learned}{5}{section.6}
+\contentsline {section}{\numberline {2}Systemarchitektur}{3}{section.2}
+\contentsline {section}{\numberline {3}Umsetzung des Anforderungskatalogs}{4}{section.3}
+\contentsline {subsection}{\numberline {3.1}Datenmanagement}{4}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}Datenbankschema}{4}{subsubsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.2}Architektur der Datenbankfunktionen}{4}{subsubsection.3.1.2}
+\contentsline {subsubsection}{\numberline {3.1.3}Einfügen von Daten}{5}{subsubsection.3.1.3}
+\contentsline {subsubsection}{\numberline {3.1.4}Löschen von Daten}{5}{subsubsection.3.1.4}
+\contentsline {subsubsection}{\numberline {3.1.5}Ändern von Daten}{6}{subsubsection.3.1.5}
+\contentsline {subsubsection}{\numberline {3.1.6}Exception Handling}{6}{subsubsection.3.1.6}
+\contentsline {subsection}{\numberline {3.2}REST-API}{6}{subsection.3.2}
+\contentsline {section}{\numberline {4}User Stories}{7}{section.4}
+\contentsline {subsection}{\numberline {4.1}Registrierung und Login}{7}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Buchauswahl und Bestellung}{7}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Administration des Web-Shops}{7}{subsection.4.3}
+\contentsline {section}{\numberline {5}Zusammenarbeit}{8}{section.5}
+\contentsline {section}{\numberline {6}Lessons Learned}{9}{section.6}
