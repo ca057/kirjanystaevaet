@@ -51,16 +51,17 @@ public class Cart {
 	// TODO: adjust getPrice!!!!
 	public double getPrice() throws DatabaseException {
 		Set<String> keys = books.keySet();
+		double sum = 0;
 		for (String s : keys) {
-			return bookService.getBookByIsbn(s).getPrice().sum();
-
+			double singlePrice = bookService.getBookByIsbn(s).getPrice();
+			sum += singlePrice;
 		}
-		return 0;
+		return sum;
 	}
 
 	// Item aus Warenkorb entfernen
 	public void deleteBook(String isbn) {
-		if (isbn == null) {
+		if (isbn == null || isbn.isEmpty()) {
 			throw new IllegalArgumentException("book to remove is null");
 		}
 		books.remove(isbn);
