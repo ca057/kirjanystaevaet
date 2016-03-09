@@ -3,7 +3,6 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <ul class="navigation-content list-inline">
-
 	<c:choose>
 		<c:when test="${navigation != null}">
 			<c:forEach var="nav" items="${navigation}">
@@ -31,7 +30,24 @@
 		</li>
 	</sec:authorize>
 	<sec:authorize access="isAnonymous()">
-		<li class="float-right"><a href="<c:url value='/login'/>" title="In Mein Konto einloggen">Anmelden</a></li>
+		<li class="float-right" id="login-handler"><span>Anmelden</span>
+			<div id="login-popup">
+				<form action="<c:url value="/login" />" method="post">
+					<fieldset>
+						<legend>Login</legend>
+						<c:if test="${param.error != null}">
+						    <p class="error">Ungültiger Benutzername oder Passwort.</p>
+						</c:if>
+						<label for="username">E-Mail</label>
+						<input type="text" id="username" name="username"/>        
+						<label for="password">Passwort</label>
+						<input type="password" id="password" name="password"/>
+						<button type="submit" value="In Mein Konto anmelden">Anmelden</button>
+						<sec:csrfInput/>
+					</fieldset>
+				</form>
+			</div>
+		</li>
 	</sec:authorize>
 </ul>
 
