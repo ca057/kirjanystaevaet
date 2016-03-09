@@ -70,8 +70,8 @@ public class RestApiController {
 	 *            an optional value to limit the number of {@link Book}s
 	 *            returned
 	 * @return a JSON object with all books fitting the parameter and HTTP
-	 *         status 200, status 204 and no result if no books fitting the
-	 *         request were found, no results and status 400 if the limit could
+	 *         status 200, status 204 with result if no books fitting the
+	 *         request were found, status 400 without results if the limit could
 	 *         not be parsed or is less than 0 or status 500 if an error while
 	 *         requesting data occurs
 	 */
@@ -84,56 +84,59 @@ public class RestApiController {
 		try {
 			if (bookService.isExistingCategory(param)) {
 				return getBooksByCategory(param, limit);
-			} else {
-				return getBookByIsbn(param);
 			}
+		} catch (DatabaseException ignore) {
+			// ignore and try as ISBN
+		}
+		return getBookByIsbn(param);
+	}
+
+	/**
+	 * Method for handling a request for all books of a specified category.
+	 * 
+	 * @param category
+	 *            the name of the category
+	 * @param limit
+	 *            an optional limit
+	 * @return the results with status code 200 or an error code without a
+	 *         result
+	 */
+	private ResponseEntity<List<BookJSONWrapper>> getBooksByCategory(String category, String limit) {
+		if (category == null || category.isEmpty() || (limit != null && Long.parseLong(limit) < 0)) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		try {
+			return new ResponseEntity<List<BookJSONWrapper>>(
+					bookService.getBooksByCategory(category, SearchMode.AVAILABLE).stream()
+							.limit((limit == null || limit.isEmpty()) ? Long.MAX_VALUE : Long.parseLong(limit))
+							.map(b -> new BookJSONWrapper(b)).collect(Collectors.toList()),
+					HttpStatus.OK);
 		} catch (DatabaseException e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	/**
-	 * A method for requesting all books of a specified category from the
-	 * underlying service.
-	 * 
-	 * @param category
-	 *            the name category which is requested
-	 * @param limit
-	 *            an optional limit
-	 * @return all books of this category and status 200, if the parameters are
-	 *         not valid no results are returned and an status of 400
-	 * @throws DatabaseException
-	 */
-	private ResponseEntity<List<BookJSONWrapper>> getBooksByCategory(String category, String limit)
-			throws DatabaseException {
-		if (category == null || category.isEmpty() || (limit != null && Long.parseLong(limit) < 0)) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<List<BookJSONWrapper>>(bookService.getBooksByCategory(category, SearchMode.AVAILABLE)
-				.stream().limit((limit == null || limit.isEmpty()) ? Long.MAX_VALUE : Long.parseLong(limit))
-				.map(b -> new BookJSONWrapper(b)).collect(Collectors.toList()), HttpStatus.OK);
-	}
-
-	/**
-	 * A method for requesting a single book by its ISBN from the underlying
-	 * service.
+	 * Method for handling a request for an ISBN
 	 * 
 	 * @param isbn
 	 *            the requested ISBN
-	 * @return the book as JSON and status 200, if the book is not available
-	 *         status 204, if the parameters are not valid no results and an
-	 *         status of 400 are returned
-	 * @throws DatabaseException
+	 * @return the corresponding {@link Book} with status code 200, status code
+	 *         204 without any result if it is not available or an error code
 	 */
 	private ResponseEntity<BookJSONWrapper> getBookByIsbn(String isbn) {
 		if (isbn == null || isbn.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
-			Book book = bookService.getBookByIsbn(isbn, SearchMode.AVAILABLE);
-			return new ResponseEntity<BookJSONWrapper>(new BookJSONWrapper(book), HttpStatus.OK);
+			Book book = bookService.getBookByIsbn(isbn, SearchMode.ALL);
+			if (book.getStock() > 0) {
+				return new ResponseEntity<BookJSONWrapper>(new BookJSONWrapper(book), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
 		} catch (DatabaseException e) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
