@@ -135,10 +135,10 @@ public class BookDAOImpl implements BookDAO {
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
 				break;
 			case pubdate:
-				System.out.println("\n\nI am in pubdate\n\nEntry: " + entry.getValue());
+				System.out.println("\n\nI am in pubdate\n\nEntry:_" + entry.getValue());
 				System.out.println("Key: " + key);
-//				cr.add(Restrictions.ilike(key, "%" + entry.getValue()));
-				cr.add(Restrictions.ilike(key, "%2006%"));
+				cr.add(Restrictions.eq(key, "%" + entry.getValue()));
+//				cr.add(Restrictions.ilike(key, "%2006%"));
 				// TODO Nur das Jahr
 				// Siehe Issue #13
 				break;
@@ -152,6 +152,7 @@ public class BookDAOImpl implements BookDAO {
 
 			}
 		}
+		System.out.println(cr.toString());
 		List<Book> result = cr.list();
 
 		return result;
