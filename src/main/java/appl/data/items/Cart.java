@@ -2,15 +2,22 @@ package appl.data.items;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
+
+import appl.logic.service.BookService;
+import exceptions.data.DatabaseException;
 
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
 @Component
 public class Cart {
 
+	@Autowired
+	private BookService bookService;
 	private Map<String, Integer> books = new HashMap<String, Integer>();
 
 	public void addBook(Book book) {
@@ -42,16 +49,22 @@ public class Cart {
 	// }
 
 	// TODO: adjust getPrice!!!!
-	public double getPrice() {
-		return 0;
+	public double getPrice() throws DatabaseException {
+		Set<String> keys = books.keySet();
+		double sum = 0;
+		for (String s : keys) {
+			double singlePrice = bookService.getBookByIsbn(s).getPrice();
+			sum += singlePrice;
+		}
+		return sum;
 	}
 
 	// Item aus Warenkorb entfernen
-	public void deleteBook(Book book) {
-		if (book == null) {
+	public void deleteBook(String isbn) {
+		if (isbn == null || isbn.isEmpty()) {
 			throw new IllegalArgumentException("book to remove is null");
 		}
-		books.remove(book);
+		books.remove(isbn);
 	}
 
 	// post order
