@@ -132,7 +132,7 @@ public class CartController {
 		} catch (DatabaseException | NoSuchElementException e) {
 			return "redirect:/warenkorb";
 		}
-		cart.deleteBook(b);
+		cart.deleteBook(isbn);
 		return "redirect:/warenkorb";
 	}
 

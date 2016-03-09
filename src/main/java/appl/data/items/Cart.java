@@ -47,11 +47,11 @@ public class Cart {
 	}
 
 	// Item aus Warenkorb entfernen
-	public void deleteBook(Book book) {
-		if (book == null) {
+	public void deleteBook(String isbn) {
+		if (isbn == null) {
 			throw new IllegalArgumentException("book to remove is null");
 		}
-		books.remove(book);
+		books.remove(isbn);
 	}
 
 	// post order
