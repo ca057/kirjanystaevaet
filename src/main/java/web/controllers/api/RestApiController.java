@@ -16,11 +16,11 @@ import appl.data.items.Book;
 import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
-import web.controllers.ControllerHelper;
 import web.jsonwrappers.BookJSONWrapper;
 
 /**
- * Controller manages the API.
+ * Controller manages the API, all results are returned as JSON. Only available
+ * books (stock > 0) will be returned.
  * 
  * @author Christian
  *
@@ -31,12 +31,23 @@ public class RestApiController {
 	@Autowired
 	private BookService bookService;
 
-	@Autowired
-	private ControllerHelper helper;
-
+	/**
+	 * Handles a request for retrieving a list with all books. An optional limit
+	 * for the results can be passed which will get parsed to a {@code long}.
+	 * 
+	 * @param limit
+	 *            an optional value to limit the number of {@link Book}s
+	 *            returned
+	 * @return a JSON object with all books and HTTP status 200, no results and
+	 *         status 400 if the limit could not be parsed or is less than 0 or
+	 *         status 500 if an error while requesting data occurs
+	 */
 	@RequestMapping(value = "/api/v1/books", produces = "application/json", method = RequestMethod.GET)
 	public ResponseEntity<List<BookJSONWrapper>> getAllBooks(
 			@RequestParam(value = "limit", required = false) String limit) {
+		if (limit != null && Long.parseLong(limit) < 0) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		try {
 			List<BookJSONWrapper> allBooks = bookService.getAllBooks(SearchMode.AVAILABLE).stream()
 					.limit((limit == null || limit.isEmpty()) ? Long.MAX_VALUE : Long.parseLong(limit))
@@ -47,11 +58,28 @@ public class RestApiController {
 		}
 	}
 
+	/**
+	 * Handles a more specific request. At the moment two different modes are
+	 * possible: If the last part of the URL is a valid category name, all books
+	 * of this category will get returned, otherwise the parameter will be
+	 * treated as an ISBN number.
+	 * 
+	 * @param param
+	 *            a path variable as parameter to specify the request
+	 * @param limit
+	 *            an optional value to limit the number of {@link Book}s
+	 *            returned
+	 * @return a JSON object with all books fitting the parameter and HTTP
+	 *         status 200, status 204 and no result if no books fitting the
+	 *         request were found, no results and status 400 if the limit could
+	 *         not be parsed or is less than 0 or status 500 if an error while
+	 *         requesting data occurs
+	 */
 	@RequestMapping(value = "/api/v1/books/{param}", produces = "application/json", method = RequestMethod.GET)
 	public ResponseEntity<?> getBooksByParamter(@PathVariable("param") String param,
 			@RequestParam(value = "limit", required = false) String limit) {
-		if (param == null || param.isEmpty()) {
-			throw new IllegalArgumentException("The passed parameter is null or an empty string.");
+		if (param == null || param.isEmpty() || (limit != null && Long.parseLong(limit) < 0)) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
 			if (bookService.isExistingCategory(param)) {
@@ -64,24 +92,47 @@ public class RestApiController {
 		}
 	}
 
+	/**
+	 * A method for requesting all books of a specified category from the
+	 * underlying service.
+	 * 
+	 * @param category
+	 *            the name category which is requested
+	 * @param limit
+	 *            an optional limit
+	 * @return all books of this category and status 200, if the parameters are
+	 *         not valid no results are returned and an status of 400
+	 * @throws DatabaseException
+	 */
 	private ResponseEntity<List<BookJSONWrapper>> getBooksByCategory(String category, String limit)
 			throws DatabaseException {
-		if (category == null || category.isEmpty()) {
-			throw new IllegalArgumentException("The passed category is null or an empty string.");
+		if (category == null || category.isEmpty() || (limit != null && Long.parseLong(limit) < 0)) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<List<BookJSONWrapper>>(bookService.getBooksByCategory(category, SearchMode.AVAILABLE)
 				.stream().limit((limit == null || limit.isEmpty()) ? Long.MAX_VALUE : Long.parseLong(limit))
 				.map(b -> new BookJSONWrapper(b)).collect(Collectors.toList()), HttpStatus.OK);
 	}
 
-	private ResponseEntity<BookJSONWrapper> getBookByIsbn(String isbn) throws DatabaseException {
+	/**
+	 * A method for requesting a single book by its ISBN from the underlying
+	 * service.
+	 * 
+	 * @param isbn
+	 *            the requested ISBN
+	 * @return the book as JSON and status 200, if the book is not available
+	 *         status 204, if the parameters are not valid no results and an
+	 *         status of 400 are returned
+	 * @throws DatabaseException
+	 */
+	private ResponseEntity<BookJSONWrapper> getBookByIsbn(String isbn) {
 		if (isbn == null || isbn.isEmpty()) {
-			throw new IllegalArgumentException("The passed category is null or an empty string.");
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		Book book = bookService.getBookByIsbn(isbn, SearchMode.AVAILABLE);
-		if (book.getStock() > 0) {
+		try {
+			Book book = bookService.getBookByIsbn(isbn, SearchMode.AVAILABLE);
 			return new ResponseEntity<BookJSONWrapper>(new BookJSONWrapper(book), HttpStatus.OK);
-		} else {
+		} catch (DatabaseException e) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 	}
