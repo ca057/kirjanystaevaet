@@ -10,7 +10,7 @@
 		<h2>Versandadresse:</h2>
 		<p><c:out value="${name}"/>&nbsp;<c:out value="${surname}"/></p>
 		<p><c:out value="${street}"/>&nbsp;<c:out value="${streetnumber}"/></p>
-		<p><c:out value="${plz}"/></p>
+		<p><c:out value="${plzid}"/></p>
 	</div>
 	<a href="<c:url value='/'/>" title="Homepage">Zur Startseite</a>
 	<a href="<c:url value='/suche'/>" title="Suche">Zur Suche</a>
