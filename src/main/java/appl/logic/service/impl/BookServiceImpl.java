@@ -399,7 +399,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Book getBookByIsbn(String isbn, SearchMode mode) throws DatabaseException {
-		//isbn = onlyLeaveLettersAndNumbers(isbn);
+		isbn = onlyLeaveLettersAndNumbers(isbn);
 		Book book = bookDao.getBookByIsbn(isbn);
 		switch (mode){
 			case ALL:
@@ -678,7 +678,7 @@ public class BookServiceImpl implements BookService {
 
 	private String onlyLeaveLettersAndNumbers(String s) {
 		// System.out.println(s);
-		//s = s.replaceAll("[^a-zA-Z0-9]", "");
+		s = s.replaceAll("[^a-zA-Z0-9]", "");
 		// System.out.println(s);
 		return s;
 	}
