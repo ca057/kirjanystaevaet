@@ -63,12 +63,9 @@ public class CartController {
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.DELETE)
 	public String deleteFromCart(@RequestParam(value = "isbn") String isbn) {
 		if (isbn != null && !isbn.isEmpty()) {
-			try {
-				cart.deleteBook(bookService.getBookByIsbn(isbn, SearchMode.ALL));
-			} catch (DatabaseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
+				cart.deleteBook(isbn);
+		
 		}
 		return "redirect:/warenkorb";
 	}
