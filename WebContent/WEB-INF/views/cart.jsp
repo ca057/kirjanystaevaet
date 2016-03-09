@@ -20,7 +20,7 @@
 					<p><c:out value="${book.key.getPages()}"/></p>
 					<p><c:out value="${book.key.getPublisher()}"/></p>
 	 				<p>ISBN: <c:out value="${book.key.getIsbn()}"/></p>
-<%-- 					<p>Preis: <c:out value="${book.getPrice()}"/></p> --%>
+					<p>Preis: <c:out value="${book.getPrice()}"/></p>
 
 					<form id="deleteBook" method="post">
 						<button id="deleteButton" name="isbn" value="${book.key.getIsbn()}" type="submit" formaction="<c:url value='/buch_geloescht'/>">aus Warenkorb entfernen</button> 
@@ -29,6 +29,7 @@
 				</c:forEach> 
 			</c:otherwise>
 		</c:choose>
+		<p>Gesamtpreis: <c:out value="${sum}"/></p>
 	
 	<form id="orderForm" method="post">
 		<button id="orderButton" type="submit" formaction="<c:url value='/bestellung_aufgegeben'/>">bestellen</button> 

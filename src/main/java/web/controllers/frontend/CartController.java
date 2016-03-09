@@ -91,7 +91,11 @@ public class CartController {
 		}
 
 		m.addAttribute("bookItems", tempBooks);
-		// m.addAttribute("sum", cart.getPrice());
+		try {
+			m.addAttribute("sum", cart.getPrice());
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
 
 		return "cart";
 	}
