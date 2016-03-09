@@ -26,6 +26,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import web.controllers.HandlerInterceptorImpl;
 
+/**
+ * Configures all web-related settings.
+ * 
+ * @author Christian
+ * @author Johannes
+ * @author Ludwig
+ *
+ */
 @Configuration
 @EnableWebMvc
 @ComponentScan({ "web", "exceptions.web" })
@@ -44,6 +52,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		super.configureMessageConverters(converters);
 	}
 
+	/**
+	 * Creates the {@link TilesConfigurer} needed to configure the views.
+	 * 
+	 * @return the {@link TilesConfigurer}
+	 */
 	@Bean
 	public TilesConfigurer tilesConfigurer() {
 		TilesConfigurer tiles = new TilesConfigurer();
