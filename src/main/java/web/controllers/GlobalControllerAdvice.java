@@ -1,4 +1,4 @@
-package exceptions.web;
+package web.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
-public class GlobalDefaultExceptionHandler {
+public class GlobalControllerAdvice {
 
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	@ExceptionHandler(NoHandlerFoundException.class)

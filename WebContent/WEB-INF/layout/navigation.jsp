@@ -3,8 +3,17 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <ul class="navigation-content list-inline">
-	<li><a href="<c:url value='/kategorie/php'/>">PHP</a></li>
-	<li><a href="<c:url value='/kategorie/mysql'/>">MySQL</a></li>
+
+	<c:choose>
+		<c:when test="${navigation != null}">
+			<c:forEach var="nav" items="${navigation}">
+				<li><a href="<c:url value='/kategorie/${nav}'/>"><c:out value="${nav}" /></a></li>
+			</c:forEach>
+		</c:when>
+		<c:otherwise>
+			<li><a href="<c:url value='/kategorien'/>">Kategorien</a></li>	
+		</c:otherwise>
+	</c:choose>
 
 	<li><a href="<c:url value='/suche' />" title="Suche">Suche</a></li>
 	<li><a href="<c:url value='/kontakt'/>" title="Kontakt und Impressum">Kontakt/Impressum</a></li>
