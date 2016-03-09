@@ -136,11 +136,18 @@ public class CartController {
 
 	}
 
-	// @RequestMapping(value = "/bestellung_aufgegeben", method =
-	// RequestMethod.POST)
-	// public String getAdress(Model m) {
-	// return "orderConducted";
-	// }
+	@RequestMapping(value = "/buch_geloescht", method = RequestMethod.GET)
+	public String deleteBook() {
+		String s = cart.getBooks().keySet().iterator().next();
+		Book b;
+		try {
+			b = bookService.getBookByIsbn(s);
+		} catch (DatabaseException | NoSuchElementException e) {
+			return "book not deleted";
+		}
+		cart.deleteBook(b);
+		return "redirect:/warenkorb";
+	}
 
 	private User getUser() throws ControllerOvertaxedException {
 		Authentication a = SecurityContextHolder.getContext().getAuthentication();

@@ -21,6 +21,10 @@
 					<p><c:out value="${book.key.getPublisher()}"/></p>
 	 				<p>ISBN: <c:out value="${book.key.getIsbn()}"/></p>
 <%-- 					<p>Preis: <c:out value="${book.getPrice()}"/></p> --%>
+					<form id="deleteBook" method="get">
+						<button id="deleteButton" type="submit" formaction="<c:url value='/buch_geloescht'/>">aus Warenkorb entfernen</button> 
+						<sec:csrfInput/>
+					</form>	
 				</c:forEach> 
 			</c:otherwise>
 		</c:choose>
