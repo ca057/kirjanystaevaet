@@ -21,8 +21,8 @@ import appl.data.items.User;
 import appl.logic.service.BookService;
 import appl.logic.service.OrderService;
 import appl.logic.service.UserService;
-import exceptions.controller.ControllerOvertaxedException;
 import exceptions.data.DatabaseException;
+import exceptions.web.ControllerOvertaxedException;
 
 @Controller
 public class CartController {
@@ -44,7 +44,7 @@ public class CartController {
 		System.out.println(isbn);
 		try {
 			System.out.println("User in Cart: " + getUser());
-		} catch (ControllerOvertaxedException e1) {
+		} catch (exceptions.web.ControllerOvertaxedException e1) {
 			e1.printStackTrace();
 		}
 		if (isbn != null && !isbn.isEmpty()) {
@@ -136,10 +136,10 @@ public class CartController {
 		return "redirect:/warenkorb";
 	}
 
-	private User getUser() throws ControllerOvertaxedException {
+	private User getUser() throws exceptions.web.ControllerOvertaxedException {
 		Authentication a = SecurityContextHolder.getContext().getAuthentication();
 		if (a == null) {
-			throw new ControllerOvertaxedException("Authentication is null");
+			throw new exceptions.web.ControllerOvertaxedException("Authentication is null");
 		} else {
 			try {
 				return userService.findByID(((User) a.getPrincipal()).getUserId()).get();
