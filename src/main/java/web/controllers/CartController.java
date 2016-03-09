@@ -70,18 +70,18 @@ public class CartController {
 		return "redirect:/warenkorb";
 	}
 
-	@RequestMapping(value = "/warenkorb", method = RequestMethod.DELETE)
-	public String deleteFromCart(@RequestParam(value = "isbn") String isbn) {
-		if (isbn != null && !isbn.isEmpty()) {
-			try {
-				cart.deleteBook(bookService.getBookByIsbn(isbn));
-			} catch (DatabaseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return "redirect:/warenkorb";
-	}
+	// @RequestMapping(value = "/warenkorb", method = RequestMethod.DELETE)
+	// public String deleteFromCart(@RequestParam(value = "isbn") String isbn) {
+	// if (isbn != null && !isbn.isEmpty()) {
+	// try {
+	// cart.deleteBook(bookService.getBookByIsbn(isbn));
+	// } catch (DatabaseException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
+	// return "redirect:/warenkorb";
+	// }
 
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.GET)
 	public String getCart(Model m) {
@@ -136,14 +136,13 @@ public class CartController {
 
 	}
 
-	@RequestMapping(value = "/buch_geloescht", method = RequestMethod.GET)
-	public String deleteBook() {
-		String s = cart.getBooks().keySet().iterator().next();
+	@RequestMapping(value = "/buch_geloescht", method = RequestMethod.POST)
+	public String deleteBook(@RequestParam(value = "isbn") String isbn) {
 		Book b;
 		try {
-			b = bookService.getBookByIsbn(s);
+			b = bookService.getBookByIsbn(isbn);
 		} catch (DatabaseException | NoSuchElementException e) {
-			return "book not deleted";
+			return "redirect:/warenkorb";
 		}
 		cart.deleteBook(b);
 		return "redirect:/warenkorb";
