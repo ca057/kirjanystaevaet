@@ -23,8 +23,9 @@ db
 /target/
 
 # alles für den Abschlussbericht
-
 documentation/abschlussbericht/*.pdf
 documentation/abschlussbericht/*.aux
 documentation/abschlussbericht/*.log
+documentation/abschlussbericht/*.lof
+documentation/abschlussbericht/*.lot
 documentation/abschlussbericht/*.synctex.gz
