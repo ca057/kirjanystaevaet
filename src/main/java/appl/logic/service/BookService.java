@@ -102,19 +102,15 @@ public interface BookService {
 	// Book Methoden
 
 	// Abfragen
-	public List<Book> getAllBooks() throws DatabaseException;
 	public List<Book> getAllBooks(SearchMode mode) throws DatabaseException;
 
 
-	public List<Book> getBooksByCategory(String category) throws DatabaseException;
 	public List<Book> getBooksByCategory(String category, SearchMode mode) throws DatabaseException;
 
 	public Book getBookByIsbn(String isbn, SearchMode mode) throws DatabaseException;
-	public Book getBookByIsbn(String isbn) throws DatabaseException;
 
 	public List<Book> getBooksByOpenSearch(String searchTerm);
 
-	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) throws DatabaseException;
 	public List<Book> getBooksByMetdata(Map<Searchfields, String> map, SearchMode mode) throws DatabaseException;
 	// Insert
 	/**
