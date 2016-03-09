@@ -126,13 +126,12 @@ public class CartController {
 
 	@RequestMapping(value = "/buch_geloescht", method = RequestMethod.POST)
 	public String deleteBook(@RequestParam(value = "isbn") String isbn) {
-		Book b;
 		try {
-			b = bookService.getBookByIsbn(isbn);
-		} catch (DatabaseException | NoSuchElementException e) {
+			cart.deleteBook(isbn);
+		} catch (NoSuchElementException e) {
 			return "redirect:/warenkorb";
 		}
-		cart.deleteBook(isbn);
+
 		return "redirect:/warenkorb";
 	}
 
