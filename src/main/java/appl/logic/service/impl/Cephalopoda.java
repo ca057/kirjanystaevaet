@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import appl.enums.SearchMode;
 import appl.enums.UserRoles;
 import appl.logic.service.BookService;
 import appl.logic.service.DataKraken;
@@ -60,7 +61,7 @@ public class Cephalopoda implements DataKraken {
 	 */
 	private void consumeBasicData(Map<String, Object> map) {
 		try {
-			map.put("amountOfBooks", bookService.getAllBooks().size());
+			map.put("amountOfBooks", bookService.getAllBooks(SearchMode.SELL).size());
 		} catch (DatabaseException ignore) {
 		}
 		try {

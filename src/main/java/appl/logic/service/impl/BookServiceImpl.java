@@ -359,19 +359,8 @@ public class BookServiceImpl implements BookService {
 		}
 	}
 
-	/*
-	 * @Override public List<Book> getAllBooks() { return bookDao.getAllBooks();
-	 * }
-	 */
-	@Override
-	public List<Book> getAllBooks() throws DatabaseException {
-		try {
-			return bookDao.getAllBooks();
 
-		} catch (HibernateException e) {
-			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}
-	}
+
 
 	@Override
 	public List<Book> getAllBooks(SearchMode mode) throws DatabaseException {
@@ -392,18 +381,7 @@ public class BookServiceImpl implements BookService {
 	 * bookDao.getBooksByMetadata(map); //return
 	 * dao.getBooksByCategory(category); //return null; }
 	 */
-	@Override
-	public List<Book> getBooksByCategory(String category) throws DatabaseException {
-		try {
-			Map<Searchfields, String> map = new HashMap<Searchfields, String>();
-			map.put(Searchfields.categoryName, category);
-			return bookDao.getBooksByMetadata(map);
-			// return dao.getBooksByCategory(category);
-			// return null;
-		} catch (HibernateException e) {
-			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}
-	}
+
 
 	@Override
 	public List<Book> getBooksByCategory(String category, SearchMode mode) throws DatabaseException {
@@ -418,31 +396,11 @@ public class BookServiceImpl implements BookService {
 		}
 	}
 
-	@Override
-	public Book getBookByIsbn(String isbn) throws DatabaseException {
-		// TODO So umbauen das mit UniqueResult gearbeitet wird
-		// TODO alles entfernen, was nicht Zahl oder Buchstabe ist
-		isbn = onlyLeaveLettersAndNumbers(isbn);
-		try {
-			Book book = bookDao.getBookByIsbn(isbn);
-			return book;
-		} catch (EntityDoesNotExistException e) {
-			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
-		}
-		/*
-		 * Map<Searchfields, String> map = new HashMap<Searchfields, String>();
-		 * map.put(Searchfields.isbn, isbn);
-		 * 
-		 * List<Book> bookList = bookDao.getBooksByMetadata(map); if
-		 * (bookList.size() > 1){
-		 * 
-		 * }
-		 */
-	}
+
 	@Override
 	public Book getBookByIsbn(String isbn, SearchMode mode) throws DatabaseException {
 		isbn = onlyLeaveLettersAndNumbers(isbn);
-		Book book = getBookByIsbn(isbn);
+		Book book = getBookByIsbn(isbn, mode);
 		switch (mode){
 			case ALL:
 				break;
@@ -473,15 +431,6 @@ public class BookServiceImpl implements BookService {
 		return null;
 	}
 
-	@Override
-	public List<Book> getBooksByMetadata(Map<Searchfields, String> map) throws DatabaseException {
-		try {
-			return bookDao.getBooksByMetadata(map);
-
-		} catch (HibernateException e) {
-			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}
-	}
 
 	@Override
 	public List<Book> getBooksByMetdata(Map<Searchfields, String> map, SearchMode mode) throws DatabaseException {
@@ -628,17 +577,13 @@ public class BookServiceImpl implements BookService {
 		
 		for (Searchfields s : data.keySet()) {
 			if (s == Searchfields.isbn || s == Searchfields.edition || s == Searchfields.pubdate
-					|| s == Searchfields.publisher) {
+					|| s == Searchfields.publisher || s == Searchfields.title || s == Searchfields.pages) {
 				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated());
-			} else if (s == Searchfields.title) {
-				book.setTitle(data.get(s));
 			} else if (s == Searchfields.description) {
 				book.setDescription(data.get(s));
 			} else if (s == Searchfields.price) {
 				double price = Double.parseDouble(data.get(s).replace(",", "."));
 				book.setPrice(price);
-			} else if (s == Searchfields.pages) {
-				book.setPages(data.get(s));
 			}
 
 		}
@@ -708,7 +653,7 @@ public class BookServiceImpl implements BookService {
 		isbn = onlyLeaveLettersAndNumbers(isbn);
 
 		try {
-			Book book = getBookByIsbn(isbn);
+			Book book = getBookByIsbn(isbn, SearchMode.ALL);
 			// bookDao.deleteBook(isbn);
 			// Es wird nicht gelöscht, sondern der Stock auf -1 gesetzt, so
 			// bleibt die Archivierungsfunktion der Bestellungen erhalten

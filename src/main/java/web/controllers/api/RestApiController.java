@@ -78,7 +78,7 @@ public class RestApiController {
 		if (isbn == null || isbn.isEmpty()) {
 			throw new IllegalArgumentException("The passed category is null or an empty string.");
 		}
-		Book book = bookService.getBookByIsbn(isbn);
+		Book book = bookService.getBookByIsbn(isbn, SearchMode.AVAILABLE);
 		if (book.getStock() > 0) {
 			return new ResponseEntity<BookJSONWrapper>(new BookJSONWrapper(book), HttpStatus.OK);
 		} else {

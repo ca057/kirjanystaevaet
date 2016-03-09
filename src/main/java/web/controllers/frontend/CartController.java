@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import appl.data.items.Book;
 import appl.data.items.Cart;
 import appl.data.items.User;
+import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import appl.logic.service.OrderService;
 import appl.logic.service.UserService;
@@ -49,7 +50,21 @@ public class CartController {
 		}
 		if (isbn != null && !isbn.isEmpty()) {
 			try {
-				cart.addBook(bookService.getBookByIsbn(isbn));
+				cart.addBook(bookService.getBookByIsbn(isbn, SearchMode.AVAILABLE));
+			} catch (DatabaseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return "redirect:/warenkorb";
+	}
+
+
+	@RequestMapping(value = "/warenkorb", method = RequestMethod.DELETE)
+	public String deleteFromCart(@RequestParam(value = "isbn") String isbn) {
+		if (isbn != null && !isbn.isEmpty()) {
+			try {
+				cart.deleteBook(bookService.getBookByIsbn(isbn, SearchMode.ALL));
 			} catch (DatabaseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -71,6 +86,7 @@ public class CartController {
 	// return "redirect:/warenkorb";
 	// }
 
+
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.GET)
 	public String getCart(Model m) {
 		Book b = null;
@@ -78,7 +94,7 @@ public class CartController {
 		Set<String> isbns = cart.getBooks().keySet();
 		for (String s : isbns) {
 			try {
-				b = bookService.getBookByIsbn(s);
+				b = bookService.getBookByIsbn(s, SearchMode.ALL);
 			} catch (DatabaseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
