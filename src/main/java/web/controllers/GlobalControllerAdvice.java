@@ -16,8 +16,6 @@ public class GlobalControllerAdvice {
 	@ExceptionHandler(NoHandlerFoundException.class)
 	public ModelAndView handleHandlerNotFound(HttpServletRequest request, Exception e) {
 		ModelAndView mav = new ModelAndView("");
-		mav.addObject("exception", e);
-		mav.addObject("url", request.getRequestURL());
 		mav.setViewName("error/404");
 		return mav;
 	}
@@ -26,8 +24,6 @@ public class GlobalControllerAdvice {
 	@ExceptionHandler(Exception.class)
 	public ModelAndView defaultHandler(HttpServletRequest request, Exception e) {
 		ModelAndView mav = new ModelAndView("");
-		mav.addObject("exception", e);
-		mav.addObject("url", request.getRequestURL());
 		mav.setViewName("error");
 		return mav;
 	}
