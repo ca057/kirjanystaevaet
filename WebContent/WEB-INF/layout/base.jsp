@@ -31,7 +31,7 @@
 		<div id="content-wrapper">
 			<header>
 				<a href="<c:url value='/'/>" title="zur Startseite">
-					<t:insertAttribute name="header"></t:insertAttribute>
+						<t:insertAttribute name="header"></t:insertAttribute>
 				</a>
 			</header>
 	
