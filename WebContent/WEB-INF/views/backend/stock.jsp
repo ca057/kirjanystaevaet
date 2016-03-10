@@ -63,7 +63,6 @@
 					</form>
 				</section>
 			</div>
-
 			<div class=“panel-heading”>
 				<h4 class="panel-title">
 					<a data-toggle="collapse" data-parent="#accordion"
@@ -86,13 +85,11 @@
 								for="autorinnen-anlegen-last">Nachname:</label> <input
 								id="autorinnen-anlegen-last" name="last" type="text"
 								placeholder="Nachname" required />
-
 							<button type="submit" id="autorinnen-anlegen-submit">Autor:in
 								anlegen</button>
 							<sec:csrfInput />
 						</fieldset>
 					</form>
-
 					<h4 id="autorinnen-loeschen">Bestehende:n Autor:in löschen</h4>
 					<form action="bestand/autorinnen/delete" method="POST">
 						<label for="autorinnen-loeschen-id">Autor:innen auswählen</label>
@@ -111,7 +108,6 @@
 					</form>
 				</section>
 			</div>
-
 			<div class=“panel-heading”>
 				<h4 class="panel-title">
 					<a data-toggle="collapse" data-parent="#accordion"
@@ -177,7 +173,6 @@
 								<label for="buecher-anlegen-publisher">Verleger:</label>
 								<input type="text" id="buecher-anlegen-publisher"
 									name="publisher" placeholder="Verleger eingeben" required />
-
 
 								<p>Veröffentlichungsdatum:</p>
 								<label for="buecher-anlegen-day">Tag:</label>
