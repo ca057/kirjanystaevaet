@@ -3,6 +3,14 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <div class="navbar navbar-default container-fluid">
+<div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button>
+    </div>
+     <div class="collapse navbar-collapse" id="navbar">
 <ul class="nav navbar-nav">
 	<c:choose>
 		<c:when test="${navigation != null}">
@@ -53,6 +61,7 @@
 		</a></li>
 	</sec:authorize>
 </ul>
+</div>
 
 <sec:authorize access="hasRole('ADMIN')">
 	<ul class="navigation-content list-inline">
