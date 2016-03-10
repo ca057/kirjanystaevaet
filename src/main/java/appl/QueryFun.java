@@ -92,7 +92,8 @@ public class QueryFun {
 
 	public void testCategoryDelete(ApplicationContext ctx) throws DatabaseException {
 		BookService service = ctx.getBean(BookService.class);
-		service.deleteCategory("stricken");
+		Category cat = service.getCategoryByExactName("stricken");
+		service.deleteCategory(cat.getCategoryID());
 		List<String> categoryNames = service.getAllCategoryNames();
 		System.out.println("Nach Delete\n\n");
 		for (String s : categoryNames) {
@@ -423,7 +424,7 @@ public class QueryFun {
 		map.put(Searchfields.description, "New Description");
 		map.put(Searchfields.price, "100,11");
 		map.put(Searchfields.title, "New Title");
-		dataService.updateBook("0101010101", map);
+//		dataService.updateBook("0101010101", map);
 		Book book = dataService.getBookByIsbn("0101010101", SearchMode.ALL);
 		System.out.println(book.toString());
 		

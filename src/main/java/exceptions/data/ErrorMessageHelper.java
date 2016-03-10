@@ -121,23 +121,47 @@ public abstract class ErrorMessageHelper {
 		return String.format("%s does already exist", entity);
 	}
 	
+	/**
+	 * Use if an error occurs while trying to insert something
+	 * @param entity
+	 * @return
+	 */
 	public static String insertFailed(String entity){
 		return String.format("Insert of %s failed", entity);
 		
 	}
+	/**
+	 * Use if one tries to decrement stock that is already 0
+	 * @param bookTitle
+	 * @return
+	 */
 	public static String stockIsNull(String bookTitle){
-		return String.format("Sorry, someone else was faster, the %s is not available anymore. Stock = 0", bookTitle);
+		return String.format("Book with title %s is not available. Stock cannot be decremeted anymore", bookTitle);
 	}
 
+	/**
+	 * Use if one tries to update a field which can not be updated, especially isbn
+	 * @param field
+	 * @return
+	 */
 	public static String mayNotBeUpdated(String field){
 		return String.format("The field %s may not be updated", field);
 	}
 	
+	/**
+	 * Use if one tries to order a book which is marked as deleted (Stock = -1)
+	 * @param isbn
+	 * @return
+	 */
 	public static String bookNotSold(String isbn){
 		return String.format("Book with isbn %s ist not sold anymore", isbn);
 		
 	}
-	
+	/**
+	 * use of one tries to access a book that is not available
+	 * @param isbn
+	 * @return
+	 */
 	public static String bookNotAvailable(String isbn){
 		return String.format("Book with isbn %s is not available right now", isbn);
 	}

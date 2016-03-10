@@ -98,7 +98,10 @@ public class BackendStockController {
 					"The passed id of the category is null or empty and can not be deleted.");
 		}
 		try {
-			bookService.deleteCategory(bookService.getCategoryById(Integer.parseInt(id)).getCategoryName());
+			//FIXME: habe die Signatur von deleteCategory geändert, da es sinnlos ist, über den Namen zu löschen
+			//bookService.deleteCategory(bookService.getCategoryById(Integer.parseInt(id)).getCategoryName());
+			bookService.deleteCategory(Integer.parseInt(id));
+
 		} catch (DatabaseException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}

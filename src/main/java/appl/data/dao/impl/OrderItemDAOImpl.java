@@ -35,17 +35,15 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 		Criteria cr = s.createCriteria(OrderItem.class);
 		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return cr;
-		//return cr.createAlias("books", "b").createAlias("authors", "a");
-		//return cr.createAlias("books", "b"); // Category hat keinen Author -> kein Alias dafür angeben
 	}
 	@Override
-	public void update(OrderItem archiveItem) {
-		getSession().update(archiveItem);
+	public void update(OrderItem orderItem) {
+		getSession().update(orderItem);
 		
 	}
 	@Override
-	public int insert(OrderItem archiveItem){
-		int id = (int) getSession().save(archiveItem);
+	public int insert(OrderItem orderItem){
+		int id = (int) getSession().save(orderItem);
 		return id;
 	}
 

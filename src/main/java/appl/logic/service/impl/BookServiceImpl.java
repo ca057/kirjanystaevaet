@@ -80,29 +80,12 @@ public class BookServiceImpl implements BookService {
 			List<String> names = new LinkedList<String>();
 			for (Category ct : categories) {
 				names.add(ct.getCategoryName());
-				// System.out.println(ct.getCategoryName());
 			}
 			return names;
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
-
-	/*
-	 * @Override public List<String> getAllCategoryNames() {
-	 * 
-	 * List<Category> categories = categoryDao.getCategories(); List<String>
-	 * names = new LinkedList<String>(); for (Category ct : categories) {
-	 * names.add(ct.getCategoryName());
-	 * //System.out.println(ct.getCategoryName()); } return names;
-	 * 
-	 * 
-	 * }
-	 */
-	/*
-	 * @Override public List<Category> getAllCategories() { return
-	 * categoryDao.getCategories(); }
-	 */
 
 	@Override
 	public List<Category> getAllCategories() throws DatabaseException {
@@ -165,16 +148,12 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void deleteCategory(String name) throws DatabaseException {
-		// Prüfen, ob Category vorhanden
-		/*
-		 * try { categoryDao.getCategoriesByExactName(name); }
-		 */
-
+	public void deleteCategory(int id) throws DatabaseException {
 		// Kategorie holen
 		try {
-			Category category = categoryDao.getCategoriesByExactName(name);
-			categoryDao.deleteCategory(category.getCategoryID());
+			// To check if category exists
+			Category cat = categoryDao.getCategoryById(id);
+			categoryDao.deleteCategory(id);
 		} catch (EntityDoesNotExistException e) {
 
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category"));
@@ -186,107 +165,6 @@ public class BookServiceImpl implements BookService {
 
 	}
 
-	/*
-	 * @Override public void insertBook(Map<Searchfields, String> map, boolean
-	 * newAuthor) { BookBuilder bb = new BookBuilderImpl(); double price =
-	 * Double.parseDouble(map.get(Searchfields.price)); int pages =
-	 * Integer.parseInt(map.get(Searchfields.pages)); // Testen, ob es diese
-	 * Kategorie schon gibt List<Category> cats =
-	 * categoryDao.getCategoriesByName(map.get(Searchfields.categoryName));
-	 * Category category = null; for (Category cat : cats){ if
-	 * (cat.getCategoryName().equals(map.get(Searchfields.categoryName))){
-	 * category = cat; break; } }
-	 * 
-	 * // Wenn es die Kategorie noch nicht gab if (category == null){
-	 * CategoryBuilder cb = new CategoryBuilderImpl(); category =
-	 * cb.setCategoryName(map.get(Searchfields.categoryName)).createCategory();
-	 * } // TODO Testen, ob ich hier save(category) category sagen muss, oder ob
-	 * das über Cascade funktioniert
-	 * 
-	 * // Abfragen, ob sich die View sicher ist, ob es sich um einen neuen Autor
-	 * handelt if ( !newAuthor){
-	 * 
-	 * 
-	 * // Abfragen, ob es Autor mit diesem Vor- und Nachnamen schon gibt
-	 * List<Author> authors =
-	 * authorDao.getAuthorByExactNames(map.get(Searchfields.nameF),
-	 * map.get(Searchfields.nameL)); // Wenn es mehr als einen Autor mit dem
-	 * Namen gibt: // Hier mit als Parameter übergeben: Einen boolean,
-	 * Standardmäßig auf false -> Person gibt es noch nicht. if(authors.size() >
-	 * 0){ throw new AuthorMayExistException("This Author " +
-	 * map.get(Searchfields.nameF) + " " + map.get(Searchfields.nameL) +
-	 * " may already exist"); } } AuthorBuilder ab = new AuthorBuilderImpl();
-	 * Author author =
-	 * ab.setNameF(map.get(Searchfields.nameF)).setNameL(map.get(Searchfields.
-	 * nameL)).createAuthor();
-	 * 
-	 * // TODO Testen, ob ich hier save(author) sagen muss
-	 * 
-	 * // TODO Wo wird Form von PubDate überprüft? Muss hier übeprüft werden ->
-	 * Illegal ArgumentException, ganz am Anfang
-	 * 
-	 * Book newBook =
-	 * bb.setAuthors(authors).set.setIsbn(map.get(Searchfields.isbn)).setTitle(
-	 * map.get(Searchfields.title)).setDescription(map.get(Searchfields.
-	 * description)).setPrice(price).setPublisher(map.get(Searchfields.publisher
-	 * )).setPubdate(map.get(Searchfields.pubdate)).setEdition(map.get(
-	 * Searchfields.edition)).setPages(pages).createBook();
-	 * 
-	 * dao.insertBook(newBook);
-	 * 
-	 * }
-	 */
-
-	/*
-	 * @Override public void insertBook(Map<Searchfields, String> map, boolean
-	 * newAuthor) { BookBuilder bb = new BookBuilderImpl(); double price =
-	 * Double.parseDouble(map.get(Searchfields.price)); int pages =
-	 * Integer.parseInt(map.get(Searchfields.pages)); // Testen, ob es diese
-	 * Kategorie schon gibt List<Category> cats =
-	 * categoryDao.getCategoriesByName(map.get(Searchfields.categoryName));
-	 * Category category = null; for (Category cat : cats){ if
-	 * (cat.getCategoryName().equals(map.get(Searchfields.categoryName))){
-	 * category = cat; break; } }
-	 * 
-	 * // Wenn es die Kategorie noch nicht gab if (category == null){
-	 * CategoryBuilder cb = new CategoryBuilderImpl(); category =
-	 * cb.setCategoryName(map.get(Searchfields.categoryName)).createCategory();
-	 * } // TODO Testen, ob ich hier save(category) category sagen muss, oder ob
-	 * das über Cascade funktioniert
-	 * 
-	 * // Abfragen, ob sich die View sicher ist, ob es sich um einen neuen Autor
-	 * handelt if ( !newAuthor){
-	 * 
-	 * 
-	 * // Abfragen, ob es Autor mit diesem Vor- und Nachnamen schon gibt
-	 * List<Author> authors =
-	 * authorDao.getAuthorByExactNames(map.get(Searchfields.nameF),
-	 * map.get(Searchfields.nameL)); // Wenn es mehr als einen Autor mit dem
-	 * Namen gibt: // Hier mit als Parameter übergeben: Einen boolean,
-	 * Standardmäßig auf false -> Person gibt es noch nicht. if(authors.size() >
-	 * 0){ throw new AuthorMayExistException("This Author " +
-	 * map.get(Searchfields.nameF) + " " + map.get(Searchfields.nameL) +
-	 * " may already exist"); } } AuthorBuilder ab = new AuthorBuilderImpl();
-	 * Author author =
-	 * ab.setNameF(map.get(Searchfields.nameF)).setNameL(map.get(Searchfields.
-	 * nameL)).createAuthor();
-	 * 
-	 * // TODO Testen, ob ich hier save(author) sagen muss
-	 * 
-	 * // TODO Wo wird Form von PubDate überprüft? Muss hier übeprüft werden ->
-	 * Illegal ArgumentException, ganz am Anfang
-	 * 
-	 * Book newBook =
-	 * bb.setAuthors(authors).set.setIsbn(map.get(Searchfields.isbn)).setTitle(
-	 * map.get(Searchfields.title)).setDescription(map.get(Searchfields.
-	 * description)).setPrice(price).setPublisher(map.get(Searchfields.publisher
-	 * )).setPubdate(map.get(Searchfields.pubdate)).setEdition(map.get(
-	 * Searchfields.edition)).setPages(pages).createBook();
-	 * 
-	 * dao.insertBook(newBook);
-	 * 
-	 * }
-	 */
 
 	@Override
 	public List<Author> getAuthorByExactName(String nameF, String nameL) throws DatabaseException {
@@ -413,17 +291,6 @@ public class BookServiceImpl implements BookService {
 		return smallList;
 	}
 
-	// ToDo die MEthode funktioniert nur darüber, dass man über CategoryNAme
-	// bekommt, nicht über die ID, -> Umbenennen!
-	/*
-	 * @Override public List<Book> getBooksByCategory(String category) {
-	 * Map<Searchfields, String> map = new HashMap<Searchfields, String>();
-	 * map.put(Searchfields.categoryName, category); return
-	 * bookDao.getBooksByMetadata(map); //return
-	 * dao.getBooksByCategory(category); //return null; }
-	 */
-
-
 	@Override
 	public List<Book> getBooksByCategory(String category, SearchMode mode) throws DatabaseException {
 		try {
@@ -494,60 +361,7 @@ public class BookServiceImpl implements BookService {
 		}
 	}
 
-	/*
-	 * @Override public void insertBook(Map<Searchfields, String> map, boolean
-	 * newAuthor) { BookBuilder bb = new BookBuilderImpl(); double price =
-	 * Double.parseDouble(map.get(Searchfields.price)); int pages =
-	 * Integer.parseInt(map.get(Searchfields.pages)); // Testen, ob es diese
-	 * Kategorie schon gibt List<Category> cats =
-	 * categoryDao.getCategoriesByName(map.get(Searchfields.categoryName));
-	 * Category category = null; for (Category cat : cats){ if
-	 * (cat.getCategoryName().equals(map.get(Searchfields.categoryName))){
-	 * category = cat; break; } }
-	 * 
-	 * // Wenn es die Kategorie noch nicht gab if (category == null){
-	 * CategoryBuilder cb = new CategoryBuilderImpl(); category =
-	 * cb.setCategoryName(map.get(Searchfields.categoryName)).createCategory();
-	 * } // TODO Testen, ob ich hier save(category) category sagen muss, oder ob
-	 * das über Cascade funktioniert
-	 * 
-	 * // Abfragen, ob sich die View sicher ist, ob es sich um einen neuen Autor
-	 * handelt if ( !newAuthor){
-	 * 
-	 * 
-	 * // Abfragen, ob es Autor mit diesem Vor- und Nachnamen schon gibt
-	 * List<Author> authors =
-	 * authorDao.getAuthorByExactNames(map.get(Searchfields.nameF),
-	 * map.get(Searchfields.nameL)); // Wenn es mehr als einen Autor mit dem
-	 * Namen gibt: // Hier mit als Parameter übergeben: Einen boolean,
-	 * Standardmäßig auf false -> Person gibt es noch nicht. if(authors.size() >
-	 * 0){ throw new AuthorMayExistException("This Author " +
-	 * map.get(Searchfields.nameF) + " " + map.get(Searchfields.nameL) +
-	 * " may already exist"); } } AuthorBuilder ab = new AuthorBuilderImpl();
-	 * Author author =
-	 * ab.setNameF(map.get(Searchfields.nameF)).setNameL(map.get(Searchfields.
-	 * nameL)).createAuthor();
-	 * 
-	 * // TODO Testen, ob ich hier save(author) sagen muss
-	 * 
-	 * // TODO Wo wird Form von PubDate überprüft? Muss hier übeprüft werden ->
-	 * Illegal ArgumentException, ganz am Anfang
-	 * 
-	 * Book newBook =
-	 * bb.setAuthors(authors).set.setIsbn(map.get(Searchfields.isbn)).setTitle(
-	 * map.get(Searchfields.title)).setDescription(map.get(Searchfields.
-	 * description)).setPrice(price).setPublisher(map.get(Searchfields.publisher
-	 * )).setPubdate(map.get(Searchfields.pubdate)).setEdition(map.get(
-	 * Searchfields.edition)).setPages(pages).createBook();
-	 * 
-	 * dao.insertBook(newBook);
-	 * 
-	 * }
-	 */
-
 	@Override
-	// public void insertBook(Map<Searchfields, String> map, Set<Integer>
-	// authorIds, Set<Integer> categoryIds) throws IsbnAlreadyExistsException {
 	public void insertBook(Map<Searchfields, String> map, Set<Integer> authorIds, Set<Integer> categoryIds)
 			throws DatabaseException {
 
@@ -622,23 +436,11 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void updateBook(String isbn, Map<Searchfields, String> data) throws DatabaseException {
+	public void updateBook(String isbn, Map<Searchfields, String> data, Set<Integer> authorIds, Set<Integer> categoryIds) throws DatabaseException {
 		isbn = onlyLeaveLettersAndNumbers(isbn);
 
 		Book book = bookDao.getBookByIsbn(isbn);
 		
-//		for (Searchfields s : data.keySet()) {
-//			if (s == Searchfields.isbn || s == Searchfields.edition || s == Searchfields.pubdate
-//					|| s == Searchfields.publisher || s == Searchfields.title || s == Searchfields.pages) {
-//				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated());
-//			} else if (s == Searchfields.description) {
-//				book.setDescription(data.get(s));
-//			} else if (s == Searchfields.price) {
-//				double price = Double.parseDouble(data.get(s).replace(",", "."));
-//				book.setPrice(price);
-//			}
-//
-//		}
 		for (Searchfields s : data.keySet()){
 			if (s == Searchfields.isbn){
 				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("isbn"));
@@ -729,9 +531,6 @@ public class BookServiceImpl implements BookService {
 
 		try {
 			Book book = getBookByIsbn(isbn, SearchMode.ALL);
-			// bookDao.deleteBook(isbn);
-			// Es wird nicht gelöscht, sondern der Stock auf -1 gesetzt, so
-			// bleibt die Archivierungsfunktion der Bestellungen erhalten
 			bookDao.setStockToNegative(isbn);
 
 		} catch (EntityDoesNotExistException e) {
@@ -752,9 +551,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	private String onlyLeaveLettersAndNumbers(String s) {
-		// System.out.println(s);
 		s = s.replaceAll("[^a-zA-Z0-9]", "");
-		// System.out.println(s);
 		return s;
 	}
 
@@ -831,69 +628,4 @@ public class BookServiceImpl implements BookService {
 		}
 		return map;
 	}
-
-
-
-
-
-
-	
-
-
-
-	
-
-
-
-	/*
-	 * @Override public void insertBook(Map<Searchfields, String> map, boolean
-	 * newAuthor) { BookBuilder bb = new BookBuilderImpl(); double price =
-	 * Double.parseDouble(map.get(Searchfields.price)); int pages =
-	 * Integer.parseInt(map.get(Searchfields.pages)); // Testen, ob es diese
-	 * Kategorie schon gibt List<Category> cats =
-	 * categoryDao.getCategoriesByName(map.get(Searchfields.categoryName));
-	 * Category category = null; for (Category cat : cats){ if
-	 * (cat.getCategoryName().equals(map.get(Searchfields.categoryName))){
-	 * category = cat; break; } }
-	 * 
-	 * // Wenn es die Kategorie noch nicht gab if (category == null){
-	 * CategoryBuilder cb = new CategoryBuilderImpl(); category =
-	 * cb.setCategoryName(map.get(Searchfields.categoryName)).createCategory();
-	 * } // TODO Testen, ob ich hier save(category) category sagen muss, oder ob
-	 * das über Cascade funktioniert
-	 * 
-	 * // Abfragen, ob sich die View sicher ist, ob es sich um einen neuen Autor
-	 * handelt if ( !newAuthor){
-	 * 
-	 * 
-	 * // Abfragen, ob es Autor mit diesem Vor- und Nachnamen schon gibt
-	 * List<Author> authors =
-	 * authorDao.getAuthorByExactNames(map.get(Searchfields.nameF),
-	 * map.get(Searchfields.nameL)); // Wenn es mehr als einen Autor mit dem
-	 * Namen gibt: // Hier mit als Parameter übergeben: Einen boolean,
-	 * Standardmäßig auf false -> Person gibt es noch nicht. if(authors.size() >
-	 * 0){ throw new AuthorMayExistException("This Author " +
-	 * map.get(Searchfields.nameF) + " " + map.get(Searchfields.nameL) +
-	 * " may already exist"); } } AuthorBuilder ab = new AuthorBuilderImpl();
-	 * Author author =
-	 * ab.setNameF(map.get(Searchfields.nameF)).setNameL(map.get(Searchfields.
-	 * nameL)).createAuthor();
-	 * 
-	 * // TODO Testen, ob ich hier save(author) sagen muss
-	 * 
-	 * // TODO Wo wird Form von PubDate überprüft? Muss hier übeprüft werden ->
-	 * Illegal ArgumentException, ganz am Anfang
-	 * 
-	 * Book newBook =
-	 * bb.setAuthors(authors).set.setIsbn(map.get(Searchfields.isbn)).setTitle(
-	 * map.get(Searchfields.title)).setDescription(map.get(Searchfields.
-	 * description)).setPrice(price).setPublisher(map.get(Searchfields.publisher
-	 * )).setPubdate(map.get(Searchfields.pubdate)).setEdition(map.get(
-	 * Searchfields.edition)).setPages(pages).createBook();
-	 * 
-	 * dao.insertBook(newBook);
-	 * 
-	 * }
-	 */
-
 }

@@ -9,10 +9,19 @@ import appl.data.items.OrderItem;
 @Transactional
 public interface OrderItemDAO {
 	
+	/**
+	 * @return
+	 */
 	public List<OrderItem> getAllOrderItems();
-	
-	public void update(OrderItem archiveItem);
+	/**
+	 * @param orderItem
+	 */
+	public void update(OrderItem orderItem);
 
-	public int insert(OrderItem archiveItem);
+	/**
+	 * @param orderItem
+	 * @return
+	 */
+	public int insert(OrderItem orderItem);
 
 }
