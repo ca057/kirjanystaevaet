@@ -10,6 +10,7 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -51,7 +52,7 @@ public class OrderDAOImpl implements OrderDAO {
 		}
 		Session s = getSession();
 		Criteria cr = s.createCriteria(Orderx.class);
-		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		cr.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		return cr;
 		
 	}
@@ -137,9 +138,9 @@ public class OrderDAOImpl implements OrderDAO {
 	public List<Book> getBooksWithoutOrderItem() {
 		Session s = getSession();
 		Criteria cr = s.createCriteria(Book.class, "book");
-		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		cr.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		cr.add(Restrictions.isEmpty("book.orderItems"));
-		return (List<Book>) cr.list();
+		return cr.list();
 	}
 
 	

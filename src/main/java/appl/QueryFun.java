@@ -763,7 +763,7 @@ public class QueryFun {
 			service.updateAccount(service.findbyMail("admin@ky.de").get().getUserId(), new HashMap<>(), bFile);
 			fileInputStream.close();
 			FileOutputStream fos = new FileOutputStream("output.jpg");
-			User user = (User) service.findbyMail("admin@ky.de")
+			User user = service.findbyMail("admin@ky.de")
 					.orElseThrow(() -> new EntityDoesNotExistException("User nicht gefunden"));
 			System.out.println(user);
 			fos.write(user.getImage());

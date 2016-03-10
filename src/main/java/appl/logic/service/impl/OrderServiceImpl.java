@@ -119,6 +119,7 @@ public class OrderServiceImpl implements OrderService{
 			// Sortieren
 			
 			Collections.sort(bestsellerList, new Comparator<Map.Entry<Book, Integer>>() {
+				@Override
 				public int compare(Map.Entry<Book, Integer> o1,
 	                                           Map.Entry<Book, Integer> o2) {
 					return (o1.getValue()).compareTo(o2.getValue());
@@ -151,6 +152,7 @@ public class OrderServiceImpl implements OrderService{
 			// Sortieren
 			
 			Collections.sort(bestsellerList, new Comparator<Map.Entry<Book, Integer>>() {
+				@Override
 				public int compare(Map.Entry<Book, Integer> o1,
 	                                           Map.Entry<Book, Integer> o2) {
 					return (o2.getValue()).compareTo(o1.getValue());
