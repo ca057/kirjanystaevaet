@@ -44,11 +44,6 @@ public class BookDAOImpl implements BookDAO {
 		// return cr.createAlias("categories", "c").createAlias("authors", "a");
 	}
 
-	@Override
-	public List<Book> getAllBooks() {
-		return getSession().createCriteria(Book.class).list();
-	}
-
 	private Criteria getCriteriaForSell(Criteria cr) {
 		cr.add(Restrictions.ge("stock", 0));
 		return cr;
@@ -128,8 +123,8 @@ public class BookDAOImpl implements BookDAO {
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
 				break;
 			case price:
-				// TODO
-				// Siehe Issue #14
+				double price = Double.parseDouble( entry.getValue().replace(",",".") );
+				cr.add(Restrictions.between(key, price-5, price+5));
 				break;
 			case publisher:
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
