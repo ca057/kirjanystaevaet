@@ -13,7 +13,19 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
+/**
+ * Author is a POJO marked as persistent entity with table name
+ * "bookauthors". It represents an author object with different variables:
+ * <ul>
+ * <li>authorId</li>
+ * <li>nameF</li>
+ * <li>nameL</li>
+ * </ul>
+ *{@link Set} of {@link Book} is joined via a many-to-many connection.
+ * Author is the owned Entity
+ * @author Madeleine
+ *
+ */
 @Entity
 @Table(name = "bookauthors", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "authorId") })
 public class Author {
@@ -23,15 +35,21 @@ public class Author {
 	private String nameL;
 
 	private Set<Book> books = new HashSet<Book>(0);
-	
-	public Author (){}
+	/**
+	 * Default constructor
+	 */
+	private Author (){}
+	/**
+	 * @param nameF
+	 * @param nameL
+	 */
 	public Author (String nameF, String nameL){
 		this.nameF = nameF;
 		this.nameL = nameL;
 	}
 
 	/**
-	 * Zur Annotation: GenerationType Identity, da hier offensichtlich nicht nur die ID hochgezählt wird, sondern geprüft wird, ob es die schon geben könnte
+	 * Annotation: GenerationType Identity, does not generate Ids by incrementing (which causes problems with already stored in the database
 	 * @return
 	 */
 	@Id

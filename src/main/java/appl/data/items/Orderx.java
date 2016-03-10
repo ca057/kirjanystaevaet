@@ -18,7 +18,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
+/**
+ * Orderx is a POJO marked as persistent entity with table name
+ * "orderx". It represents an order object with different variables:
+ * <ul>
+ * <li>orderId</li>
+ * <li>date</li>
+ * </ul>
+ * {@link Set} of {@link OrderItem} is joined via a one-to-many connection.
+ * {@link User} is joined via a many-to-one connection.
+ * 
+ * The class is not called "Order" because it might cause problems in sql-statements, even if preparedStatements are used
+ * @author Madeleine
+ *
+ */
 @Entity
 @Table(name = "orderx", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "orderId") })
 public class Orderx {
@@ -28,26 +41,18 @@ public class Orderx {
 
 	private Calendar date;
 	
-	// Required Constructor, may be private
+	/**
+	 * Required Constructor, may be private
+	 */
 	private Orderx(){
 		
 	}
-	
+	/**
+	 * 
+	 * @param date
+	 */
 	public Orderx(Calendar date){
 		this.date = date;
-	}
-	
-	public Orderx(Set<OrderItem> orderItems, Calendar date){
-		this.orderItems = orderItems;
-		this.date = date;
-	}
-
-	public Orderx(Set<OrderItem> orderItems, User user, Calendar date) {
-		this.orderItems = orderItems;
-		this.user = user;
-		//this.payed = false;
-		this.date = date;
-
 	}
 
 	@Id
@@ -62,12 +67,6 @@ public class Orderx {
 		return this.date;
 	}
 
-	/*@Column(name = "paymentStatus", nullable = false, length = 256)
-	public boolean getPaymentStatus() {
-		return this.payed;
-	}
-	*/
-
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "USERID", nullable = true)
 	public User getUser() {
@@ -75,7 +74,6 @@ public class Orderx {
 	}
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "order")
-	//@JoinTable(name = "orderorderitems", schema = "public", joinColumns = @JoinColumn(name = "orderId") , inverseJoinColumns = @JoinColumn(name = "archiveItemId") )
 	public Set<OrderItem> getOrderItems() {
 		return orderItems;
 	}
@@ -94,12 +92,6 @@ public class Orderx {
 		this.user = user;
 	}
 
-	/*public void setPaymentStatus(boolean payed) {
-		// Sollte eigentlich nichts machen?!? Benötige ich die change status
-		// dann?
-		this.payed = payed;
-	}*/
-	
 
 	private void setDate(Calendar date) {
 		this.date = date;
@@ -113,32 +105,5 @@ public class Orderx {
  		}
 		return s;
 	}
-	//public String toString(){
-		
-	//}
-
-	/*public void changeStatusToPayed() {
-		updateOrderInDatabase();
-		this.payed = true;
-	}
-	*/
-	// Private Hilfsmethoden
-
-	/*
-	public boolean saveOrderInDatabase() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	private boolean updateOrderInDatabase() {
-		return false;// Sollte nur benutzt werden um den Paymentstatus in der DB
-						// anzupassen
-	}
-
-	public boolean removeOrderFromDatabase() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	*/
 
 }

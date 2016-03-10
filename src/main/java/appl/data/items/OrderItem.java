@@ -1,7 +1,5 @@
 package appl.data.items;
-/**
- * @author Madeleine
- */
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +11,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
+/**
+ *  Category is a POJO marked as persistent entity with table name
+ * "orderItem". It represents an orderItem object with different variables:
+ * <ul>
+ * <li>orderItemId</li>
+ * <li>price</li>
+ * <li>numberOf</li>
+ * </ul>
+ *{@link Book} is joined via a many-to-one connection.
+ *{@link Orderx} is joined via a many-to-one connection.
+ * @author Madeleine
+ */
 @Entity
 @Table(name = "orderItem", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "orderItemId") })
 public class OrderItem {
@@ -29,14 +38,10 @@ public class OrderItem {
 	/**
 	 * 
 	 * @param book
-	 * @param price
+	 * @param price of ordered {@link Book} at the time an order is created
+	 * @param numberOf defines how many exemplars of that {@link Book} are ordered
+	 * @param order {@link Orderx} to which this Item belongs to
 	 */
-	public OrderItem(Book book, double price, int numberOf){
-		this.book = book;
-		this.price = price;
-		this.numberOf = numberOf;
-	}
-	
 	public OrderItem(Book book, double price, int numberOf, Orderx order){
 		this.book = book;
 		this.price = price;
