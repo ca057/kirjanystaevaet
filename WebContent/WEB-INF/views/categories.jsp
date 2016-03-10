@@ -22,29 +22,33 @@
 				</c:when>
 				<c:otherwise>
 					<h2><c:out value='${name}'/></h2>
-					<article>
-						<p>Folgende Bücher haben wir zu <c:out value='${name}' />:</p>
-						<c:forEach var="book" items="${books}">
-						<div id="wrapper">
-							<h4><c:out value="${book.getTitle()}" /></h4>
-							<p>von
-								<c:set var="delimiter" value="" scope="request"></c:set><c:forEach var="a" items="${book.getAuthors()}">${delimiter}<c:out value="${a.getNameF()}" /> <c:out value="${a.getNameL()}" /><c:set var="delimiter" value=", " scope="request"></c:set></c:forEach>
-							</p>
-							<p><c:out value="${book.getPrice()}" />€ - <a href="<c:url value='/buch/${book.getIsbn()}' />" title="zum Buch <c:out value='${book.getTitle()}' />">zum Buch</a></p>
-					<div class="add-to-cart">
-					<!-- hier brauchen wir noch ein form-element, welches das buch zum Warenkorb hinzufügt -->
-						<form action="../warenkorb" method="post" id="cartForm">
-							<button type="submit" form="cartForm" value='<c:out value="${book.getIsbn()}"></c:out>' name="isbn">
-								<img src="<c:url value="/img/icons/ic_add_shopping_cart_black_36dp.png" />" title="Zum Warenkorb hinzufügen" />
-								<p>In den Warenkorb</p>
-							</button>
-							<sec:csrfInput/>
-						</form>
-					</div>
-					</div>
-						</c:forEach>
-					
-					</article>
+					<c:choose>
+						<c:when test="${books.size() == 0}">
+							<p>Leider haben wir zu dieser Kategorie keine Bücher...</p>
+						</c:when>
+						<c:otherwise>
+							<p>Folgende Bücher haben wir zu <c:out value='${name}' />:</p>
+							<c:forEach var="book" items="${books}">
+								<div id="wrapper">
+									<h4><c:out value="${book.getTitle()}" /></h4>
+									<p>von
+										<c:set var="delimiter" value="" scope="request"></c:set><c:forEach var="a" items="${book.getAuthors()}">${delimiter}<c:out value="${a.getNameF()}" /> <c:out value="${a.getNameL()}" /><c:set var="delimiter" value=", " scope="request"></c:set></c:forEach>
+									</p>
+									<p><c:out value="${book.getPrice()}" />€ - <a href="<c:url value='/buch/${book.getIsbn()}' />" title="zum Buch <c:out value='${book.getTitle()}' />">zum Buch</a></p>
+									<div class="add-to-cart">
+									<!-- hier brauchen wir noch ein form-element, welches das buch zum Warenkorb hinzufügt -->
+										<form action="../warenkorb" method="post" id="cartForm">
+											<button type="submit" form="cartForm" value='<c:out value="${book.getIsbn()}"></c:out>' name="isbn">
+												<img src="<c:url value="/img/icons/ic_add_shopping_cart_black_36dp.png" />" title="Zum Warenkorb hinzufügen" />
+												<p>In den Warenkorb</p>
+											</button>
+											<sec:csrfInput/>
+										</form>
+									</div>
+								</div>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</c:otherwise>
 			</c:choose>
 		</c:otherwise>	
