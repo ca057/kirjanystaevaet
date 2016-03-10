@@ -151,6 +151,18 @@ public class BookServiceImpl implements BookService {
 		throw new DatabaseException(ErrorMessageHelper.entityDoesAlreadyExist("Category"));
 
 	}
+	@Override
+	public void updateCategory(int categoryId, String newCategoryName) throws DatabaseException {
+		try {
+			Category cat = categoryDao.getCategoryById(categoryId);
+			cat.setCategoryName(newCategoryName);
+			categoryDao.updateCategory(cat);
+
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+		
+	}
 
 	@Override
 	public void deleteCategory(String name) throws DatabaseException {
@@ -346,6 +358,25 @@ public class BookServiceImpl implements BookService {
 		return id;
 
 	}
+	@Override
+	public void updateAuthor(int id, Map<Searchfields, String> newData) throws DatabaseException {
+		try {
+		Author author = authorDao.getAuthorByID(id);
+		for (Searchfields s : newData.keySet() ){
+			if (s == Searchfields.nameF){
+				author.setNameF(newData.get(s));
+			} else if ( s == Searchfields.nameL){
+				author.setNameL(newData.get(s));
+			} else {
+				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated(s.toString()));
+			}
+		}
+		authorDao.updateAuthor(author);
+		}catch(HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+		
+	}
 
 	@Override
 	public void deleteAuthor(int id) throws DatabaseException {
@@ -371,6 +402,16 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+	
+	@Override
+	public List<Book> getAllBooks(SearchMode mode, int range) throws DatabaseException {
+		List<Book> books = getAllBooks(mode);
+		if (books.size() < range){
+			return books;
+		}
+		List<Book> smallList = books.subList(0, range);
+		return smallList;
+	}
 
 	// ToDo die MEthode funktioniert nur darüber, dass man über CategoryNAme
 	// bekommt, nicht über die ID, -> Umbenennen!
@@ -395,6 +436,17 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+	
+	@Override
+	public List<Book> getBooksByCategory(String category, SearchMode mode, int range) throws DatabaseException {
+		List<Book> books = getBooksByCategory(category, mode);
+		if (books.size() < range){
+			return books;
+		}
+		List<Book> smallList = books.subList(0, range);
+		return smallList;
+	}
+
 
 
 	@Override
@@ -575,17 +627,40 @@ public class BookServiceImpl implements BookService {
 
 		Book book = bookDao.getBookByIsbn(isbn);
 		
-		for (Searchfields s : data.keySet()) {
-			if (s == Searchfields.isbn || s == Searchfields.edition || s == Searchfields.pubdate
-					|| s == Searchfields.publisher || s == Searchfields.title || s == Searchfields.pages) {
-				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated());
+//		for (Searchfields s : data.keySet()) {
+//			if (s == Searchfields.isbn || s == Searchfields.edition || s == Searchfields.pubdate
+//					|| s == Searchfields.publisher || s == Searchfields.title || s == Searchfields.pages) {
+//				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated());
+//			} else if (s == Searchfields.description) {
+//				book.setDescription(data.get(s));
+//			} else if (s == Searchfields.price) {
+//				double price = Double.parseDouble(data.get(s).replace(",", "."));
+//				book.setPrice(price);
+//			}
+//
+//		}
+		for (Searchfields s : data.keySet()){
+			if (s == Searchfields.isbn){
+				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("isbn"));
 			} else if (s == Searchfields.description) {
 				book.setDescription(data.get(s));
 			} else if (s == Searchfields.price) {
 				double price = Double.parseDouble(data.get(s).replace(",", "."));
 				book.setPrice(price);
+			} else if (s == Searchfields.pages){
+				book.setPages(data.get(s));
+				
+			} else if (s == Searchfields.pubdate){
+				book.setPubdate(data.get(s));
+			} else if (s == Searchfields.edition){
+				book.setEdition(data.get(s));
+			} else if (s == Searchfields.publisher){
+				book.setPublisher(data.get(s));
+			} else if (s == Searchfields.stock){
+				//TODO Christian fragen
+			} else if (s == Searchfields.title){
+				book.setTitle(data.get(s));
 			}
-
 		}
 
 		try {
@@ -756,6 +831,13 @@ public class BookServiceImpl implements BookService {
 		}
 		return map;
 	}
+
+
+
+
+
+
+	
 
 
 

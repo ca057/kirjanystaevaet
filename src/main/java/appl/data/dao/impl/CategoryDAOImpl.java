@@ -3,7 +3,6 @@ package appl.data.dao.impl;
  * @author Madeleine
  */
 import java.util.List;
-import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -13,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import appl.data.dao.CategoryDAO;
-import appl.data.items.Book;
 import appl.data.items.Category;
-import appl.enums.Searchfields;
 import exceptions.data.EntityDoesNotExistException;
 
 @Repository
@@ -60,8 +57,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 		
 	}
 
-
-
 	@Override
 	public List<Category> getCategoriesByName(String categoryName) {
 		
@@ -77,8 +72,8 @@ public class CategoryDAOImpl implements CategoryDAO {
 	}
 
 	@Override
-	public void updateCategory(Book book, Map<Searchfields, String> map) {
-		// TODO Auto-generated method stub
+	public void updateCategory(Category category) {
+		getSession().update(category);
 	}
 
 

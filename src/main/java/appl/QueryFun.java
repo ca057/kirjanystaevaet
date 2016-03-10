@@ -422,9 +422,50 @@ public class QueryFun {
 		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.description, "New Description");
 		map.put(Searchfields.price, "100,11");
+		map.put(Searchfields.title, "New Title");
 		dataService.updateBook("0101010101", map);
 		Book book = dataService.getBookByIsbn("0101010101", SearchMode.ALL);
 		System.out.println(book.toString());
+		
+	}
+	public void testUpdateCategory(ApplicationContext ctx) throws DatabaseException{
+		BookService dataService = ctx.getBean(BookService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
+		UserService userService = ctx.getBean(UserService.class);
+		
+		Category cat = dataService.getCategoryByExactName("PHP");
+		int id = cat.getCategoryID();
+		dataService.updateCategory(id, "stuff");
+		Category newCat = dataService.getCategoryById(id);
+		System.out.println("New cat " + newCat.toString());
+		
+		List<Book> books = dataService.getBooksByCategory("stuff", SearchMode.ALL);
+		for (Book b : books){
+			System.out.println(b.toString());
+		}
+		
+	}
+	
+	public void testUpdateAuthor(ApplicationContext ctx) throws DatabaseException{
+		BookService dataService = ctx.getBean(BookService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
+		UserService userService = ctx.getBean(UserService.class);
+		
+		List<Author> authors = dataService.getAuthorByExactName("Michael", "Ende");
+		Author author = authors.get(0);
+		int id = author.getAuthorId();
+		Map<Searchfields, String> newData = new HashMap<Searchfields, String>();
+		newData.put(Searchfields.nameF, "Someone");
+		newData.put(Searchfields.nameL, "Else");
+		dataService.updateAuthor(id, newData);
+		
+		Book book = dataService.getBookByIsbn("9101010101", SearchMode.ALL);
+		Set<Author> newAuthor = book.getAuthors();
+		System.out.println("New Author in Momo: " + book.toString());
+		System.out.println("New Author in Momo:\n");
+		for (Author a : newAuthor){
+			System.out.println(a.toString());
+		}
 		
 	}
 	
@@ -458,6 +499,23 @@ public class QueryFun {
 //		for (Book b : allBooks){
 //			System.out.println(b.toString());
 //		}
+	}
+	
+	public void testRangeOfBookList(ApplicationContext ctx) throws DatabaseException{
+		BookService dataService = ctx.getBean(BookService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
+		UserService userService = ctx.getBean(UserService.class);
+		List<Book> books = dataService.getAllBooks(SearchMode.ALL, 5);
+		System.out.println("Only 5 books" );
+		for (Book b : books){
+			System.out.println(b.toString());
+		}
+		
+		List<Book> books2 = dataService.getBooksByCategory("MySQL", SearchMode.ALL, 20);
+		System.out.println("Only 20 books" );
+		for (Book b : books2){
+			System.out.println(b.toString());
+		}
 	}
 	/*
 	 * 
