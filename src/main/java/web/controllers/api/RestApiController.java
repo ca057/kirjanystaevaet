@@ -75,7 +75,7 @@ public class RestApiController {
 	 *         not be parsed or is less than 0 or status 500 if an error while
 	 *         requesting data occurs
 	 */
-	@RequestMapping(value = "/api/v1/books/{param}", produces = "application/json", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/v1/books/{param:.+}", produces = "application/json", method = RequestMethod.GET)
 	public ResponseEntity<?> getBooksByParamter(@PathVariable("param") String param,
 			@RequestParam(value = "limit", required = false) String limit) {
 		if (param == null || param.isEmpty() || (limit != null && Long.parseLong(limit) < 0)) {

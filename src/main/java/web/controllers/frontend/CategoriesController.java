@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
-import web.controllers.ControllerHelper;
 
 /**
  * Controller for the route to the categories.
@@ -20,9 +19,6 @@ public class CategoriesController {
 
 	@Autowired
 	private BookService bookService;
-
-	@Autowired
-	private ControllerHelper helper;
 
 	/**
 	 * Adds a list with all existing categories to the model. If an exception
@@ -60,8 +56,9 @@ public class CategoriesController {
 	 * @return the name of the view responsible for displaying a category and
 	 *         its books or a redirect to the category overview
 	 */
-	@RequestMapping(value = "/kategorie/{category}", method = RequestMethod.GET)
+	@RequestMapping(value = "/kategorie/{category:.+}", method = RequestMethod.GET)
 	public String getCategory(@PathVariable("category") String category, Model m) {
+		System.out.println("KATGOR" + category);
 		try {
 			m.addAttribute("name", bookService.getCategoryName(category));
 			m.addAttribute("books", bookService.getBooksByCategory(category, SearchMode.AVAILABLE));
