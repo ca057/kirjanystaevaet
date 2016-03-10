@@ -92,7 +92,8 @@ public class QueryFun {
 
 	public void testCategoryDelete(ApplicationContext ctx) throws DatabaseException {
 		BookService service = ctx.getBean(BookService.class);
-		service.deleteCategory("stricken");
+		Category cat = service.getCategoryByExactName("stricken");
+		service.deleteCategory(cat.getCategoryID());
 		List<String> categoryNames = service.getAllCategoryNames();
 		System.out.println("Nach Delete\n\n");
 		for (String s : categoryNames) {
