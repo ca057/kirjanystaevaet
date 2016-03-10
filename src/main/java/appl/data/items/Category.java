@@ -12,35 +12,42 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
+/**
+ * Category is a POJO marked as persistent entity with table name
+ * "bookcategories". It represents a category object with different variables:
+ * <ul>
+ * <li>categoryId</li>
+ * <li>categoryName</li>
+ * </ul>
+ * @author Madeleine
+ *{@link Set} of {@link Book} is joined via a many-to-many connection.
+ * Category is the owned Entity
+ */
 @Entity
 @Table(name = "bookcategories", schema = "public", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "categoryId") })
 public class Category {
-	private int categoryID;
+	private int categoryId;
 	private String categoryName;
 
 	private Set<Book> books = new HashSet<Book>(0);
-	
-	public Category(){} // Default Konstruktor
+	/**
+	 * Default Constructor, needed by Hibernate
+	 */
+	private Category(){}
 
+	/**
+	 * @param categoryName
+	 */
 	public Category(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	/**
-
-	public Category(String categoryName, Set<Book> books) {
-		super();
-		this.categoryName = categoryName;
-		this.books = books;
-	}
-	**/
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "categoryId", unique = true, nullable = false)
 	public int getCategoryID() {
-		return categoryID;
+		return categoryId;
 	}
 
 	@Column(name = "categoryName", unique = true, nullable = false)
@@ -58,7 +65,7 @@ public class Category {
 	}
 
 	public void setCategoryID(int categoryID) {
-		this.categoryID = categoryID;
+		this.categoryId = categoryID;
 	}
 
 	public void setCategoryName(String categoryName) {
@@ -67,7 +74,7 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "Category [categoryID=" + categoryID + ", CategoryName=" + categoryName + "]";
+		return "Category [categoryID=" + categoryId + ", CategoryName=" + categoryName + "]";
 	}
 
 }
