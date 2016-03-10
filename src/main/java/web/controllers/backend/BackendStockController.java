@@ -47,9 +47,7 @@ public class BackendStockController {
 	public BookService bookService;
 
 	private Predicate<String> stringIsNotNullAndEmpty = s -> s != null && !s.isEmpty();
-	private Predicate<String> stringIsNotNullOrEmpty = s -> s != null || !s.isEmpty();
 	private Predicate<List> listIsNotNullAndEmpty = l -> l != null && !l.isEmpty();
-	private Predicate<List> listIsNotNullOrEmpty = l -> l != null || !l.isEmpty();
 
 	/**
 	 * Handles a simple GET request and returns the name of the backend view for
@@ -185,13 +183,13 @@ public class BackendStockController {
 	private String addBook(List<String> categories, String title, String description, String price, String isbn,
 			String publisher, String day, String month, String year, String edition, String pages, String stock,
 			List<String> authors, MultipartFile file, HttpServletRequest request) {
-		if (listIsNotNullOrEmpty.test(categories) || stringIsNotNullOrEmpty.test(title)
-				|| stringIsNotNullOrEmpty.test(description) || stringIsNotNullOrEmpty.test(price)
-				|| stringIsNotNullOrEmpty.test(isbn) || stringIsNotNullOrEmpty.test(publisher)
-				|| stringIsNotNullOrEmpty.test(day) || stringIsNotNullOrEmpty.test(month)
-				|| stringIsNotNullOrEmpty.test(year) || stringIsNotNullOrEmpty.test(edition)
-				|| stringIsNotNullOrEmpty.test(pages) || stringIsNotNullOrEmpty.test(stock)
-				|| listIsNotNullOrEmpty.test(authors) || file == null || file.isEmpty()) {
+		if (listIsNotNullAndEmpty.test(categories) || stringIsNotNullAndEmpty.test(title)
+				|| stringIsNotNullAndEmpty.test(description) || stringIsNotNullAndEmpty.test(price)
+				|| stringIsNotNullAndEmpty.test(isbn) || stringIsNotNullAndEmpty.test(publisher)
+				|| stringIsNotNullAndEmpty.test(day) || stringIsNotNullAndEmpty.test(month)
+				|| stringIsNotNullAndEmpty.test(year) || stringIsNotNullAndEmpty.test(edition)
+				|| stringIsNotNullAndEmpty.test(pages) || stringIsNotNullAndEmpty.test(stock)
+				|| listIsNotNullAndEmpty.test(authors) || file == null || file.isEmpty()) {
 			throw new IllegalArgumentException("One of the passed values for adding a book is null or empty.");
 		}
 		if (!file.getContentType().contains("image")) {
@@ -280,10 +278,6 @@ public class BackendStockController {
 		return "redirect:/backend/bestand";
 	}
 
-	private String formatPubdate(String day, String month, String year) {
-		return month.trim() + " " + Integer.parseInt(day) + ", " + year;
-	}
-
 	@RequestMapping(value = "/backend/bestand/buecher/stock", method = RequestMethod.POST)
 	public String editStock(@RequestParam(value = "isbn", required = true) String isbn,
 			@RequestParam(value = "stock", required = true) String stock) {
@@ -324,5 +318,21 @@ public class BackendStockController {
 	private void deleteImage(Path path, String title) throws IOException {
 		Files.walk(path).parallel().filter(tmpPath -> tmpPath.toString().contains(title))
 				.forEach(tmpPath -> tmpPath.toFile().delete());
+	}
+
+	/**
+	 * Format the publication date as it is stored in the database. Example
+	 * return value: 'August 15, 2016'
+	 * 
+	 * @param day
+	 *            the day
+	 * @param month
+	 *            the month
+	 * @param year
+	 *            the year
+	 * @return the correct concatenated string
+	 */
+	private String formatPubdate(String day, String month, String year) {
+		return month.trim() + " " + Integer.parseInt(day) + ", " + year;
 	}
 }
