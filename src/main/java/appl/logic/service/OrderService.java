@@ -27,15 +27,43 @@ public interface OrderService {
 
 	public int createOrder(Map<String, Integer> isbnsNumberOf, int userId, Calendar cal) throws DatabaseException;
 	
+	/**
+	 * returns {@link List} with all {@link Orderx}s
+	 * @return
+	 * @throws DatabaseException
+	 */
 	public List<Orderx> getAllOrders() throws DatabaseException;
+	/**
+	 * returns {@link List} with all {@link OrderItem} Might be used for statistics
+	 * @return
+	 * @throws DatabaseException
+	 */
 	public List<OrderItem> getAllOrderItems() throws DatabaseException;
+	/**
+	 * @param userId
+	 * @return {@link Map} with all {@Orderx}s of a {@link User}
+	 * @throws DatabaseException
+	 */
 	public Set<Orderx> getOrdersByUserid(int userId) throws DatabaseException;
-//	public List<Book> getOrderedBooksOfUser(int userId) throws DatabaseException;
-	public List<Map.Entry<String, Integer>> getBestsellers() throws DatabaseException;
-	//public LinkedHashMap<String, Integer> getBestsellers(int range) throws DatabaseException;
+	/**
+	 * Bestsellers determined by number of orders
+	 * @param range to determine how many {@link Book} should be returned
+	 * @return {@link LinkedHashMap} with {@link Book} as key and {@link int} number of orders as value. Datatype guarantuees sorted order of {@link Book}s
+	 * @throws DatabaseException
+	 */
 	public LinkedHashMap<Book, Integer> getBestsellers(int range) throws DatabaseException;
-
-	//public LinkedHashMap<String, Integer> getShelfWarmers(int range) throws DatabaseException;
+	/**
+	 * 
+	 * @param range
+	 * @return 	 * @return {@link LinkedHashMap} with {@link Book} as key and {@link int} number of orders as value. Datatype guarantuees sorted order of {@link Book}s
+	 * @throws DatabaseException
+	 */
 	public LinkedHashMap<Book, Integer> getShelfWarmers(int range) throws DatabaseException;
+	/**
+	 * Calculates the overall price of an order
+	 * @param orderId
+	 * @return
+	 * @throws DatabaseException
+	 */
 	public double getPriceOfOrder(int orderId) throws DatabaseException;
 }
