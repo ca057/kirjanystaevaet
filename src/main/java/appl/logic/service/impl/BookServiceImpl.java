@@ -575,17 +575,40 @@ public class BookServiceImpl implements BookService {
 
 		Book book = bookDao.getBookByIsbn(isbn);
 		
-		for (Searchfields s : data.keySet()) {
-			if (s == Searchfields.isbn || s == Searchfields.edition || s == Searchfields.pubdate
-					|| s == Searchfields.publisher || s == Searchfields.title || s == Searchfields.pages) {
+//		for (Searchfields s : data.keySet()) {
+//			if (s == Searchfields.isbn || s == Searchfields.edition || s == Searchfields.pubdate
+//					|| s == Searchfields.publisher || s == Searchfields.title || s == Searchfields.pages) {
+//				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated());
+//			} else if (s == Searchfields.description) {
+//				book.setDescription(data.get(s));
+//			} else if (s == Searchfields.price) {
+//				double price = Double.parseDouble(data.get(s).replace(",", "."));
+//				book.setPrice(price);
+//			}
+//
+//		}
+		for (Searchfields s : data.keySet()){
+			if (s == Searchfields.isbn){
 				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated());
 			} else if (s == Searchfields.description) {
 				book.setDescription(data.get(s));
 			} else if (s == Searchfields.price) {
 				double price = Double.parseDouble(data.get(s).replace(",", "."));
 				book.setPrice(price);
+			} else if (s == Searchfields.pages){
+				book.setPages(data.get(s));
+				
+			} else if (s == Searchfields.pubdate){
+				book.setPubdate(data.get(s));
+			} else if (s == Searchfields.edition){
+				book.setEdition(data.get(s));
+			} else if (s == Searchfields.publisher){
+				book.setPublisher(data.get(s));
+			} else if (s == Searchfields.stock){
+				//TODO Christian fragen
+			} else if (s == Searchfields.title){
+				book.setTitle(data.get(s));
 			}
-
 		}
 
 		try {
