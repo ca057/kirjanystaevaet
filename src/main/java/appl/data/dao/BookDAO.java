@@ -13,6 +13,11 @@ import exceptions.data.EntityDoesNotExistException;
 
 @Transactional
 public interface BookDAO {
+	/**
+	 * Is not implemented, can be done in the future to extend the project
+	 * @param searchTerm
+	 * @return
+	 */
 
 	public List<Book> getBooksByOpenSearch(String searchTerm);
 
@@ -24,7 +29,6 @@ public interface BookDAO {
 	
 	public Book getBookByIsbn(String isbn) throws EntityDoesNotExistException;
 
-	// public String insertBook(Book book)throws IsbnAlreadyExistsException;
 	public String insertBook(Book book) throws DatabaseException;
 
 	public void deleteBook(String isbn);
