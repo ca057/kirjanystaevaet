@@ -27,21 +27,21 @@
 
 	</ul>
 
-	<ul class="nav navbar-nav navbar-right">
+	<ul class="nav navbar-nav navbar-right divider-vertical">
 	<sec:authorize access="hasRole('USER')">
-		<li><a href="<c:url value='/warenkorb'/>" title="Warenkorb">Warenkorb</a></li>
-		<li><a href="<c:url value='/meinkonto'/>" title="Mein Konto anzeigen">Mein Konto</a></li>
+		<li><a href="<c:url value='/warenkorb'/>" title="Warenkorb"><span class="glyphicon glyphicon-shopping-cart"></span> Warenkorb</a></li>
+		<li><a href="<c:url value='/meinkonto'/>" title="Mein Konto anzeigen"><span class="glyphicon glyphicon-user"></span> Konto</a></li>
 	</sec:authorize>
 	<sec:authorize access="hasAnyRole('USER', 'ADMIN')">
 		<li>
-			<form class="form-inline" action="<c:url value="/logout" />" method="post">
-				<button type="submit" value="Aus Mein Konto abmelden">Abmelden</button>
+			<form action="<c:url value="/logout" />" method="post">
+				<button class="btn" type="submit" value="Aus Mein Konto abmelden"><span class="glyphicon glyphicon-log-out"></span> Abmelden</button>
 				<sec:csrfInput/>
 			</form>
 		</li>
 	</sec:authorize>
 	<sec:authorize access="isAnonymous()">
-		<li class="divider-vertical"></li>
+		<li></li>
 					<li class="dropdown">
 						<a class="dropdown-toggle" href="#" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span> Anmelden </a>
 						<div class="dropdown-menu">
