@@ -6,7 +6,6 @@
 
 <div id="sidebar-wrapper">
 		<ul class="sidebar-nav">
-			<li class="sidebar-brand"><a href="#"> Start Bootstrap </a></li>
 			<li><a href="<c:url value='/backend' />" title="Dashboard">Dashboard</a></li>
 		<li><a href="<c:url value='/backend/bestand' />" title="Bestand verwalten">Bestand verwalten</a>
 			<ul class="navigation-content-sub">
