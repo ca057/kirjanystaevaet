@@ -108,7 +108,7 @@ public interface BookService {
 	public List<Book> getAllBooks(SearchMode mode) throws DatabaseException;
 	public List<Book> getAllBooks(SearchMode mode, int range) throws DatabaseException;
 
-
+	public List<Book> getBooksByCategory(String category, SearchMode mode, int range) throws DatabaseException;
 	public List<Book> getBooksByCategory(String category, SearchMode mode) throws DatabaseException;
 
 	public Book getBookByIsbn(String isbn, SearchMode mode) throws DatabaseException;

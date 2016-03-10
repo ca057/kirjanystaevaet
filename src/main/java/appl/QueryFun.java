@@ -510,6 +510,12 @@ public class QueryFun {
 		for (Book b : books){
 			System.out.println(b.toString());
 		}
+		
+		List<Book> books2 = dataService.getBooksByCategory("MySQL", SearchMode.ALL, 20);
+		System.out.println("Only 20 books" );
+		for (Book b : books2){
+			System.out.println(b.toString());
+		}
 	}
 	/*
 	 * 

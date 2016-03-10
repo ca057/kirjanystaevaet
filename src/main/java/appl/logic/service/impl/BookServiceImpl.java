@@ -406,6 +406,9 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<Book> getAllBooks(SearchMode mode, int range) throws DatabaseException {
 		List<Book> books = getAllBooks(mode);
+		if (books.size() < range){
+			return books;
+		}
 		List<Book> smallList = books.subList(0, range);
 		return smallList;
 	}
@@ -433,6 +436,17 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+	
+	@Override
+	public List<Book> getBooksByCategory(String category, SearchMode mode, int range) throws DatabaseException {
+		List<Book> books = getBooksByCategory(category, mode);
+		if (books.size() < range){
+			return books;
+		}
+		List<Book> smallList = books.subList(0, range);
+		return smallList;
+	}
+
 
 
 	@Override
@@ -817,6 +831,7 @@ public class BookServiceImpl implements BookService {
 		}
 		return map;
 	}
+
 
 
 
