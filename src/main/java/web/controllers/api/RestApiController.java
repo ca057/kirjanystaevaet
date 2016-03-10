@@ -16,11 +16,11 @@ import appl.data.items.Book;
 import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
-import web.controllers.ControllerHelper;
 import web.jsonwrappers.BookJSONWrapper;
 
 /**
- * Controller manages the API.
+ * Controller manages the API, all results are returned as JSON. Only available
+ * books (stock > 0) will be returned.
  * 
  * @author Christian
  *
@@ -31,12 +31,23 @@ public class RestApiController {
 	@Autowired
 	private BookService bookService;
 
-	@Autowired
-	private ControllerHelper helper;
-
+	/**
+	 * Handles a request for retrieving a list with all books. An optional limit
+	 * for the results can be passed which will get parsed to a {@code long}.
+	 * 
+	 * @param limit
+	 *            an optional value to limit the number of {@link Book}s
+	 *            returned
+	 * @return a JSON object with all books and HTTP status 200, no results and
+	 *         status 400 if the limit could not be parsed or is less than 0 or
+	 *         status 500 if an error while requesting data occurs
+	 */
 	@RequestMapping(value = "/api/v1/books", produces = "application/json", method = RequestMethod.GET)
 	public ResponseEntity<List<BookJSONWrapper>> getAllBooks(
 			@RequestParam(value = "limit", required = false) String limit) {
+		if (limit != null && Long.parseLong(limit) < 0) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 		try {
 			List<BookJSONWrapper> allBooks = bookService.getAllBooks(SearchMode.AVAILABLE).stream()
 					.limit((limit == null || limit.isEmpty()) ? Long.MAX_VALUE : Long.parseLong(limit))
@@ -47,42 +58,85 @@ public class RestApiController {
 		}
 	}
 
+	/**
+	 * Handles a more specific request. At the moment two different modes are
+	 * possible: If the last part of the URL is a valid category name, all books
+	 * of this category will get returned, otherwise the parameter will be
+	 * treated as an ISBN number.
+	 * 
+	 * @param param
+	 *            a path variable as parameter to specify the request
+	 * @param limit
+	 *            an optional value to limit the number of {@link Book}s
+	 *            returned
+	 * @return a JSON object with all books fitting the parameter and HTTP
+	 *         status 200, status 204 with result if no books fitting the
+	 *         request were found, status 400 without results if the limit could
+	 *         not be parsed or is less than 0 or status 500 if an error while
+	 *         requesting data occurs
+	 */
 	@RequestMapping(value = "/api/v1/books/{param}", produces = "application/json", method = RequestMethod.GET)
 	public ResponseEntity<?> getBooksByParamter(@PathVariable("param") String param,
 			@RequestParam(value = "limit", required = false) String limit) {
-		if (param == null || param.isEmpty()) {
-			throw new IllegalArgumentException("The passed parameter is null or an empty string.");
+		if (param == null || param.isEmpty() || (limit != null && Long.parseLong(limit) < 0)) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
 			if (bookService.isExistingCategory(param)) {
 				return getBooksByCategory(param, limit);
-			} else {
-				return getBookByIsbn(param);
 			}
+		} catch (DatabaseException ignore) {
+			// ignore and try as ISBN
+		}
+		return getBookByIsbn(param);
+	}
+
+	/**
+	 * Method for handling a request for all books of a specified category.
+	 * 
+	 * @param category
+	 *            the name of the category
+	 * @param limit
+	 *            an optional limit
+	 * @return the results with status code 200 or an error code without a
+	 *         result
+	 */
+	private ResponseEntity<List<BookJSONWrapper>> getBooksByCategory(String category, String limit) {
+		if (category == null || category.isEmpty() || (limit != null && Long.parseLong(limit) < 0)) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		try {
+			return new ResponseEntity<List<BookJSONWrapper>>(
+					bookService.getBooksByCategory(category, SearchMode.AVAILABLE).stream()
+							.limit((limit == null || limit.isEmpty()) ? Long.MAX_VALUE : Long.parseLong(limit))
+							.map(b -> new BookJSONWrapper(b)).collect(Collectors.toList()),
+					HttpStatus.OK);
 		} catch (DatabaseException e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	private ResponseEntity<List<BookJSONWrapper>> getBooksByCategory(String category, String limit)
-			throws DatabaseException {
-		if (category == null || category.isEmpty()) {
-			throw new IllegalArgumentException("The passed category is null or an empty string.");
-		}
-		return new ResponseEntity<List<BookJSONWrapper>>(bookService.getBooksByCategory(category, SearchMode.AVAILABLE)
-				.stream().limit((limit == null || limit.isEmpty()) ? Long.MAX_VALUE : Long.parseLong(limit))
-				.map(b -> new BookJSONWrapper(b)).collect(Collectors.toList()), HttpStatus.OK);
-	}
-
-	private ResponseEntity<BookJSONWrapper> getBookByIsbn(String isbn) throws DatabaseException {
+	/**
+	 * Method for handling a request for an ISBN
+	 * 
+	 * @param isbn
+	 *            the requested ISBN
+	 * @return the corresponding {@link Book} with status code 200, status code
+	 *         204 without any result if it is not available or an error code
+	 */
+	private ResponseEntity<BookJSONWrapper> getBookByIsbn(String isbn) {
 		if (isbn == null || isbn.isEmpty()) {
-			throw new IllegalArgumentException("The passed category is null or an empty string.");
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		Book book = bookService.getBookByIsbn(isbn, SearchMode.AVAILABLE);
-		if (book.getStock() > 0) {
-			return new ResponseEntity<BookJSONWrapper>(new BookJSONWrapper(book), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		try {
+			Book book = bookService.getBookByIsbn(isbn, SearchMode.ALL);
+			if (book.getStock() > 0) {
+				return new ResponseEntity<BookJSONWrapper>(new BookJSONWrapper(book), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+		} catch (DatabaseException e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

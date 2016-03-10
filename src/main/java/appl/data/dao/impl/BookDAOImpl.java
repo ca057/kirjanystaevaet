@@ -44,11 +44,6 @@ public class BookDAOImpl implements BookDAO {
 		// return cr.createAlias("categories", "c").createAlias("authors", "a");
 	}
 
-	@Override
-	public List<Book> getAllBooks() {
-		return getSession().createCriteria(Book.class).list();
-	}
-
 	private Criteria getCriteriaForSell(Criteria cr) {
 		cr.add(Restrictions.ge("stock", 0));
 		return cr;
@@ -128,38 +123,27 @@ public class BookDAOImpl implements BookDAO {
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
 				break;
 			case price:
-				// TODO
-				// Siehe Issue #14
+				double price = Double.parseDouble( entry.getValue().replace(",",".") );
+				cr.add(Restrictions.between(key, price-5, price+5));
 				break;
 			case publisher:
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
 				break;
 			case pubdate:
-				System.out.println("\n\nI am in pubdate\n\nEntry:_" + entry.getValue());
-				System.out.println("Key: " + key);
-				cr.add(Restrictions.eq(key, "%" + entry.getValue()));
-//				cr.add(Restrictions.ilike(key, "%2006%"));
-				// TODO Nur das Jahr
-				// Siehe Issue #13
+				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
 				break;
 			case edition:
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
 				break;
 			case pages:
-				// TODO
-				// Range? Überhaupt in der Suche?
+				cr.add(Restrictions.eq(key, entry.getValue()));
 				break;
-
 			}
 		}
-		System.out.println(cr.toString());
 		List<Book> result = cr.list();
-
 		return result;
 
 	}
-
-
 
 	@Override
 	public Book getBookByIsbn(String isbn) throws EntityDoesNotExistException {
@@ -175,11 +159,8 @@ public class BookDAOImpl implements BookDAO {
 	}
 
 	@Override
-	// public String insertBook(Book book) throws IsbnAlreadyExistsException {
 	public String insertBook(Book book) throws DatabaseException {
 		Object id = getSession().save(book);
-
-		// if (id instanceof String){
 		if (id != null && id instanceof String) {
 			return (String) id;
 		} else {

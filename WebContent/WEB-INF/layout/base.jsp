@@ -14,6 +14,7 @@
 
 	<link href="<s:url value='/css/bootstrap.min.css'/>" rel="stylesheet">
 	<link rel="stylesheet" href="<s:url value='/css/style.css'/>">
+	<link rel="stylesheet" href="<s:url value='/css/login-popup.css'/>">
 	
 	<script type="text/javascript" src="<s:url value='/js/jquery-2.2.1.min.js' />"></script>
 	<script type="text/javascript" src="<s:url value='/js/elevator.min.js' />"></script>

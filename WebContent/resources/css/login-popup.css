@@ -1,0 +1,20 @@
+/* give the span a behaviour similar to a link */
+#login-handler span {
+	pointer: cursor;
+}
+
+#login-handler:HOVER span {
+	text-decoration: underline;
+}
+
+/* the popup is not visible in the beginning */
+#login-popup {
+	position: absolute;
+	display: none;
+	background-color: red;
+}
+
+/* if you hover over the handler (aka list element), change the display-property of the popup */
+#login-handler:HOVER #login-popup {
+	display: block;
+}
