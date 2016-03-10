@@ -27,15 +27,18 @@ import javax.persistence.UniqueConstraint;
  * <li>pubdate</li>
  * <li>edition</li>
  * <li>pages</li>
+ * <li>stock</li>
+ * <li>visitCount</li>
  * </ul>
- * Lists of {@link Author} and {@link Category} are joined via many-to-many
+ * {@link Set}s of {@link Author} and {@link Category} are joined via many-to-many
+ * connections.
+ * {@link Set}s of {@link OrderItem} and {@link UserBookStatistic} are joined via one-to-many
  * connections.
  * 
  * @author Johannes
  * @author Madeleine
  *
  */
-// TODO Javadoc updaten
 @Entity
 @Table(name = "bookdescriptions", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "isbn") })
 public class Book {
@@ -227,7 +230,6 @@ public class Book {
 
 	@Override
 	public String toString() {
-		// TODO Category
 		return "Book [isbn=" + isbn + ", title=" + title + ", description=" + description + ", price=" + price
 				+ ", publisher=" + publisher + ", pubdate=" + pubdate + ", edition=" + edition + ", pages=" + pages
 				+ ", stock=" + stock + "]";
