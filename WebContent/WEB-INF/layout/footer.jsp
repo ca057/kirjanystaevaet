@@ -4,7 +4,7 @@
 <ul class="list-inline">
 	<li><a href="#" title="zurück nach oben" class="to-top">nach oben</a></li>
 	<li><a href="<c:url value='/'/>" title="zur Startseite">Startseite</a></li>
-	<li>zum Login</li>
+	<li><a href="<c:url value='/login'/>" title="zur Login">zum Login</a></li>
 	<li><a href="<c:url value='/kontakt'/>" title="Kontakt und Impressum">Kontakt/Impressum</a></li>
 </ul>
 <ul class="list-inline">

@@ -254,9 +254,14 @@ div#homerow{
 	width:40%;
 }
 
+#logout-form {
+	height: 100%;
+}
+
 #logout-button {
 	background-color: inherit;
 	color: rgb(119, 119, 119);
+	height: inherit;
 }
 
 #logout-button:HOVER {
