@@ -86,17 +86,17 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map, SearchMode mode) {
 		Criteria cr = setupAndGetCriteria();
-		switch (mode) {
-		case ALL:
-			break;
-		case SELL:
-			cr = getCriteriaForSell(cr);
-			break;
-
-		case AVAILABLE:
-			cr = getCriteriaForAvailable(cr);
-			break;
-		}
+//		switch (mode) {
+//		case ALL:
+//			break;
+//		case SELL:
+//			cr = getCriteriaForSell(cr);
+//			break;
+//
+//		case AVAILABLE:
+//			cr = getCriteriaForAvailable(cr);
+//			break;
+//		}
 
 		cr.createAlias("categories", "c").createAlias("authors", "a");
 		for (Entry<Searchfields, String> entry : map.entrySet()) {
@@ -137,7 +137,7 @@ public class BookDAOImpl implements BookDAO {
 			case pubdate:
 				System.out.println("\n\nI am in pubdate\n\nEntry:_" + entry.getValue());
 				System.out.println("Key: " + key);
-				cr.add(Restrictions.eq(key, "%" + entry.getValue()));
+				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
 //				cr.add(Restrictions.ilike(key, "%2006%"));
 				// TODO Nur das Jahr
 				// Siehe Issue #13
@@ -154,6 +154,10 @@ public class BookDAOImpl implements BookDAO {
 		}
 		System.out.println(cr.toString());
 		List<Book> result = cr.list();
+		System.out.println("Ergebnisliste: \n");
+		for (Book b : result){
+			System.out.println(b.toString());
+		}
 
 		return result;
 
