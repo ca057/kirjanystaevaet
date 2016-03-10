@@ -90,6 +90,8 @@ public interface BookService {
 	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws AuthorMayExistException;
 
 	// Update
+	
+	public void updateAuthor(int id, Map<Searchfields, String> newData) throws DatabaseException;
 
 	// Delete
 	/**
@@ -98,7 +100,7 @@ public interface BookService {
 	 * @throws DatabaseException
 	 *             If Author does not exist, or if a general DB-Error Happens
 	 */
-	void deleteAuthor(int id) throws DatabaseException;
+	public void deleteAuthor(int id) throws DatabaseException;
 
 	// Book Methoden
 

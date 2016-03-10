@@ -96,7 +96,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 
 	@Override
 	public void updateAuthor(Author author) {
-		// TODO Auto-generated method stub
+		getSession().update(author);
 	}
 
 	@Override

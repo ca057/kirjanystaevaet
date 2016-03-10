@@ -358,6 +358,25 @@ public class BookServiceImpl implements BookService {
 		return id;
 
 	}
+	@Override
+	public void updateAuthor(int id, Map<Searchfields, String> newData) throws DatabaseException {
+		try {
+		Author author = authorDao.getAuthorByID(id);
+		for (Searchfields s : newData.keySet() ){
+			if (s == Searchfields.nameF){
+				author.setNameF(newData.get(s));
+			} else if ( s == Searchfields.nameL){
+				author.setNameL(newData.get(s));
+			} else {
+				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated(s.toString()));
+			}
+		}
+		authorDao.updateAuthor(author);
+		}catch(HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+		
+	}
 
 	@Override
 	public void deleteAuthor(int id) throws DatabaseException {
@@ -601,7 +620,7 @@ public class BookServiceImpl implements BookService {
 //		}
 		for (Searchfields s : data.keySet()){
 			if (s == Searchfields.isbn){
-				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated());
+				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("isbn"));
 			} else if (s == Searchfields.description) {
 				book.setDescription(data.get(s));
 			} else if (s == Searchfields.price) {
@@ -791,6 +810,8 @@ public class BookServiceImpl implements BookService {
 		}
 		return map;
 	}
+
+
 
 	
 

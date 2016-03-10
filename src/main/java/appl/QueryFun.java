@@ -446,6 +446,29 @@ public class QueryFun {
 		
 	}
 	
+	public void testUpdateAuthor(ApplicationContext ctx) throws DatabaseException{
+		BookService dataService = ctx.getBean(BookService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
+		UserService userService = ctx.getBean(UserService.class);
+		
+		List<Author> authors = dataService.getAuthorByExactName("Michael", "Ende");
+		Author author = authors.get(0);
+		int id = author.getAuthorId();
+		Map<Searchfields, String> newData = new HashMap<Searchfields, String>();
+		newData.put(Searchfields.nameF, "Someone");
+		newData.put(Searchfields.nameL, "Else");
+		dataService.updateAuthor(id, newData);
+		
+		Book book = dataService.getBookByIsbn("9101010101", SearchMode.ALL);
+		Set<Author> newAuthor = book.getAuthors();
+		System.out.println("New Author in Momo: " + book.toString());
+		System.out.println("New Author in Momo:\n");
+		for (Author a : newAuthor){
+			System.out.println(a.toString());
+		}
+		
+	}
+	
 	public void testGetBooksSell(ApplicationContext ctx) throws DatabaseException{
 		BookService dataService = ctx.getBean(BookService.class);
 		OrderService orderService = ctx.getBean(OrderService.class);
