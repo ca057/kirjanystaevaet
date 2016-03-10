@@ -55,6 +55,7 @@ public interface BookService {
 	public int insertCategory(String name) throws DatabaseException;
 
 	// Update
+	public void updateCategory(int categoryId, String newCategoryName) throws DatabaseException;
 
 	// Delete
 

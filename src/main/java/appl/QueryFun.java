@@ -428,6 +428,23 @@ public class QueryFun {
 		System.out.println(book.toString());
 		
 	}
+	public void testUpdateCategory(ApplicationContext ctx) throws DatabaseException{
+		BookService dataService = ctx.getBean(BookService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
+		UserService userService = ctx.getBean(UserService.class);
+		
+		Category cat = dataService.getCategoryByExactName("PHP");
+		int id = cat.getCategoryID();
+		dataService.updateCategory(id, "stuff");
+		Category newCat = dataService.getCategoryById(id);
+		System.out.println("New cat " + newCat.toString());
+		
+		List<Book> books = dataService.getBooksByCategory("stuff", SearchMode.ALL);
+		for (Book b : books){
+			System.out.println(b.toString());
+		}
+		
+	}
 	
 	public void testGetBooksSell(ApplicationContext ctx) throws DatabaseException{
 		BookService dataService = ctx.getBean(BookService.class);

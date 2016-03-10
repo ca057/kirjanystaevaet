@@ -151,6 +151,18 @@ public class BookServiceImpl implements BookService {
 		throw new DatabaseException(ErrorMessageHelper.entityDoesAlreadyExist("Category"));
 
 	}
+	@Override
+	public void updateCategory(int categoryId, String newCategoryName) throws DatabaseException {
+		try {
+			Category cat = categoryDao.getCategoryById(categoryId);
+			cat.setCategoryName(newCategoryName);
+			categoryDao.updateCategory(cat);
+
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+		
+	}
 
 	@Override
 	public void deleteCategory(String name) throws DatabaseException {
@@ -779,6 +791,8 @@ public class BookServiceImpl implements BookService {
 		}
 		return map;
 	}
+
+	
 
 
 

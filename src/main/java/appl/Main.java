@@ -48,6 +48,7 @@ public class Main {
 		qf.testUpdateBook(ctx);
 //		qf.testGetBooksSell(ctx);
 //		qf.testGetShelveWarmers(ctx);
+		qf.testUpdateCategory(ctx);
 //		
 
 		//qf.testUser(ctx);
