@@ -41,7 +41,7 @@
 		</li>
 	</sec:authorize>
 	<sec:authorize access="isAnonymous()">
-		<li id="login-handler"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Anmelden
+		<li id="login-handler"><a href="<c:url value='/login'/>"><span class="glyphicon glyphicon-log-in"></span> Anmelden
 			<!--  <div id="login-popup">
 				<form action="<c:url value="/login" />" method="post">
 					<fieldset>
