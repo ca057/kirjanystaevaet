@@ -2,7 +2,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<ul class="navigation-content list-inline">
+<div class="navbar navbar-default container-fluid">
+<ul class="nav navbar-nav">
 	<c:choose>
 		<c:when test="${navigation != null}">
 			<c:forEach var="nav" items="${navigation}">
@@ -15,14 +16,16 @@
 	</c:choose>
 
 	<li><a href="<c:url value='/suche' />" title="Suche">Suche</a></li>
-	<li><a href="<c:url value='/kontakt'/>" title="Kontakt und Impressum">Kontakt/Impressum</a></li>
 
+	</ul>
+
+	<ul class="nav navbar-nav navbar-right">
 	<sec:authorize access="hasRole('USER')">
 		<li><a href="<c:url value='/warenkorb'/>" title="Warenkorb">Warenkorb</a></li>
-		<li class="float-right"><a href="<c:url value='/meinkonto'/>" title="Mein Konto anzeigen">Mein Konto</a></li>
+		<li><a href="<c:url value='/meinkonto'/>" title="Mein Konto anzeigen">Mein Konto</a></li>
 	</sec:authorize>
 	<sec:authorize access="hasAnyRole('USER', 'ADMIN')">
-		<li class="float-right">
+		<li>
 			<form class="form-inline" action="<c:url value="/logout" />" method="post">
 				<button type="submit" value="Aus Mein Konto abmelden">Abmelden</button>
 				<sec:csrfInput/>
@@ -30,8 +33,8 @@
 		</li>
 	</sec:authorize>
 	<sec:authorize access="isAnonymous()">
-		<li class="float-right" id="login-handler"><span>Anmelden</span>
-			<div id="login-popup">
+		<li id="login-handler"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Anmelden
+			<!--  <div id="login-popup">
 				<form action="<c:url value="/login" />" method="post">
 					<fieldset>
 						<legend>Login</legend>
@@ -46,8 +49,8 @@
 						<sec:csrfInput/>
 					</fieldset>
 				</form>
-			</div>
-		</li>
+			</div> -->
+		</a></li>
 	</sec:authorize>
 </ul>
 
@@ -88,3 +91,4 @@
 		<li><a href="<c:url value='/backend/einstellungen' />" title="Einstellungen">Einstellungen</a></li>
 	</ul>
 </sec:authorize>
+</div>
