@@ -206,6 +206,11 @@ ul.navigation-content li:hover .navigation-content-sub {
 /* on homepage */
 form * {
 	display: block;
+	margin-bottom:0.3em;
+}
+
+.dropdown-menu * {
+	padding: 0 0.3em 0.3em 0.3em;
 }
 
 /* animations */
