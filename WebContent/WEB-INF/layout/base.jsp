@@ -40,7 +40,23 @@
 			</nav>
 		
 			<div id="content" class="container-fluid">
-					<t:insertAttribute name="content"></t:insertAttribute>
+				<sec:authorize var="loggedIn" access="hasRole('ADMIN')" />
+					<c:choose>
+						 <c:when test="${loggedIn}"> 
+						 	<div class="row">
+						 		<div class="col-sm-3 col-md-2 sidebar">
+									<t:insertAttribute name="sidebar"></t:insertAttribute>
+								</div>
+								<div class="col-sm-9 col-md-10">
+									<t:insertAttribute name="content"></t:insertAttribute>
+								</div>
+							</div>
+   						 </c:when>
+   						 <c:otherwise>
+        						<t:insertAttribute name="content"></t:insertAttribute>
+   						 </c:otherwise>
+					</c:choose>
+					
 			</div>
 		</div>
 		
