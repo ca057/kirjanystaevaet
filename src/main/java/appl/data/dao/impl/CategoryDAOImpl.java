@@ -57,8 +57,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 		
 	}
 
-
-
 	@Override
 	public List<Category> getCategoriesByName(String categoryName) {
 		
