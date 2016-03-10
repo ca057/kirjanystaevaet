@@ -40,7 +40,7 @@
 			</sec:authorize>
 			<sec:authorize access="hasAnyRole('USER', 'ADMIN')">
 				<li>
-					<form action="<c:url value="/logout" />" method="post">
+					<form id="logout-form" action="<c:url value="/logout" />" method="post">
 						<button class="btn" id="logout-button" type="submit"
 							value="Abmelden">
 							<span class="glyphicon glyphicon-log-out"></span> Abmelden
@@ -53,7 +53,7 @@
 				<li></li>
 				<li class="dropdown"><a class="dropdown-toggle" href="#"
 					data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span>
-						Anmelden </a>
+						Anmelden</a>
 					<div class="dropdown-menu">
 						<form method="post" action="<c:url value="/login" />"
 							method="post">
