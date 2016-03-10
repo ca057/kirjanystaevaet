@@ -226,6 +226,30 @@
 				</c:otherwise>
 			</c:choose>
 		</form>
+		
+		<h4 id="bestand-aendern">Bestand eines bestehenden Buches ändern</h4>
+		<c:choose>
+			<c:when test="${books.isEmpty()}">
+				<p>Noch keine Bücher in der Datenbank vorhanden.</p>
+			</c:when>
+			<c:otherwise>
+				<p>Die eingetragenen Änderungen werden zum bisherigen Bestand hinzu addiert bzw. abgezogen.</p>
+				<form action="bestand/buecher/stock" method="POST">
+					<label for="buecher-stock-isbn"></label>
+					<select name="isbn" id=buecher-stock-isbn required>
+						<c:forEach var="book" items="${books}">
+							<option value="${book.getIsbn()}"><c:out
+									value="${book.getIsbn()}"></c:out>:
+								<c:out value="${book.getTitle()}"></c:out></option>
+						</c:forEach>
+					</select>
+					<label for="buecher-stock-stock">Änderung:</label>
+					<input type="number" id="buecher-stock-stock" name="stock" placeholder="Änderung eingeben">
+					<button type="submit">Bestand ändern</button>
+					<sec:csrfInput />
+				</form>
+			</c:otherwise>
+		</c:choose>
 
 		<h4 id="buecher-loeschen">Bestehendes Buch löschen</h4>
 		<c:choose>

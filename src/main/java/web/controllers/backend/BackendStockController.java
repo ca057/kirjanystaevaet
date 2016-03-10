@@ -282,7 +282,9 @@ public class BackendStockController {
 	public String editStock(@RequestParam(value = "isbn", required = true) String isbn,
 			@RequestParam(value = "stock", required = true) String stock) {
 		try {
+			System.out.println("Davor: " + bookService.getBookByIsbn(isbn, SearchMode.ALL).getStock());
 			bookService.updateStock(isbn, Integer.parseInt(stock));
+			System.out.println("Danach: " + bookService.getBookByIsbn(isbn, SearchMode.ALL).getStock());
 		} catch (NumberFormatException | DatabaseException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
