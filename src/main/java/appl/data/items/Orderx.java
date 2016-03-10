@@ -98,6 +98,7 @@ public class Orderx {
 	}
 
 
+	@Override
 	public String toString(){
 		String s = "OrderId + " +orderId + " UserId" +user.getUserId() + " UserSurName " + user.getSurname() + "\n" + "Amount of Ordered Items " +orderItems.size() + "\n";
 		for (OrderItem a : orderItems){

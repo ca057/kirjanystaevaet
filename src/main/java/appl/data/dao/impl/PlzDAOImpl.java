@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,7 +29,7 @@ public class PlzDAOImpl implements PlzDAO {
 		if (sessionFactory == null) {
 			throw new RuntimeException("[Error] SessionFactory is null");
 		}
-		Criteria cr = getSession().createCriteria(PLZ.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		Criteria cr = getSession().createCriteria(PLZ.class).setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		return cr;
 	}
 
@@ -53,13 +54,13 @@ public class PlzDAOImpl implements PlzDAO {
 
 	@Override
 	public List<PLZ> getPLZByPostalCode(String postalCode) {
-		return (List<PLZ>) setupAndGetCriteria().add(Restrictions.ilike(Userfields.postcode.toString(), postalCode))
+		return setupAndGetCriteria().add(Restrictions.ilike(Userfields.postcode.toString(), postalCode))
 				.list();
 	}
 
 	@Override
 	public List<PLZ> getPLZByPlace(String place) {
-		return (List<PLZ>) setupAndGetCriteria().add(Restrictions.ilike(Userfields.place.toString(), place)).list();
+		return setupAndGetCriteria().add(Restrictions.ilike(Userfields.place.toString(), place)).list();
 	}
 
 }

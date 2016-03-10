@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -32,7 +33,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 		}
 		Session s = getSession();
 		Criteria cr = s.createCriteria(Category.class);
-		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		cr.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		return cr;
 		//return cr.createAlias("books", "b").createAlias("authors", "a");
 		//return cr.createAlias("books", "b"); // Category hat keinen Author -> kein Alias dafür angeben
@@ -62,7 +63,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 		
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.ilike("categoryName", "%" + categoryName + "%" ));
-		return (List<Category>) cr.list();
+		return cr.list();
 	}
 
 	@Override
@@ -89,8 +90,9 @@ public class CategoryDAOImpl implements CategoryDAO {
 			throw new EntityDoesNotExistException();
 		}
 	}
+	@Override
 	public void deleteCategory(int id){
-		Category category = (Category) getSession().get(Category.class, id);			             
+		Category category = getSession().get(Category.class, id);			             
 		getSession().delete(category);
 	}
 

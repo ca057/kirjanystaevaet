@@ -8,6 +8,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -32,7 +33,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 		}
 		Session s = getSession();
 		Criteria cr = s.createCriteria(Author.class);
-		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		cr.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		
 		return cr;
 
@@ -50,7 +51,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 	public List<Author> getAuthorsByNameF(String nameF) {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.ilike("nameF", nameF));
-		List<Author> authors = (List<Author>) cr.list();
+		List<Author> authors = cr.list();
 		
 		return authors;
 	}
@@ -59,7 +60,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 	public List<Author> getAuthorsByNameL(String nameL) {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.ilike("nameL", nameL));
-		List<Author> authors = (List<Author>) cr.list();
+		List<Author> authors = cr.list();
 		
 		return authors;
 	}
@@ -100,7 +101,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq("nameF", nameF));
 		cr.add(Restrictions.eq("nameL", nameL));
-		List<Author> authors = (List<Author>) cr.list();
+		List<Author> authors = cr.list();
 		return authors;
 	}
 
@@ -109,7 +110,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 		Criteria cr = setupAndGetCriteria();
 		cr.createAlias("books", "b");
 		cr.add(Restrictions.eq("b.isbn", isbn));
-		List<Author> authors = (List<Author>) cr.list();
+		List<Author> authors = cr.list();
 		return authors;
 	}
 
