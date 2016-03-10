@@ -87,71 +87,7 @@ public class OrderServiceImpl implements OrderService{
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
-	@Override
-	public List<Book> getOrderedBooksOfUser(int userId) throws DatabaseException {
-		try{
-			List<Book> books = orderDao.getOrderedBook(userId);
-			return books;
-		} catch(HibernateException e){
-			e.printStackTrace();
-			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}
-//		Set<Orderx> orders = getOrdersByUserid(userId);
-//		Set<Book> books = new HashSet<Book>();
-//		for(Orderx o : orders){
-//			Set<OrderItem> orderItems = o.getOrderItems();
-//			for(OrderItem i : orderItems){
-//				books.add(i.getBook());
-//			}
-//		}
-		//return books;
-	}
-//	@Override
-//	public LinkedHashMap<String, Integer> getShelfWarmers(int range) throws DatabaseException {
-//		List<Book> shelfWarmers = orderDao.getBooksWithoutOrderItem();
-//		LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
-//		// sortedMap zunächst mit allen Books auffüllen, die gar nicht bestellt wurden
-//		for (Book b : shelfWarmers){
-//			sortedMap.put(b.getIsbn(), 0);
-//			range--;
-//			if (range < 1){
-//				break;
-//			}
-//		
-//		}
-//		// Wenn vom range noch was übrig ist, mit der umgekehrten BestsellerListe auffüllen
-//		if (range > 0){
-//			List<OrderItem> orderItems = orderItemDao.getAllOrderItems();
-//			Map<String, Integer> tmpMap = new HashMap<String, Integer>();
-//			List<Map.Entry<String, Integer>> bestsellerList = new ArrayList<Map.Entry<String, Integer>>();
-//
-//
-//			for (OrderItem o : orderItems){
-//				if(tmpMap.get(o.getBook().getIsbn())!= null){
-//					tmpMap.put(o.getBook().getIsbn(), tmpMap.get(o.getBook().getIsbn()) + o.getNumberOf());
-//				} else {
-//					tmpMap.put(o.getBook().getIsbn(), o.getNumberOf());
-//				}
-//			}
-//			bestsellerList.addAll(tmpMap.entrySet());
-//			// Sortieren
-//			
-//			Collections.sort(bestsellerList, new Comparator<Map.Entry<String, Integer>>() {
-//				public int compare(Map.Entry<String, Integer> o1,
-//	                                           Map.Entry<String, Integer> o2) {
-//					return (o1.getValue()).compareTo(o2.getValue());
-//				}
-//			});
-//			for (Map.Entry<String, Integer> e : bestsellerList){
-//				sortedMap.put(e.getKey(), e.getValue());
-//				range--;
-//				if (range < 1){
-//					break;
-//				}
-//			}
-//		}
-//		return sortedMap;
-//	}
+
 	@Override
 	public LinkedHashMap<Book, Integer> getShelfWarmers(int range) throws DatabaseException {
 		List<Book> shelfWarmers = orderDao.getBooksWithoutOrderItem();
@@ -229,85 +165,14 @@ public class OrderServiceImpl implements OrderService{
 					break;
 				}
 			}
-//			for (Iterator<Map.Entry<String, Integer>> it = bestsellerList.iterator(); it.hasNext();) {
-//				Map.Entry<String, Integer> entry = it.next();
-//				sortedMap.put(entry.getKey(), entry.getValue());
-//			}
+
 			return sortedMap;
 			
 		} catch (HibernateException e){
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
-//	@Override
-//	public LinkedHashMap<String, Integer> getBestsellers(int range) throws DatabaseException {
-//		List<Map.Entry<String, Integer>> bestsellerList = new ArrayList<Map.Entry<String, Integer>>();
-//		Map<String, Integer> tmpMap = new HashMap<String, Integer>();
-//		try {
-//			List<OrderItem> orderItems = orderItemDao.getAllOrderItems();
-//			for (OrderItem o : orderItems){
-//				if(tmpMap.get(o.getBook().getIsbn())!= null){
-//					tmpMap.put(o.getBook().getIsbn(), tmpMap.get(o.getBook().getIsbn()) + o.getNumberOf());
-//				} else {
-//					tmpMap.put(o.getBook().getIsbn(), o.getNumberOf());
-//				}
-//			}
-//			bestsellerList.addAll(tmpMap.entrySet());
-//			// Sortieren
-//			
-//			Collections.sort(bestsellerList, new Comparator<Map.Entry<String, Integer>>() {
-//				public int compare(Map.Entry<String, Integer> o1,
-//	                                           Map.Entry<String, Integer> o2) {
-//					return (o2.getValue()).compareTo(o1.getValue());
-//				}
-//			});
-//			LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
-//			int i = range;
-//			for (Map.Entry<String, Integer> e : bestsellerList){
-//				sortedMap.put(e.getKey(), e.getValue());
-//				i--;
-//				if (i < 1){
-//					break;
-//				}
-//			}
-////			for (Iterator<Map.Entry<String, Integer>> it = bestsellerList.iterator(); it.hasNext();) {
-////				Map.Entry<String, Integer> entry = it.next();
-////				sortedMap.put(entry.getKey(), entry.getValue());
-////			}
-//			return sortedMap;
-//			
-//		} catch (HibernateException e){
-//			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-//		}
-//	}
-	@Override
-	public List<Map.Entry<String, Integer>> getBestsellers() throws DatabaseException {
-		List<Map.Entry<String, Integer>> bestsellers = new ArrayList<Map.Entry<String, Integer>>();
-		Map<String, Integer> tmpMap = new HashMap<String, Integer>();
-		try {
-			List<OrderItem> orderItems = orderItemDao.getAllOrderItems();
-			for (OrderItem o : orderItems){
-				if(tmpMap.get(o.getBook().getIsbn())!= null){
-					tmpMap.put(o.getBook().getIsbn(), tmpMap.get(o.getBook().getIsbn()) + o.getNumberOf());
-				} else {
-					tmpMap.put(o.getBook().getIsbn(), o.getNumberOf());
-				}
-			}
-			bestsellers.addAll(tmpMap.entrySet());
-			// Sortieren
-			
-			Collections.sort(bestsellers, new Comparator<Map.Entry<String, Integer>>() {
-				public int compare(Map.Entry<String, Integer> o1,
-	                                           Map.Entry<String, Integer> o2) {
-					return (o2.getValue()).compareTo(o1.getValue());
-				}
-			});
-			
-			return bestsellers;
-		} catch (HibernateException e){
-			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}
-	}
+
 	@Override
 	public double getPriceOfOrder(int orderId) throws DatabaseException {
 		Orderx order = orderDao.getOrderByOrderId(orderId);

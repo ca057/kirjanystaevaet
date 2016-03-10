@@ -33,7 +33,7 @@ public class RestApiController {
 
 	/**
 	 * Handles a request for retrieving a list with all books. An optional limit
-	 * for the results can be passed which will get parsed to a {@code long}.
+	 * for the results can be passed which will get parsed to an {@code int}.
 	 * 
 	 * @param limit
 	 *            an optional value to limit the number of {@link Book}s
@@ -45,13 +45,12 @@ public class RestApiController {
 	@RequestMapping(value = "/api/v1/books", produces = "application/json", method = RequestMethod.GET)
 	public ResponseEntity<List<BookJSONWrapper>> getAllBooks(
 			@RequestParam(value = "limit", required = false) String limit) {
-		if (limit != null && Long.parseLong(limit) < 0) {
+		if (limit != null && Integer.parseInt(limit) < 0) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
-			List<BookJSONWrapper> allBooks = bookService.getAllBooks(SearchMode.AVAILABLE).stream()
-					.limit((limit == null || limit.isEmpty()) ? Long.MAX_VALUE : Long.parseLong(limit))
-					.map(b -> new BookJSONWrapper(b)).collect(Collectors.toList());
+			List<BookJSONWrapper> allBooks = bookService.getAllBooks(SearchMode.AVAILABLE, Integer.parseInt(limit))
+					.stream().map(b -> new BookJSONWrapper(b)).collect(Collectors.toList());
 			return new ResponseEntity<List<BookJSONWrapper>>(allBooks, HttpStatus.OK);
 		} catch (DatabaseException e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -75,10 +74,10 @@ public class RestApiController {
 	 *         not be parsed or is less than 0 or status 500 if an error while
 	 *         requesting data occurs
 	 */
-	@RequestMapping(value = "/api/v1/books/{param}", produces = "application/json", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/v1/books/{param:.+}", produces = "application/json", method = RequestMethod.GET)
 	public ResponseEntity<?> getBooksByParamter(@PathVariable("param") String param,
 			@RequestParam(value = "limit", required = false) String limit) {
-		if (param == null || param.isEmpty() || (limit != null && Long.parseLong(limit) < 0)) {
+		if (param == null || param.isEmpty() || (limit != null && Integer.parseInt(limit) < 0)) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
@@ -102,13 +101,12 @@ public class RestApiController {
 	 *         result
 	 */
 	private ResponseEntity<List<BookJSONWrapper>> getBooksByCategory(String category, String limit) {
-		if (category == null || category.isEmpty() || (limit != null && Long.parseLong(limit) < 0)) {
+		if (category == null || category.isEmpty() || (limit != null && Integer.parseInt(limit) < 0)) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
 			return new ResponseEntity<List<BookJSONWrapper>>(
-					bookService.getBooksByCategory(category, SearchMode.AVAILABLE).stream()
-							.limit((limit == null || limit.isEmpty()) ? Long.MAX_VALUE : Long.parseLong(limit))
+					bookService.getBooksByCategory(category, SearchMode.AVAILABLE, Integer.parseInt(limit)).stream()
 							.map(b -> new BookJSONWrapper(b)).collect(Collectors.toList()),
 					HttpStatus.OK);
 		} catch (DatabaseException e) {

@@ -35,9 +35,9 @@ public class Main {
 		qf.testCategoryInsert(ctx);
 		qf.testCategoryDelete(ctx);
 
-		qf.testAuthorInsert(ctx);
-		qf.testAuthorDelete(ctx);
-
+//		qf.testAuthorInsert(ctx);
+//		qf.testAuthorDelete(ctx);
+//
 		qf.testInsertBook(ctx);
 //		qf.testDeleteBook(ctx);
 		qf.testInsertOrder(ctx);
@@ -46,8 +46,8 @@ public class Main {
 		qf.testDeleteCategoryOfBook(ctx);
 		qf.testAddCategoryToBook(ctx);
 		qf.testUpdateBook(ctx);
-//		qf.testGetBooksSell(ctx);
-//		qf.testGetShelveWarmers(ctx);
+		qf.testGetBooksSell(ctx);
+		qf.testGetShelveWarmers(ctx);
 		qf.testUpdateCategory(ctx);
 		qf.testUpdateAuthor(ctx);
 		qf.testRangeOfBookList(ctx);
