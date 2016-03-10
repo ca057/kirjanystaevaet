@@ -87,15 +87,15 @@ public class OrderServiceImpl implements OrderService{
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
-	@Override
-	public List<Book> getOrderedBooksOfUser(int userId) throws DatabaseException {
-		try{
-			List<Book> books = orderDao.getOrderedBook(userId);
-			return books;
-		} catch(HibernateException e){
-			e.printStackTrace();
-			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}
+//	@Override
+//	public List<Book> getOrderedBooksOfUser(int userId) throws DatabaseException {
+//		try{
+//			List<Book> books = orderDao.getOrderedBook(userId);
+//			return books;
+//		} catch(HibernateException e){
+//			e.printStackTrace();
+//			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+//		}
 //		Set<Orderx> orders = getOrdersByUserid(userId);
 //		Set<Book> books = new HashSet<Book>();
 //		for(Orderx o : orders){
@@ -105,7 +105,7 @@ public class OrderServiceImpl implements OrderService{
 //			}
 //		}
 		//return books;
-	}
+//	}
 //	@Override
 //	public LinkedHashMap<String, Integer> getShelfWarmers(int range) throws DatabaseException {
 //		List<Book> shelfWarmers = orderDao.getBooksWithoutOrderItem();
