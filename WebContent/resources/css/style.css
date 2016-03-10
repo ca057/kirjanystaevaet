@@ -14,6 +14,7 @@ html, body {
 	color: #212121;
 	background-color: #CFD8DC;
 	hyphens: auto;
+	margin-bottom: 60px;
 }
 
 /* all font stuff */
@@ -114,9 +115,12 @@ div#content-wrapper>* {
 }
 
 footer {
+	
 	background-color: #009688;
+	position: absolute;
+  	bottom: 0;
 	width: 100%;
-	height: auto;
+	height: 60px;
 	padding: 5px;
 	display: flex;
 	flex-direction: column;
