@@ -9,8 +9,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import appl.data.items.Book;
 import appl.enums.SearchMode;
 import appl.enums.Searchfields;
 import appl.logic.service.BookService;
@@ -42,6 +45,11 @@ public class BackendStockController {
 
 	@Autowired
 	public BookService bookService;
+
+	private Predicate<String> stringIsNotNullAndEmpty = s -> s != null && !s.isEmpty();
+	private Predicate<String> stringIsNotNullOrEmpty = s -> s != null || !s.isEmpty();
+	private Predicate<List> listIsNotNullAndEmpty = l -> l != null && !l.isEmpty();
+	private Predicate<List> listIsNotNullOrEmpty = l -> l != null || !l.isEmpty();
 
 	/**
 	 * Handles a simple GET request and returns the name of the backend view for
@@ -98,8 +106,9 @@ public class BackendStockController {
 					"The passed id of the category is null or empty and can not be deleted.");
 		}
 		try {
-			//FIXME: habe die Signatur von deleteCategory geändert, da es sinnlos ist, über den Namen zu löschen
-			//bookService.deleteCategory(bookService.getCategoryById(Integer.parseInt(id)).getCategoryName());
+			// FIXME: habe die Signatur von deleteCategory geändert, da es
+			// sinnlos ist, über den Namen zu löschen
+			// bookService.deleteCategory(bookService.getCategoryById(Integer.parseInt(id)).getCategoryName());
 			bookService.deleteCategory(Integer.parseInt(id));
 
 		} catch (DatabaseException e) {
@@ -142,33 +151,47 @@ public class BackendStockController {
 		return "redirect:/backend/bestand";
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/backend/bestand/buecher/add", method = RequestMethod.POST)
-	public String addBook(@RequestParam(value = "categories", required = true) List<String> categories,
-			@RequestParam(value = "title", required = true) String title,
-			@RequestParam(value = "isbn", required = true) String isbn,
-			@RequestParam(value = "description", required = true) String description,
-			@RequestParam(value = "price", required = true) String price,
-			@RequestParam(value = "publisher", required = true) String publisher,
-			@RequestParam(value = "day", required = true) String day,
-			@RequestParam(value = "month", required = true) String month,
-			@RequestParam(value = "year", required = true) String year,
-			@RequestParam(value = "edition", required = true) String edition,
-			@RequestParam(value = "pages", required = true) String pages,
-			@RequestParam(value = "stock", required = true) String stock,
-			@RequestParam(value = "authors", required = true) List<String> authors,
-			@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-		if (categories == null || categories.isEmpty() || title == null || title.isEmpty() || isbn == null
-				|| isbn.isEmpty() || description == null || description.isEmpty() || price == null || price.isEmpty()
-				|| publisher == null || publisher.isEmpty() || day == null || day.isEmpty() || month == null
-				|| month.isEmpty() || year == null || year.isEmpty() || edition == null || edition.isEmpty()
-				|| pages == null || pages.isEmpty() || authors == null || authors.isEmpty() || stock == null
-				|| stock.isEmpty() || file == null || file.isEmpty()) {
-			// TODO check if pages, categories and authors only contains
-			// numerical values
+	@RequestMapping(value = "/backend/bestand/buecher/{action}", method = RequestMethod.POST)
+	public String addOrEditBook(@PathParam("action") String action,
+			@RequestParam(value = "categories", required = false) List<String> categories,
+			@RequestParam(value = "title", required = false) String title,
+			@RequestParam(value = "isbn", required = false) String isbn,
+			@RequestParam(value = "description", required = false) String description,
+			@RequestParam(value = "price", required = false) String price,
+			@RequestParam(value = "publisher", required = false) String publisher,
+			@RequestParam(value = "day", required = false) String day,
+			@RequestParam(value = "month", required = false) String month,
+			@RequestParam(value = "year", required = false) String year,
+			@RequestParam(value = "edition", required = false) String edition,
+			@RequestParam(value = "pages", required = false) String pages,
+			@RequestParam(value = "stock", required = false) String stock,
+			@RequestParam(value = "authors", required = false) List<String> authors,
+			@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) {
+		if (action == null || action.isEmpty()) {
+			throw new IllegalArgumentException("The passed URL parameter is null and cannot be resolved to an action.");
+		}
+		switch (action) {
+		case "add":
+			return addBook(categories, title, description, price, isbn, publisher, day, month, year, edition, pages,
+					stock, authors, file, request);
+		case "edit":
+			return editBook(categories, title, description, price, isbn, publisher, day, month, year, edition, pages,
+					authors, file, request);
+		default:
+			return "redirect:/backend/bestand?error";
+		}
+	}
+
+	private String addBook(List<String> categories, String title, String description, String price, String isbn,
+			String publisher, String day, String month, String year, String edition, String pages, String stock,
+			List<String> authors, MultipartFile file, HttpServletRequest request) {
+		if (listIsNotNullOrEmpty.test(categories) || stringIsNotNullOrEmpty.test(title)
+				|| stringIsNotNullOrEmpty.test(description) || stringIsNotNullOrEmpty.test(price)
+				|| stringIsNotNullOrEmpty.test(isbn) || stringIsNotNullOrEmpty.test(publisher)
+				|| stringIsNotNullOrEmpty.test(day) || stringIsNotNullOrEmpty.test(month)
+				|| stringIsNotNullOrEmpty.test(year) || stringIsNotNullOrEmpty.test(edition)
+				|| stringIsNotNullOrEmpty.test(pages) || stringIsNotNullOrEmpty.test(stock)
+				|| listIsNotNullOrEmpty.test(authors) || file == null || file.isEmpty()) {
 			throw new IllegalArgumentException("One of the passed values for adding a book is null or empty.");
 		}
 		if (!file.getContentType().contains("image")) {
@@ -180,11 +203,10 @@ public class BackendStockController {
 		book.put(Searchfields.description, description);
 		book.put(Searchfields.price, price);
 		book.put(Searchfields.publisher, publisher);
-		book.put(Searchfields.pubdate, month.trim() + " " + Integer.parseInt(day) + ", " + year);
+		book.put(Searchfields.pubdate, formatPubdate(day, month, year));
 		book.put(Searchfields.edition, edition);
 		book.put(Searchfields.pages, pages);
 		book.put(Searchfields.stock, stock);
-		// TODO add stock to book
 
 		Set<Integer> authorIds = new HashSet<Integer>(1);
 		authors.stream().forEach(id -> authorIds.add(Integer.parseInt(id)));
@@ -207,29 +229,68 @@ public class BackendStockController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/backend/bestand/buecher/edit", method = RequestMethod.POST)
-	public String editBook(@RequestParam(value = "categories", required = true) List<String> categories,
-			@RequestParam(value = "title", required = true) String title,
-			@RequestParam(value = "description", required = true) String description,
-			@RequestParam(value = "price", required = true) String price,
-			@RequestParam(value = "isbn", required = true) String isbn,
-			@RequestParam(value = "publisher", required = true) String publisher,
-			@RequestParam(value = "day", required = true) String day,
-			@RequestParam(value = "month", required = true) String month,
-			@RequestParam(value = "year", required = true) String year,
-			@RequestParam(value = "edition", required = true) String edition,
-			@RequestParam(value = "pages", required = true) String pages,
-			@RequestParam(value = "stock", required = true) String stock,
-			@RequestParam(value = "authors", required = true) List<String> authors,
-			@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-		if (categories == null || categories.isEmpty() || title == null || title.isEmpty() || description == null
-				|| description.isEmpty() || price == null || price.isEmpty() || publisher == null || publisher.isEmpty()
-				|| day == null || day.isEmpty() || month == null || month.isEmpty() || year == null || year.isEmpty()
-				|| edition == null || edition.isEmpty() || pages == null || pages.isEmpty() || authors == null
-				|| authors.isEmpty() || stock == null || stock.isEmpty() || file == null || file.isEmpty()) {
-			// TODO check if pages, categories and authors only contains
-			// numerical values
-			throw new IllegalArgumentException("One of the passed values for editing a book is null or empty.");
+	private String editBook(List<String> categories, String title, String description, String price, String isbn,
+			String publisher, String day, String month, String year, String edition, String pages, List<String> authors,
+			MultipartFile file, HttpServletRequest request) {
+		Map<Searchfields, String> data = new HashMap<Searchfields, String>();
+		try {
+			Book book = bookService.getBookByIsbn(isbn, SearchMode.ALL);
+
+			Set<Integer> authorIds = new HashSet<Integer>();
+			if (listIsNotNullAndEmpty.test(authors)) {
+				authors.stream().forEach(id -> authorIds.add(Integer.parseInt(id)));
+			} else {
+				book.getAuthors().stream().forEach(author -> authorIds.add(author.getAuthorId()));
+			}
+
+			Set<Integer> categoryIds = new HashSet<Integer>();
+			if (listIsNotNullAndEmpty.test(categories)) {
+				categories.stream().forEach(id -> categoryIds.add(Integer.parseInt(id)));
+			} else {
+				book.getCategories().stream().forEach(c -> categoryIds.add(c.getCategoryID()));
+			}
+
+			if (stringIsNotNullAndEmpty.test(title)) {
+				data.put(Searchfields.title, title);
+			}
+			if (stringIsNotNullAndEmpty.test(description)) {
+				data.put(Searchfields.description, description);
+			}
+			if (stringIsNotNullAndEmpty.test(price)) {
+				data.put(Searchfields.price, price);
+			}
+			if (stringIsNotNullAndEmpty.test(publisher)) {
+				data.put(Searchfields.publisher, publisher);
+			}
+			if (stringIsNotNullAndEmpty.test(day) && stringIsNotNullAndEmpty.test(month)
+					&& stringIsNotNullAndEmpty.test(year)) {
+				data.put(Searchfields.pubdate, formatPubdate(day, month, year));
+			}
+			if (stringIsNotNullAndEmpty.test(edition)) {
+				data.put(Searchfields.edition, edition);
+			}
+			if (stringIsNotNullAndEmpty.test(pages)) {
+				data.put(Searchfields.pages, pages);
+			}
+			bookService.updateBook(isbn, data, authorIds, categoryIds);
+		} catch (DatabaseException e) {
+			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
+		}
+
+		return "redirect:/backend/bestand";
+	}
+
+	private String formatPubdate(String day, String month, String year) {
+		return month.trim() + " " + Integer.parseInt(day) + ", " + year;
+	}
+
+	@RequestMapping(value = "/backend/bestand/buecher/stock", method = RequestMethod.POST)
+	public String editStock(@RequestParam(value = "isbn", required = true) String isbn,
+			@RequestParam(value = "stock", required = true) String stock) {
+		try {
+			bookService.updateStock(isbn, Integer.parseInt(stock));
+		} catch (NumberFormatException | DatabaseException e) {
+			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 		return "redirect:/backend/bestand";
 	}
