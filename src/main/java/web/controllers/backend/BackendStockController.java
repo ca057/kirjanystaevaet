@@ -39,6 +39,9 @@ import web.jsonwrappers.AuthorJSONWrapper;
  * This controller handles all requests for managing the stock of the shop.
  * Categories, authors and books can be added, deleted and edited.
  * 
+ * @author Christian
+ * @author Johannes
+ * 
  */
 @Controller
 public class BackendStockController {
