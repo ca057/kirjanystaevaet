@@ -28,7 +28,6 @@
 </head>
 
 <body>
-	<div id="wrapper">
 		<div id="content-wrapper">
 			<header>
 				<a href="<c:url value='/'/>" title="zur Startseite">
@@ -48,6 +47,5 @@
 		<footer>
 			<t:insertAttribute name="footer"></t:insertAttribute>
 		</footer>
-	</div>
 </body>
 </html>
