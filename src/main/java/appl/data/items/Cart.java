@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
 
@@ -53,7 +54,7 @@ public class Cart {
 		Set<String> keys = books.keySet();
 		double sum = 0;
 		for (String s : keys) {
-			double singlePrice = bookService.getBookByIsbn(s).getPrice();
+			double singlePrice = bookService.getBookByIsbn(s, SearchMode.ALL).getPrice();
 			sum += singlePrice;
 		}
 		return sum;
