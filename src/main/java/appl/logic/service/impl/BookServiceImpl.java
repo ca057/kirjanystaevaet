@@ -99,16 +99,18 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public String getCategoryName(String name) throws DatabaseException {
 		Category cat = getCategoryByExactName(name);
-		
+
 		return cat.getCategoryName();
 	}
+
 	@Override
 	public boolean isExistingCategory(String category) throws DatabaseException {
-		if (categoryDao.getCategoriesByExactName(category) != null){
+		if (categoryDao.getCategoriesByExactName(category) != null) {
 			return true;
 		}
 		return false;
 	}
+
 	@Override
 	public int insertCategory(String name) throws DatabaseException {
 		// Prüfen, ob es Category schon gibt
@@ -134,6 +136,7 @@ public class BookServiceImpl implements BookService {
 		throw new DatabaseException(ErrorMessageHelper.entityDoesAlreadyExist("Category"));
 
 	}
+
 	@Override
 	public void updateCategory(int categoryId, String newCategoryName) throws DatabaseException {
 		try {
@@ -141,10 +144,10 @@ public class BookServiceImpl implements BookService {
 			cat.setCategoryName(newCategoryName);
 			categoryDao.updateCategory(cat);
 
-		} catch (HibernateException e){
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
-		
+
 	}
 
 	@Override
@@ -164,7 +167,6 @@ public class BookServiceImpl implements BookService {
 		}
 
 	}
-
 
 	@Override
 	public List<Author> getAuthorByExactName(String nameF, String nameL) throws DatabaseException {
@@ -206,7 +208,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<Author> getAuthorByIsbn(String isbn) throws DatabaseException {
 		try {
-			isbn = onlyLeaveLettersAndNumbers(isbn);			
+			isbn = onlyLeaveLettersAndNumbers(isbn);
 			List<Author> authors = authorDao.getAuthorsByIsbn(isbn);
 			return authors;
 
@@ -236,24 +238,25 @@ public class BookServiceImpl implements BookService {
 		return id;
 
 	}
+
 	@Override
 	public void updateAuthor(int id, Map<Searchfields, String> newData) throws DatabaseException {
 		try {
-		Author author = authorDao.getAuthorByID(id);
-		for (Searchfields s : newData.keySet() ){
-			if (s == Searchfields.nameF){
-				author.setNameF(newData.get(s));
-			} else if ( s == Searchfields.nameL){
-				author.setNameL(newData.get(s));
-			} else {
-				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated(s.toString()));
+			Author author = authorDao.getAuthorByID(id);
+			for (Searchfields s : newData.keySet()) {
+				if (s == Searchfields.nameF) {
+					author.setNameF(newData.get(s));
+				} else if (s == Searchfields.nameL) {
+					author.setNameL(newData.get(s));
+				} else {
+					throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated(s.toString()));
+				}
 			}
-		}
-		authorDao.updateAuthor(author);
-		}catch(HibernateException e){
+			authorDao.updateAuthor(author);
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
-		
+
 	}
 
 	@Override
@@ -268,9 +271,6 @@ public class BookServiceImpl implements BookService {
 		}
 	}
 
-
-
-
 	@Override
 	public List<Book> getAllBooks(SearchMode mode) throws DatabaseException {
 		try {
@@ -280,11 +280,11 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
-	
+
 	@Override
 	public List<Book> getAllBooks(SearchMode mode, int range) throws DatabaseException {
 		List<Book> books = getAllBooks(mode);
-		if (books.size() < range){
+		if (books.size() < range) {
 			return books;
 		}
 		List<Book> smallList = books.subList(0, range);
@@ -303,43 +303,41 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
-	
+
 	@Override
 	public List<Book> getBooksByCategory(String category, SearchMode mode, int range) throws DatabaseException {
 		List<Book> books = getBooksByCategory(category, mode);
-		if (books.size() < range){
+		if (books.size() < range) {
 			return books;
 		}
 		List<Book> smallList = books.subList(0, range);
 		return smallList;
 	}
 
-
-
 	@Override
 	public Book getBookByIsbn(String isbn, SearchMode mode) throws DatabaseException {
 		isbn = onlyLeaveLettersAndNumbers(isbn);
 		Book book = bookDao.getBookByIsbn(isbn);
-		switch (mode){
-			case ALL:
-				break;
-			case SELL:
-				if (book.getStock() < 0){
-					throw new DatabaseException(ErrorMessageHelper.bookNotSold(isbn));
-				}
-				break;
-				
-			case AVAILABLE: 
-				if (book.getStock() == 0){
-					throw new DatabaseException(ErrorMessageHelper.bookNotAvailable(isbn));
-				} else if (book.getStock() < 0){
-					throw new DatabaseException(ErrorMessageHelper.bookNotSold(isbn));
-				}
-				break;
-				
+		switch (mode) {
+		case ALL:
+			break;
+		case SELL:
+			if (book.getStock() < 0) {
+				throw new DatabaseException(ErrorMessageHelper.bookNotSold(isbn));
+			}
+			break;
+
+		case AVAILABLE:
+			if (book.getStock() == 0) {
+				throw new DatabaseException(ErrorMessageHelper.bookNotAvailable(isbn));
+			} else if (book.getStock() < 0) {
+				throw new DatabaseException(ErrorMessageHelper.bookNotSold(isbn));
+			}
+			break;
+
 		}
 		return book;
-		
+
 	}
 
 	@Override
@@ -349,7 +347,6 @@ public class BookServiceImpl implements BookService {
 
 		return null;
 	}
-
 
 	@Override
 	public List<Book> getBooksByMetdata(Map<Searchfields, String> map, SearchMode mode) throws DatabaseException {
@@ -436,31 +433,32 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void updateBook(String isbn, Map<Searchfields, String> data, Set<Integer> authorIds, Set<Integer> categoryIds) throws DatabaseException {
+	public void updateBook(String isbn, Map<Searchfields, String> data, Set<Integer> authorIds,
+			Set<Integer> categoryIds) throws DatabaseException {
 		isbn = onlyLeaveLettersAndNumbers(isbn);
 
 		Book book = bookDao.getBookByIsbn(isbn);
-		
-		for (Searchfields s : data.keySet()){
-			if (s == Searchfields.isbn){
+
+		for (Searchfields s : data.keySet()) {
+			if (s == Searchfields.isbn) {
 				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("isbn"));
 			} else if (s == Searchfields.description) {
 				book.setDescription(data.get(s));
 			} else if (s == Searchfields.price) {
 				double price = Double.parseDouble(data.get(s).replace(",", "."));
 				book.setPrice(price);
-			} else if (s == Searchfields.pages){
+			} else if (s == Searchfields.pages) {
 				book.setPages(data.get(s));
-				
-			} else if (s == Searchfields.pubdate){
+
+			} else if (s == Searchfields.pubdate) {
 				book.setPubdate(data.get(s));
-			} else if (s == Searchfields.edition){
+			} else if (s == Searchfields.edition) {
 				book.setEdition(data.get(s));
-			} else if (s == Searchfields.publisher){
+			} else if (s == Searchfields.publisher) {
 				book.setPublisher(data.get(s));
-			} else if (s == Searchfields.stock){
-				//TODO Christian fragen
-			} else if (s == Searchfields.title){
+			} else if (s == Searchfields.stock) {
+				// TODO Christian fragen
+			} else if (s == Searchfields.title) {
 				book.setTitle(data.get(s));
 			}
 		}
@@ -602,7 +600,7 @@ public class BookServiceImpl implements BookService {
 
 			@Override
 			public int compare(Book b1, Book b2) {
-				return Integer.compare(b1.getVisitCount(), b2.getVisitCount());
+				return Integer.compare(b2.getVisitCount(), b1.getVisitCount());
 			}
 		});
 		for (Book b : bookDao.getMostVisitedBooks(range)) {
@@ -620,7 +618,7 @@ public class BookServiceImpl implements BookService {
 
 			@Override
 			public int compare(Book b1, Book b2) {
-				return Integer.compare(b2.getVisitCount(), b1.getVisitCount());
+				return Integer.compare(b1.getVisitCount(), b2.getVisitCount());
 			}
 		});
 		for (Book b : bookDao.getLeastVisitedBooks(range)) {

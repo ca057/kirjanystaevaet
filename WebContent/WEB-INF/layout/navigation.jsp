@@ -65,7 +65,7 @@
 
 <sec:authorize access="hasRole('ADMIN')">
 	<ul class="navigation-content list-inline">
-		<li><a href="<c:url value='/backend' />" title="Admin-Bereich">Admin-Bereich</a></li>
+		<li><a href="<c:url value='/backend' />" title="Dashboard">Dashboard</a></li>
 		<li><a href="<c:url value='/backend/bestand' />" title="Bestand verwalten">Bestand verwalten</a>
 			<ul class="navigation-content-sub">
 				<li><a href="<c:url value='/backend/bestand#kategorien' />" title="Kategorien verwalten">Kategorien</a>
@@ -96,8 +96,6 @@
 			</ul>
 		</li>
 		<li><a href="<c:url value='/backend/bestellungen' />" title="Bestellungen">Bestellungen</a></li>
-		<li><a href="<c:url value='/backend/nutzungsstatistiken' />" title="Nutzungsstatistiken">Nutzungsstatistiken</a></li>
-		<li><a href="<c:url value='/backend/einstellungen' />" title="Einstellungen">Einstellungen</a></li>
 	</ul>
 </sec:authorize>
 </div>

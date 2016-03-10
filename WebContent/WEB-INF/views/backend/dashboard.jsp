@@ -3,7 +3,7 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <section>
-	<h2>Nutzungsstatistiken</h2>
+	<h2><c:out value="${admin.getName()}" /> <c:out value="${admin.getSurname()}" />, willkommen im Dashboard!</h2>
 	<article>
 		<h3>Allgemeine Daten</h3>
 		<p>Anzahl aller Bücher: 

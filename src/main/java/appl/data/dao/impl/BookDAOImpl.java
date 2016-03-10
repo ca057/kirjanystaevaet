@@ -124,8 +124,8 @@ public class BookDAOImpl implements BookDAO {
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
 				break;
 			case price:
-				double price = Double.parseDouble( entry.getValue().replace(",",".") );
-				cr.add(Restrictions.between(key, price-5, price+5));
+				double price = Double.parseDouble(entry.getValue().replace(",", "."));
+				cr.add(Restrictions.between(key, price - 5, price + 5));
 				break;
 			case publisher:
 				cr.add(Restrictions.ilike(key, "%" + entry.getValue() + "%"));
@@ -214,7 +214,7 @@ public class BookDAOImpl implements BookDAO {
 			throw new IllegalArgumentException("The passed range must be greater than 0.");
 		}
 		System.out.println("Range: " + range);
-		List result = setupAndGetCriteria().addOrder(Order.asc("visitCount")).setMaxResults(range).list();
+		List result = setupAndGetCriteria().addOrder(Order.desc("visitCount")).setMaxResults(range).list();
 		System.out.println("Least Visited: " + result);
 		return result;
 	}

@@ -50,8 +50,8 @@
 	</definition> 
 	
 	<!-- views for the backend -->
-	<definition name="backend" extends="base">
-		<put-attribute name="content" value="/WEB-INF/views/backend/backend.jsp"></put-attribute>
+	<definition name="dashboard" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/backend/dashboard.jsp"></put-attribute>
 	</definition>
 	
 	<definition name="backend/login" extends="base">
@@ -70,10 +70,6 @@
 		<put-attribute name="content" value="/WEB-INF/views/backend/orders.jsp"></put-attribute>
 	</definition>
 
-	<definition name="backend/usage" extends="base">
-		<put-attribute name="content" value="/WEB-INF/views/backend/usage.jsp"></put-attribute>
-	</definition>
-	
 	<definition name="upload" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/upload.jsp"></put-attribute>
 	</definition>
