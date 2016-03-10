@@ -35,7 +35,7 @@
 	<sec:authorize access="hasAnyRole('USER', 'ADMIN')">
 		<li>
 			<form action="<c:url value="/logout" />" method="post">
-				<button class="btn" type="submit" value="Aus Mein Konto abmelden"><span class="glyphicon glyphicon-log-out"></span> Abmelden</button>
+				<button class="btn" id="logout-button" type="submit" value="Abmelden"><span class="glyphicon glyphicon-log-out"></span> Abmelden</button>
 				<sec:csrfInput/>
 			</form>
 		</li>
