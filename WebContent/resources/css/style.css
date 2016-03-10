@@ -249,3 +249,7 @@ form * {
 		padding: 0 10px 0 10px;
 	}
 }
+
+div#homerow{
+	width: 100%
+}
