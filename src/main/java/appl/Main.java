@@ -38,19 +38,19 @@ public class Main {
 //		qf.testAuthorInsert(ctx);
 //		qf.testAuthorDelete(ctx);
 //
-//		qf.testInsertBook(ctx);
+		qf.testInsertBook(ctx);
 //		qf.testDeleteBook(ctx);
-//		qf.testInsertOrder(ctx);
-//		qf.testBestsellers(ctx);
-//		qf.testExistingCategory(ctx);
-//		qf.testDeleteCategoryOfBook(ctx);
-//		qf.testAddCategoryToBook(ctx);
-//		qf.testUpdateBook(ctx);
-//		qf.testGetBooksSell(ctx);
-//		qf.testGetShelveWarmers(ctx);
-//		qf.testUpdateCategory(ctx);
-//		qf.testUpdateAuthor(ctx);
-//		qf.testRangeOfBookList(ctx);
+		qf.testInsertOrder(ctx);
+		qf.testBestsellers(ctx);
+		qf.testExistingCategory(ctx);
+		qf.testDeleteCategoryOfBook(ctx);
+		qf.testAddCategoryToBook(ctx);
+		qf.testUpdateBook(ctx);
+		qf.testGetBooksSell(ctx);
+		qf.testGetShelveWarmers(ctx);
+		qf.testUpdateCategory(ctx);
+		qf.testUpdateAuthor(ctx);
+		qf.testRangeOfBookList(ctx);
 //		
 
 		//qf.testUser(ctx);

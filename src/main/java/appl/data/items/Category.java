@@ -19,9 +19,10 @@ import javax.persistence.UniqueConstraint;
  * <li>categoryId</li>
  * <li>categoryName</li>
  * </ul>
- * @author Madeleine
  *{@link Set} of {@link Book} is joined via a many-to-many connection.
  * Category is the owned Entity
+ * 
+ * @author Madeleine
  */
 @Entity
 @Table(name = "bookcategories", schema = "public", uniqueConstraints = {
