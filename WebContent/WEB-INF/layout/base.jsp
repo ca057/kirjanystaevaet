@@ -41,9 +41,7 @@
 			</nav>
 		
 			<div id="content" class="container-fluid">
-				<div class="container">
 					<t:insertAttribute name="content"></t:insertAttribute>
-				</div>
 			</div>
 		</div>
 		

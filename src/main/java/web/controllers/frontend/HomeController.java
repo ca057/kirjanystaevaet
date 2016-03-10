@@ -41,7 +41,7 @@ public class HomeController {
 		try {
 			List<Book> allBooks = bookService.getAllBooks(SearchMode.AVAILABLE);
 			List<Book> recBooks = new ArrayList<Book>();
-			while (recBooks.size() < 3) {
+			while (recBooks.size() < 4) {
 
 				Book bookTemp = allBooks.get((int) (Math.random() * allBooks.size()));
 				if (!recBooks.contains(bookTemp)) {
