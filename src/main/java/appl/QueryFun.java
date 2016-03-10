@@ -424,7 +424,7 @@ public class QueryFun {
 		map.put(Searchfields.description, "New Description");
 		map.put(Searchfields.price, "100,11");
 		map.put(Searchfields.title, "New Title");
-		dataService.updateBook("0101010101", map);
+//		dataService.updateBook("0101010101", map);
 		Book book = dataService.getBookByIsbn("0101010101", SearchMode.ALL);
 		System.out.println(book.toString());
 		

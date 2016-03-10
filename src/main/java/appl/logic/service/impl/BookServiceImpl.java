@@ -436,7 +436,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void updateBook(String isbn, Map<Searchfields, String> data) throws DatabaseException {
+	public void updateBook(String isbn, Map<Searchfields, String> data, Set<Integer> authorIds, Set<Integer> categoryIds) throws DatabaseException {
 		isbn = onlyLeaveLettersAndNumbers(isbn);
 
 		Book book = bookDao.getBookByIsbn(isbn);
