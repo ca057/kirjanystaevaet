@@ -49,19 +49,23 @@
 								</div>
 								<div class="col-sm-9 col-md-10">
 									<t:insertAttribute name="content"></t:insertAttribute>
+								<footer>
+									<t:insertAttribute name="footer"></t:insertAttribute>
+								</footer>
 								</div>
 							</div>
    						 </c:when>
    						 <c:otherwise>
         						<t:insertAttribute name="content"></t:insertAttribute>
+        						<footer>
+									<t:insertAttribute name="footer"></t:insertAttribute>
+								</footer>
    						 </c:otherwise>
 					</c:choose>
 					
 			</div>
 		</div>
 		
-		<footer>
-			<t:insertAttribute name="footer"></t:insertAttribute>
-		</footer>
+		
 </body>
 </html>
