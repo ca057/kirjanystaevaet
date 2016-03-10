@@ -81,11 +81,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 
 	@Override
 	public int insertAuthor(Author author) {
-		System.out.println("\n\nauthorDao.insertAuthor\n\n");
 		int id = (int) getSession().save(author);
-		System.out.println("\n\n authorDao,´.insertAuthor nach dem save \n\n id = " + id);
-		System.out.println("\nNochmal den Author checken\n" + author.toString());
-
 		return id;
 	}
 
