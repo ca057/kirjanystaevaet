@@ -1,5 +1,6 @@
 package web.controllers.frontend;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +39,21 @@ public class HomeController {
 	@RequestMapping(method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String homepage(Model m) {
 		try {
-			List<Book> books = bookService.getAllBooks(SearchMode.AVAILABLE);
-			m.addAttribute("bookOfTheMoment", books.get((int) (Math.random() * books.size())));
+			List<Book> allBooks = bookService.getAllBooks(SearchMode.AVAILABLE);
+			List<Book> recBooks = new ArrayList<Book>();
+			while (recBooks.size() < 3) {
+
+				Book bookTemp = allBooks.get((int) (Math.random() * allBooks.size()));
+				if (!recBooks.contains(bookTemp)) {
+					recBooks.add(bookTemp);
+
+				}
+			}
+			m.addAttribute("recommendations", recBooks);
+			System.out.print("Find me" + recBooks);
 		} catch (DatabaseException ignore) {
 		}
+
 		return "homepage";
 	}
 }
