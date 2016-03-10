@@ -58,7 +58,6 @@ public class CategoriesController {
 	 */
 	@RequestMapping(value = "/kategorie/{category:.+}", method = RequestMethod.GET)
 	public String getCategory(@PathVariable("category") String category, Model m) {
-		System.out.println("KATGOR" + category);
 		try {
 			m.addAttribute("name", bookService.getCategoryName(category));
 			m.addAttribute("books", bookService.getBooksByCategory(category, SearchMode.AVAILABLE));

@@ -55,6 +55,7 @@
 								<label for="kategorien-loeschen-input">Name der
 									Kategorie:</label>
 								<select name="id" id="kategorien-loeschen-input" required>
+									<option value="">Kategorie auswählen</option>
 									<c:forEach var="category" items="${categories}">
 										<option value="${category.getCategoryID()}"><c:out
 												value="${category.getCategoryID()}" />:
@@ -194,6 +195,7 @@
 								<p>Veröffentlichungsdatum:</p>
 								<label for="buecher-anlegen-day">Tag:</label>
 								<select name="day" id="buecher-anlegen-day" required>
+									<option value="">Tag auswählen</option>
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
@@ -228,6 +230,7 @@
 								</select>
 								<label for="buecher-anlegen-month">Monat:</label>
 								<select name="month" id="buecher-anlegen-month" required>
+									<option value="">Monat auswählen</option>
 									<option value="Januar">Januar</option>
 									<option value="Februar">Februar</option>
 									<option value="März">März</option>
@@ -268,6 +271,135 @@
 						</fieldset>
 					</form>
 
+					<h4 id="buecher-aendern">Bestehendes Buch ändern</h4>
+					<form action="bestand/buecher/edit" method="POST" enctype="multipart/form-data">
+					<fieldset>
+					<legend>Buch ändern</legend>
+						<c:choose>
+							<c:when test="${books.isEmpty()}">
+								<p>Noch keine Bücher zum Ändern in der Datenbank vorhanden.</p>
+							</c:when>
+							<c:otherwise>
+								<label for="buecher-aendern-isbn"></label>
+								<select name="isbn" id="buecher-aendern-isbn" required>
+									<option value="">Buch auswählen</option>
+									<c:forEach var="book" items="${books}">
+										<option value="${book.getIsbn()}">
+											<c:out value="${book.getIsbn()}"></c:out>: <c:out value="${book.getTitle()}"></c:out>
+										</option>
+									</c:forEach>
+								</select>
+								<label for="buecher-aendern-category">Kategorien auswählen:</label>
+								<select name="categories" id="buecher-aendern-category" multiple>
+									<c:forEach var="category" items="${categories}">
+										<option value="${category.getCategoryID()}"><c:out
+												value="${category.getCategoryID()}" />:
+											<c:out value="${category.getCategoryName()}" /></option>
+									</c:forEach>
+								</select>
+
+								<label for="buecher-aendern-title">Titel:</label>
+								<input type="text" id="buecher-aendern-title" name="title"
+									placeholder="Titel eingeben" />
+
+								<label for="buecher-aendern-authors">Autor:innen
+									auswählen</label>
+								<select name="authors" id="buecher-aendern-authors" multiple>
+									<c:forEach var="author" items="${authors}">
+										<option value="${author.getAuthorId()}"><c:out
+												value="${author.getAuthorId()}" />:
+											<c:out value="${author.getNameF()}" />
+											<c:out value="${author.getNameL()}" /></option>
+									</c:forEach>
+								</select>
+
+								<label for="buecher-aendern-description">Beschreibung:</label>
+								<textarea rows="10" cols="50" maxlength="4096"
+									name="description" id="buecher-aendern-description"></textarea>
+
+								<label for="buecher-aendern-price">Preis:</label>
+								<input type="text" id="buecher-aendern-price" name="price"
+									placeholder="Preis eingeben" />
+
+								<label for="buecher-aendern-publisher">Verleger:</label>
+								<input type="text" id="buecher-aendern-publisher"
+									name="publisher" placeholder="Verleger eingeben" />
+
+								<p>Veröffentlichungsdatum:</p>
+								<label for="buecher-aendern-day">Tag:</label>
+								<select name="day" id="buecher-aendern-day" >
+									<option value="">Tag auswählen</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+									<option value="24">24</option>
+									<option value="25">25</option>
+									<option value="26">26</option>
+									<option value="27">27</option>
+									<option value="28">28</option>
+									<option value="29">29</option>
+									<option value="30">30</option>
+									<option value="31">31</option>
+								</select>
+								<label for="buecher-aendern-month">Monat:</label>
+								<select name="month" id="buecher-aendern-month" >
+									<option value="">Monat auswählen</option>
+									<option value="Januar">Januar</option>
+									<option value="Februar">Februar</option>
+									<option value="März">März</option>
+									<option value="April">April</option>
+									<option value="Mai">Mai</option>
+									<option value="Juni">Juni</option>
+									<option value="Juli">Juli</option>
+									<option value="August">August</option>
+									<option value="September">September</option>
+									<option value="Oktober">Oktober</option>
+									<option value="November">November</option>
+									<option value="Dezember">Dezember</option>
+								</select>
+								<label for="buecher-aendern-year">Jahr:</label>
+								<input type="number" min="0" max="2222"
+									id="buecher-aendern-year" name="year"
+									placeholder="Jahr eingeben" />
+
+								<label for="buecher-aendern-edition">Ausgabe:</label>
+								<input type="text" id="buecher-aendern-edition" name="edition"
+									placeholder="Ausgabe" />
+
+								<label for="buecher-aendern-pages">Seitenzahl:</label>
+								<input type="number" min="0" id="buecher-aendern-pages"
+									name="pages" placeholder="Seitenzahl eingeben" />
+
+								<label for="buecher-aendern-cover">Cover:</label>
+								<input type="file" accept="image/*" name="file" />
+
+								<button type="submit">Buch ändern</button>
+								<sec:csrfInput />
+							</c:otherwise>
+						</c:choose>
+						</fieldset>
+					</form>
+
 					<h4 id="bestand-aendern">Bestand eines bestehenden Buches ändern</h4>
 					<c:choose>
 						<c:when test="${books.isEmpty()}">
@@ -280,6 +412,7 @@
 							<legend>Bestand ändern</legend>
 								<label for="buecher-stock-isbn"></label>
 								<select name="isbn" id=buecher-stock-isbn required>
+									<option value="">Buch auswählen</option>
 									<c:forEach var="book" items="${books}">
 										<option value="${book.getIsbn()}"><c:out
 												value="${book.getIsbn()}"></c:out>:
@@ -305,8 +438,9 @@
 							<form action="bestand/buecher/delete" method="POST">
 							<fieldset>
 							<legend>Buch löschen</legend>
-								<label for="buecher-loeschen-isbn"></label> <select name="isbn"
-									id=buecher-loeschen-isbn required>
+								<label for="buecher-loeschen-isbn"></label>
+								<select name="isbn" id="buecher-loeschen-isbn" required>
+									<option value="">Buch auswählen</option>
 									<c:forEach var="book" items="${books}">
 										<option value="${book.getIsbn()}"><c:out
 												value="${book.getIsbn()}"></c:out>:

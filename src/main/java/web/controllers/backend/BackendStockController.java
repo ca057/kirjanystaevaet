@@ -12,13 +12,13 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -153,7 +153,7 @@ public class BackendStockController {
 	}
 
 	@RequestMapping(value = "/backend/bestand/buecher/{action}", method = RequestMethod.POST)
-	public String addOrEditBook(@PathParam("action") String action,
+	public String addOrEditBook(@PathVariable("action") String action,
 			@RequestParam(value = "categories", required = false) List<String> categories,
 			@RequestParam(value = "title", required = false) String title,
 			@RequestParam(value = "isbn", required = false) String isbn,
@@ -168,7 +168,8 @@ public class BackendStockController {
 			@RequestParam(value = "stock", required = false) String stock,
 			@RequestParam(value = "authors", required = false) List<String> authors,
 			@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) {
-		if (action == null || action.isEmpty()) {
+		if (!stringIsNotNullAndEmpty.test(action)) {
+			System.err.println("Action: " + action);
 			throw new IllegalArgumentException("The passed URL parameter is null and cannot be resolved to an action.");
 		}
 		switch (action) {
@@ -273,8 +274,14 @@ public class BackendStockController {
 			if (stringIsNotNullAndEmpty.test(pages)) {
 				data.put(Searchfields.pages, pages);
 			}
+			if (file.getContentType().contains("image")) {
+				new ProcessUpload().saveBookCover(isbn, file.getOriginalFilename().split("\\.")[1], file.getBytes(),
+						request, false);
+			}
+
+			System.out.println("data: " + data.toString());
 			bookService.updateBook(isbn, data, authorIds, categoryIds);
-		} catch (DatabaseException e) {
+		} catch (DatabaseException | IOException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 
