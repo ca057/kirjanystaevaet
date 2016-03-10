@@ -39,7 +39,7 @@
 				<t:insertAttribute name="navigation"></t:insertAttribute>
 			</nav>
 		
-			<div id="content container-fluid">
+			<div id="content" class="container-fluid">
 				<t:insertAttribute name="content"></t:insertAttribute>
 			</div>
 		</div>
