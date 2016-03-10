@@ -27,38 +27,32 @@
 
 	</ul>
 
-	<ul class="nav navbar-nav navbar-right">
+	<ul class="nav navbar-nav navbar-right divider-vertical">
 	<sec:authorize access="hasRole('USER')">
-		<li><a href="<c:url value='/warenkorb'/>" title="Warenkorb">Warenkorb</a></li>
-		<li><a href="<c:url value='/meinkonto'/>" title="Mein Konto anzeigen">Mein Konto</a></li>
+		<li><a href="<c:url value='/warenkorb'/>" title="Warenkorb"><span class="glyphicon glyphicon-shopping-cart"></span> Warenkorb</a></li>
+		<li><a href="<c:url value='/meinkonto'/>" title="Mein Konto anzeigen"><span class="glyphicon glyphicon-user"></span> Konto</a></li>
 	</sec:authorize>
 	<sec:authorize access="hasAnyRole('USER', 'ADMIN')">
 		<li>
-			<form class="form-inline" action="<c:url value="/logout" />" method="post">
-				<button type="submit" value="Aus Mein Konto abmelden">Abmelden</button>
+			<form action="<c:url value="/logout" />" method="post">
+				<button class="btn" type="submit" value="Aus Mein Konto abmelden"><span class="glyphicon glyphicon-log-out"></span> Abmelden</button>
 				<sec:csrfInput/>
 			</form>
 		</li>
 	</sec:authorize>
 	<sec:authorize access="isAnonymous()">
-		<li id="login-handler"><a href="<c:url value='/login'/>"><span class="glyphicon glyphicon-log-in"></span> Anmelden
-			<!--  <div id="login-popup">
-				<form action="<c:url value="/login" />" method="post">
-					<fieldset>
-						<legend>Login</legend>
-						<c:if test="${param.error != null}">
-						    <p class="error">Ungültiger Benutzername oder Passwort.</p>
-						</c:if>
-						<label for="username">E-Mail</label>
-						<input type="text" id="username" name="username"/>        
-						<label for="password">Passwort</label>
-						<input type="password" id="password" name="password"/>
-						<button type="submit" value="In Mein Konto anmelden">Anmelden</button>
-						<sec:csrfInput/>
-					</fieldset>
-				</form>
-			</div> -->
-		</a></li>
+		<li></li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" href="#" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span> Anmelden </a>
+						<div class="dropdown-menu">
+							<form method="post" action="<c:url value="/login" />" method="post">
+								<input type="text" placeholder="E-Mail" id="username" name="username">
+								<input type="password" placeholder="Passwort" id="password" name="password">
+								<input class="btn btn-primary btn-block" type="submit" value="Anmelden">
+								<sec:csrfInput/>
+							</form>
+						</div>
+					</li>
 	</sec:authorize>
 </ul>
 </div>
