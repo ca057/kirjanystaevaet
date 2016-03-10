@@ -500,6 +500,17 @@ public class QueryFun {
 //			System.out.println(b.toString());
 //		}
 	}
+	
+	public void testRangeOfBookList(ApplicationContext ctx) throws DatabaseException{
+		BookService dataService = ctx.getBean(BookService.class);
+		OrderService orderService = ctx.getBean(OrderService.class);
+		UserService userService = ctx.getBean(UserService.class);
+		List<Book> books = dataService.getAllBooks(SearchMode.ALL, 5);
+		System.out.println("Only 5 books" );
+		for (Book b : books){
+			System.out.println(b.toString());
+		}
+	}
 	/*
 	 * 
 	 * public void doSomeOrderTesting(ApplicationContext ctx) { SessionFactory

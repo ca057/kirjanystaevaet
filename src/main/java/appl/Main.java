@@ -50,6 +50,7 @@ public class Main {
 //		qf.testGetShelveWarmers(ctx);
 		qf.testUpdateCategory(ctx);
 		qf.testUpdateAuthor(ctx);
+		qf.testRangeOfBookList(ctx);
 //		
 
 		//qf.testUser(ctx);

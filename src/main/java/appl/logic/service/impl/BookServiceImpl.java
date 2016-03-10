@@ -402,6 +402,13 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
+	
+	@Override
+	public List<Book> getAllBooks(SearchMode mode, int range) throws DatabaseException {
+		List<Book> books = getAllBooks(mode);
+		List<Book> smallList = books.subList(0, range);
+		return smallList;
+	}
 
 	// ToDo die MEthode funktioniert nur darüber, dass man über CategoryNAme
 	// bekommt, nicht über die ID, -> Umbenennen!
@@ -810,6 +817,8 @@ public class BookServiceImpl implements BookService {
 		}
 		return map;
 	}
+
+
 
 
 
