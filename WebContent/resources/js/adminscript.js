@@ -155,6 +155,16 @@ const manage = function() {
 					$('#autorinnen-anlegen-submit').prop('disabled', false);
 				});
 		});
+		$('#buecher-aendern-isbn').on('change', () => {
+			const isbn = $('#buecher-aendern-isbn').val().trim();
+			if (isbn && isbn !== '') {
+				KY.request('/kirjanystaevaet/backend/bestand/buecher/data').GET_PARAM('isbn=' + isbn).done(data => {
+					console.log(data);
+				}).fail((j, s, e) => {
+					console.log(e);
+				});
+			}
+		});
 	};
 		
 	return {
