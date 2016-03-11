@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/backend", "/backend/**").hasRole("ADMIN").anyRequest().authenticated().and().formLogin()
 				.loginPage("/login").successHandler(authSuccessHandler).failureUrl("/login?error").and().logout()
 				.deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/?logout")
-				.permitAll().and().exceptionHandling().accessDeniedPage("/error");
+				.permitAll().and().exceptionHandling().accessDeniedPage("/login");
 	}
 
 	@Override
