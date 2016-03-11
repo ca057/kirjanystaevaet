@@ -7,28 +7,28 @@
 		<h1>Suche</h1>
 	</div>
 	
-	<form class="form-inline">
-		<div class="form-group">
+	<form class="form">
+		<div class="col-xs-6 col-sm-4 col-md-2">
 			<label for="title">Titel</label>
 			<input type="text" id="title" name="title" placeholder="Titel">
 		</div>
-		<div class="form-group">
+		<div class="col-xs-6 col-sm-4 col-md-2">
 			<label for="authorFirst">Vorname</label>
 			<input type="text" id="authorFirst" name="authorFirst" placeholder="Vorname">
 		</div>
-		<div class="form-group">
+		<div class="col-xs-6 col-sm-4 col-md-2">
 			<label for="authorLast">Nachname</label>
 			<input type="text" id="authorLast" name="authorLast" placeholder="Nachname">
 		</div>
-		<div class="form-group">
+		<div class="col-xs-6 col-sm-4 col-md-2">
 			<label for="isbn">ISBN</label>
 			<input type="text" id="isbn" name="isbn" placeholder="ISBN">
 		</div>
-		<div class="form-group">
+		<div class="col-xs-6 col-sm-4 col-md-2">
 			<label for="year">Erscheinungsjahr</label>
 			<input type="text" id="year" name="year" placeholder="Jahr">
 		</div>
-		<div class="form-group">
+		<div class="col-xs-6 col-sm-4 col-md-2">
 			<label for="category">Kategorie</label>
 			<input type="text" id="category" name="category" placeholder="Kategorie">
 		</div>
