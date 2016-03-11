@@ -39,7 +39,7 @@
 								<legend>Kategorie anlegen</legend>
 								<label for="kategorien-anlegen-input">Name der neuen
 									Kategorie:</label> <input type="text" placeholder="Name der Kategorie"
-									id="kategorien-anlegen-input" name="name" required />
+									id="kategorien-anlegen-input" name="name" class="form-control" required />
 								<button type="submit" class="btn btn-default" >Kategorie anlegen</button>
 								<sec:csrfInput />
 							</fieldset>
@@ -87,10 +87,10 @@
 								<legend>Autor_in anlegen</legend>
 								<label for="autorinnen-anlegen-first">Vorname:</label> <input
 									id="autorinnen-anlegen-first" name="first" type="text"
-									placeholder="Vorname" required /> <label
+									placeholder="Vorname" class="form-control" required /> <label
 									for="autorinnen-anlegen-last">Nachname:</label> <input
 									id="autorinnen-anlegen-last" name="last" type="text"
-									placeholder="Nachname" required />
+									placeholder="Nachname" class="form-control" required />
 
 								<button type="submit" class="btn btn-default" id="autorinnen-anlegen-submit"
 									class="btn btn-default">Autor_in anlegen</button>
@@ -145,25 +145,25 @@
 										<div class="form-group">
 											<label for="buecher-anlegen-isbn">ISBN</label> <input
 												type="text" id="buecher-anlegen-isbn" name="isbn"
-												placeholder="ISBN eingeben" required />
+												placeholder="ISBN eingeben" class="form-control" required />
 										</div>
 
 										<div class="form-group">
 											<label for="buecher-anlegen-title">Titel</label> <input
 												type="text" id="buecher-anlegen-title" name="title"
-												placeholder="Titel eingeben" required />
+												placeholder="Titel eingeben" class="form-control" required />
 										</div>
 
 										<div class="form-group">
 											<label for="buecher-anlegen-price">Preis</label> <input
 												type="text" id="buecher-anlegen-price" name="price"
-												placeholder="Preis eingeben" required />
+												placeholder="Preis eingeben" class="form-control" required />
 										</div>
 
 										<div class="form-group">
 											<label for="buecher-anlegen-publisher">Verlag</label> <input
 												type="text" id="buecher-anlegen-publisher" name="publisher"
-												placeholder="Verleger eingeben" required />
+												placeholder="Verleger eingeben" class="form-control" required />
 										</div>
 									</div>
 
@@ -172,24 +172,24 @@
 										<div class="form-group">
 											<label for="buecher-anlegen-edition">Ausgabe</label> <input
 												type="text" id="buecher-anlegen-edition" name="edition"
-												placeholder="Ausgabe" required />
+												placeholder="Ausgabe" class="form-control" required />
 										</div>
 
 										<div class="form-group">
 											<label for="buecher-anlegen-pages">Seitenzahl</label> <input
 												type="number" min="0" id="buecher-anlegen-pages"
-												name="pages" placeholder="Seitenzahl eingeben" required />
+												name="pages" placeholder="Seitenzahl eingeben" class="form-control" required />
 										</div>
 
 										<div class="form-group">
 											<label for="buecher-anlegen-stock">Bestand</label> <input
 												type="number" min="0" id="buecher-anlegen-stock"
-												name="stock" placeholder="Bestand eingeben" required />
+												name="stock" placeholder="Bestand eingeben" class="form-control" required />
 										</div>
 										
 										<div class="form-group">
 											<label for="buecher-anlegen-cover">Cover</label><span class="btn btn-default btn-file" >Suchen<input
-												type="file" accept="image/*" name="file" required ></span>
+												type="file" accept="image/*" name="file" class="form-control" required ></span>
 										</div>
 									</div>
 
@@ -335,7 +335,7 @@
 
 								<label for="buecher-aendern-title">Titel:</label>
 								<input type="text" id="buecher-aendern-title" name="title"
-									placeholder="Titel eingeben" />
+									placeholder="Titel eingeben" class="form-control" />
 
 								<label for="buecher-aendern-authors">Autor_innen
 									auswählen</label>
@@ -354,11 +354,11 @@
 
 								<label for="buecher-aendern-price">Preis:</label>
 								<input type="text" id="buecher-aendern-price" name="price"
-									placeholder="Preis eingeben" />
+									placeholder="Preis eingeben" class="form-control" />
 
 								<label for="buecher-aendern-publisher">Verleger:</label>
 								<input type="text" id="buecher-aendern-publisher"
-									name="publisher" placeholder="Verleger eingeben" />
+									name="publisher" placeholder="Verleger eingeben" class="form-control" />
 
 								<p>Veröffentlichungsdatum</p>
 								<label for="buecher-aendern-day">Tag</label>
@@ -415,15 +415,15 @@
 								<label for="buecher-aendern-year">Jahr:</label>
 								<input type="number" min="0" max="2222"
 									id="buecher-aendern-year" name="year"
-									placeholder="Jahr eingeben" />
+									placeholder="Jahr eingeben" class="form-control" />
 
 								<label for="buecher-aendern-edition">Ausgabe:</label>
 								<input type="text" id="buecher-aendern-edition" name="edition"
-									placeholder="Ausgabe" />
+									placeholder="Ausgabe" class="form-control"/>
 
 								<label for="buecher-aendern-pages">Seitenzahl:</label>
 								<input type="number" min="0" id="buecher-aendern-pages"
-									name="pages" placeholder="Seitenzahl eingeben" />
+									name="pages" placeholder="Seitenzahl eingeben" class="form-control" />
 
 								<label for="buecher-aendern-cover">Cover:</label>
 								<input type="file" accept="image/*" name="file" />
