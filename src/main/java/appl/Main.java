@@ -35,8 +35,8 @@ public class Main {
 		qf.testCategoryInsert(ctx);
 		qf.testCategoryDelete(ctx);
 
-//		qf.testAuthorInsert(ctx);
-//		qf.testAuthorDelete(ctx);
+		qf.testAuthorInsert(ctx);
+		qf.testAuthorDelete(ctx);
 //
 		qf.testInsertBook(ctx);
 //		qf.testDeleteBook(ctx);

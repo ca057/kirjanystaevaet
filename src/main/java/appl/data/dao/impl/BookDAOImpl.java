@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import appl.data.builder.BookBuilder;
 import appl.data.builder.BuilderFactory;
+import appl.data.builder.BuilderHelper;
 import appl.data.dao.BookDAO;
 import appl.data.items.Book;
 import appl.enums.SearchMode;
@@ -205,7 +206,7 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public void setStockToNegative(String isbn) {
 		Book book = getSession().get(Book.class, isbn);
-		BookBuilder bookBuilder = saveOldValues(book, getBookBuilder());
+		BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
 
 		bookBuilder.setStock(-1);
 //		book.setStock(-1);
@@ -231,10 +232,5 @@ public class BookDAOImpl implements BookDAO {
 		return result;
 	}
 
-	private BookBuilder saveOldValues(Book book, BookBuilder bookBuilder){
-		return bookBuilder.setAuthors(book.getAuthors()).setCategories(book.getCategories()).setDescription(book.getDescription())
-				.setEdition(book.getEdition()).setIsbn(book.getIsbn()).setPages(book.getPages()).setPrice(book.getPrice())
-				.setPubdate(book.getPubdate()).setPublisher(book.getPublisher()).setStock(book.getStock()).setTitle(book.getTitle())
-				.setVisitCount(book.getVisitCount());
-	}
+
 }

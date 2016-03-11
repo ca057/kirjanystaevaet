@@ -5,10 +5,17 @@ import appl.data.items.Author;
 
 public class AuthorBuilderImpl implements AuthorBuilder {
 
+	private int authorId = -1;
 	private String nameF;
 	private String nameL;
 	
 	public AuthorBuilderImpl() {
+	}
+	
+	@Override
+	public AuthorBuilder setAuthorId(int authorId){
+		this.authorId = authorId;
+		return this;
 	}
 
 	@Override
@@ -25,7 +32,13 @@ public class AuthorBuilderImpl implements AuthorBuilder {
 
 	@Override
 	public Author createAuthor() {
-		return new Author(this.nameF, this.nameL);
+		if (authorId < 0){
+			return new Author(this.nameF, this.nameL);
+
+		} else {
+			return new Author(this.authorId, this.nameF, this.nameL);
+
+		}
 	}
 
 }

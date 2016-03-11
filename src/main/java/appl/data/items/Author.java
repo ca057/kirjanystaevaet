@@ -71,38 +71,39 @@ public class Author {
 		return authorId;
 	}
 
-	public void setId(int id) {
-		this.authorId = id;
-	}
+
 
 	@Column(name = "nameF", nullable = false)
 	public String getNameF() {
 		return nameF;
 	}
 
-	public void setNameF(String nameF) {
-		this.nameF = nameF;
-	}
 
 	@Column(name = "nameL", nullable = false)
 	public String getNameL() {
 		return nameL;
 	}
 
-	public void setNameL(String nameL) {
-		this.nameL = nameL;
-	}
+
 
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "authors")
 	public Set<Book> getBooks() {
 		return books;
 	}
 
-	public void setAuthorId(int authorId) {
+	private void setAuthorId(int authorId) {
 		this.authorId = authorId;
 	}
+	
+	private void setNameF(String nameF) {
+		this.nameF = nameF;
+	}
 
-	public void setBooks(Set<Book> books) {
+	private void setNameL(String nameL) {
+		this.nameL = nameL;
+	}
+	
+	private void setBooks(Set<Book> books) {
 		this.books = books;
 	}
 

@@ -9,6 +9,8 @@ import appl.data.items.Author;
  *
  */
 public interface AuthorBuilder {
+	
+	public AuthorBuilder setAuthorId(int authorId);
 
 	public AuthorBuilder setNameF(String nameF);
 

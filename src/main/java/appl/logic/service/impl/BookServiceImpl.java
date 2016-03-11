@@ -51,6 +51,9 @@ public class BookServiceImpl implements BookService {
 	private BookBuilder getBookBuilder() {
 		return builderFactory.getBookBuilder();
 	}
+	private AuthorBuilder getAuthorBuilder(){
+		return builderFactory.getAuthorBuilder();
+	}
 
 	@Override
 	public Category getCategoryByExactName(String name) throws DatabaseException {
@@ -248,16 +251,19 @@ public class BookServiceImpl implements BookService {
 	public void updateAuthor(int id, Map<Searchfields, String> newData) throws DatabaseException {
 		try {
 			Author author = authorDao.getAuthorByID(id);
+			AuthorBuilder authorBuilder = BuilderHelper.saveOldValues(author, getAuthorBuilder());
 			for (Searchfields s : newData.keySet()) {
 				if (s == Searchfields.nameF) {
-					author.setNameF(newData.get(s));
+					authorBuilder.setNameF(newData.get(s));
+//					author.setNameF(newData.get(s));
 				} else if (s == Searchfields.nameL) {
-					author.setNameL(newData.get(s));
+//					author.setNameL(newData.get(s));
+					authorBuilder.setNameL(newData.get(s));
 				} else {
 					throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated(s.toString()));
 				}
 			}
-			authorDao.updateAuthor(author);
+			authorDao.updateAuthor(authorBuilder.createAuthor());
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
@@ -614,7 +620,6 @@ public class BookServiceImpl implements BookService {
 		try {
 			Book book = bookDao.getBookByIsbn(isbn);
 			BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
-			// FIXME, testen ob das hier passts
 			bookBuilder.setVisitCount(book.getVisitCount() + additional);
 			bookDao.updateBook(bookBuilder.createBook());
 			return bookDao.getBookByIsbn(isbn).getVisitCount();
