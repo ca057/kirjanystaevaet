@@ -25,7 +25,7 @@ import appl.enums.UserRoles;
  *
  */
 @Configuration
-@ComponentScan(basePackages = { "appl.logic.security" /*, "conf" */})
+@ComponentScan(basePackages = { "appl.logic.security", "conf" })
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -58,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
+		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/fonts/**");
 	}
 
 	@Bean
