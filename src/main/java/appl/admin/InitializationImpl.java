@@ -99,8 +99,8 @@ public class InitializationImpl implements InitializingBean {
 	private void createAdmin() throws DatabaseException {
 		System.out.println("createAdmin");
 		Map<Userfields, String> data = new HashMap<>();
-		data.put(Userfields.name, "admin");
-		data.put(Userfields.surname, "admin");
+		data.put(Userfields.name, "Sebastian");
+		data.put(Userfields.surname, "Boosz");
 		data.put(Userfields.email, "admin@ky.de");
 		data.put(Userfields.password, "admin");
 		data.put(Userfields.role, UserRoles.ADMIN.toString());

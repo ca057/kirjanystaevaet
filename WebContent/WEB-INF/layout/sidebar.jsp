@@ -4,39 +4,73 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<div id="sidebar-wrapper">
-		<ul class="sidebar-nav">
-			<li><a href="<c:url value='/backend' />" title="Dashboard">Dashboard</a></li>
-		<li><a href="<c:url value='/backend/bestand' />" title="Bestand verwalten">Bestand verwalten</a>
-			<ul class="navigation-content-sub">
-				<li><a href="<c:url value='/backend/bestand#kategorien' />" title="Kategorien verwalten">Kategorien</a>
-					<ul>
-						<li><a href="<c:url value='/backend/bestand#kategorien-anlegen' />" title="Neue Kategorie anlegen">Anlegen</a></li>
-						<li><a href="<c:url value='/backend/bestand#kategorien-loeschen' />" title="Bestehende Kategorie löschen">Löschen</a></li>
-					</ul>
-				</li>
-				<li><a href="<c:url value='/backend/bestand#autorinnen' />" title="Autor:innen verwalten">Autor:innen</a>
-					<ul>
-						<li><a href="<c:url value='/backend/bestand#autorinnen-anlegen' />" title="Neue:n Autor:in anlegen">Anlegen</a></li>
-						<li><a href="<c:url value='/backend/bestand#autorinnen-loeschen' />" title="Bestehende Autor:innen löschen">Löschen</a></li>
-					</ul>
-				</li>
-				<li><a href="<c:url value='/backend/bestand#buecher' />" title="Autor:innen verwalten">Bücher</a>
-					<ul>
-						<li><a href="<c:url value='/backend/bestand#buecher' />" title="Neue Bücher anlegen">Anlegen</a></li>
-						<li><a href="<c:url value='/backend/bestand#buecher-loeschen' />" title="Bestehende Bücher löschen">Löschen</a></li>
-					</ul>
-				</li>
+<div class="nav-side-menu">
+	<i class="toggle-btn" data-toggle="collapse"
+		data-target="#menu-content"></i>
+	<div class="menu-list">
+		<ul id="menu-content" class="menu-content collapse out">
+			 
+			<li><a href="<c:url value='/backend' />"><span class="glyphicon glyphicon-dashboard"></span> Dashboard
+			</a></li>
+			
+			<li><a href="<c:url value='/backend/bestand' />"
+				title="Bestand verwalten"><span class="glyphicon glyphicon-hdd"></span> Bestand</a>
+			</li>
+			
+			<li data-toggle="collapse" data-target="#categories"
+				class="collapsed"><a href="#"><span class="glyphicon glyphicon-th-list"></span> Kategorien <span class="caret"></span></a>
+			</li>
+			<ul class="sub-menu collapse" id="categories">
+					<li><a
+						href="<c:url value='/backend/bestand#kategorien' />">Verwalten</a></li>
+					<li><a
+						href="<c:url value='/backend/bestand#kategorien-anlegen' />">Anlegen</a></li>
+					<li><a
+						href="<c:url value='/backend/bestand#kategorien-loeschen' />">Löschen</a></li>
+				</ul>
+
+
+			<li data-toggle="collapse" data-target="#authors"
+				class="collapsed"><a href="#"><span class="glyphicon glyphicon-pencil"></span> Autor_innen <span class="caret"></span></a>
+			</li>
+			<ul class="sub-menu collapse" id="authors">
+					<li><a
+						href="<c:url value='/backend/bestand#autorinnen' />">Verwalten</a></li>
+					<li><a
+						href="<c:url value='/backend/bestand#autorinnen-anlegen' />">Anlegen</a></li>
+					<li><a
+						href="<c:url value='/backend/bestand#autorinnen-loeschen' />">Löschen</a></li>
+				</ul>
+				
+			<li data-toggle="collapse" data-target="#books"
+				class="collapsed"><a href="#"><span class="glyphicon glyphicon-book"></span> Bücher <span class="caret"></span></a>
+			</li>
+			<ul class="sub-menu collapse" id="books">
+					<li><a
+						href="<c:url value='/backend/bestand#buecher' />">Verwalten</a></li>
+					<li><a
+						href="<c:url value='/backend/bestand#buecher-anlegen' />">Anlegen</a></li>
+					<li><a
+						href="<c:url value='/backend/bestand#buecher-loeschen' />">Löschen</a></li>
+				</ul>
+				
+			<li data-toggle="collapse" data-target="#user"
+				class="collapsed"><a href="#"><span class="glyphicon glyphicon-user"></span> Nutzer_innen <span class="caret"></span></a>
+			</li>
+			<ul class="sub-menu collapse" id="user">
+					<li><a
+						href="<c:url value='/backend/nutzerinnen#nutzerinnen' />">Verwalten</a></li>
+					<li><a
+						href="<c:url value='/backend/nutzerinnen#anlegen' />">Anlegen</a></li>
+					<li><a
+						href="<c:url value='/backend/nutzerinnen#aendern' />">Ändern</a></li>
+					<li><a
+						href="<c:url value='/backend/nutzerinnen#loeschen' />">Löschen</a></li>
+				</ul>
+			
+			<li><a href="<c:url value='/backend/bestellungen' />"
+			title="Bestellungen"><span class="glyphicon glyphicon-shopping-cart"></span> Bestellungen</a></li>
 			</ul>
-		</li>
-		<li><a href="<c:url value='/backend/nutzerinnen' />" title="Kund:innen verwalten">Nutzer:in verwalten</a>
-			<ul class="navigation-content-sub">
-				<li><a href="<c:url value='/backend/nutzerinnen#anlegen' />" title="Neue:n Nutzer:in anlegen">Anlegen</a></li>
-				<li><a href="<c:url value='/backend/nutzerinnen#aendern' />" title="Bestehende Nutzer:in ändern">Ändern</a></li>
-				<li><a href="<c:url value='/backend/nutzerinnen#loeschen' />" title="Bestehende Nutzer:in löschen">Löschen</a></li>
-			</ul>
-		</li>
-		<li><a href="<c:url value='/backend/bestellungen' />" title="Bestellungen">Bestellungen</a></li>
-	</ul> 
-		</ul>
-	</div>
+			
+		</div>
+</div>
