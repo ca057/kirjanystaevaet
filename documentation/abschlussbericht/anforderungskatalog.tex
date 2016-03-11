@@ -31,7 +31,13 @@
 	Eine Idee war es Enums zu verwenden, die den Status eines Vorgangs angeben (z.B. \texttt{delete succssful} o.ä.) und überprüft werden können, um dementsprechend zu handeln. Der gravierende Nachteil dieser Lösung ist, dass sie nur bei \texttt{void}-Methoden anwendbar ist. Aus diesem Grund haben wir uns gegen diese Idee entschieden und sind doch dabei geblieben, bei Fehlern Exceptions zu werfen, um alle Probleme durchgängig einheitlich behandeln zu können.\\	
 	Dabei haben wir darauf geachtet, so weit es möglich ist, nur eine Exception an die oberen Schichten weiter zu geben, nämlich die \texttt{DatabaseException}. Ihr werden mithilfe des \texttt{ErrorMessageHelpers} sehr spezifische, aber einheitliche Fehlernachrichten mitgegeben, die dann z.B. dem Nutzer, v.a. wenn es sich um den Admin handelt, angezeigt werden können.\\	
 	Zudem wurde auf diese Weise versucht, \texttt{HibernateExceptions} schon auf der Ebene der \textit{Daos} und \textit{Services} abzufangen und ebenfalls in eine \texttt{DatabaseException} umzuwandeln. Es soll so verhindert werden, dass unchecked Exceptions den Shop zum Absturz bringen.
+
+	\subsection{Suchfunktion}
+	Die Suchfunktion wird im \texttt{DataService} angeboten. Hierbei wurde sich auf eine Suche über die Metadaten beschränkt. Es kann nach \textit{Titel}, \textit{Vorname}, \textit{Nachname}, \textit{ISBN}, \textit{Erscheinungsjahr} und \textit{Kategorie} gesucht werden. Die Angaben werden und-verknüpft. 
+
+
 	\subsection{REST-API}\label{sec:umsetzung:Rest}
+
 	Die REST-API liefert Bestandsdaten im JSON-Format über die zum Verkauf stehenden Bücher. Tabelle \ref{rest-api} gibt Auskunft über das verwendete URL-Schema, dabei muss der angegebenen URL \lstinline|http://localhost:8080/kirjanystaevaet/api/v1| vorangestellt werden.
 	
 	\begin{table}[h]

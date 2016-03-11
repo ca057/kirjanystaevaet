@@ -438,7 +438,18 @@ public class BookServiceImpl implements BookService {
 		isbn = onlyLeaveLettersAndNumbers(isbn);
 
 		Book book = bookDao.getBookByIsbn(isbn);
-
+		Set<Author> authors = new HashSet<Author>();
+		for (int id : authorIds){
+			authors.add(authorDao.getAuthorByID(id));
+		}
+		book.setAuthors(authors);
+		
+		Set<Category> categories = new HashSet<Category>();
+		for (int id : categoryIds){
+			categories.add(categoryDao.getCategoryById(id));
+		}
+		book.setCategories(categories);
+		
 		for (Searchfields s : data.keySet()) {
 			if (s == Searchfields.isbn) {
 				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("isbn"));
