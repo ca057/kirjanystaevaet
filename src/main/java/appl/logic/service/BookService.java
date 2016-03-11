@@ -133,8 +133,9 @@ public interface BookService {
 	 * @param newAuthor set to true, if author should be isnerted in any case, also if author with that name already exists
 	 * @return newly generated Id oh author
 	 * @throws AuthorMayExistException only thrown when newAuthor == false and an author with exact that name already exists
+	 * @throws DatabaseException 
 	 */
-	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws AuthorMayExistException;
+	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws AuthorMayExistException, DatabaseException;
 
 	// Update
 	

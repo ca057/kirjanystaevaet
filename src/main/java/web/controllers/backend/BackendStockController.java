@@ -131,6 +131,10 @@ public class BackendStockController {
 			bookService.insertAuthor(req.getNameF(), req.getNameL(), req.isNewAuthor());
 		} catch (AuthorMayExistException e) {
 			return new ResponseEntity<AuthorJSONWrapper>(req, HttpStatus.CONFLICT);
+		} catch(DatabaseException e){
+//			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
+			//FIXME Da stimmt der return type nicht. Sorry!
+
 		}
 		return new ResponseEntity<AuthorJSONWrapper>(req, HttpStatus.OK);
 	}
