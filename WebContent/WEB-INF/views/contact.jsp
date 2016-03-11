@@ -6,13 +6,13 @@
 	<h1>Kontakt/Impressum</h1>
 	</div>
 	<article>
-		<h3>Kontakt</h3>
+		<h2>Kontakt</h2>
 		<p>Schreibt Liebesbriefe an: </p>
 		<p>Telefon: 80101&nbsp;110&nbsp;105&nbsp;115</p>
 	</article>
 
 	<article>
-		<h3>Impressum</h3>
+		<h2>Impressum</h2>
 		<p>Wir mögen keine Anwälte, daher steht alles unter der WTFPL License</p>
 	</article>
 </section>

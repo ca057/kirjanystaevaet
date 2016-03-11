@@ -28,7 +28,7 @@
 		</div>
 		<label for="email">E-Mail</label>
 		<input type="email" id="email" name="email" required/>
-		<label for="password">Passwort (mindestens 6 Zeichen lang)</label>
+		<label for="password">Passwort <span class="glyphicon glyphicon-info-sign" title="mind. 6 Zeichen"></span></label>
 		<input type="password" id="password" name="password" required/>
 		<label for="image">Profilbild</label>
 		<input type="file" id="image" accept="image/*" name="file" />
