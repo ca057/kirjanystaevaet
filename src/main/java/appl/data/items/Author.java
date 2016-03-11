@@ -40,6 +40,18 @@ public class Author {
 	 */
 	private Author (){}
 	/**
+	 * Constructor used to build objects that are already persisted in the database
+	 * @param authorId
+	 * @param nameF
+	 * @param nameL
+	 */
+	public Author (int authorId, String nameF, String nameL){
+		this.authorId = authorId;
+		this.nameF = nameF;
+		this.nameL = nameL;
+	}
+	/**
+	 * Constructuor used to build objects that will be newly stored in the database
 	 * @param nameF
 	 * @param nameL
 	 */
