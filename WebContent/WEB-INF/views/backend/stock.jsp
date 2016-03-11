@@ -312,6 +312,7 @@
 								<p>Noch keine Bücher zum Ändern in der Datenbank vorhanden.</p>
 							</c:when>
 							<c:otherwise>
+								<p class="hidden" id="buecher-aendern-data-loading"><em>Daten werden geladen, bitte warten...</em></p>
 								<label for="buecher-aendern-isbn"></label>
 								<select name="isbn" id="buecher-aendern-isbn" class="form-control" required>
 									<option value="">Buch auswählen</option>
@@ -322,9 +323,9 @@
 										</option>
 									</c:forEach>
 								</select>
-								<label for="buecher-aendern-category">Kategorien
+								<label for="buecher-aendern-categories">Kategorien
 									auswählen:</label>
-								<select name="categories" id="buecher-aendern-category" class="form-control" multiple>
+								<select name="categories" id="buecher-aendern-categories" class="form-control" multiple>
 									<c:forEach var="category" items="${categories}">
 										<option value="${category.getCategoryID()}"><c:out
 												value="${category.getCategoryID()}" />:
