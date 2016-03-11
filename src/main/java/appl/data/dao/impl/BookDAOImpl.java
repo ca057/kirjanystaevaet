@@ -16,6 +16,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import appl.data.builder.BookBuilder;
+import appl.data.builder.BuilderFactory;
 import appl.data.dao.BookDAO;
 import appl.data.items.Book;
 import appl.enums.SearchMode;
@@ -29,6 +31,13 @@ public class BookDAOImpl implements BookDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+	@Autowired
+	BuilderFactory builderFactory;
+	
+	private BookBuilder getBookBuilder() {
+		return builderFactory.getBookBuilder();
+	}
+
 
 	private Session getSession() {
 		return sessionFactory.getCurrentSession();
@@ -196,8 +205,11 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public void setStockToNegative(String isbn) {
 		Book book = getSession().get(Book.class, isbn);
-		book.setStock(-1);
-		getSession().update(book);
+		BookBuilder bookBuilder = saveOldValues(book, getBookBuilder());
+
+		bookBuilder.setStock(-1);
+//		book.setStock(-1);
+		getSession().update(bookBuilder.createBook());
 	}
 
 	@Override
@@ -219,4 +231,10 @@ public class BookDAOImpl implements BookDAO {
 		return result;
 	}
 
+	private BookBuilder saveOldValues(Book book, BookBuilder bookBuilder){
+		return bookBuilder.setAuthors(book.getAuthors()).setCategories(book.getCategories()).setDescription(book.getDescription())
+				.setEdition(book.getEdition()).setIsbn(book.getIsbn()).setPages(book.getPages()).setPrice(book.getPrice())
+				.setPubdate(book.getPubdate()).setPublisher(book.getPublisher()).setStock(book.getStock()).setTitle(book.getTitle())
+				.setVisitCount(book.getVisitCount());
+	}
 }

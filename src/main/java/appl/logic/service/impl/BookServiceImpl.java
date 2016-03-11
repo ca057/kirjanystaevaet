@@ -46,6 +46,10 @@ public class BookServiceImpl implements BookService {
 	CategoryDAO categoryDao;
 	@Autowired
 	BuilderFactory builderFactory;
+	
+	private BookBuilder getBookBuilder() {
+		return builderFactory.getBookBuilder();
+	}
 
 	@Override
 	public Category getCategoryByExactName(String name) throws DatabaseException {
@@ -432,6 +436,15 @@ public class BookServiceImpl implements BookService {
 
 	}
 
+	private BookBuilder saveOldValues(Book book, BookBuilder bookBuilder){
+		return bookBuilder.setAuthors(book.getAuthors()).setCategories(book.getCategories()).setDescription(book.getDescription())
+				.setEdition(book.getEdition()).setIsbn(book.getIsbn()).setPages(book.getPages()).setPrice(book.getPrice())
+				.setPubdate(book.getPubdate()).setPublisher(book.getPublisher()).setStock(book.getStock()).setTitle(book.getTitle())
+				.setVisitCount(book.getVisitCount());
+	}
+	
+//	private BookBuilder readData(BookBuilder bookBuilder, Searchfields searchfield, String information )
+	
 	@Override
 	public void updateBook(String isbn, Map<Searchfields, String> data, Set<Integer> authorIds,
 			Set<Integer> categoryIds) throws DatabaseException {
@@ -442,40 +455,53 @@ public class BookServiceImpl implements BookService {
 		for (int id : authorIds){
 			authors.add(authorDao.getAuthorByID(id));
 		}
-		book.setAuthors(authors);
 		
 		Set<Category> categories = new HashSet<Category>();
 		for (int id : categoryIds){
 			categories.add(categoryDao.getCategoryById(id));
 		}
-		book.setCategories(categories);
+		// Save old Values
+		BookBuilder bookBuilder = saveOldValues(book, getBookBuilder());
+		
+		bookBuilder.setAuthors(authors);
+		bookBuilder.setCategories(categories);
+		
+//		book.setAuthors(authors);
+
+//		book.setCategories(categories);
 		
 		for (Searchfields s : data.keySet()) {
 			if (s == Searchfields.isbn) {
 				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("isbn"));
 			} else if (s == Searchfields.description) {
-				book.setDescription(data.get(s));
+//				book.setDescription(data.get(s));
+				bookBuilder.setDescription(data.get(s));
 			} else if (s == Searchfields.price) {
 				double price = Double.parseDouble(data.get(s).replace(",", "."));
-				book.setPrice(price);
+//				book.setPrice(price);
+				bookBuilder.setPrice(price);
 			} else if (s == Searchfields.pages) {
-				book.setPages(data.get(s));
-
+//				book.setPages(data.get(s));
+				bookBuilder.setPages(data.get(s));
 			} else if (s == Searchfields.pubdate) {
-				book.setPubdate(data.get(s));
+//				book.setPubdate(data.get(s));
+				bookBuilder.setPubdate(data.get(s));
 			} else if (s == Searchfields.edition) {
-				book.setEdition(data.get(s));
+				bookBuilder.setEdition(data.get(s));
+//				book.setEdition(data.get(s));
 			} else if (s == Searchfields.publisher) {
-				book.setPublisher(data.get(s));
+				bookBuilder.setPublisher(data.get(s));
+//				book.setPublisher(data.get(s));
 			} else if (s == Searchfields.stock) {
-				// TODO Christian fragen
+				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("stock"));
 			} else if (s == Searchfields.title) {
-				book.setTitle(data.get(s));
+//				book.setTitle(data.get(s));
+				bookBuilder.setTitle(data.get(s));
 			}
 		}
 
 		try {
-			bookDao.updateBook(book);
+			bookDao.updateBook(bookBuilder.createBook());
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
@@ -592,8 +618,10 @@ public class BookServiceImpl implements BookService {
 
 		try {
 			Book book = bookDao.getBookByIsbn(isbn);
-			book.setVisitCount(book.getVisitCount() + additional);
-			bookDao.updateBook(book);
+			BookBuilder bookBuilder = saveOldValues(book, getBookBuilder());
+			// FIXME, testen ob das hier passts
+			bookBuilder.setVisitCount(book.getVisitCount() + additional);
+			bookDao.updateBook(bookBuilder.createBook());
 			return bookDao.getBookByIsbn(isbn).getVisitCount();
 		} catch (EntityDoesNotExistException e) {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
