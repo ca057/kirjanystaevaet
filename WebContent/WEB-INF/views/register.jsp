@@ -31,7 +31,7 @@
 		<label for="password">Passwort (mindestens 6 Zeichen lang)</label>
 		<input type="password" id="password" name="password" required/>
 		<label for="image">Profilbild</label>
-		<input type="file" accept="image/*" name="file" />
+		<input type="file" id="image" accept="image/*" name="file" />
 		<button type="submit" id="register-submit" title="Registrieren">Registrieren</button>
 		<sec:csrfInput/>
 		<p id="info-message" style="display:none;font-style:italic">&nbsp;</p>
