@@ -25,7 +25,10 @@
 					<p>Preis: <c:out value="${book.key.getPrice()}"/>€</p>
 
 					<form id="deleteBook" method="post">
-						<button id="deleteButton" name="isbn" value="${book.key.getIsbn()}" type="submit" formaction="<c:url value='/buch_geloescht'/>">aus Warenkorb entfernen</button> 
+						<button class="btn btn-default btn-sm" id="deleteButton" name="isbn" value="${book.key.getIsbn()}" type="submit" formaction="<c:url value='/buch_geloescht'/>">
+							<span class="glyphicon glyphicon-remove-circle"></span>
+							aus Warenkorb entfernen
+						</button> 
 						<sec:csrfInput/>
 					</form>	
 				</c:forEach> 
@@ -34,7 +37,10 @@
 		<p>Gesamtpreis: <c:out value="${sum}"/>€</p>
 	
 	<form id="orderForm" method="post">
-		<button id="orderButton" type="submit" formaction="<c:url value='/bestellung_aufgegeben'/>">bestellen</button> 
+		<button class="btn btn-default btn-sm" id="orderButton" type="submit" formaction="<c:url value='/bestellung_aufgegeben'/>">
+			<span class="glyphicon glyphicon-ok"></span>
+			bestellen
+		</button> 
 		<sec:csrfInput/>
 	</form>	
 	
