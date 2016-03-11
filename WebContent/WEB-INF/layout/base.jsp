@@ -49,7 +49,7 @@
 			<sec:authorize var="loggedIn" access="hasRole('ADMIN')" />
 			<c:choose>
 				<c:when test="${loggedIn}">
-					<div class="row row-eq-height">
+					<div class="row">
 						<div class="col-sm-3 col-md-2">
 							<t:insertAttribute name="sidebar"></t:insertAttribute>
 						</div>
