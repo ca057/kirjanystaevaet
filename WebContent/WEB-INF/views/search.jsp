@@ -36,16 +36,16 @@
 	</form>
 	
 	
-	<h2>Suchergebnisse</h2>
+	
 	<!-- Suchanfrage wird nur angezeigt, wenn der übergebene String nicht leer ist. -->
 	<c:if test="${error != null}">
 		<p><c:out value="${error}"></c:out></p>
 	</c:if>
 	<c:choose>
 		<c:when test="${query.isEmpty()}">
-			<p>Noch keine Suchanfrage gestellt.</p>
 		</c:when>
 		<c:otherwise>
+			<h2>Suchergebnisse</h2>
 			<p><span class="font-bold">Suchanfrage:</span> <span class="query"><c:out value='${query}' /></span></p>
 			<c:choose>
 				<c:when test="${results.isEmpty()}">
