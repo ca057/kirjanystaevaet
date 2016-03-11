@@ -22,6 +22,7 @@ public class BookBuilderImpl implements BookBuilder {
 	private int stock;
 	private Set<Author> authors;
 	private Set<Category> categories;
+	private int visitCount;
 
 	public BookBuilderImpl() {
 	}
@@ -90,13 +91,20 @@ public class BookBuilderImpl implements BookBuilder {
 		this.stock = stock;
 		return this;
 	}
+	@Override
+	public BookBuilder setVisitCount(int visitCount) {
+		this.visitCount = visitCount;
+		return this;
+	}
+
 
 
 	@Override
 	public Book createBook() {
 		return new Book(this.isbn, this.title, this.description, this.price, this.publisher, this.pubdate, this.edition,
-				this.pages, this.stock, this.categories, this.authors);
+				this.pages, this.stock, this.categories, this.authors, this.visitCount);
 	}
 
+	
 	
 }

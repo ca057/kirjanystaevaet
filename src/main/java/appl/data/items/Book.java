@@ -77,7 +77,7 @@ public class Book {
 	 * @param authors
 	 */
 	public Book(String isbn, String title, String description, double price, String publisher, String pubdate,
-			String edition, String pages, int stock, Set<Category> categories, Set<Author> authors) {
+			String edition, String pages, int stock, Set<Category> categories, Set<Author> authors, int visitCount) {
 		this.isbn = isbn;
 		this.title = title;
 		this.description = description;
@@ -89,6 +89,7 @@ public class Book {
 		this.categories = categories;
 		this.authors = authors;
 		this.stock = stock;
+		this.visitCount = visitCount;
 	}
 
 	@Id
@@ -164,65 +165,66 @@ public class Book {
 		return userBookStatistics;
 	}
 
-	public void setIsbn(String isbn) {
+	private void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
 
-	public void setTitle(String title) {
+	private void setTitle(String title) {
 		this.title = title;
 	}
 
-	public void setDescription(String description) {
+	private void setDescription(String description) {
 		this.description = description;
 	}
 
-	public void setPrice(double price) {
+	private void setPrice(double price) {
 		this.price = price;
 	}
 
-	public void setPublisher(String publisher) {
+	private void setPublisher(String publisher) {
 		this.publisher = publisher;
 	}
 
-	public void setPubdate(String pubdate) {
+	private void setPubdate(String pubdate) {
 		this.pubdate = pubdate;
 	}
 
-	public void setEdition(String edition) {
+	private void setEdition(String edition) {
 		this.edition = edition;
 	}
 
-	public void setPages(String pages) {
+	private void setPages(String pages) {
 		this.pages = pages;
 	}
 
-	public void setStock(int stock) {
+	private void setStock(int stock) {
 		this.stock = stock;
 	}
 
-	public void setVisitCount(int visitCount) {
+	private void setVisitCount(int visitCount) {
 		this.visitCount = visitCount;
 	}
 
-	public void setCategories(Set<Category> categories) {
+	private void setCategories(Set<Category> categories) {
 		this.categories = categories;
 	}
 
-	public void setAuthors(Set<Author> authors) {
+	private void setAuthors(Set<Author> authors) {
 		this.authors = authors;
 	}
 
-	public void setOrderItems(Set<OrderItem> orderItems) {
+	private void setOrderItems(Set<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
 
-	public void setUserBookStatistics(Set<UserBookStatistic> userBookStatistics) {
+	private void setUserBookStatistics(Set<UserBookStatistic> userBookStatistics) {
 		this.userBookStatistics = userBookStatistics;
 	}
 
 	public void decrementStock(int decrement) {
 		stock -= decrement;
 	}
+	// TODO bessere Lösung finden
 
 	public int addToStock(int add) {
 		stock += add;

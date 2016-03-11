@@ -35,6 +35,8 @@ public interface BookBuilder {
 	public BookBuilder setCategories(Set<Category> categories);
 	
 	public BookBuilder setStock(int stock);
+	
+	public BookBuilder setVisitCount(int visitCount);
 
 	public Book createBook();
 }

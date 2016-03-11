@@ -46,17 +46,17 @@ public class Main {
 		qf.testDeleteCategoryOfBook(ctx);
 		qf.testAddCategoryToBook(ctx);
 		qf.testUpdateBook(ctx);
-//		qf.testGetBooksSell(ctx);
-//		qf.testGetShelveWarmers(ctx);
-//		qf.testUpdateCategory(ctx);
-//		qf.testUpdateAuthor(ctx);
-//		qf.testRangeOfBookList(ctx);
+		qf.testGetBooksSell(ctx);
+		qf.testGetShelveWarmers(ctx);
+		qf.testUpdateCategory(ctx);
+		qf.testUpdateAuthor(ctx);
+		qf.testRangeOfBookList(ctx);
 //		
 
 		//qf.testUser(ctx);
-		//qf.testStatistics(ctx);
+		qf.testStatistics(ctx);
 
-		//qf.testGetAuthorsByIsbn(ctx);;
+//		qf.testGetAuthorsByIsbn(ctx);;
 	}
 
 }
