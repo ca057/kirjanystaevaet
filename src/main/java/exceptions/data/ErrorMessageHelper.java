@@ -165,5 +165,14 @@ public abstract class ErrorMessageHelper {
 	public static String bookNotAvailable(String isbn){
 		return String.format("Book with isbn %s is not available right now", isbn);
 	}
+	
+	/**
+	 * Used if generally a database request is unsuccessful
+	 * @param entity
+	 * @return
+	 */
+	public static String couldNotGetData(String entity){
+		return String.format("Could not get %s from database", entity);
+	}
 
 }
