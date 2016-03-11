@@ -71,15 +71,15 @@ public class Category {
 		return books;
 	}
 
-	public void setBooks(Set<Book> books) {
+	private void setBooks(Set<Book> books) {
 		this.books = books;
 	}
 
-	public void setCategoryID(int categoryID) {
+	private void setCategoryID(int categoryID) {
 		this.categoryId = categoryID;
 	}
 
-	public void setCategoryName(String categoryName) {
+	private void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
 

@@ -9,6 +9,8 @@ import appl.data.items.Category;
  *
  */
 public interface CategoryBuilder {
+	
+	public CategoryBuilder setCategoryId(int categoryId);
 
 	public CategoryBuilder setCategoryName(String categoryName);
 

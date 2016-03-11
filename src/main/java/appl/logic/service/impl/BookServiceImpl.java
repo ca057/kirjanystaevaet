@@ -54,6 +54,9 @@ public class BookServiceImpl implements BookService {
 	private AuthorBuilder getAuthorBuilder(){
 		return builderFactory.getAuthorBuilder();
 	}
+	private CategoryBuilder getCategoryBuilder(){
+		return builderFactory.getCategoryBuilder();
+	}
 
 	@Override
 	public Category getCategoryByExactName(String name) throws DatabaseException {
@@ -149,7 +152,9 @@ public class BookServiceImpl implements BookService {
 	public void updateCategory(int categoryId, String newCategoryName) throws DatabaseException {
 		try {
 			Category cat = categoryDao.getCategoryById(categoryId);
-			cat.setCategoryName(newCategoryName);
+			CategoryBuilder categoryBuilder = BuilderHelper.saveOldValues(cat, getCategoryBuilder());
+			categoryBuilder.setCategoryName(newCategoryName);
+//			cat.setCategoryName(newCategoryName);
 			categoryDao.updateCategory(cat);
 
 		} catch (HibernateException e) {
