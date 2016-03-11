@@ -50,7 +50,9 @@
 				</li>
 			</sec:authorize>
 			<sec:authorize access="isAnonymous()">
-				<li></li>
+				<li class="dropdown"><a class="dropdown-toggle" href="<c:url value="/registrierung" />"><span class="glyphicon glyphicon-globe"></span>
+						Registrieren</a>
+					</li>
 				<li class="dropdown"><a class="dropdown-toggle" href="#"
 					data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span>
 						Anmelden</a>
@@ -67,5 +69,4 @@
 			</sec:authorize>
 		</ul>
 	</div>
-
 </div>
