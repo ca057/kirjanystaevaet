@@ -2,7 +2,9 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <section>
-	<h2>Kontakt/Impressum</h2>
+	<div class="page-header">
+	<h1>Kontakt/Impressum</h1>
+	</div>
 	<article>
 		<h3>Kontakt</h3>
 		<p>Schreibt Liebesbriefe an: </p>

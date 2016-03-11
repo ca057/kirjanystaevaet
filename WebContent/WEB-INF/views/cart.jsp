@@ -5,9 +5,11 @@
 
 
 <section>
-	<h2>Warenkorb</h2>
-	<p>Hallo <c:out value="${name}" />, ich bin dein Warenkorb. Schau mal, was schon in mir liegt :)</p>
- 	<h3>Bücher im Warenkorb</h3> 
+	<div class="page-header">
+	<h1>Warenkorb</h1>
+	</div>
+	<p>Hallo <c:out value="${name}" />!</p>
+ 	<h2>Bücher in deinem Warenkorb</h2> 
 		<c:choose>
 			<c:when test="${bookItems.isEmpty()}">
 				<p>Keine Bücher im Warenkorb</p>
@@ -15,7 +17,7 @@
 			<c:otherwise>
 				<c:forEach var="book" items="${bookItems}">
 					<img class="book-cover" src="<c:url value="/img/cover/${book.key.getIsbn()}.jpg"/>" title="<c:out value="Cover des Buchs '${book.key.getTitle()}'"/>">
-					<h4><c:out value="${book.key.getTitle()}"/></h4>
+					<h3><c:out value="${book.key.getTitle()}"/></h3>
 					<p><c:out value="${book.key.getDescription()}" escapeXml="false"/></p>
 					<p><c:out value="${book.key.getPages()}"/></p>
 					<p><c:out value="${book.key.getPublisher()}"/></p>

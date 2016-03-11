@@ -3,7 +3,9 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <section>
-	<h1>Die Bestellung wurde ausgeführt</h1> 
+	<div class="page-header">
+		<h1>Die Bestellung wurde ausgeführt</h1> 
+	</div>
 	<p>Bald hast Du Deine neuen Bücher!</p>
 	<div>
 	<!-- TODO: how to get user-methods using jstl?!? -->

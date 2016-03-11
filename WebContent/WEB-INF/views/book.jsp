@@ -17,9 +17,11 @@
 			</p>
 		</c:when>
 		<c:otherwise>
-			<h2>
+			<div class="page-header">
+			<h1>
 				<c:out value="${book.getTitle()}" />
-			</h2>
+			</h1>
+			</div>
 			<c:choose>
 				<c:when test="${!info.isEmpty()}">
 					<p class="error">

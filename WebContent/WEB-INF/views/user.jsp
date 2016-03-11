@@ -7,12 +7,14 @@
 	pageEncoding="UTF-8"%>
 
 <section>
-	<h2>
+<div class="page-header">
+	<h1>
 		Hallo
 		<c:out value="${user.getName()}" />
 		<c:out value="${user.getSurname()}" />
 		!
-	</h2>
+	</h1>
+</div>
 	<div class="row">
 		<div class="col-sm-8">
 			<article>

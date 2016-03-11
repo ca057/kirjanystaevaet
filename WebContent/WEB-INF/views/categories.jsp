@@ -7,7 +7,9 @@
 	<c:choose>
 		<c:when test="${allCategories != null}">
 			<!-- es gibt ein Attribut mit allen Kategorien, dann zeigen wir diese an -->
-			<h2>Verfügbare Kategorien</h2>
+			<div class="page-header">
+			<h1>Verfügbare Kategorien</h1>
+			</div>
 			<ul>			
 				<c:forEach var="category" items="${allCategories}">
 					<li><a href='kategorie/<c:out value="${category}"/>' title="Zur Kategorie <c:out value="${category}"/>"><c:out value="${category}" /></a></li>
@@ -21,13 +23,14 @@
 					<p>Es ist ein Fehler bei der Abfrage aufgetreten. Versuchen Sie es zu einem späteren Zeitpunkt noch einmal.</p>
 				</c:when>
 				<c:otherwise>
-					<h2><c:out value='${name}'/></h2>
+					<div class="page-header">
+					<h1><c:out value='${name}'/></h1>
+					</div>
 					<c:choose>
 						<c:when test="${books.size() == 0}">
 							<p>Leider haben wir zu dieser Kategorie keine Bücher...</p>
 						</c:when>
 						<c:otherwise>
-							<p>Folgende Bücher haben wir zu <c:out value='${name}' />:</p>
 							<c:forEach var="book" items="${books}">
 								<div id="wrapper" class="col-sm-8">
 									<h4><c:out value="${book.getTitle()}" /></h4>

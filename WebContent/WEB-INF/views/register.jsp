@@ -2,7 +2,9 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<h2>Registrierung</h2>
+<div class="page-header">
+	<h1>Registrierung</h1>
+</div>
 
 <p>Schon einen Account? Hier geht es zum <a href="<c:url value="/login" />" title="Zum Login">Login</a>!</p>
 
