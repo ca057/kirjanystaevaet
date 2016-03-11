@@ -3,9 +3,11 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <section>
-	<h2><c:out value="${admin.getName()}" /> <c:out value="${admin.getSurname()}" />, willkommen im Dashboard!</h2>
+	<div class="page-header">
+		<h1>Willkommen im Dashboard, <c:out value="${admin.getName()}" /> <c:out value="${admin.getSurname()}" />!</h1>
+	</div>
 	<article>
-		<h3>Allgemeine Daten</h3>
+		<h2>Allgemeine Daten</h2>
 		<p>Anzahl aller Bücher: 
 			<c:choose>
 				<c:when test="${amountOfBooks != null}"><c:out value="${amountOfBooks}"></c:out></c:when>
@@ -18,16 +20,16 @@
 				<c:otherwise><em>Anzahl konnte nicht abgefragt werden.</em></c:otherwise>
 			</c:choose>
 		</p>
-		<p>Anzahl aller Autor:innen: 
+		<p>Anzahl aller Autor_innen: 
 			<c:choose>
 				<c:when test="${amountOfAuthors != null}"><c:out value="${amountOfAuthors}"></c:out></c:when>
 				<c:otherwise><em>Anzahl konnte nicht abgefragt werden.</em></c:otherwise>
 			</c:choose>
 		</p>
-		<p>Anzahl aller Nutzer:innen: 
+		<p>Anzahl aller Nutzer_innen: 
 			<c:choose>
 				<c:when test="${amountOfUsers != null}">
-					<c:out value="${amountOfUsers}"></c:out> (Nutzer:innen: <c:out value="${amountOfUsersUSER}"></c:out>; Administrator:innen: <c:out value="${amountOfUsersADMIN}"></c:out>)
+					<c:out value="${amountOfUsers}"></c:out> (Nutzer_innen: <c:out value="${amountOfUsersUSER}"></c:out>; Administrator_innen: <c:out value="${amountOfUsersADMIN}"></c:out>)
 				</c:when>
 				<c:otherwise><em>Anzahl konnte nicht abgefragt werden.</em></c:otherwise>
 			</c:choose>
@@ -35,8 +37,8 @@
 	</article>
 	
 	<article>
-		<h3>Verkaufszahlen</h3>
-		<h4>Die 5 meist verkauften Bücher</h4>
+		<h2>Verkaufszahlen</h2>
+		<h3>Die 5 meist verkauften Bücher</h3>
 		<c:choose>
 			<c:when test="${topSellers.isEmpty()}">
 				<p>Es liegen leider noch keine Daten vor.</p>
@@ -51,7 +53,7 @@
 			</c:otherwise>
 		</c:choose>
 
-		<h4>Die 5 am schlechtesten verkauften Bücher</h4>
+		<h3>Die 5 am schlechtesten verkauften Bücher</h3>
 		<c:choose>
 			<c:when test="${shelfWarmers.isEmpty()}">
 				<p>Es liegen leider noch keine Daten vor.</p>
@@ -66,8 +68,8 @@
 		</c:choose>
 	</article>
 	<article>
-		<h3>Besuchszahlen</h3>
-		<h4>Die 5 am häufigsten besuchten Bücher (in der Einzelansicht)</h4>
+		<h2>Besuchszahlen</h2>
+		<h3>Die 5 am häufigsten besuchten Bücher (in der Einzelansicht)</h3>
 		<c:choose>
 			<c:when test="${mostVisitedBooks.isEmpty()}">
 				<p>Es liegen leider noch keine Daten vor.</p>
@@ -81,7 +83,7 @@
 			</c:otherwise>
 		</c:choose>
 		
-		<h4>Die 5 am seltensten besuchten Bücher (in der Einzelansicht)</h4>
+		<h3>Die 5 am seltensten besuchten Bücher (in der Einzelansicht)</h3>
 		<c:choose>
 			<c:when test="${leastVisitedBooks.isEmpty()}">
 				<p>Es liegen leider noch keine Daten vor.</p>

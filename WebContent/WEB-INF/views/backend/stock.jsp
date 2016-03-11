@@ -20,20 +20,19 @@
 		</p>
 	</c:if>
 
-	<h2>Bestandsverwaltung</h2>
-	<div class=“panel-group” id=“accordion”>
-		<div class=“panelpanel-default">
-			<div class=“panel-heading”>
-				<h4 class="panel-title">
-					<a data-toggle="collapse" data-parent="#accordion"
-						href="#collapse1">Collapsible Group 1</a>
-				</h4>
-			</div>
-			<div id="collapse1" class="panel-collapse collapse in">
-				<section id="kategorien">
-					<h3>Kategorien verwalten</h3>
-					<h4 id="kategorien-anlegen">Neue Kategorie anlegen</h4>
-					<form action="bestand/kategorien/add" method="POST">
+	<div class="page-header">
+		<h1>Bestandsverwaltung</h1>
+	</div>
+
+	<ul class="nav nav-tabs">
+		<li class="active"><a data-toggle="tab" href="#categories">Kategorien</a></li>
+		<li><a data-toggle="tab" href="#authors">Autor_innen</a></li>
+		<li><a data-toggle="tab" href="#books">Bücher</a></li>
+	</ul>
+	<div class="tab-content">
+		<div id="categories" class="tab-pane fade in active">
+			<section id="kategorien">
+				<form action="bestand/kategorien/add" method="POST">
 					<fieldset>
 						<legend>Kategorie anlegen</legend>
 						<label for="kategorien-anlegen-input">Name der neuen
@@ -42,10 +41,9 @@
 						<button type="submit">Katgorie anlegen</button>
 						<sec:csrfInput />
 					</fieldset>
-					</form>
-					<h4 id="kategorien-loeschen">Bestehende Kategorien löschen</h4>
-					<form action="bestand/kategorien/delete" method="POST">
-						<fieldset>
+				</form>
+				<form action="bestand/kategorien/delete" method="POST">
+					<fieldset>
 						<legend>Kategorie löschen</legend>
 						<c:choose>
 							<c:when test="${categories.isEmpty()}">
@@ -67,44 +65,37 @@
 							</c:otherwise>
 						</c:choose>
 					</fieldset>
-					</form>
-				</section>
-			</div>
-
-			<div class=“panel-heading”>
-				<h4 class="panel-title">
-					<a data-toggle="collapse" data-parent="#accordion"
-						href="#collapse2">Collapsible Group 2</a>
-				</h4>
-			</div>
-			<div id="collapse2" class="panel-collapse collapse in">
-				<section id="autorinnen">
-					<h3>Autor:innen verwalten</h3>
-					<p>
-						<em>Hinweis: Neu angelegte Autor:innen stehen erst nach einem
-							neuen Laden der Seite zur Verfügung.</em>
-					</p>
-					<h4 id="autorinnen-anlegen">Neue:n Autor:in anlegen</h4>
-					<form>
-						<fieldset>
-						<legend>Autor:in anlegen</legend>
-							<label for="autorinnen-anlegen-first">Vorname:</label> <input
-								id="autorinnen-anlegen-first" name="first" type="text"
-								placeholder="Vorname" required /> <label
-								for="autorinnen-anlegen-last">Nachname:</label> <input
-								id="autorinnen-anlegen-last" name="last" type="text"
-								placeholder="Nachname" required />
-
-							<button type="submit" id="autorinnen-anlegen-submit">Autor:in
-								anlegen</button>
-							<sec:csrfInput />
-						</fieldset>
-					</form>
-
-					<h4 id="autorinnen-loeschen">Bestehende:n Autor:in löschen</h4>
-					<form action="bestand/autorinnen/delete" method="POST">
+				</form>
+			</section>
+		</div>
+		<div id="authors" class="tab-pane fade">
+			<section id="autorinnen">
+				<h3>Autor:innen verwalten</h3>
+				<p>
+					<em>Hinweis: Neu angelegte Autor:innen stehen erst nach einem
+						neuen Laden der Seite zur Verfügung.</em>
+				</p>
+				<h4 id="autorinnen-anlegen">Neue:n Autor:in anlegen</h4>
+				<form>
 					<fieldset>
-					<legend>Autor:in löschen</legend>
+						<legend>Autor:in anlegen</legend>
+						<label for="autorinnen-anlegen-first">Vorname:</label> <input
+							id="autorinnen-anlegen-first" name="first" type="text"
+							placeholder="Vorname" required /> <label
+							for="autorinnen-anlegen-last">Nachname:</label> <input
+							id="autorinnen-anlegen-last" name="last" type="text"
+							placeholder="Nachname" required />
+
+						<button type="submit" id="autorinnen-anlegen-submit">Autor:in
+							anlegen</button>
+						<sec:csrfInput />
+					</fieldset>
+				</form>
+
+				<h4 id="autorinnen-loeschen">Bestehende:n Autor:in löschen</h4>
+				<form action="bestand/autorinnen/delete" method="POST">
+					<fieldset>
+						<legend>Autor:in löschen</legend>
 						<label for="autorinnen-loeschen-id">Autor:innen auswählen</label>
 						<select name="author" id="autorinnen-loeschen-id" multiple
 							required>
@@ -119,29 +110,22 @@
 						<button type="submit">Autor:in löschen</button>
 						<sec:csrfInput />
 					</fieldset>
-					</form>
-				</section>
-			</div>
+				</form>
+			</section>
+		</div>
+		<div id="books" class="tab-pane fade">
+			<section id="buecher">
+				<h3>Bücher verwalten</h3>
+				<p>
+					<em>Hinweis:</em> Vor dem Anlegen neuer Bücher müssen Kategorien
+					und Autor:innen bereits existieren.
+				</p>
 
-			<div class=“panel-heading”>
-				<h4 class="panel-title">
-					<a data-toggle="collapse" data-parent="#accordion"
-						href="#collapse3">Collapsible Group 3</a>
-				</h4>
-			</div>
-			<div id="collapse3" class="panel-collapse collapse in">
-				<section id="buecher">
-					<h3>Bücher verwalten</h3>
-					<p>
-						<em>Hinweis:</em> Vor dem Anlegen neuer Bücher müssen Kategorien
-						und Autor:innen bereits existieren.
-					</p>
-
-					<h4 id="buecher-anlegen">Neues Buch anlegen</h4>
-					<form action="bestand/buecher/add" method="POST"
-						enctype="multipart/form-data">
+				<h4 id="buecher-anlegen">Neues Buch anlegen</h4>
+				<form action="bestand/buecher/add" method="POST"
+					enctype="multipart/form-data">
 					<fieldset>
-					<legend>Buch anlegen</legend>
+						<legend>Buch anlegen</legend>
 						<c:choose>
 							<c:when test="${categories.isEmpty() && authors.isEmpty()}">
 								<p>Noch keine Kategorien oder Autor:innen in der Datenbank
@@ -268,13 +252,14 @@
 								<sec:csrfInput />
 							</c:otherwise>
 						</c:choose>
-						</fieldset>
-					</form>
+					</fieldset>
+				</form>
 
-					<h4 id="buecher-aendern">Bestehendes Buch ändern</h4>
-					<form action="bestand/buecher/edit" method="POST" enctype="multipart/form-data">
+				<h4 id="buecher-aendern">Bestehendes Buch ändern</h4>
+				<form action="bestand/buecher/edit" method="POST"
+					enctype="multipart/form-data">
 					<fieldset>
-					<legend>Buch ändern</legend>
+						<legend>Buch ändern</legend>
 						<c:choose>
 							<c:when test="${books.isEmpty()}">
 								<p>Noch keine Bücher zum Ändern in der Datenbank vorhanden.</p>
@@ -285,11 +270,13 @@
 									<option value="">Buch auswählen</option>
 									<c:forEach var="book" items="${books}">
 										<option value="${book.getIsbn()}">
-											<c:out value="${book.getIsbn()}"></c:out>: <c:out value="${book.getTitle()}"></c:out>
+											<c:out value="${book.getIsbn()}"></c:out>:
+											<c:out value="${book.getTitle()}"></c:out>
 										</option>
 									</c:forEach>
 								</select>
-								<label for="buecher-aendern-category">Kategorien auswählen:</label>
+								<label for="buecher-aendern-category">Kategorien
+									auswählen:</label>
 								<select name="categories" id="buecher-aendern-category" multiple>
 									<c:forEach var="category" items="${categories}">
 										<option value="${category.getCategoryID()}"><c:out
@@ -327,7 +314,7 @@
 
 								<p>Veröffentlichungsdatum:</p>
 								<label for="buecher-aendern-day">Tag:</label>
-								<select name="day" id="buecher-aendern-day" >
+								<select name="day" id="buecher-aendern-day">
 									<option value="">Tag auswählen</option>
 									<option value="1">1</option>
 									<option value="2">2</option>
@@ -362,7 +349,7 @@
 									<option value="31">31</option>
 								</select>
 								<label for="buecher-aendern-month">Monat:</label>
-								<select name="month" id="buecher-aendern-month" >
+								<select name="month" id="buecher-aendern-month">
 									<option value="">Monat auswählen</option>
 									<option value="Januar">Januar</option>
 									<option value="Februar">Februar</option>
@@ -397,49 +384,51 @@
 								<sec:csrfInput />
 							</c:otherwise>
 						</c:choose>
-						</fieldset>
-					</form>
+					</fieldset>
+				</form>
 
-					<h4 id="bestand-aendern">Bestand eines bestehenden Buches ändern</h4>
-					<c:choose>
-						<c:when test="${books.isEmpty()}">
-							<p>Noch keine Bücher in der Datenbank vorhanden.</p>
-						</c:when>
-						<c:otherwise>
-							<p>Die eingetragenen Änderungen werden zum bisherigen Bestand hinzu addiert bzw. abgezogen.</p>
-							<form action="bestand/buecher/stock" method="POST">
+				<h4 id="bestand-aendern">Bestand eines bestehenden Buches
+					ändern</h4>
+				<c:choose>
+					<c:when test="${books.isEmpty()}">
+						<p>Noch keine Bücher in der Datenbank vorhanden.</p>
+					</c:when>
+					<c:otherwise>
+						<p>Die eingetragenen Änderungen werden zum bisherigen Bestand
+							hinzu addiert bzw. abgezogen.</p>
+						<form action="bestand/buecher/stock" method="POST">
 							<fieldset>
-							<legend>Bestand ändern</legend>
-								<label for="buecher-stock-isbn"></label>
-								<select name="isbn" id=buecher-stock-isbn required>
+								<legend>Bestand ändern</legend>
+								<label for="buecher-stock-isbn"></label> <select name="isbn"
+									id=buecher-stock-isbn required>
 									<option value="">Buch auswählen</option>
 									<c:forEach var="book" items="${books}">
 										<option value="${book.getIsbn()}"><c:out
 												value="${book.getIsbn()}"></c:out>:
 											<c:out value="${book.getTitle()}"></c:out></option>
 									</c:forEach>
-								</select>
-								<label for="buecher-stock-stock">Änderung:</label>
-								<input type="number" id="buecher-stock-stock" name="stock" placeholder="Änderung eingeben">
+								</select> <label for="buecher-stock-stock">Änderung:</label> <input
+									type="number" id="buecher-stock-stock" name="stock"
+									placeholder="Änderung eingeben">
 								<button type="submit">Bestand ändern</button>
 								<sec:csrfInput />
 							</fieldset>
-							</form>
-						</c:otherwise>
-					</c:choose>
+						</form>
+					</c:otherwise>
+				</c:choose>
 
 
-					<h4 id="buecher-loeschen">Bestehendes Buch löschen</h4>
-					<c:choose>
-						<c:when test="${books.isEmpty()}">
-							<p>Noch keine Bücher in der Datenbank vorhanden.</p>
-						</c:when>
-						<c:otherwise>
-							<form action="bestand/buecher/delete" method="POST">
+				<h4 id="buecher-loeschen">Bestehendes Buch löschen</h4>
+				<c:choose>
+					<c:when test="${books.isEmpty()}">
+						<p>Noch keine Bücher in der Datenbank vorhanden.</p>
+					</c:when>
+					<c:otherwise>
+						<form action="bestand/buecher/delete" method="POST">
 							<fieldset>
-							<legend>Buch löschen</legend>
-								<label for="buecher-loeschen-isbn"></label>
-								<select name="isbn" id="buecher-loeschen-isbn" required>
+								<legend>Buch löschen</legend>
+								<label for="buecher-loeschen-isbn"></label> <select name="isbn"
+									id="buecher-loeschen-isbn" required>
 									<option value="">Buch auswählen</option>
 									<c:forEach var="book" items="${books}">
 										<option value="${book.getIsbn()}"><c:out
@@ -450,11 +439,13 @@
 								<button type="submit">Buch löschen</button>
 								<sec:csrfInput />
 							</fieldset>
-							</form>
-						</c:otherwise>
-					</c:choose>
-				</section>
-			</div>
+						</form>
+					</c:otherwise>
+				</c:choose>
+			</section>
 		</div>
 	</div>
+
+
+
 </div>
