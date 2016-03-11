@@ -36,8 +36,18 @@ public class Category {
 	 * Default Constructor, needed by Hibernate
 	 */
 	private Category(){}
+	/**
+	 * Constructor used to build objects that are already persisted in the database
+	 * @param categoryId
+	 * @param categoryName
+	 */
+	public Category(int categoryId, String categoryName){
+		this.categoryId = categoryId;
+		this.categoryName = categoryName;
+	}
 
 	/**
+	 * Constructuor used to build objects that will be newly stored in the database
 	 * @param categoryName
 	 */
 	public Category(String categoryName) {

@@ -77,7 +77,7 @@ public class Book {
 	 * @param authors
 	 */
 	public Book(String isbn, String title, String description, double price, String publisher, String pubdate,
-			String edition, String pages, int stock, Set<Category> categories, Set<Author> authors, int visitCount) {
+			String edition, String pages, int stock, Set<Category> categories, Set<Author> authors, int visitCount, Set<UserBookStatistic> userBookStatistics) {
 		this.isbn = isbn;
 		this.title = title;
 		this.description = description;
@@ -90,6 +90,7 @@ public class Book {
 		this.authors = authors;
 		this.stock = stock;
 		this.visitCount = visitCount;
+		this.userBookStatistics = userBookStatistics;
 	}
 
 	@Id

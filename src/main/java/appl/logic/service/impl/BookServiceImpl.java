@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import appl.data.builder.AuthorBuilder;
 import appl.data.builder.BookBuilder;
 import appl.data.builder.BuilderFactory;
+import appl.data.builder.BuilderHelper;
 import appl.data.builder.CategoryBuilder;
 import appl.data.dao.AuthorDAO;
 import appl.data.dao.BookDAO;
@@ -301,8 +302,6 @@ public class BookServiceImpl implements BookService {
 			Map<Searchfields, String> map = new HashMap<Searchfields, String>();
 			map.put(Searchfields.categoryName, category);
 			return bookDao.getBooksByMetadata(map, mode);
-			// return dao.getBooksByCategory(category);
-			// return null;
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
@@ -436,12 +435,7 @@ public class BookServiceImpl implements BookService {
 
 	}
 
-	private BookBuilder saveOldValues(Book book, BookBuilder bookBuilder){
-		return bookBuilder.setAuthors(book.getAuthors()).setCategories(book.getCategories()).setDescription(book.getDescription())
-				.setEdition(book.getEdition()).setIsbn(book.getIsbn()).setPages(book.getPages()).setPrice(book.getPrice())
-				.setPubdate(book.getPubdate()).setPublisher(book.getPublisher()).setStock(book.getStock()).setTitle(book.getTitle())
-				.setVisitCount(book.getVisitCount());
-	}
+
 	
 //	private BookBuilder readData(BookBuilder bookBuilder, Searchfields searchfield, String information )
 	
@@ -461,7 +455,8 @@ public class BookServiceImpl implements BookService {
 			categories.add(categoryDao.getCategoryById(id));
 		}
 		// Save old Values
-		BookBuilder bookBuilder = saveOldValues(book, getBookBuilder());
+//		BookBuilder bookBuilder = saveOldValues(book, getBookBuilder());
+		BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
 		
 		bookBuilder.setAuthors(authors);
 		bookBuilder.setCategories(categories);
@@ -618,7 +613,7 @@ public class BookServiceImpl implements BookService {
 
 		try {
 			Book book = bookDao.getBookByIsbn(isbn);
-			BookBuilder bookBuilder = saveOldValues(book, getBookBuilder());
+			BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
 			// FIXME, testen ob das hier passts
 			bookBuilder.setVisitCount(book.getVisitCount() + additional);
 			bookDao.updateBook(bookBuilder.createBook());
