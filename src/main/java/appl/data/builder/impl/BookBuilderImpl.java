@@ -3,12 +3,14 @@
  */
 package appl.data.builder.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import appl.data.builder.BookBuilder;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.data.items.UserBookStatistic;
 
 public class BookBuilderImpl implements BookBuilder {
 	private String isbn;
@@ -23,7 +25,9 @@ public class BookBuilderImpl implements BookBuilder {
 	private Set<Author> authors;
 	private Set<Category> categories;
 	private int visitCount;
+	private Set<UserBookStatistic> userBookStatistics = new HashSet<UserBookStatistic>(0);
 
+	
 	public BookBuilderImpl() {
 	}
 
@@ -96,14 +100,22 @@ public class BookBuilderImpl implements BookBuilder {
 		this.visitCount = visitCount;
 		return this;
 	}
-
+	
+	
+	@Override
+	public BookBuilder setUserBookStatistics(Set<UserBookStatistic> userBookStatistics) {
+		this.userBookStatistics = userBookStatistics;
+		return this;
+	}
 
 
 	@Override
 	public Book createBook() {
 		return new Book(this.isbn, this.title, this.description, this.price, this.publisher, this.pubdate, this.edition,
-				this.pages, this.stock, this.categories, this.authors, this.visitCount);
+				this.pages, this.stock, this.categories, this.authors, this.visitCount, this.userBookStatistics);
 	}
+
+	
 
 	
 	

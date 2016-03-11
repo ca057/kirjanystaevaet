@@ -5,6 +5,7 @@ import java.util.Set;
 import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.data.items.Category;
+import appl.data.items.UserBookStatistic;
 
 /**
  * Builder to create a new object of the {@link Book} class.
@@ -37,6 +38,8 @@ public interface BookBuilder {
 	public BookBuilder setStock(int stock);
 	
 	public BookBuilder setVisitCount(int visitCount);
+	
+	public BookBuilder setUserBookStatistics(Set<UserBookStatistic> userBookStatistics);
 
 	public Book createBook();
 }

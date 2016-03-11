@@ -7,9 +7,19 @@ import appl.data.items.Category;
 public abstract class BuilderHelper {
 
 	public static BookBuilder saveOldValues(Book book, BookBuilder bookBuilder){
-		return bookBuilder.setAuthors(book.getAuthors()).setCategories(book.getCategories()).setDescription(book.getDescription())
-				.setEdition(book.getEdition()).setIsbn(book.getIsbn()).setPages(book.getPages()).setPrice(book.getPrice())
-				.setPubdate(book.getPubdate()).setPublisher(book.getPublisher()).setStock(book.getStock()).setTitle(book.getTitle())
+		return bookBuilder
+				.setUserBookStatistics(book.getUserBookStatistics())
+				.setAuthors(book.getAuthors())
+				.setCategories(book.getCategories())
+				.setDescription(book.getDescription())
+				.setEdition(book.getEdition())
+				.setIsbn(book.getIsbn())
+				.setPages(book.getPages())
+				.setPrice(book.getPrice())
+				.setPubdate(book.getPubdate())
+				.setPublisher(book.getPublisher())
+				.setStock(book.getStock())
+				.setTitle(book.getTitle())
 				.setVisitCount(book.getVisitCount());
 	}
 	
