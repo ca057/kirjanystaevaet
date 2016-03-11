@@ -424,9 +424,26 @@ public class QueryFun {
 		map.put(Searchfields.description, "New Description");
 		map.put(Searchfields.price, "100,11");
 		map.put(Searchfields.title, "New Title");
-//		dataService.updateBook("0101010101", map);
-		Book book = dataService.getBookByIsbn("0101010101", SearchMode.ALL);
+		List<Author> author1 = dataService.getAuthorByExactName("Joan K.", "Rowling");
+		List<Author> author2 = dataService.getAuthorByExactName("Michael", "Ende");
+		Set<Integer> authors = new HashSet<Integer>();
+		authors.add(author1.get(0).getAuthorId());
+		authors.add(author2.get(0).getAuthorId());
+		
+		Set<Category> categories = dataService.getBookByIsbn("0131428985", SearchMode.ALL).getCategories();
+		Set<Integer> catIds = new HashSet<Integer>();
+		for (Category c : categories){
+			catIds.add(c.getCategoryID());
+		}
+		
+		dataService.updateBook("0131428985", map, authors, catIds);
+		Book book = dataService.getBookByIsbn("0131428985", SearchMode.ALL);
 		System.out.println(book.toString());
+		Set<Author> authorsOfBook = book.getAuthors();
+		System.out.println("Authors of Book");
+		for (Author a : authorsOfBook){
+			System.out.println(a.toString());
+		}
 		
 	}
 	public void testUpdateCategory(ApplicationContext ctx) throws DatabaseException{
