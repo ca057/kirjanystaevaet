@@ -232,6 +232,8 @@ public interface BookService {
 	 * 
 	 * @param isbn
 	 * @param data {@link Map} with {@link Searchfields} as key to determine the fields to be updated and {@link String} as value with the new data
+	 * @param authorIds
+	 * @param categoryIds
 	 * @throws DatabaseException thrown e.g. if one tries to update isbn
 	 */
 	public void updateBook(String isbn, Map<Searchfields, String> data, Set<Integer> authorIds, Set<Integer> categoryIds) throws DatabaseException;
