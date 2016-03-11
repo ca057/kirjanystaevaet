@@ -25,14 +25,14 @@
 	</div>
 
 	<ul class="nav nav-tabs">
-		<li class="active"><a data-toggle="tab" href="#category">Kategorien</a></li>
-		<li><a data-toggle="tab" href="#author">Autor_innen</a></li>
-		<li><a data-toggle="tab" href="#book">Bücher</a></li>
+		<li class="active"><a data-toggle="tab" href="#kategorien">Kategorien</a></li>
+		<li><a data-toggle="tab" href="#autorinnen">Autor_innen</a></li>
+		<li><a data-toggle="tab" href="#buecher">Bücher</a></li>
 	</ul>
 	<div class="tab-content">
-		<div id="category" class="tab-pane fade in active">
+		<div id="kategorien" class="tab-pane fade in active">
 			<div class="row">
-				<section id="kategorien">
+				<section>
 					<div class="col-md-6">
 						<form action="bestand/kategorien/add" method="POST">
 							<fieldset>
@@ -74,8 +74,8 @@
 				</section>
 			</div>
 		</div>
-		<div id="author" class="tab-pane fade">
-			<section id="autorinnen">
+		<div id="autorinnen" class="tab-pane fade">
+			<section>
 				<p>
 					<em>Hinweis: Neu angelegte Autor_innen stehen erst nach einem
 						neuen Laden der Seite zur Verfügung.</em>
@@ -122,8 +122,8 @@
 				</div>
 			</section>
 		</div>
-		<div id="book" class="tab-pane fade">
-			<section id="buecher">
+		<div id="buecher" class="tab-pane fade">
+			<section>
 				<p>
 					<em>Hinweis:</em> Vor dem Anlegen neuer Bücher müssen Kategorien
 					und Autor_innen bereits existieren.
@@ -490,7 +490,4 @@
 			</section>
 		</div>
 	</div>
-
-
-
 </div>
