@@ -52,12 +52,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/", "/kategorien", "/kategorie/**", "/buch/**", "/suche", "/kontakt", "/login", "/logout",
-						"/registrierung", "/registrierung/**", "/api/**")
+						"/registrierung", "/registrierung/**", "/api/**", "/error")
 				.permitAll().antMatchers("/meinkonto", "/meinkonto/**", "/warenkorb").hasRole(UserRoles.USER.toString())
 				.antMatchers("/backend", "/backend/**").hasRole("ADMIN").anyRequest().authenticated().and().formLogin()
 				.loginPage("/login").successHandler(authSuccessHandler).failureUrl("/login?error").and().logout()
 				.deleteCookies("remove").invalidateHttpSession(true).logoutUrl("/logout").logoutSuccessUrl("/?logout")
-				.permitAll();
+				.permitAll().and().exceptionHandling().accessDeniedPage("/error");
 	}
 
 	@Override
