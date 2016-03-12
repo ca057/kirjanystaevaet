@@ -91,9 +91,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		if (registry != null) {
-			// TODO caching aktivieren
-			// registry.addResourceHandler("/resources/css/**").addResourceLocations("/resources/css/").setCachePeriod(3600);
-			// registry.addResourceHandler("/resources/js/**").addResourceLocations("/resources/js/").setCachePeriod(3600);
+			// TODO caching aktivieren ...().setCachePeriod(3600);
 			registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
 			registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
 			registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/", "/uploaded/img/");
