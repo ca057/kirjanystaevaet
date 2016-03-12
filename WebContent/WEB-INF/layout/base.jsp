@@ -30,44 +30,40 @@
 </head>
 
 <body>
-	<div id="content-wrapper">
 		<header>
 			<a href="<c:url value='/'/>" title="zur Startseite"> <t:insertAttribute name="header"></t:insertAttribute>
 			</a>
 		</header>
 
-		<nav class="shadow-1">
-			<t:insertAttribute name="navigation"></t:insertAttribute>
-		</nav>
-
-		<div id="content" class="container-fluid">
+		<div class="container">
 			<sec:authorize var="loggedIn" access="hasRole('ADMIN')" />
 			<c:choose>
 				<c:when test="${loggedIn}">
 					<div class="row">
-						<div class="col-sm-3 col-md-2">
-							<div class="container-fluid">
+						<div class="col-sm-2">
 								<t:insertAttribute name="sidebar"></t:insertAttribute>
-							</div>
 						</div>
-						<div class="col-sm-9 col-md-10">
+						<div class="col-sm-10">
 							<div class="container-fluid">
+								<t:insertAttribute name="navigation"></t:insertAttribute>
 								<t:insertAttribute name="content"></t:insertAttribute>
 							</div>
 						</div>
 					</div>
 				</c:when>
 				<c:otherwise>
-					<t:insertAttribute name="content"></t:insertAttribute>
+					<div class="container-fluid">
+						<t:insertAttribute name="navigation"></t:insertAttribute>
+						<t:insertAttribute name="content"></t:insertAttribute>
+					</div>
 				</c:otherwise>
 			</c:choose>
 
 		</div>
 	
-		<footer>
+		<footer class="footer">
 			<t:insertAttribute name="footer"></t:insertAttribute>
 		</footer>
-	</div>
 
 </body>
 </html>

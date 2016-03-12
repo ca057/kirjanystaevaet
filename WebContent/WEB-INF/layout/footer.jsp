@@ -13,7 +13,7 @@
 			title="Kontakt und Impressum">Kontakt/Impressum</a></li>
 	</ul>
 	<ul class="list-inline">
-		<li>&copy; 2015 R/T/T/O &ndash; <a href="http://www.wtfpl.net/"
+		<li>&copy; 2015 O/R/T/T &ndash; <a href="http://www.wtfpl.net/"
 			title="WTFPL License">WTFPL License</a></li>
 	</ul>
 </div>

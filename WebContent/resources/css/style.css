@@ -284,14 +284,15 @@ div#homerow {
 .nav-side-menu {
 	overflow: auto;
 	background-color: #2e353d;
+    background-repeat: repeat;
+    padding:0;
+    position:relative;
 	width: 100%;
 	height: 100%;
 	color: #e1ffff;
+	
 }
 
-.nav-side-menu .toggle-btn {
-	display: none;
-}
 
 .nav-side-menu ul, .nav-side-menu li {
 	list-style: none;
@@ -324,11 +325,6 @@ div#homerow {
 	margin-left: 0px;
 }
 
-.nav-side-menu ul .sub-menu li:hover, .nav-side-menu li .sub-menu li:hover
-	{
-	background-color: #020203;
-}
-
 .nav-side-menu li {
 	padding-left: 1em;
 	border-left: 3px solid #2e353d;
@@ -340,8 +336,13 @@ div#homerow {
 	color: #e1ffff;
 }
 
+.nav-side-menu ul .sub-menu li:hover, .nav-side-menu li .sub-menu li:hover
+	{
+	background-color: #020203;
+}
+
 .nav-side-menu ul .sub-menu li span {
-	padding-left: 2em;
+	padding-left: 1.5em;
 }
 
 .nav-side-menu li:hover {

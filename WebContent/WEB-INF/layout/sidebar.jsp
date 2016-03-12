@@ -4,6 +4,7 @@
 <%@ page session="false" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<div class="row">
 <div class="nav-side-menu">
 	<i class="toggle-btn" data-toggle="collapse"
 		data-target="#menu-content"></i>
@@ -43,5 +44,6 @@
 			title="Bestellungen"><span class="glyphicon glyphicon-shopping-cart"></span> Bestellungen</a></li>
 			</ul>
 			
+		</div>
 		</div>
 </div>
