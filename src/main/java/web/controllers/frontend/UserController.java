@@ -29,6 +29,7 @@ import web.controllers.UploadHelper;
  * 
  * @author Christian
  * @author Ludwig
+ * @author Johannes
  *
  */
 @Controller
@@ -73,12 +74,10 @@ public class UserController {
 			headers.setContentType(MediaType.IMAGE_PNG);
 			response.getOutputStream().write(imageBytes);
 			response.getOutputStream().flush();
-			// return imageBytes;
 			return new ResponseEntity<byte[]>(imageBytes, headers, HttpStatus.CREATED);
-		} catch (DatabaseException | ControllerOvertaxedException /* | IOException */ | IOException e) {
-			System.err.println("Fehler beim Bild holen");
+		} catch (DatabaseException | ControllerOvertaxedException | IOException e) {
+			return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return null;
 	}
 
 	@RequestMapping(value = "/meinkonto/bildhochladen", method = RequestMethod.POST)
@@ -89,7 +88,7 @@ public class UserController {
 		try {
 			uploadHelper.saveProfilePicture(helper.getUserId(), file.getBytes(), true);
 		} catch (IOException | ControllerOvertaxedException | DatabaseException e) {
-			// TODO Handle this
+			return "redirect:/meinkonto?error";
 		}
 		return "redirect:/meinkonto";
 	}
