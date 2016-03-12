@@ -68,9 +68,8 @@ public class InitializationImpl implements InitializingBean {
 		list.add("Rosenhagen");
 		list.add("Trepesch");
 		list.add("Boosz");
-		list.add("Plank");
+		list.add("Blank");
 		list.add("Büchner");
-		list.add("Unicorn");
 		list.add("Unicorn");
 		list.add("Arendt");
 		list.add("Brandt");
