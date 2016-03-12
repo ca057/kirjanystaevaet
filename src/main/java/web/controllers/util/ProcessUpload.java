@@ -1,4 +1,4 @@
-package web.controllers.helper;
+package web.controllers.util;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
