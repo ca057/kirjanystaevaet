@@ -37,14 +37,15 @@
 						<form action="bestand/kategorien/add" method="POST">
 							<fieldset>
 								<legend>Kategorie anlegen</legend>
-								<label for="kategorien-anlegen-input">Name der neuen
-									Kategorie:</label> <input type="text" placeholder="Name der Kategorie"
-									id="kategorien-anlegen-input" name="name" class="form-control" required />
+								<label for="kategorien-anlegen-input">Name der neuen Kategorie:</label>
+								<input type="text" placeholder="Name der Kategorie" id="kategorien-anlegen-input" name="name" class="form-control" required />
+								
 								<button type="submit" class="btn btn-default" >Kategorie anlegen</button>
 								<sec:csrfInput />
 							</fieldset>
 						</form>
 					</div>
+					
 					<div class="col-md-6">
 						<form action="bestand/kategorien/delete" method="POST">
 							<fieldset>
@@ -59,9 +60,9 @@
 										<select name="id" id="kategorien-loeschen-input" class="form-control" required>
 											<option value="">Kategorie auswählen</option>
 											<c:forEach var="category" items="${categories}">
-												<option value="${category.getCategoryID()}"><c:out
-														value="${category.getCategoryID()}" />:
-													<c:out value="${category.getCategoryName()}" /></option>
+												<option value="${category.getCategoryID()}">
+													<c:out value="${category.getCategoryID()}" />: <c:out value="${category.getCategoryName()}" />
+												</option>
 											</c:forEach>
 										</select>
 										<button type="submit" class="btn btn-default" >Kategorie löschen</button>
@@ -85,11 +86,12 @@
 						<form>
 							<fieldset>
 								<legend>Autor_in anlegen</legend>
-								<label for="autorinnen-anlegen-first">Vorname:</label> <input
-									id="autorinnen-anlegen-first" name="first" type="text"
-									placeholder="Vorname" class="form-control" required /> <label
-									for="autorinnen-anlegen-last">Nachname:</label> <input
-									id="autorinnen-anlegen-last" name="last" type="text"
+								<label for="autorinnen-anlegen-first">Vorname:</label>
+								<input id="autorinnen-anlegen-first" name="first" type="text"
+									placeholder="Vorname" class="form-control" required />
+								
+								<label for="autorinnen-anlegen-last">Nachname:</label>
+								<input id="autorinnen-anlegen-last" name="last" type="text"
 									placeholder="Nachname" class="form-control" required />
 
 								<button type="submit" class="btn btn-default" id="autorinnen-anlegen-submit"
@@ -102,14 +104,12 @@
 						<form action="bestand/autorinnen/delete" method="POST">
 							<fieldset>
 								<legend>Autor_in löschen</legend>
-								<label for="autorinnen-loeschen-id">Autor_innen
-									auswählen</label> <select name="author" id="autorinnen-loeschen-id" class="form-control"
-									multiple required>
+								<label for="autorinnen-loeschen-id">Autor_innen auswählen</label>
+								<select name="author" id="autorinnen-loeschen-id" class="form-control" multiple required>
 									<c:forEach var="author" items="${authors}">
-										<option value="${author.getAuthorId()}"><c:out
-												value="${author.getAuthorId()}" />:
-											<c:out value="${author.getNameF()}" />
-											<c:out value="${author.getNameL()}" /></option>
+										<option value="${author.getAuthorId()}">
+											<c:out value="${author.getAuthorId()}" />: <c:out value="${author.getNameF()}" /> <c:out value="${author.getNameL()}" />
+										</option>
 									</c:forEach>
 								</select>
 
@@ -132,14 +132,13 @@
 				<form action="bestand/buecher/add" method="POST"
 					enctype="multipart/form-data" class="form-inline">
 					<fieldset>
+						<legend>Buch anlegen</legend>
 						<c:choose>
 							<c:when test="${categories.isEmpty() && authors.isEmpty()}">
-								<legend>Buch anlegen</legend>
 								<p>Noch keine Kategorien oder Autor_innen in der Datenbank
 									vorhanden.</p>
 							</c:when>
 							<c:otherwise>
-								<legend>Buch anlegen</legend>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">
@@ -312,16 +311,13 @@
 								<p>Noch keine Bücher zum Ändern in der Datenbank vorhanden.</p>
 							</c:when>
 							<c:otherwise>
-								<p><em>Leere Felder werden nicht geändert.</em></p>
+								<p><em>Leere Felder werden nicht geändert; es werden auch die Datensätze von Büchern angezeigt, die in der Datenbank als gelöscht markiert sind und aus Konsistenzgründen weiterhin aufgelistet werden.</em></p>
 								<p class="hidden" id="buecher-aendern-data-loading"><em>Daten werden geladen, bitte warten...</em></p>
 								<label for="buecher-aendern-isbn"></label>
 								<select name="isbn" id="buecher-aendern-isbn" class="form-control" required>
 									<option value="">Buch auswählen</option>
 									<c:forEach var="book" items="${books}">
-										<option value="${book.getIsbn()}">
-											<c:out value="${book.getIsbn()}"></c:out>:
-											<c:out value="${book.getTitle()}"></c:out>
-										</option>
+										<option value="${book.getIsbn()}"><c:out value="${book.getIsbn()}"></c:out>: <c:out value="${book.getTitle()}"></c:out> <c:if test="${book.getStock() < 0}"> <span class="error">(gelöscht)</span></c:if></option>
 									</c:forEach>
 								</select>
 								<label for="buecher-aendern-categories">Kategorien auswählen:</label>
@@ -341,10 +337,9 @@
 									auswählen</label>
 								<select name="authors" id="buecher-aendern-authors" class="form-control" multiple>
 									<c:forEach var="author" items="${authors}">
-										<option value="${author.getAuthorId()}"><c:out
-												value="${author.getAuthorId()}" />:
-											<c:out value="${author.getNameF()}" />
-											<c:out value="${author.getNameL()}" /></option>
+										<option value="${author.getAuthorId()}">
+											<c:out value="${author.getAuthorId()}" />: <c:out value="${author.getNameF()}" /><c:out value="${author.getNameL()}" />
+										</option>
 									</c:forEach>
 								</select>
 
@@ -435,59 +430,59 @@
 					</fieldset>
 				</form>
 
-				<c:choose>
-					<c:when test="${books.isEmpty()}">
-						<legend>Bestand ändern</legend>
-						<p>Noch keine Bücher in der Datenbank vorhanden.</p>
-					</c:when>
-					<c:otherwise>
-						<legend>Bestand ändern</legend>
-						<p>Die eingetragenen Änderungen werden zum bisherigen Bestand
-							hinzu addiert bzw. abgezogen.</p>
-						<form action="bestand/buecher/stock" method="POST">
-							<fieldset>
-								<label for="buecher-stock-isbn"></label> <select name="isbn"
-									id=buecher-stock-isbn class="form-control" required>
-									<option value="">Buch auswählen</option>
-									<c:forEach var="book" items="${books}">
-										<option value="${book.getIsbn()}"><c:out
-												value="${book.getIsbn()}"></c:out>:
-											<c:out value="${book.getTitle()}"></c:out></option>
-									</c:forEach>
-								</select> <label for="buecher-stock-stock">Änderung:</label> <input
-									type="number" id="buecher-stock-stock" name="stock"
-									placeholder="Änderung eingeben">
-								<button type="submit" class="btn btn-default" >Bestand ändern</button>
-								<sec:csrfInput />
-							</fieldset>
-						</form>
-					</c:otherwise>
-				</c:choose>
+				<form action="bestand/buecher/stock" method="POST">
+					<fieldset>
+					<legend>Bestand ändern</legend>
+					<c:choose>
+						<c:when test="${books.isEmpty()}">
+							<p>Noch keine Bücher in der Datenbank vorhanden.</p>
+						</c:when>
+						<c:otherwise>
+							<p>Die eingetragenen Änderungen werden zum bisherigen Bestand
+								hinzu addiert bzw. abgezogen.</p>
+							<label for="buecher-stock-isbn"></label>
+							<select name="isbn" id=buecher-stock-isbn class="form-control" required>
+								<option value="">Buch auswählen</option>
+								<c:forEach var="book" items="${books}">
+									<option value="${book.getIsbn()}">
+										<c:out value="${book.getIsbn()}"></c:out>: <c:out value="${book.getTitle()}"></c:out>
+									</option>
+								</c:forEach>
+							</select>
+							
+							<label for="buecher-stock-stock">Änderung:</label>
+							<input type="number" id="buecher-stock-stock" name="stock" placeholder="Änderung eingeben">
+							
+							<button type="submit" class="btn btn-default" >Bestand ändern</button>
+							<sec:csrfInput />
+						</c:otherwise>
+					</c:choose>
+					</fieldset>
+				</form>
 
-				<c:choose>
-					<c:when test="${books.isEmpty()}">
+				<form action="bestand/buecher/delete" method="POST">
+					<fieldset>
 						<legend>Buch löschen</legend>
-						<p>Noch keine Bücher in der Datenbank vorhanden.</p>
-					</c:when>
-					<c:otherwise>
-						<form action="bestand/buecher/delete" method="POST">
-							<fieldset>
-								<legend>Buch löschen</legend>
-								<label for="buecher-loeschen-isbn"></label> <select name="isbn"
-									id="buecher-loeschen-isbn" class="form-control" required>
+						<c:choose>
+							<c:when test="${books.isEmpty()}">
+								<p>Noch keine Bücher in der Datenbank vorhanden.</p>
+							</c:when>
+							<c:otherwise>
+								<label for="buecher-loeschen-isbn">Buch auswählen</label>
+								<select name="isbn" id="buecher-loeschen-isbn" class="form-control" required>
 									<option value="">Buch auswählen</option>
 									<c:forEach var="book" items="${books}">
-										<option value="${book.getIsbn()}"><c:out
-												value="${book.getIsbn()}"></c:out>:
-											<c:out value="${book.getTitle()}"></c:out></option>
+										<c:if test="${book.getStock() >= 0}">
+											<option value="${book.getIsbn()}"><c:out value="${book.getIsbn()}"></c:out>: <c:out value="${book.getTitle()}"></c:out></option>
+										</c:if>
 									</c:forEach>
 								</select>
 								<button type="submit" class="btn btn-default" >Buch löschen</button>
 								<sec:csrfInput />
-							</fieldset>
-						</form>
-					</c:otherwise>
-				</c:choose>
+							</c:otherwise>
+						</c:choose>
+					</fieldset>
+				</form>
 			</section>
 		</div>
 	</div>
