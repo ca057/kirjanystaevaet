@@ -8,7 +8,7 @@
 	</div>
 	<div class="row">
 
-		<div class="jumbotron" id="about">
+		<div class="jumbotron" id="ueber">
 			<article>
 				<h2>Kirjanystaevaet - der Buchshop</h2>
 				<p>Seien wir ehrlich: Eigentlich würden wir gerade auch lieber
