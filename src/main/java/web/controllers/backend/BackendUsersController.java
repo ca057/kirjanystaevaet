@@ -96,7 +96,7 @@ public class BackendUsersController {
 			}
 			return new ResponseEntity<UserJSONWrapper>(returnWrapper, HttpStatus.OK);
 		} catch (DatabaseException e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 			return returnUnprocessableEntity(returnWrapper);
 		}
 	}
