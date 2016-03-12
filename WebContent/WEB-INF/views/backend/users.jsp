@@ -57,6 +57,7 @@
 			<div class="form-group">
 				<label for="role">Rolle</label> <select name="role" id="role"
 					class="form-control" required>
+					<option value="">Rolle auswählen</option>
 					<option value="USER">Nutzer_in</option>
 					<option value="ADMIN">Administrator_in</option>
 				</select>
@@ -81,6 +82,7 @@
 					<label for="edit-id">Datensatz auswählen</label>
 					<select name="edit-id" id="edit-id" class="form-control" required>
 						<c:forEach var="user" items="${users}">
+						<option value="">Datensatz auswählen</option>
 							<option value="${user.getUserId()}"><c:out
 									value="${user.getUserId()}" />:
 								<c:out value="${user.getName()}" />
@@ -130,13 +132,13 @@
 					<div class="form-group">
 					<label for="edit-role">Rolle</label>
 					<select name="edit-role" id="edit-role" class="form-control" >
+						<option value="">Rolle auswählen</option>
 						<option value="USER">Nutzer:in</option>
 						<option value="ADMIN">Administrator:in</option>
 					</select>
 					</div>
 
-					<button type="submit" class="btn btn-default" id="edit-user-submit">Datensatz
-						ändern</button>
+					<button type="submit" class="btn btn-default" id="edit-user-submit">Datensatz ändern</button>
 				</c:otherwise>
 			</c:choose>
 		</fieldset>
