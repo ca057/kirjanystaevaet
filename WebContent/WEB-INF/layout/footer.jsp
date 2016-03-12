@@ -9,7 +9,7 @@
 		<li><a href="<c:url value='/'/>" title="zur Startseite">Startseite</a></li>
 		<li><a href="<c:url value='/login'/>" title="zur Login">zum
 				Login</a></li>
-		<li><a href="<c:url value='/kontakt'/>"
+		<li><a href="<c:url value='/kontakt#kontakt'/>"
 			title="Kontakt und Impressum">Kontakt/Impressum</a></li>
 	</ul>
 	<ul class="list-inline">
