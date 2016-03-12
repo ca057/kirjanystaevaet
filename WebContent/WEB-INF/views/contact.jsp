@@ -27,8 +27,8 @@
 					diese Zeit voll auszukosten.</p>
 			</article>
 		</div>
+		</div>
 
-	</div>
 
 	<div class="row">
 

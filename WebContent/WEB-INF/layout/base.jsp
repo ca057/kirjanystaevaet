@@ -18,26 +18,21 @@
 <link rel="stylesheet" href="<s:url value='/css/style.css'/>">
 <link rel="stylesheet" href="<s:url value='/css/login-popup.css'/>">
 
-<script type="text/javascript"
-	src="<s:url value='/js/jquery-2.2.1.min.js' />"></script>
-<script type="text/javascript"
-	src="<s:url value='/js/elevator.min.js' />"></script>
+<script type="text/javascript" src="<s:url value='/js/jquery-2.2.1.min.js' />"></script>
+<script type="text/javascript" src="<s:url value='/js/elevator.min.js' />"></script>
 <script type="text/javascript" src="<s:url value='/js/helpme.js'/>"></script>
-<script type="text/javascript"
-	src="<s:url value='/js/bootstrap.min.js"'/>"></script>
+<script type="text/javascript" src="<s:url value='/js/bootstrap.min.js"'/>"></script>
 <script type="text/javascript" src="<s:url value='/js/script.js'/>"></script>
 
 <sec:authorize access="hasRole('ADMIN')">
-	<script type="text/javascript"
-		src="<s:url value='/js/adminscript.js'/>"></script>
+	<script type="text/javascript" src="<s:url value='/js/adminscript.js'/>"></script>
 </sec:authorize>
 </head>
 
 <body>
 	<div id="content-wrapper">
 		<header>
-			<a href="<c:url value='/'/>" title="zur Startseite"> <t:insertAttribute
-					name="header"></t:insertAttribute>
+			<a href="<c:url value='/'/>" title="zur Startseite"> <t:insertAttribute name="header"></t:insertAttribute>
 			</a>
 		</header>
 
@@ -51,27 +46,28 @@
 				<c:when test="${loggedIn}">
 					<div class="row">
 						<div class="col-sm-3 col-md-2">
-							<t:insertAttribute name="sidebar"></t:insertAttribute>
+							<div class="container-fluid">
+								<t:insertAttribute name="sidebar"></t:insertAttribute>
+							</div>
 						</div>
 						<div class="col-sm-9 col-md-10">
-							<t:insertAttribute name="content"></t:insertAttribute>
-							<footer>
-								<t:insertAttribute name="footer"></t:insertAttribute>
-							</footer>
+							<div class="container-fluid">
+								<t:insertAttribute name="content"></t:insertAttribute>
+							</div>
 						</div>
 					</div>
 				</c:when>
 				<c:otherwise>
 					<t:insertAttribute name="content"></t:insertAttribute>
-					<footer>
-						<t:insertAttribute name="footer"></t:insertAttribute>
-					</footer>
 				</c:otherwise>
 			</c:choose>
 
 		</div>
+	
+		<footer>
+			<t:insertAttribute name="footer"></t:insertAttribute>
+		</footer>
 	</div>
-
 
 </body>
 </html>
