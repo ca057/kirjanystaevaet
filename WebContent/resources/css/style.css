@@ -326,13 +326,6 @@ div#homerow {
 }
 
 /* Bootstrap changes */
-.thumbnail {
-	width: 90%;
-}
-
-.thumbnail img {
-	width: 40%;
-}
 
 #logout-form {
 	height: 100%;
@@ -476,3 +469,16 @@ div#homerow {
     cursor: inherit;
     display: block;
 }
+
+/* Thumbnail */
+
+.thumbnail{        
+    width: 90%;
+    height: 35vw;
+    overflow: auto;
+}
+
+.thumbnail img {
+	width: 40%;
+}
+

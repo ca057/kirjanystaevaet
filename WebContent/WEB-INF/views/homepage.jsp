@@ -11,7 +11,7 @@
 		<h1>Tipps aus unserem Sortiment</h1>
 	</div>
 	
-	<div class="row row-eq-height">
+	<div class="row">
 		<div class="col-sm-6 col-md-3">
 			<div class="thumbnail">
 				<article>
@@ -32,15 +32,9 @@
 								<c:set var="delimiter" value=", " scope="request"></c:set>
 							</c:forEach>
 						</p>
-						<!--  <p><c:out value="${bookOfTheMoment.getDescription()}" escapeXml="false" ></c:out></p>  -->
-						<p>
-							<c:out value="${recommendations.get(0).getPrice()}" />
-							€
-						<p>
-							<a
-								href="<c:url value='/buch/${recommendations.get(0).getIsbn()}' />"
-								class="btn btn-primary center-block" role="button">zum Buch</a>
-						</p>
+						<p><c:out value="${recommendations.get(0).getPrice()}" /> €</p>
+							<a href="<c:url value='/buch/${recommendations.get(0).getIsbn()}' />" 
+							class="btn btn-primary center-block" role="button">zum Buch</a>
 					</div>
 				</article>
 			</div>
