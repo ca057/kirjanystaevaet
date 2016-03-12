@@ -100,7 +100,9 @@
 		\label{rest-api}
 	\end{table}
 	
-	Die 
+	Für die Nutzung der API ist keine Authentifizierung erforderlich, es können daher auch keine Daten an den Server übermittelt werden.
+	
+	In der aktuellen Implementierung bietet die API nur grundlegende Abfragen. Für die Bereitstellung von komplexeren Abfragen müsste das bisherige Schema um weitere Parameter und/oder URLs ergänzt werden. Vor allem bei zunehmenden Datensätzen sollte dies in Erwägung gezogen werden, da eine Abfrage aller Bücher schnell große Datenmengen erzeugen kann, welche sowohl für den Server des Shops als auch für den Client zur Belastung werden können. Eine Reduzierung der Belastung kann zum Beispiel durch die Angabe eines \lstinline|offset|s zusätzlich zum \lstinline|limit| erreicht werden oder über die Ergänzung weiterer Parameter, zum Beispiel zur Abfrage aller Bücher einer bestimmten Autorin.
 	
 	\subsection{A8: Nutzeranalyse}
 	\dots
