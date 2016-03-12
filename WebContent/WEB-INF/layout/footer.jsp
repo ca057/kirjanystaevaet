@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 
 <div class="footer">
-	<div class="container">
+	<div class="col-xs-12">
 		<ul class="list-inline">
 			<li><a href="#" title="zurück nach oben" class="to-top">nach
 					oben</a></li>

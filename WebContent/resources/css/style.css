@@ -292,17 +292,6 @@ div#homerow {
 	cursor: pointer;
 }
 
-.nav-side-menu ul :not(collapsed) .arrow:before, .nav-side-menu li :not(collapsed) .arrow:before
-	{
-	font-family: FontAwesome;
-	content: "\f078";
-	display: inline-block;
-	padding-left: 1em;
-	padding-right: 1em;
-	vertical-align: middle;
-	float: right;
-}
-
 .nav-side-menu ul .active, .nav-side-menu li .active {
 	border-left: 0.3em solid #d19b3d;
 	background-color: #4f5b69;
@@ -331,18 +320,8 @@ div#homerow {
 	background-color: #020203;
 }
 
-.nav-side-menu ul .sub-menu li:before, .nav-side-menu li .sub-menu li:before
-	{
-	font-family: FontAwesome;
-	content: "\f105";
-	display: inline-block;
-	padding-left: 1em;
-	padding-right: 1em;
-	vertical-align: middle;
-}
-
 .nav-side-menu li {
-	padding-left: 0px;
+	padding-left: 1em;
 	border-left: 3px solid #2e353d;
 	border-bottom: 1px solid #23282e;
 }
@@ -350,6 +329,10 @@ div#homerow {
 .nav-side-menu li a {
 	text-decoration: none;
 	color: #e1ffff;
+}
+
+.nav-side-menu ul .sub-menu li span {
+	padding-left: 2em;
 }
 
 .nav-side-menu li:hover {
