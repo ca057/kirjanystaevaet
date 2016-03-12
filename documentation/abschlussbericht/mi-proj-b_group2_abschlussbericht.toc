@@ -4,23 +4,27 @@
 \contentsline {section}{\numberline {3}Umsetzung des Anforderungskatalogs}{5}{section.3}
 \contentsline {subsection}{\numberline {3.1}Datenbank}{5}{subsection.3.1}
 \contentsline {subsubsection}{\numberline {3.1.1}Datenbankschema}{5}{subsubsection.3.1.1}
-\contentsline {subsection}{\numberline {3.2}Datenmanagement}{5}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.2}A1: Datenmanagement}{5}{subsection.3.2}
 \contentsline {subsubsection}{\numberline {3.2.1}Architektur der Datenbankfunktionen}{6}{subsubsection.3.2.1}
 \contentsline {subsubsection}{\numberline {3.2.2}Einf\IeC {\"u}gen von Daten}{7}{subsubsection.3.2.2}
 \contentsline {subsubsection}{\numberline {3.2.3}L\IeC {\"o}schen von Daten}{7}{subsubsection.3.2.3}
 \contentsline {subsubsection}{\numberline {3.2.4}\IeC {\"A}ndern von Daten}{7}{subsubsection.3.2.4}
 \contentsline {subsubsection}{\numberline {3.2.5}Exception Handling}{8}{subsubsection.3.2.5}
-\contentsline {subsection}{\numberline {3.3}Suchfunktion}{8}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}REST-API}{9}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Bestellverwaltung}{9}{subsection.3.5}
-\contentsline {section}{\numberline {4}User Stories}{10}{section.4}
-\contentsline {subsection}{\numberline {4.1}Registrierung und Login}{10}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Buchauswahl und Bestellung}{10}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Administration des Web-Shops}{10}{subsection.4.3}
-\contentsline {section}{\numberline {5}Zusammenarbeit}{11}{section.5}
-\contentsline {paragraph}{W\IeC {\"o}chentliche Treffen}{11}{section*.5}
-\contentsline {paragraph}{Feature-Branches}{11}{section*.6}
-\contentsline {section}{\numberline {6}Lessons Learned}{12}{section.6}
-\contentsline {subsection}{\numberline {6.1}Kritik}{12}{subsection.6.1}
-\contentsline {paragraph}{Naming conventions}{12}{section*.7}
-\contentsline {section}{\numberline {7}Bliblablub}{12}{section.7}
+\contentsline {subsection}{\numberline {3.3}A2: Frontend}{8}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}A3: Suchfunktion}{9}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}A4: Backend}{9}{subsection.3.5}
+\contentsline {subsection}{\numberline {3.6}A5: Warenkorb}{9}{subsection.3.6}
+\contentsline {subsection}{\numberline {3.7}A6: Bestellverwaltung}{9}{subsection.3.7}
+\contentsline {subsection}{\numberline {3.8}A7: REST-API}{10}{subsection.3.8}
+\contentsline {subsection}{\numberline {3.9}A8: Nutzeranalyse}{10}{subsection.3.9}
+\contentsline {section}{\numberline {4}User Stories}{11}{section.4}
+\contentsline {subsection}{\numberline {4.1}Registrierung und Login}{11}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Buchauswahl und Bestellung}{11}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Administration des Web-Shops}{11}{subsection.4.3}
+\contentsline {section}{\numberline {5}Zusammenarbeit}{12}{section.5}
+\contentsline {paragraph}{W\IeC {\"o}chentliche Treffen}{12}{section*.5}
+\contentsline {paragraph}{Feature-Branches}{12}{section*.6}
+\contentsline {section}{\numberline {6}Lessons Learned}{13}{section.6}
+\contentsline {subsection}{\numberline {6.1}Kritik}{13}{subsection.6.1}
+\contentsline {paragraph}{Naming conventions}{13}{section*.7}
+\contentsline {section}{\numberline {7}Bliblablub}{13}{section.7}
