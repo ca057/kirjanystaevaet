@@ -54,8 +54,18 @@
 		\subsubsection{Zuordnung von Views und Controllern}	
 		Mit einzelnen Ausnahmen besitzt jeder View, das heißt jede im Browser dargestellte Seite, eine eigene \lstinline|.jsp|-Datei und einen eigenen Controller. Einzelne Views können dabei durchaus unterschiedlich auftreten, wie zum Beispiel die Darstellung der Kategorien. Der zuständige Controller erwartet als Pfad-Variable in der URL den gesuchten Kategoriennamen. Kann die Variable einer existierenden Kategorie zugeordnet werden, werden alle Bücher dieser Kategorie angezeigt, andernfalls wird eine Übersichtsseite angezeigt. Beide Darstellungen werden durch den gleichen Controller und \lstinline|.jsp|-Datei erzeugt.
 		
+		Die für die Anzeige benötigten Daten werden in den Controller-Methoden dem Model hinzugefügt und können anschließend im View abgegriffen werden. Im gesamten Shop werden alle Daten, die zur Anzeige benötigt werden, auf diese Weise den Views zur Verfügung gestellt.
+		
 		\subsubsection{Funktionalitäten des Frontends}
-		Das Frontend ermöglicht alle grundlegenden Funktionalitäten zur vollständigen Nutzung des Shops. Nutzer*innen können sich registrieren, einloggen, Bücher auswählen und in den Warenkorb legen und schließlich bestellen. Administrator*innen haben im \ref{sec:umsetzung:backend}
+		Das Frontend ermöglicht alle grundlegenden Funktionalitäten zur vollständigen Nutzung des Shops. Nutzer*innen können sich registrieren, einloggen, Bücher auswählen und in den Warenkorb legen und schließlich bestellen. Administrator*innen haben im Backend (siehe Kapitel \ref{sec:umsetzung:backend}) alle Möglichkeiten zur umfassenden Verwaltung des Shops und Bestands.
+		
+		Vom oben beschriebenen Datenfluss weicht die Seite zur Registrierung ab. Da in der Datenbank die Postleitzahlen als Entität abgelegt werden und es zu einer Postleitzahl mehrere Orte geben kann (zum Beispiel bei \lstinline|37627|), muss bei der Registrierung ein eindeutiger Wert an den Server übermittelt werden. Daher wird nach einer Eingabe von fünf Zeichen in das Postleitzahlen-Feld diese per AJAX-Request an den Server übermittelt, der alle zu dieser Postleitzahl gehörenden Orte zurückliefert. War die Abfrage erfolgreich, werden die Orte als Auswahlliste in die Seite eingefügt. Mit Beginn der Abfrage wird ein Hinweis angezeigt, so dass auch bei einem länger dauernden Request der Nutzer über die Hintergrundaktivität informiert ist.
+		
+		\dots
+		
+		Cart, detaillierter in \ref{sec:umsetzung:cart}
+		
+		\dots
 
 	\subsection{A3: Suchfunktion}\label{umsetzung:Suche}
 	Die Suchfunktion wird im \texttt{BookService} angeboten. Hierbei wurde sich auf eine Suche über die Metadaten beschränkt. Es kann nach \textit{Titel}, \textit{Vorname}, \textit{Nachname}, \textit{ISBN}, \textit{Erscheinungsjahr} und \textit{Kategorie} gesucht werden. Für Datenbankabfragen allgemein und die Suche im besonderen werden \textit{Criteria} verwendet, da sich auf diese Weise sehr einfach dynamische Anfragen generieren lassen. Bei der Suche werden die Angaben der verschiedenen Felder und-verknüpft und sind durch die Verwendung der \texttt{Restrictions.ilike} case-insensitiv und der Suchterm muss nicht exakt so in der Datenbank stehen, sondern kann von anderen Zeichen umgeben sein.
@@ -65,7 +75,7 @@
 
 	\subsection{A4: Backend}\label{sec:umsetzung:backend}
 	\dots
-	\subsection{A5: Warenkorb}
+	\subsection{A5: Warenkorb}\label{sec:umsetzung:cart}
 	\dots
 	
 	\subsection{A6: Bestellverwaltung}\label{sec:umsetzung:Bestellverwaltung}

@@ -13,11 +13,11 @@
 \contentsline {subsection}{\numberline {3.3}A2: Frontend}{8}{subsection.3.3}
 \contentsline {subsubsection}{\numberline {3.3.1}Zuordnung von Views und Controllern}{9}{subsubsection.3.3.1}
 \contentsline {subsubsection}{\numberline {3.3.2}Funktionalit\IeC {\"a}ten des Frontends}{9}{subsubsection.3.3.2}
-\contentsline {subsection}{\numberline {3.4}A3: Suchfunktion}{9}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.4}A3: Suchfunktion}{10}{subsection.3.4}
 \contentsline {subsection}{\numberline {3.5}A4: Backend}{10}{subsection.3.5}
 \contentsline {subsection}{\numberline {3.6}A5: Warenkorb}{10}{subsection.3.6}
 \contentsline {subsection}{\numberline {3.7}A6: Bestellverwaltung}{10}{subsection.3.7}
-\contentsline {subsection}{\numberline {3.8}A7: REST-API}{10}{subsection.3.8}
+\contentsline {subsection}{\numberline {3.8}A7: REST-API}{11}{subsection.3.8}
 \contentsline {subsection}{\numberline {3.9}A8: Nutzeranalyse}{11}{subsection.3.9}
 \contentsline {section}{\numberline {4}User Stories}{12}{section.4}
 \contentsline {subsection}{\numberline {4.1}Registrierung und Login}{12}{subsection.4.1}
