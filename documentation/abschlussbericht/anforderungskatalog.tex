@@ -86,23 +86,20 @@
 	Im Admin-Backend können die Bestellungen eingesehen werden \textbf{Christian}
 	
 	\subsection{A7: REST-API}\label{sec:umsetzung:Rest}
-	Die REST-API liefert Bestandsdaten im JSON-Format über die zum Verkauf stehenden Bücher. Tabelle \ref{rest-api} gibt Auskunft über das verwendete URL-Schema, dabei muss der angegebenen URL \lstinline|http://localhost:8080/kirjanystaevaet/api/v1| vorangestellt werden.
+	Die REST-API liefert Bestandsdaten im JSON-Format über die zum Verkauf stehenden Bücher. Erreichbar ist die API unter \lstinline|http://localhost:8080/kirjanystaevaet/api/v1/{parameter}|, wobei \lstinline|{parameter}| durch die gesuchte Entität (aktuell sind nur Bücher (\lstinline|books|) möglich) ersetzt werden muss. Für die Nutzung der API ist keine Authentifizierung erforderlich, es können daher auch keine Daten an den Server übermittelt werden. Zu einem Buch werden nicht alle Daten übermittelt, es gibt zum Beispiel keine Angaben über den Bestand.
 	
-	\begin{table}[h]
-		\caption{URL-Schema der REST-API}
-		\begin{tabular}{|c|c|c|c|}
-			\hline
-			URL & (optionale) Parameter & Methode & Beschreibung \\ \hline \hline
-			\lstinline|/books| & \lstinline|limit (int)| & \lstinline|GET| & alle verfügbaren Bücher \\ \hline
-			\lstinline|/books/{category}| & \lstinline|limit (int)| & \lstinline|GET| & alle verfügbaren Bücher der übergebenen Kategorie \\ \hline
-			\lstinline|/books/{isbn}| & & \lstinline|GET| & das Buch mit der übergebenen ISBN \\ \hline
-		\end{tabular} 
-		\label{rest-api}
-	\end{table}
+	Wird die Anfrage ohne Parameter übermittelt, wird eine komplette Liste aller Datensätze der Entität zurückgegeben, hier eine Liste aller Bücher. Zur Einschränkung der Abfrage können in der bekannten Form (\lstinline|URL?name=value|) die folgenden Parameter mitgegeben werden:
+	\begin{itemize}
+		\item[category] der Name einer Kategorie
+		\item[isbn] die ISBN-Nummer eines Buches
+	\end{itemize}
 	
-	Für die Nutzung der API ist keine Authentifizierung erforderlich, es können daher auch keine Daten an den Server übermittelt werden.
+	Die bereits beschriebenen Parameter können um den folgenden ergänzt werden:
+	\begin{itemize}
+		\item[limit] limitiert die Anzahl der zurück gelieferten Ergebnisse, wird server-seitig zu einem Integer-Wert umgewandelt
+	\end{itemize}
 	
-	In der aktuellen Implementierung bietet die API nur grundlegende Abfragen. Für die Bereitstellung von komplexeren Abfragen müsste das bisherige Schema um weitere Parameter und/oder URLs ergänzt werden. Vor allem bei zunehmenden Datensätzen sollte dies in Erwägung gezogen werden, da eine Abfrage aller Bücher schnell große Datenmengen erzeugen kann, welche sowohl für den Server des Shops als auch für den Client zur Belastung werden können. Eine Reduzierung der Belastung kann zum Beispiel durch die Angabe eines \lstinline|offset|s zusätzlich zum \lstinline|limit| erreicht werden oder über die Ergänzung weiterer Parameter, zum Beispiel zur Abfrage aller Bücher einer bestimmten Autorin.
+	In der aktuellen Implementierung kann die API nur für grundlegende Abfragen zu Büchern verwendet werden. Für die Bereitstellung von komplexeren Abfragen müsste das bisherige Schema um weitere Pfad- und Anfrage-Parameter ergänzt werden. Vor allem bei zunehmenden Datensätzen sollte dies in Erwägung gezogen werden, da eine Abfrage aller Bücher schnell große Datenmengen erzeugen kann, welche sowohl für den Server des Shops als auch für den Client zur Belastung werden können. Eine Reduzierung der Belastung kann zum Beispiel durch die Angabe eines \lstinline|offset|s zusätzlich zum \lstinline|limit| erreicht werden oder über die Ergänzung weiterer Parameter, zum Beispiel zur Abfrage aller Bücher einer bestimmten Autorin.
 	
 	\subsection{A8: Nutzeranalyse}
 	\dots

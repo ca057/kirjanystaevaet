@@ -24,9 +24,9 @@
 \contentsline {subsection}{\numberline {4.2}Buchauswahl und Bestellung}{12}{subsection.4.2}
 \contentsline {subsection}{\numberline {4.3}Administration des Web-Shops}{12}{subsection.4.3}
 \contentsline {section}{\numberline {5}Zusammenarbeit}{13}{section.5}
-\contentsline {paragraph}{W\IeC {\"o}chentliche Treffen}{13}{section*.5}
-\contentsline {paragraph}{Feature-Branches}{13}{section*.6}
+\contentsline {paragraph}{W\IeC {\"o}chentliche Treffen}{13}{section*.4}
+\contentsline {paragraph}{Feature-Branches}{13}{section*.5}
 \contentsline {section}{\numberline {6}Lessons Learned}{14}{section.6}
 \contentsline {subsection}{\numberline {6.1}Kritik}{14}{subsection.6.1}
-\contentsline {paragraph}{Naming conventions}{14}{section*.7}
+\contentsline {paragraph}{Naming conventions}{14}{section*.6}
 \contentsline {section}{\numberline {7}Bliblablub}{14}{section.7}
