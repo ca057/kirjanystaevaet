@@ -16,17 +16,18 @@
 \contentsline {subsection}{\numberline {3.4}A3: Suchfunktion}{10}{subsection.3.4}
 \contentsline {subsection}{\numberline {3.5}A4: Backend}{10}{subsection.3.5}
 \contentsline {subsection}{\numberline {3.6}A5: Warenkorb}{10}{subsection.3.6}
-\contentsline {subsection}{\numberline {3.7}A6: Bestellverwaltung}{10}{subsection.3.7}
+\contentsline {subsection}{\numberline {3.7}A6: Bestellverwaltung}{11}{subsection.3.7}
 \contentsline {subsection}{\numberline {3.8}A7: REST-API}{11}{subsection.3.8}
-\contentsline {subsection}{\numberline {3.9}A8: Nutzeranalyse}{11}{subsection.3.9}
-\contentsline {section}{\numberline {4}User Stories}{12}{section.4}
-\contentsline {subsection}{\numberline {4.1}Registrierung und Login}{12}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Buchauswahl und Bestellung}{12}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Administration des Web-Shops}{12}{subsection.4.3}
-\contentsline {section}{\numberline {5}Zusammenarbeit}{13}{section.5}
-\contentsline {paragraph}{W\IeC {\"o}chentliche Treffen}{13}{section*.4}
-\contentsline {paragraph}{Feature-Branches}{13}{section*.5}
-\contentsline {section}{\numberline {6}Lessons Learned}{14}{section.6}
-\contentsline {subsection}{\numberline {6.1}Kritik}{14}{subsection.6.1}
-\contentsline {paragraph}{Naming conventions}{14}{section*.6}
-\contentsline {section}{\numberline {7}Bliblablub}{14}{section.7}
+\contentsline {subsection}{\numberline {3.9}A8: Nutzeranalyse}{12}{subsection.3.9}
+\contentsline {section}{\numberline {4}User Stories}{13}{section.4}
+\contentsline {subsection}{\numberline {4.1}Registrierung und Login}{13}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Buchauswahl und Bestellung}{13}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Administration des Web-Shops}{13}{subsection.4.3}
+\contentsline {section}{\numberline {5}Zusammenarbeit}{14}{section.5}
+\contentsline {paragraph}{W\IeC {\"o}chentliche Treffen}{14}{section*.4}
+\contentsline {paragraph}{Feature-Branches}{14}{section*.5}
+\contentsline {section}{\numberline {6}Lessons Learned}{15}{section.6}
+\contentsline {subsection}{\numberline {6.1}Known Issues}{15}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Kritik}{15}{subsection.6.2}
+\contentsline {paragraph}{Naming conventions}{15}{section*.6}
+\contentsline {section}{\numberline {7}Bliblablub}{15}{section.7}

@@ -58,8 +58,9 @@ public class RestApiController {
 			List<Book> books;
 			if (limitIsValid.test(limit)) {
 				books = bookService.getBooksByCategory(category, SearchMode.AVAILABLE, Integer.parseInt(limit));
+			} else {
+				books = bookService.getBooksByCategory(category, SearchMode.AVAILABLE);
 			}
-			books = bookService.getBooksByCategory(category, SearchMode.AVAILABLE);
 			return new ResponseEntity<List<ApiBookJSONWrapper>>(convertList.apply(books), HttpStatus.OK);
 		} catch (DatabaseException e) {
 			return new ResponseEntity<List<ApiBookJSONWrapper>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -80,8 +81,9 @@ public class RestApiController {
 			List<Book> books;
 			if (limitIsValid.test(limit)) {
 				books = bookService.getAllBooks(SearchMode.AVAILABLE, Integer.parseInt(limit));
+			} else {
+				books = bookService.getAllBooks(SearchMode.AVAILABLE);
 			}
-			books = bookService.getAllBooks(SearchMode.AVAILABLE);
 			return new ResponseEntity<List<ApiBookJSONWrapper>>(convertList.apply(books), HttpStatus.OK);
 		} catch (DatabaseException e) {
 			return new ResponseEntity<List<ApiBookJSONWrapper>>(HttpStatus.INTERNAL_SERVER_ERROR);
