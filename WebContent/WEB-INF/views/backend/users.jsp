@@ -90,28 +90,27 @@
 
 					<div class="form-group">
 					<label for="edit-name">Vorname</label>
-					<input type="text" id="edit-name" name="edit-name" required />
+					<input type="text" id="edit-name" name="edit-name" />
 					</div>
 
 					<div class="form-group">
 					<label for="edit-surname">Nachname</label>
-					<input type="text" id="edit-surname" name="edit-surname" required />
+					<input type="text" id="edit-surname" name="edit-surname" />
 					</div>
 
 					<div class="form-group">
 					<label for="edit-street">Straße</label>
-					<input type="text" id="edit-street" name="edit-street" required />
+					<input type="text" id="edit-street" name="edit-street" />
 					</div>
 
 					<div class="form-group">
 					<label for="edit-streetnumber">Hausnummer</label>
-					<input type="text" id="edit-streetnumber" name="edit-streetnumber"
-						required />
+					<input type="text" id="edit-streetnumber" name="edit-streetnumber" />
 						</div>
 
 					<div class="form-group">
 					<label for="edit-plz">PLZ</label>
-					<input type="text" id="edit-plz" name="edit-plz" required />
+					<input type="text" id="edit-plz" name="edit-plz" />
 					<div class="hidden-info" id="edit-plz-info-wrapper">
 						<p id="edit-plz-info"></p>
 						<div id="edit-plz-selection"></div>
@@ -120,18 +119,17 @@
 
 					<div class="form-group">
 					<label for="edit-email">E-Mail</label>
-					<input type="email" id="edit-email" name="edit-email" required />
+					<input type="email" id="edit-email" name="edit-email" />
 					</div>
 
 					<div class="form-group">
 					<label for="edit-password">Passwort <span class="glyphicon glyphicon-info-sign" title="mind. 6 Zeichen"></span></label>
-					<input type="password" id="edit-password" name="edit-password"
-						required />
+					<input type="password" id="edit-password" name="edit-password" />
 						</div>
 
 					<div class="form-group">
 					<label for="edit-role">Rolle</label>
-					<select name="edit-role" id="edit-role" class="form-control" required>
+					<select name="edit-role" id="edit-role" class="form-control" >
 						<option value="USER">Nutzer:in</option>
 						<option value="ADMIN">Administrator:in</option>
 					</select>

@@ -72,19 +72,19 @@ public class BackendUsersController {
 		if (req.getName().isEmpty()) {
 			userMap.put(Userfields.name, req.getName());
 		} else if (!req.getSurname().isEmpty()) {
-			userMap.put(Userfields.surname, "");
+			userMap.put(Userfields.surname, req.getSurname());
 		} else if (!req.getStreet().isEmpty()) {
-			userMap.put(Userfields.street, "");
+			userMap.put(Userfields.street, req.getStreet());
 		} else if (!req.getStreetnumber().isEmpty()) {
-			userMap.put(Userfields.streetnumber, "");
+			userMap.put(Userfields.streetnumber, req.getStreetnumber());
 		} else if (!req.getPlz().isEmpty()) {
-			userMap.put(Userfields.plzId, "");
+			userMap.put(Userfields.plzId, req.getPlz());
 		} else if (!req.getEmail().isEmpty()) {
-			userMap.put(Userfields.email, "");
+			userMap.put(Userfields.email, req.getEmail());
 		} else if (!req.getRole().isEmpty()) {
-			userMap.put(Userfields.role, "");
+			userMap.put(Userfields.role, req.getRole());
 		} else if (!req.getPassword().isEmpty()) {
-			userMap.put(Userfields.password, "");
+			userMap.put(Userfields.password, req.getPassword());
 		}
 
 		UserJSONWrapper returnWrapper = req;
