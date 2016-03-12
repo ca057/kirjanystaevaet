@@ -39,7 +39,8 @@
 
 	\subsection{Suchfunktion}\label{umsetzung:Suche}
 	Die Suchfunktion wird im \texttt{BookService} angeboten. Hierbei wurde sich auf eine Suche über die Metadaten beschränkt. Es kann nach \textit{Titel}, \textit{Vorname}, \textit{Nachname}, \textit{ISBN}, \textit{Erscheinungsjahr} und \textit{Kategorie} gesucht werden. Für Datenbankabfragen allgemein und die Suche im besonderen werden \textit{Criteria} verwendet, da sich auf diese Weise sehr einfach dynamische Anfragen generieren lassen. Bei der Suche werden die Angaben der verschiedenen Felder und-verknüpft und sind durch die Verwendung der \texttt{Restrictions.ilike} case-insensitiv und der Suchterm muss nicht exakt so in der Datenbank stehen, sondern kann von anderen Zeichen umgeben sein.
-	Auch wenn es in der Oberfläche nicht genutzt wird, kann die \texttt{getBookByMetadata}-Methode im \texttt{BookService} auch alle weiteren Felder in der Suche berücksichtigen. Bei Bedarf könnte der Webshop sehr einfach um diese Suchmöglichkeiten erweitert werden. 
+	Auch wenn es in der Oberfläche nicht genutzt wird, kann die \texttt{getBookByMetadata}-Methode im \texttt{BookService} auch alle weiteren Felder in der Suche berücksichtigen. Bei Bedarf könnte der Webshop sehr einfach um diese Suchmöglichkeiten erweitert werden.\\
+	Im Laufe des Projekts wurde auch versucht eine offene Suche zu implementieren. Da dies jedoch mit Schwierigkeiten verbunden war und das als zu weitreichend für dieses Projekt betrachtet wurde, wurde dieses Vorhaben fallen gelassen. Dies ist jedoch ebenfalls eine Erweiterungsmöglichkeit für die Anwendung.
 
 
 
