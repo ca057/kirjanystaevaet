@@ -65,9 +65,24 @@ const handle = function () {
 			$("#info-message").css("color", "#727272");
 		}
 	}
+ 	
+ 	const bootstrap = function () {
+ 		const showTab = name => $('a[href="#' + name + '"]').tab('show');
+ 		const getName = hash => hash.split('#')[1].split('-')[0];
+ 		
+ 		if (window.location.hash) {
+ 			showTab(getName(window.location.hash));
+ 		}
+ 		window.addEventListener('hashchange', () => {
+ 			if (window.location.hash) {
+ 				showTab(getName(window.location.hash)); 				
+ 			}
+ 	 	});
+ 	};
 
  	return {
- 		registration: () => registration()
+ 		registration: () => registration(),
+ 		bootstrap: () => bootstrap()
  	};
  };
 
@@ -75,6 +90,8 @@ $(document).ready(function () {
 	if (window.location.pathname.indexOf("/registrierung") != -1) {
 		handle().registration();
 	}
+	handle().bootstrap();
+	
 	window.onload = function() {
 		var elevator = new Elevator({
 			element: document.querySelector('.to-top'),

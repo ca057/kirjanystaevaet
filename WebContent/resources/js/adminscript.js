@@ -155,6 +155,29 @@ const manage = function() {
 					$('#autorinnen-anlegen-submit').prop('disabled', false);
 				});
 		});
+		$('#buecher-aendern-isbn').on('change', () => {
+			const inputs = ['categories', 'title', 'authors', 'description', 'price', 'publisher', 'day', 'month', 'year', 'edition', 'pages'];
+			const isbn = $('#buecher-aendern-isbn').val().trim();
+			$('#buecher-aendern-data-loading').show();
+			inputs.forEach(e => {
+				$('#buecher-aendern-' + e).prop('disabled', true);
+			});
+			
+			if (isbn && isbn !== '') {
+				KY.request('/kirjanystaevaet/backend/bestand/buecher/data').GET_PARAM('isbn=' + isbn).done(data => {
+					inputs.forEach(e => {
+						$('#buecher-aendern-' + e).prop('disabled', false).val(data[e]);
+					});
+					$('#buecher-aendern-data-loading').hide();
+				}).fail((j, s, e) => {
+					alert('Daten konnten nicht geladen werden:\n' + 'Status: ' + status + '; Fehler: ' + e);
+					$('#buecher-aendern-data-loading').hide();
+					inputs.forEach(e => {
+						$('#buecher-aendern-' + e).prop('disabled', false);
+					});
+				});
+			}
+		});
 	};
 		
 	return {

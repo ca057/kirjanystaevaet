@@ -33,6 +33,7 @@ import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
 import web.controllers.helper.ProcessUpload;
 import web.jsonwrappers.AuthorJSONWrapper;
+import web.jsonwrappers.ExtendedBookJSONWrapper;
 
 /**
  * 
@@ -329,6 +330,22 @@ public class BackendStockController {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 		return "redirect:/backend/bestand";
+	}
+
+	@RequestMapping(value = "/backend/bestand/buecher/data", method = RequestMethod.GET)
+	public ResponseEntity<ExtendedBookJSONWrapper> getBookByISBN(
+			@RequestParam(value = "isbn", required = true) String isbn) {
+		if (isbn == null || isbn.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		try {
+			ExtendedBookJSONWrapper wrapper = new ExtendedBookJSONWrapper(
+					bookService.getBookByIsbn(isbn, SearchMode.ALL));
+			System.out.println("WRAPPER: " + wrapper);
+			return new ResponseEntity<ExtendedBookJSONWrapper>(wrapper, HttpStatus.OK);
+		} catch (DatabaseException e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	private void deleteImage(Path path, String title) throws IOException {

@@ -7,28 +7,28 @@
 		<h1>Suche</h1>
 	</div>
 	
-	<form class="form-inline">
-		<div class="form-group">
+	<form class="form">
+		<div class="col-xs-6 col-sm-4 col-md-2">
 			<label for="title">Titel</label>
 			<input type="text" id="title" name="title" placeholder="Titel">
 		</div>
-		<div class="form-group">
+		<div class="col-xs-6 col-sm-4 col-md-2">
 			<label for="authorFirst">Vorname</label>
 			<input type="text" id="authorFirst" name="authorFirst" placeholder="Vorname">
 		</div>
-		<div class="form-group">
+		<div class="col-xs-6 col-sm-4 col-md-2">
 			<label for="authorLast">Nachname</label>
 			<input type="text" id="authorLast" name="authorLast" placeholder="Nachname">
 		</div>
-		<div class="form-group">
+		<div class="col-xs-6 col-sm-4 col-md-2">
 			<label for="isbn">ISBN</label>
 			<input type="text" id="isbn" name="isbn" placeholder="ISBN">
 		</div>
-		<div class="form-group">
+		<div class="col-xs-6 col-sm-4 col-md-2">
 			<label for="year">Erscheinungsjahr</label>
 			<input type="text" id="year" name="year" placeholder="Jahr">
 		</div>
-		<div class="form-group">
+		<div class="col-xs-6 col-sm-4 col-md-2">
 			<label for="category">Kategorie</label>
 			<input type="text" id="category" name="category" placeholder="Kategorie">
 		</div>
@@ -36,16 +36,16 @@
 	</form>
 	
 	
-	<h2>Suchergebnisse</h2>
+	
 	<!-- Suchanfrage wird nur angezeigt, wenn der übergebene String nicht leer ist. -->
 	<c:if test="${error != null}">
 		<p><c:out value="${error}"></c:out></p>
 	</c:if>
 	<c:choose>
 		<c:when test="${query.isEmpty()}">
-			<p>Noch keine Suchanfrage gestellt.</p>
 		</c:when>
 		<c:otherwise>
+			<h2>Suchergebnisse</h2>
 			<p><span class="font-bold">Suchanfrage:</span> <span class="query"><c:out value='${query}' /></span></p>
 			<c:choose>
 				<c:when test="${results.isEmpty()}">
