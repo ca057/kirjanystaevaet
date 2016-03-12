@@ -34,7 +34,9 @@
 	Zudem wurde auf diese Weise versucht, \texttt{HibernateExceptions} schon auf der Ebene der \textit{Daos} und \textit{Services} abzufangen und ebenfalls in eine \texttt{DatabaseException} umzuwandeln. Es soll so verhindert werden, dass unchecked Exceptions den Shop zum Absturz bringen.
 
 	\subsection{Suchfunktion}
-	Die Suchfunktion wird im \texttt{DataService} angeboten. Hierbei wurde sich auf eine Suche über die Metadaten beschränkt. Es kann nach \textit{Titel}, \textit{Vorname}, \textit{Nachname}, \textit{ISBN}, \textit{Erscheinungsjahr} und \textit{Kategorie} gesucht werden. Die Angaben werden und-verknüpft. 
+	Die Suchfunktion wird im \texttt{BookService} angeboten. Hierbei wurde sich auf eine Suche über die Metadaten beschränkt. Es kann nach \textit{Titel}, \textit{Vorname}, \textit{Nachname}, \textit{ISBN}, \textit{Erscheinungsjahr} und \textit{Kategorie} gesucht werden. Für Datenbankabfragen allgemein und die Suche im besonderen werden \textit{Criteria} verwendet, da sich auf diese Weise sehr einfach dynamische Anfragen generieren lassen. Bei der Suche werden die Angaben der verschiedenen Felder und-verknüpft und sind durch die Verwendung der \texttt{Restrictions.ilike} case-insensitiv und der Suchterm muss nicht exakt so in der Datenbank stehen, sondern kann von anderen Zeichen umgeben sein.
+	Auch wenn es in der Oberfläche nicht genutzt wird, kann die \texttt{getBookByMetadata}-Methode im \texttt{BookService} auch alle weiteren Felder in der Suche berücksichtigen. Bei Bedarf könnte der Webshop sehr einfach erweitert werden. 
+
 
 
 	\subsection{REST-API}\label{sec:umsetzung:Rest}
