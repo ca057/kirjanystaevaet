@@ -124,14 +124,6 @@ public class BookServiceImpl implements BookService {
 		return cat.getCategoryName();
 	}
 
-//	@Override
-//	public boolean isExistingCategory(String category) throws DatabaseException {
-//		if (categoryDao.getCategoriesByExactName(category) != null) {
-//			return true;
-//		}
-//		return false;
-//	}
-	
 	@Override
 	public boolean isExistingCategory(String category) throws DatabaseException {
 		try{ 
@@ -274,27 +266,6 @@ public class BookServiceImpl implements BookService {
 
 	}
 
-//	@Override
-//	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws AuthorMayExistException {
-//
-//		// Wenn noch kein bestimmter Autor ausgewählt wurde
-//		if (!newAuthor) {
-//			List<Author> authors = authorDao.getAuthorByExactNames(nameF, nameL);
-//			// Testen ob es schon Autoren mit dem Namen gibt
-//			if (authors.size() > 0) {
-//				throw new AuthorMayExistException("This Author " + nameF + " " + nameL + " may already exist");
-//			}
-//		}
-//
-//		// Wenn ein neuer Autor eingefügt werden soll
-//		AuthorBuilder ab = builderFactory.getAuthorBuilder();
-//		Author author = ab.setNameF(nameF).setNameL(nameL).createAuthor();
-//		System.out.println("\n\nEinmal den Autor checken\n\n" + author.toString());
-//		int id = authorDao.insertAuthor(author);
-//
-//		return id;
-//
-//	}
 	
 	@Override
 	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws DatabaseException {
@@ -620,74 +591,6 @@ public class BookServiceImpl implements BookService {
 		
 
 	}
-	
-//	private BookBuilder readData(BookBuilder bookBuilder, Searchfields searchfield, String information )
-	
-//	@Override
-//	public void updateBook(String isbn, Map<Searchfields, String> data, Set<Integer> authorIds,
-//			Set<Integer> categoryIds) throws DatabaseException {
-//		isbn = onlyLeaveLettersAndNumbers(isbn);
-//
-//		Book book = bookDao.getBookByIsbn(isbn);
-//		Set<Author> authors = new HashSet<Author>();
-//		for (int id : authorIds){
-//			authors.add(authorDao.getAuthorByID(id));
-//		}
-//		
-//		Set<Category> categories = new HashSet<Category>();
-//		for (int id : categoryIds){
-//			categories.add(categoryDao.getCategoryById(id));
-//		}
-//		// Save old Values
-////		BookBuilder bookBuilder = saveOldValues(book, getBookBuilder());
-//		BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
-//		
-//		bookBuilder.setAuthors(authors);
-//		bookBuilder.setCategories(categories);
-//		
-////		book.setAuthors(authors);
-//
-////		book.setCategories(categories);
-//		
-//		for (Searchfields s : data.keySet()) {
-//			if (s == Searchfields.isbn) {
-//				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("isbn"));
-//			} else if (s == Searchfields.description) {
-////				book.setDescription(data.get(s));
-//				bookBuilder.setDescription(data.get(s));
-//			} else if (s == Searchfields.price) {
-//				double price = Double.parseDouble(data.get(s).replace(",", "."));
-////				book.setPrice(price);
-//				bookBuilder.setPrice(price);
-//			} else if (s == Searchfields.pages) {
-////				book.setPages(data.get(s));
-//				bookBuilder.setPages(data.get(s));
-//			} else if (s == Searchfields.pubdate) {
-////				book.setPubdate(data.get(s));
-//				bookBuilder.setPubdate(data.get(s));
-//			} else if (s == Searchfields.edition) {
-//				bookBuilder.setEdition(data.get(s));
-////				book.setEdition(data.get(s));
-//			} else if (s == Searchfields.publisher) {
-//				bookBuilder.setPublisher(data.get(s));
-////				book.setPublisher(data.get(s));
-//			} else if (s == Searchfields.stock) {
-//				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("stock"));
-//			} else if (s == Searchfields.title) {
-////				book.setTitle(data.get(s));
-//				bookBuilder.setTitle(data.get(s));
-//			}
-//		}
-//
-//		try {
-//			bookDao.updateBook(bookBuilder.createBook());
-//		} catch (HibernateException e) {
-//			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-//		} catch (Exception e){
-//			throw new DatabaseException(ErrorMessageHelper.updateError("Book", isbn, e.getMessage()));
-//		}
-//
-//	}
 
 	@Override
 	public void deleteCategoryOfBook(String isbn, int categoryId) throws DatabaseException {
@@ -840,24 +743,6 @@ public class BookServiceImpl implements BookService {
 
 	}
 
-//	@Override
-//	public SortedMap<Book, Integer> getMostVisitedBooks(int range) {
-//		if (range < 0) {
-//			throw new IllegalArgumentException("The passed range must be greater 0.");
-//		}
-//		SortedMap<Book, Integer> map = new TreeMap<>(new Comparator<Book>() {
-//
-//			@Override
-//			public int compare(Book b1, Book b2) {
-//				return Integer.compare(b2.getVisitCount(), b1.getVisitCount());
-//			}
-//		});
-//		for (Book b : bookDao.getMostVisitedBooks(range)) {
-//			map.put(b, b.getVisitCount());
-//		}
-//		return map;
-//		 
-//	}
 	@Override
 	public SortedMap<Book, Integer> getMostVisitedBooks(int range) throws DatabaseException {
 		try {
@@ -906,21 +791,5 @@ public class BookServiceImpl implements BookService {
 		}
 	}
 
-//	@Override
-//	public SortedMap<Book, Integer> getLeastVisitedBooks(int range) {
-//		if (range < 0) {
-//			throw new IllegalArgumentException("The passed range must be greater 0.");
-//		}
-//		SortedMap<Book, Integer> map = new TreeMap<>(new Comparator<Book>() {
-//
-//			@Override
-//			public int compare(Book b1, Book b2) {
-//				return Integer.compare(b1.getVisitCount(), b2.getVisitCount());
-//			}
-//		});
-//		for (Book b : bookDao.getLeastVisitedBooks(range)) {
-//			map.put(b, b.getVisitCount());
-//		}
-//		return map;
-//	}
+
 }
