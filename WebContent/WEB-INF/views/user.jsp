@@ -9,62 +9,77 @@
 <section>
 	<div class="page-header">
 		<h1>
-			Hallo <c:out value="${user.getName()}" /> <c:out value="${user.getSurname()}" />!
+			Hallo
+			<c:out value="${user.getName()}" />
+			<c:out value="${user.getSurname()}" />
+			!
 		</h1>
 	</div>
-	
+
 	<c:if test="${param.error != null}">
-		<p class="error">Bei der letzten Aktion ist ein Fehler aufgetreten.</p>
+		<p class="error">Bei der letzten Aktion ist ein Fehler
+			aufgetreten.</p>
 	</c:if>
-	
+
 	<div class="row">
-		<div class="col-sm-8">
+		<div class="col-sm-9">
 			<article>
-				<h3>Deine Bestellungen</h3>
-				<c:choose>
-					<c:when test="${lastOrders.isEmpty()}">
-						<p>Du hast noch keine Bestellungen aufgegeben.</p>
-					</c:when>
-					<c:otherwise>
-						<ul>
-							<c:forEach var="order" items="${lastOrders}">
-								<li>Bestellung #<c:out value="${order.getOrderId()}" />
-									vom <fmt:formatDate pattern="dd.MM.yyyy"
-										value="${order.getDate().getInstance().getTime()}" /> mit
-									folgendem Inhalt:
-									<ul>
-										<c:forEach var="item" items="${order.getOrderItems()}">
-											<li><c:out value="${item.getBook().getTitle()}"></c:out>
-												(Menge: <c:out value="${item.getNumberOf()}"></c:out>;
-												Einzelpreis: <c:out value="${item.getBook().getPrice()}"></c:out>€)</li>
-										</c:forEach>
-									</ul>
-								</li>
-							</c:forEach>
-						</ul>
-					</c:otherwise>
-				</c:choose>
+				<h2>Deine Bestellungen</h2>
+				<div class="panel-group" id="accordion">
+					<div class="panel panel-default">
+						<c:choose>
+							<c:when test="${lastOrders.isEmpty()}">
+								<p>Du hast noch keine Bestellungen aufgegeben.</p>
+							</c:when>
+							<c:otherwise>
+								<ul>
+									<c:forEach var="order" items="${lastOrders}">
+										<div class="panel-heading">
+      										<h4 class="panel-title">
+      											<a data-toggle="collapse" data-parent="#accordion" <c:out value="href=#collapse${order.getOrderId()}" />>Bestellung vom <fmt:formatDate pattern="dd.MM.yyyy"
+												value="${order.getDate().getInstance().getTime()}" /></a>
+      										</h4>
+    									</div>
+    									<div id="collapse<c:out value='${order.getOrderId()}'/>" class="panel-collapse collapse in">
+											<ul>
+												<c:forEach var="item" items="${order.getOrderItems()}">
+													<li><c:out value="${item.getBook().getTitle()}"></c:out>
+														(Menge: <c:out value="${item.getNumberOf()}"></c:out>;
+														Einzelpreis: <c:out value="${item.getBook().getPrice()}"></c:out>€)</li>
+												</c:forEach>
+											</ul>
+										</div>
+									</c:forEach>
+								</ul>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
 			</article>
 		</div>
 		<c:choose>
-				<c:when test="${user.getImage() != null}">
-				<div class="col-sm-4">
-					<img class="profilepicture"
-						src=<s:url value='/meinkonto/profilbild'/> alt="Profilbild"
-						width=30% />
-						</div>
-				</c:when>
-				<c:otherwise>
-				<div class="col-sm-4">
-					<form action="meinkonto/bildhochladen" method="POST"
-						enctype="multipart/form-data">
-						<label for="image">Lade ein Profilbild!</label> <input type="file"
-							accept="image/*" name="file" />
-						<button type="submit" id="profilepicture-submit" title="Hochladen">Hochladen</button>
-						<sec:csrfInput />
-					</form>
+			<c:when test="${user.getImage() != null}">
+				<div class="col-sm-3">
+					<div class="jumbotron">
+						<img class="img-responsive .img-thumbnail"
+							src=<s:url value='/meinkonto/profilbild'/> alt="Profilbild" />
 					</div>
-				</c:otherwise>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="col-sm-3">
+					<div class="jumbotron">
+						<form action="meinkonto/bildhochladen" method="POST"
+							enctype="multipart/form-data">
+							<label for="image">Lade ein Profilbild hoch!</label> <input
+								type="file" accept="image/*" name="file" />
+							<button type="submit" id="profilepicture-submit"
+								title="Hochladen" class="btn btn-primary">Hochladen</button>
+							<sec:csrfInput />
+						</form>
+					</div>
+				</div>
+			</c:otherwise>
 		</c:choose>
 	</div>
 </section>
