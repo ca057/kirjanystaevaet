@@ -193,7 +193,9 @@ ul.navigation-content li:hover .navigation-content-sub {
 /* Footer */
 
 .footer {
+	background-color: #C0C0C0;
 	display: flex;
+	padding-top: 0.7em;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
