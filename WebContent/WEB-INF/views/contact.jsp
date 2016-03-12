@@ -8,7 +8,7 @@
 	</div>
 	<div class="row">
 
-		<div class="jumbotron">
+		<div class="jumbotron" id="about">
 			<article>
 				<h2>Kirjanystaevaet - der Buchshop</h2>
 				<p>Seien wir ehrlich: Eigentlich würden wir gerade auch lieber
@@ -32,7 +32,7 @@
 
 	<div class="row">
 
-		<div class="col-sm-6">
+		<div class="col-sm-6" id="kontakt">
 			<article>
 				<h2>Kontakt</h2>
 				<p>Schreibt Liebesbriefe an info (at) kirjanystaevaet.de</p>
@@ -41,7 +41,7 @@
 		</div>
 
 
-		<div class="col-sm-6">
+		<div class="col-sm-6" id="impressum">
 			<article>
 				<h2>Impressum</h2>
 				<p>WTFPL License. Für eine freie Welt. Denn wer braucht schon Anwälte, wenn man Bücher haben kann? </p>
