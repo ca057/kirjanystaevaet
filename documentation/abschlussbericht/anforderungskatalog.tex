@@ -48,7 +48,7 @@
 	Die REST-API liefert Bestandsdaten im JSON-Format über die zum Verkauf stehenden Bücher. Tabelle \ref{rest-api} gibt Auskunft über das verwendete URL-Schema, dabei muss der angegebenen URL \lstinline|http://localhost:8080/kirjanystaevaet/api/v1| vorangestellt werden.
 	
 	\subsection{Bestellverwaltung}\label{sec:umsetzung:Bestellverwaltung}
-	
+	Die Bestellverwaltung findet im \texttt{OrderService} statt. Eine Bestellung ist mit einem \texttt{User} und den \texttt{OrderItems}, die die bestellten Bücher repräsentieren, verknüpft. Ein wichtiger Aspekt der Bestellverwaltung ist die Archivierung der Bestellungen für den User. Aus diesem Grund wurden die \texttt{OrderItems} eingeführt, anstatt einfach eine \texttt{Order} mit den entsprechenden \texttt{Books} selbst zu verknüpfen, denn so können Informationen der bestellten Bücher, wie sie zum Zeitpunkt der Bestellung aktuell waren, gespeichert werden. In dieser Anwendung ist das nur der Preis. Somit kann der Benutzer jederzeit einsehen, zu welchem Preis ein Buch gekauft wurde, auch wenn dieser sich zwischenzeitlich geändert hat.
 	
 	\begin{table}[h]
 		\caption{URL-Schema der REST-API}
