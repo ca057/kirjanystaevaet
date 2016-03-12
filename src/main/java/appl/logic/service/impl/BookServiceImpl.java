@@ -224,7 +224,7 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		} catch (Exception e){
-			throw new DatabaseException (ErrorMessageHelper.couldNotGetData("Author"));
+			throw new DatabaseException (ErrorMessageHelper.couldNotGetData("Author") + e.getMessage());
 		}
 
 	}
@@ -240,7 +240,7 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		} catch (Exception e){
-			throw new DatabaseException (ErrorMessageHelper.couldNotGetData("Author"));
+			throw new DatabaseException (ErrorMessageHelper.couldNotGetData("Author") +e.getMessage());
 		}
 
 
@@ -254,7 +254,7 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		} catch (Exception e){
-			throw new DatabaseException (ErrorMessageHelper.couldNotGetData("Authors"));
+			throw new DatabaseException (ErrorMessageHelper.couldNotGetData("Authors") + e.getMessage());
 		}
 
 	}
@@ -269,7 +269,7 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		} catch (Exception e){
-			throw new DatabaseException (ErrorMessageHelper.couldNotGetData("Authors"));
+			throw new DatabaseException (ErrorMessageHelper.couldNotGetData("Authors") + e.getMessage());
 		}
 
 	}
@@ -318,7 +318,7 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e){
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		} catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.insertFailed("Author"));
+			throw new DatabaseException(ErrorMessageHelper.insertFailed("Author") + e.getMessage());
 		}
 
 	}
@@ -371,7 +371,7 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		} catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books"));
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books")+ e.getMessage());
 		}
 	}
 
@@ -386,7 +386,7 @@ public class BookServiceImpl implements BookService {
 			List<Book> smallList = books.subList(0, range);
 			return smallList;
 		}catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books"));
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books") + e.getMessage());
 		}
 	}
 
@@ -399,7 +399,7 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books"));
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books") + e.getMessage());
 		}
 	}
 
@@ -413,7 +413,7 @@ public class BookServiceImpl implements BookService {
 			List<Book> smallList = books.subList(0, range);
 			return smallList;
 		} catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books"));
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books") + e.getMessage());
 		}
 	}
 
@@ -446,7 +446,7 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		} catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Book"));
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Book") + e.getMessage());
 		}
 
 	}
@@ -467,7 +467,7 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		} catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books"));
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books") + e.getMessage());
 		}
 
 	}
@@ -517,7 +517,7 @@ public class BookServiceImpl implements BookService {
 			try {
 				categories.add(categoryDao.getCategoryById(i));
 			} catch (EntityDoesNotExistException e) {
-				throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category"));
+				throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category") + e.getMessage());
 			}
 		}
 
@@ -543,7 +543,7 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError("Book could not be inserted"));
 		} catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.insertFailed("Book"));
+			throw new DatabaseException(ErrorMessageHelper.insertFailed("Book") + e.getMessage());
 		}
 
 
@@ -814,7 +814,7 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("visitCount"));
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("visitCount") + e.getMessage());
 		}
 
 
@@ -878,7 +878,7 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e){
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		} catch(Exception e){
-			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("MostVisitedBooks"));
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("MostVisitedBooks") + e.getMessage());
 		}
 		 
 	}
@@ -902,7 +902,7 @@ public class BookServiceImpl implements BookService {
 		} catch (HibernateException e){
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		} catch(Exception e){
-			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("VisitCount"));
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("VisitCount") + e.getMessage());
 		}
 	}
 
