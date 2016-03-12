@@ -15,17 +15,25 @@
 	<div class="collapse navbar-collapse" id="navbar">
 		<ul class="nav navbar-nav">
 			<c:choose>
-				<c:when test="${navigation != null}">
+				<c:when test="${navigation != null} && ${navigation.size() < 7 }">
 					<c:forEach var="nav" items="${navigation}">
 						<li><a href="<c:url value='/kategorie/${nav}'/>"><c:out
 									value="${nav}" /></a></li>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
-					<li><a href="<c:url value='/kategorien'/>">Kategorien</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Kategorien <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+						<c:forEach var="nav" items="${navigation}">
+						<li><a href="<c:url value='/kategorie/${nav}'/>"><c:out
+									value="${nav}" /></a></li>
+						</c:forEach>
+						</ul></li>
 				</c:otherwise>
 			</c:choose>
-
+			<li><a href="<c:url value='/kontakt'/>">Über uns</a></li>
 			<li><a href="<c:url value='/suche' />" title="Suche">Suche</a></li>
 
 		</ul>
@@ -40,7 +48,8 @@
 			</sec:authorize>
 			<sec:authorize access="hasAnyRole('USER', 'ADMIN')">
 				<li>
-					<form id="logout-form" action="<c:url value="/logout" />" method="post">
+					<form id="logout-form" action="<c:url value="/logout" />"
+						method="post">
 						<button class="btn" id="logout-button" type="submit"
 							value="Abmelden">
 							<span class="glyphicon glyphicon-log-out"></span> Abmelden
@@ -50,9 +59,9 @@
 				</li>
 			</sec:authorize>
 			<sec:authorize access="isAnonymous()">
-				<li class="dropdown"><a class="dropdown-toggle" href="<c:url value="/registrierung" />"><span class="glyphicon glyphicon-globe"></span>
-						Registrieren</a>
-					</li>
+				<li class="dropdown"><a class="dropdown-toggle"
+					href="<c:url value="/registrierung" />"><span
+						class="glyphicon glyphicon-globe"></span> Registrieren</a></li>
 				<li class="dropdown"><a class="dropdown-toggle" href="#"
 					data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span>
 						Anmelden</a>
