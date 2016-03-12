@@ -10,17 +10,19 @@
 \BOOKMARK [3][-]{subsubsection.3.2.4}{\304ndern von Daten}{subsection.3.2}% 10
 \BOOKMARK [3][-]{subsubsection.3.2.5}{Exception Handling}{subsection.3.2}% 11
 \BOOKMARK [2][-]{subsection.3.3}{A2: Frontend}{section.3}% 12
-\BOOKMARK [2][-]{subsection.3.4}{A3: Suchfunktion}{section.3}% 13
-\BOOKMARK [2][-]{subsection.3.5}{A4: Backend}{section.3}% 14
-\BOOKMARK [2][-]{subsection.3.6}{A5: Warenkorb}{section.3}% 15
-\BOOKMARK [2][-]{subsection.3.7}{A6: Bestellverwaltung}{section.3}% 16
-\BOOKMARK [2][-]{subsection.3.8}{A7: REST-API}{section.3}% 17
-\BOOKMARK [2][-]{subsection.3.9}{A8: Nutzeranalyse}{section.3}% 18
-\BOOKMARK [1][-]{section.4}{User Stories}{}% 19
-\BOOKMARK [2][-]{subsection.4.1}{Registrierung und Login}{section.4}% 20
-\BOOKMARK [2][-]{subsection.4.2}{Buchauswahl und Bestellung}{section.4}% 21
-\BOOKMARK [2][-]{subsection.4.3}{Administration des Web-Shops}{section.4}% 22
-\BOOKMARK [1][-]{section.5}{Zusammenarbeit}{}% 23
-\BOOKMARK [1][-]{section.6}{Lessons Learned}{}% 24
-\BOOKMARK [2][-]{subsection.6.1}{Kritik}{section.6}% 25
-\BOOKMARK [1][-]{section.7}{Bliblablub}{}% 26
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Zuordnung von Views und Controllern}{subsection.3.3}% 13
+\BOOKMARK [3][-]{subsubsection.3.3.2}{Funktionalit\344ten des Frontends}{subsection.3.3}% 14
+\BOOKMARK [2][-]{subsection.3.4}{A3: Suchfunktion}{section.3}% 15
+\BOOKMARK [2][-]{subsection.3.5}{A4: Backend}{section.3}% 16
+\BOOKMARK [2][-]{subsection.3.6}{A5: Warenkorb}{section.3}% 17
+\BOOKMARK [2][-]{subsection.3.7}{A6: Bestellverwaltung}{section.3}% 18
+\BOOKMARK [2][-]{subsection.3.8}{A7: REST-API}{section.3}% 19
+\BOOKMARK [2][-]{subsection.3.9}{A8: Nutzeranalyse}{section.3}% 20
+\BOOKMARK [1][-]{section.4}{User Stories}{}% 21
+\BOOKMARK [2][-]{subsection.4.1}{Registrierung und Login}{section.4}% 22
+\BOOKMARK [2][-]{subsection.4.2}{Buchauswahl und Bestellung}{section.4}% 23
+\BOOKMARK [2][-]{subsection.4.3}{Administration des Web-Shops}{section.4}% 24
+\BOOKMARK [1][-]{section.5}{Zusammenarbeit}{}% 25
+\BOOKMARK [1][-]{section.6}{Lessons Learned}{}% 26
+\BOOKMARK [2][-]{subsection.6.1}{Kritik}{section.6}% 27
+\BOOKMARK [1][-]{section.7}{Bliblablub}{}% 28

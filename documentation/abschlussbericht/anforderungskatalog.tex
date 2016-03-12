@@ -51,14 +51,19 @@
 	\subsection{A2: Frontend}
 	Zur Umsetzung des Frontends wurden die anfangs vorgestellten Java Server Pages verwendet, um ein angenehmes Erscheinungsbild zu erreichen, wurde auf das HTML und CSS Framework Bootstrap\footnote{\hyperlink{https://getbootstrap.com}{https://getbootstrap.com}} zurückgegriffen. Zur Verbesserung der Nutzung und Interaktivität des Shops wird an einigen Stellen JavaScript\footnote{Aufgrund der Verwendung von ECMAScript6 ohne die Umwandlung in eine frühere Version wird ein aktueller Browser zur vollständigen Nutzung der Seite benötigt.} und jQuery\footnote{\hyperlink{https://jquery.com}{https://jquery.com}} genutzt.
 	
-	\dots
+		\subsubsection{Zuordnung von Views und Controllern}	
+		Mit einzelnen Ausnahmen besitzt jeder View, das heißt jede im Browser dargestellte Seite, eine eigene \lstinline|.jsp|-Datei und einen eigenen Controller. Einzelne Views können dabei durchaus unterschiedlich auftreten, wie zum Beispiel die Darstellung der Kategorien. Der zuständige Controller erwartet als Pfad-Variable in der URL den gesuchten Kategoriennamen. Kann die Variable einer existierenden Kategorie zugeordnet werden, werden alle Bücher dieser Kategorie angezeigt, andernfalls wird eine Übersichtsseite angezeigt. Beide Darstellungen werden durch den gleichen Controller und \lstinline|.jsp|-Datei erzeugt.
+		
+		\subsubsection{Funktionalitäten des Frontends}
+		Das Frontend ermöglicht alle grundlegenden Funktionalitäten zur vollständigen Nutzung des Shops. Nutzer*innen können sich registrieren, einloggen, Bücher auswählen und in den Warenkorb legen und schließlich bestellen. Administrator*innen haben im \ref{sec:umsetzung:backend}
 
 	\subsection{A3: Suchfunktion}\label{umsetzung:Suche}
 	Die Suchfunktion wird im \texttt{BookService} angeboten. Hierbei wurde sich auf eine Suche über die Metadaten beschränkt. Es kann nach \textit{Titel}, \textit{Vorname}, \textit{Nachname}, \textit{ISBN}, \textit{Erscheinungsjahr} und \textit{Kategorie} gesucht werden. Für Datenbankabfragen allgemein und die Suche im besonderen werden \textit{Criteria} verwendet, da sich auf diese Weise sehr einfach dynamische Anfragen generieren lassen. Bei der Suche werden die Angaben der verschiedenen Felder und-verknüpft und sind durch die Verwendung der \texttt{Restrictions.ilike} case-insensitiv und der Suchterm muss nicht exakt so in der Datenbank stehen, sondern kann von anderen Zeichen umgeben sein.
-	Auch wenn es in der Oberfläche nicht genutzt wird, kann die \texttt{getBookByMetadata}-Methode im \texttt{BookService} auch alle weiteren Felder in der Suche berücksichtigen. Bei Bedarf könnte der Webshop sehr einfach um diese Suchmöglichkeiten erweitert werden.\\
+	Auch wenn es in der Oberfläche nicht genutzt wird, kann die \texttt{getBookByMetadata}-Methode im \texttt{BookService} auch alle weiteren Felder in der Suche berücksichtigen. Bei Bedarf könnte der Webshop sehr einfach um diese Suchmöglichkeiten erweitert werden.
+	
 	Im Laufe des Projekts wurde auch versucht eine offene Suche zu implementieren. Da dies jedoch mit Schwierigkeiten verbunden war und das als zu weitreichend für dieses Projekt betrachtet wurde, wurde dieses Vorhaben fallen gelassen. Dies ist jedoch ebenfalls eine Erweiterungsmöglichkeit für die Anwendung.
 
-	\subsection{A4: Backend}
+	\subsection{A4: Backend}\label{sec:umsetzung:backend}
 	\dots
 	\subsection{A5: Warenkorb}
 	\dots

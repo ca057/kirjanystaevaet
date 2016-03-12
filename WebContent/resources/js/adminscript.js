@@ -186,7 +186,26 @@ const manage = function() {
 	};
 };
 
+const frontend = function () {
+	return {
+		bootstrap: () => {
+			const showTab = name => $('a[href="#' + name + '"]').tab('show');
+			const getName = hash => hash.split('#')[1].split('-')[0];
+			
+			if (window.location.hash) {
+				showTab(getName(window.location.hash));
+			}
+			window.addEventListener('hashchange', () => {
+				if (window.location.hash) {
+					showTab(getName(window.location.hash)); 				
+				}
+		 	});
+		}
+	};
+};
+
 $(document).ready(function () {
 	manage().users();
 	manage().stock();
+	frontend().bootstrap();
 });
