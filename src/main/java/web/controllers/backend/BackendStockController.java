@@ -33,7 +33,7 @@ import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
 import web.controllers.util.ProcessUpload;
 import web.jsonwrappers.AuthorJSONWrapper;
-import web.jsonwrappers.ExtendedBookJSONWrapper;
+import web.jsonwrappers.BookJSONWrapper;
 
 /**
  * 
@@ -328,16 +328,14 @@ public class BackendStockController {
 	}
 
 	@RequestMapping(value = "/backend/bestand/buecher/data", method = RequestMethod.GET)
-	public ResponseEntity<ExtendedBookJSONWrapper> getBookByISBN(
-			@RequestParam(value = "isbn", required = true) String isbn) {
+	public ResponseEntity<BookJSONWrapper> getBookByISBN(@RequestParam(value = "isbn", required = true) String isbn) {
 		if (isbn == null || isbn.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
-			ExtendedBookJSONWrapper wrapper = new ExtendedBookJSONWrapper(
-					bookService.getBookByIsbn(isbn, SearchMode.ALL));
+			BookJSONWrapper wrapper = new BookJSONWrapper(bookService.getBookByIsbn(isbn, SearchMode.ALL));
 			System.out.println("WRAPPER: " + wrapper);
-			return new ResponseEntity<ExtendedBookJSONWrapper>(wrapper, HttpStatus.OK);
+			return new ResponseEntity<BookJSONWrapper>(wrapper, HttpStatus.OK);
 		} catch (DatabaseException e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
