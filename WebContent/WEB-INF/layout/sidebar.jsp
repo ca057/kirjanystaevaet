@@ -13,59 +13,30 @@
 			<li><a href="<c:url value='/backend' />"><span class="glyphicon glyphicon-dashboard"></span> Dashboard
 			</a></li>
 			
-			<li><a href="<c:url value='/backend/bestand' />"
-				title="Bestand verwalten"><span class="glyphicon glyphicon-hdd"></span> Bestand</a>
+			<li data-toggle="collapse" data-target="#bestand"
+				class="collapsed"><a href="#"><span class="glyphicon glyphicon-hdd"></span> Bestand <span class="caret"></span></a>
 			</li>
-			
-			<li data-toggle="collapse" data-target="#categories"
-				class="collapsed"><a href="#"><span class="glyphicon glyphicon-th-list"></span> Kategorien <span class="caret"></span></a>
-			</li>
-			<ul class="sub-menu collapse" id="categories">
+			<ul class="sub-menu collapse" id="bestand">
 					<li><a
-						href="<c:url value='/backend/bestand#kategorien' />">Verwalten</a></li>
+						href="<c:url value='/backend/bestand#kategorien' />"><span class="glyphicon glyphicon-th-list"></span> Kategorien</a></li>
 					<li><a
-						href="<c:url value='/backend/bestand#kategorien-anlegen' />">Anlegen</a></li>
+						href="<c:url value='/backend/bestand#autorinnen' />"><span class="glyphicon glyphicon-pencil"></span> Autor_innen</a></li>
 					<li><a
-						href="<c:url value='/backend/bestand#kategorien-loeschen' />">Löschen</a></li>
+						href="<c:url value='/backend/bestand#buecher' />"><span class="glyphicon glyphicon-book"></span> Bücher</a></li>
 				</ul>
 
-
-			<li data-toggle="collapse" data-target="#authors"
-				class="collapsed"><a href="#"><span class="glyphicon glyphicon-pencil"></span> Autor_innen <span class="caret"></span></a>
-			</li>
-			<ul class="sub-menu collapse" id="authors">
-					<li><a
-						href="<c:url value='/backend/bestand#autorinnen' />">Verwalten</a></li>
-					<li><a
-						href="<c:url value='/backend/bestand#autorinnen-anlegen' />">Anlegen</a></li>
-					<li><a
-						href="<c:url value='/backend/bestand#autorinnen-loeschen' />">Löschen</a></li>
-				</ul>
-				
-			<li data-toggle="collapse" data-target="#books"
-				class="collapsed"><a href="#"><span class="glyphicon glyphicon-book"></span> Bücher <span class="caret"></span></a>
-			</li>
-			<ul class="sub-menu collapse" id="books">
-					<li><a
-						href="<c:url value='/backend/bestand#buecher' />">Verwalten</a></li>
-					<li><a
-						href="<c:url value='/backend/bestand#buecher-anlegen' />">Anlegen</a></li>
-					<li><a
-						href="<c:url value='/backend/bestand#buecher-loeschen' />">Löschen</a></li>
-				</ul>
-				
 			<li data-toggle="collapse" data-target="#user"
 				class="collapsed"><a href="#"><span class="glyphicon glyphicon-user"></span> Nutzer_innen <span class="caret"></span></a>
 			</li>
 			<ul class="sub-menu collapse" id="user">
 					<li><a
-						href="<c:url value='/backend/nutzerinnen#nutzerinnen' />">Verwalten</a></li>
+						href="<c:url value='/backend/nutzerinnen#nutzerinnen' />"><span class="glyphicon glyphicon-cog"></span> Verwalten</a></li>
 					<li><a
-						href="<c:url value='/backend/nutzerinnen#anlegen' />">Anlegen</a></li>
+						href="<c:url value='/backend/nutzerinnen#anlegen' />"><span class="glyphicon glyphicon-save"></span> Anlegen</a></li>
 					<li><a
-						href="<c:url value='/backend/nutzerinnen#aendern' />">Ändern</a></li>
+						href="<c:url value='/backend/nutzerinnen#aendern' />"><span class="glyphicon glyphicon-refresh"></span> Ändern</a></li>
 					<li><a
-						href="<c:url value='/backend/nutzerinnen#loeschen' />">Löschen</a></li>
+						href="<c:url value='/backend/nutzerinnen#loeschen' />"><span class="glyphicon glyphicon-trash"></span> Löschen</a></li>
 				</ul>
 			
 			<li><a href="<c:url value='/backend/bestellungen' />"
