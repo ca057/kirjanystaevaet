@@ -108,9 +108,6 @@ public class BackendStockController {
 					"The passed id of the category is null or empty and can not be deleted.");
 		}
 		try {
-			// FIXME: habe die Signatur von deleteCategory geändert, da es
-			// sinnlos ist, über den Namen zu löschen
-			// bookService.deleteCategory(bookService.getCategoryById(Integer.parseInt(id)).getCategoryName());
 			bookService.deleteCategory(Integer.parseInt(id));
 
 		} catch (DatabaseException e) {
@@ -132,10 +129,8 @@ public class BackendStockController {
 			bookService.insertAuthor(req.getNameF(), req.getNameL(), req.isNewAuthor());
 		} catch (AuthorMayExistException e) {
 			return new ResponseEntity<AuthorJSONWrapper>(req, HttpStatus.CONFLICT);
-		} catch(DatabaseException e){
-//			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
-			//FIXME Da stimmt der return type nicht. Sorry!
-
+		} catch (DatabaseException e) {
+			return new ResponseEntity<AuthorJSONWrapper>(req, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		return new ResponseEntity<AuthorJSONWrapper>(req, HttpStatus.OK);
 	}

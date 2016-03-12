@@ -25,9 +25,7 @@ public class BackendDashboardController {
 	public String getBackend(Model m) throws ControllerOvertaxedException {
 		try {
 			m.addAllAttributes(dataKraken.attack());
-		} catch (DatabaseException e1) {
-			// FIXME Auto-generated catch block
-			e1.printStackTrace();
+		} catch (DatabaseException ignore) {
 		}
 		try {
 			m.addAttribute("admin", helper.getUser().get());
