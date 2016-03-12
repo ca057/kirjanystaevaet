@@ -840,8 +840,27 @@ public class BookServiceImpl implements BookService {
 
 	}
 
+//	@Override
+//	public SortedMap<Book, Integer> getMostVisitedBooks(int range) {
+//		if (range < 0) {
+//			throw new IllegalArgumentException("The passed range must be greater 0.");
+//		}
+//		SortedMap<Book, Integer> map = new TreeMap<>(new Comparator<Book>() {
+//
+//			@Override
+//			public int compare(Book b1, Book b2) {
+//				return Integer.compare(b2.getVisitCount(), b1.getVisitCount());
+//			}
+//		});
+//		for (Book b : bookDao.getMostVisitedBooks(range)) {
+//			map.put(b, b.getVisitCount());
+//		}
+//		return map;
+//		 
+//	}
 	@Override
-	public SortedMap<Book, Integer> getMostVisitedBooks(int range) {
+	public SortedMap<Book, Integer> getMostVisitedBooks(int range) throws DatabaseException {
+		try {
 		if (range < 0) {
 			throw new IllegalArgumentException("The passed range must be greater 0.");
 		}
@@ -856,11 +875,16 @@ public class BookServiceImpl implements BookService {
 			map.put(b, b.getVisitCount());
 		}
 		return map;
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		} catch(Exception e){
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("MostVisitedBooks"));
+		}
 		 
 	}
-
 	@Override
-	public SortedMap<Book, Integer> getLeastVisitedBooks(int range) {
+	public SortedMap<Book, Integer> getLeastVisitedBooks(int range) throws DatabaseException {
+		try {
 		if (range < 0) {
 			throw new IllegalArgumentException("The passed range must be greater 0.");
 		}
@@ -875,5 +899,28 @@ public class BookServiceImpl implements BookService {
 			map.put(b, b.getVisitCount());
 		}
 		return map;
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		} catch(Exception e){
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("VisitCount"));
+		}
 	}
+
+//	@Override
+//	public SortedMap<Book, Integer> getLeastVisitedBooks(int range) {
+//		if (range < 0) {
+//			throw new IllegalArgumentException("The passed range must be greater 0.");
+//		}
+//		SortedMap<Book, Integer> map = new TreeMap<>(new Comparator<Book>() {
+//
+//			@Override
+//			public int compare(Book b1, Book b2) {
+//				return Integer.compare(b1.getVisitCount(), b2.getVisitCount());
+//			}
+//		});
+//		for (Book b : bookDao.getLeastVisitedBooks(range)) {
+//			map.put(b, b.getVisitCount());
+//		}
+//		return map;
+//	}
 }

@@ -307,8 +307,9 @@ public interface BookService {
 	 *            the amount of books the returned map should contain
 	 * @return the map with the amount of books passed as range sorted
 	 *         descending by their visit count
+	 * @throws DatabaseException 
 	 */
-	public SortedMap<Book, Integer> getMostVisitedBooks(int range);
+	public SortedMap<Book, Integer> getMostVisitedBooks(int range) throws DatabaseException;
 
 	/**
 	 * Returns a {@link SortedMap} with the least visited {@link Book}s sorted
@@ -319,7 +320,8 @@ public interface BookService {
 	 *            the amount of books the returned map should contain
 	 * @return the map with the amount of books passed as range sorted ascending
 	 *         by their visit count
+	 * @throws DatabaseException 
 	 */
-	public SortedMap<Book, Integer> getLeastVisitedBooks(int range);
+	public SortedMap<Book, Integer> getLeastVisitedBooks(int range) throws DatabaseException;
 
 }

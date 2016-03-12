@@ -44,7 +44,7 @@ public class Cephalopoda implements DataKraken {
 	}
 
 	@Override
-	public Map<String, ?> attack() {
+	public Map<String, ?> attack() throws DatabaseException {
 		Map<String, Object> m = new HashMap<>();
 		consumeBasicData(m);
 		consumeComplexData(m);
@@ -86,7 +86,7 @@ public class Cephalopoda implements DataKraken {
 	 * 
 	 * @param m
 	 */
-	private void consumeComplexData(Map<String, Object> map) {
+	private void consumeComplexData(Map<String, Object> map)throws DatabaseException {
 		computeTopSellersAndShelfWarmers(map);
 		computeMostAndLeastVisitedBooks(map);
 	}
@@ -99,7 +99,7 @@ public class Cephalopoda implements DataKraken {
 		}
 	}
 
-	private void computeMostAndLeastVisitedBooks(Map<String, Object> map) {
+	private void computeMostAndLeastVisitedBooks(Map<String, Object> map)throws DatabaseException {
 		map.put("mostVisitedBooks", bookService.getMostVisitedBooks(5));
 		map.put("leastVisitedBooks", bookService.getLeastVisitedBooks(5));
 	}
