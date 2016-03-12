@@ -672,7 +672,11 @@ public class BookServiceImpl implements BookService {
 
 		try {
 //			Book book = getBookByIsbn(isbn, SearchMode.ALL);
-			bookDao.setStockToNegative(isbn);
+			Book book = bookDao.getBookByIsbn(isbn);
+			BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
+			bookBuilder.setStock(-1);
+//			bookDao.setStockToNegative(isbn);
+			bookDao.updateBook(bookBuilder.createBook());
 
 //		} catch (EntityDoesNotExistException e) {
 //			e.printStackTrace();
