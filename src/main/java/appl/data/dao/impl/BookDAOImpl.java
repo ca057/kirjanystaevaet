@@ -208,9 +208,10 @@ public class BookDAOImpl implements BookDAO {
 		Book book = getSession().get(Book.class, isbn);
 		BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
 
-		bookBuilder.setStock(-1);
-//		book.setStock(-1);
-		getSession().update(bookBuilder.createBook());
+//		bookBuilder.setStock(-1);
+		book.setStock(-1);
+//		getSession().update(bookBuilder.createBook());
+		getSession().update(book);
 	}
 
 	@Override

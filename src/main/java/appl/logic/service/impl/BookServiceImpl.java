@@ -671,14 +671,17 @@ public class BookServiceImpl implements BookService {
 		isbn = onlyLeaveLettersAndNumbers(isbn);
 
 		try {
-			Book book = getBookByIsbn(isbn, SearchMode.ALL);
+//			Book book = getBookByIsbn(isbn, SearchMode.ALL);
 			bookDao.setStockToNegative(isbn);
 
-		} catch (EntityDoesNotExistException e) {
-			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
+//		} catch (EntityDoesNotExistException e) {
+//			e.printStackTrace();
+//			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
 		} catch (HibernateException e) {
+			e.printStackTrace();
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		} catch (Exception e){
+			e.printStackTrace();
 			throw new DatabaseException(ErrorMessageHelper.deletionFailed("Book", isbn, e.getMessage()));
 		}
 
