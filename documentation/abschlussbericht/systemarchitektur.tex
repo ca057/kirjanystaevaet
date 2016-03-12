@@ -1,1 +1,11 @@
 \section{Systemarchitektur}
+
+Bei der Aufteilung der Klassen stand die Idee der \textit{seperation of concerns} im Vordergrund. In der Implementierung spiegelt sich also der Versuch wider, durch die Struktur möglichst deutliche, voneinander unabhängige und damit leichter austauschbare Schichten zu erzeugen.
+
+%	\includesvg{files/packages}
+
+Die Anwendung ist dabei in Anwendung (appl) und Web (web) unterteilt. Damit soll die klare Trennung von Programmlogik und Userinterface hervorgehoben werden. Datenbankbezogene Packages befinden sich ebenfalls im Anwendungsteil, könnten aber auch als eigenes Package ausgelagert werden. Aufgrund der engen Verbindung von Anwendung zur Datenbank (und umgekehrt) ist dies jedoch nebensächlich. Extra stehen die Konfigurationsklassen sowie eigene Exceptions.
+
+Im Anwendungspackage herrscht eine vorwiegende Zweiteilung zwischen datenbankbezogenen (data) und datenverarbeitenden (logic) Klassen. Zusätzlich existiert ein Adminpackage, das für erste Initialisierungen des Programms zuständig ist. Data ist -- wie bei Hibernateanwendungen üblich -- in ein Package mit Entities (items) und den transaktionalen Zugriffsklassen (DAO) unterteilt. Hilfsklassen zum Aufbau von Entityobjekten sind im Builderpackage zu finden. Logic wiederrum enthält die ebenfalls konventionellen Serviceklassen, die den Zugriff auf DAOs verwalten, sowie ein Securitypackage, das die Implementation von Spring-Klassen für Login etc. enthält. Durch diese Aufteilung des Appl-Packages soll der Zugriff auf DAO-Klassen reglementiert und außerhalb der Services unnötig gemacht werden.
+
+% Missing: Webpackage % 

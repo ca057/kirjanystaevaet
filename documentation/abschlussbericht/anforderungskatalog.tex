@@ -1,11 +1,15 @@
 \section{Umsetzung des Anforderungskatalogs}\label{sec:umsetzung}
 	\subsection{Datenbank}\label{sec:umsetzung:DB:DBS}
 	\subsubsection{Datenbankschema}\label{sec:umsetzung:DB:Schema}
+	
+	Das Datenbankschema war zum Teil bereits gegeben. Hinzu kamen die Abschnitte zu Nutzer\_innen und Bestellungen. Um auch bei Änderungen des Preises in Bestellungen den Kaufpreis eines Buches in einer bestimmten Bestellung nicht zu verlieren, existiert die Tabelle OrderItem, die den zum Kauf gültigen Preis sichert. Um diese OrderItems in mehreren Bestellungen nutzen zu können, sind sie über eine m:n-Verbindung mit der Order-Tabelle verknüpft. Diese 
+	
+	Nutzer\_innen halten über eine 1:n-Verbindung beliebig viele Orders. Zudem sind sie über eine Zwischentabelle mit Books assoziiert, in der verschiedene user- und buchspezifische Daten gespeichert sind. In der aktuellen Umsetzung sind das die Anzahl an Aufrufen eines bestimmten Buches über einen bestimmten Account sowie das Datum des letzten Aufrufs.
+	
 %	\includesvg{files/db-schema}
 	
-	Überprüfen und Einfügen von Johannes Bild
 	\subsection{Datenmanagement}\label{sec:umsetzung:DB:DM}
-	Grundlage der Datenverwaltung von \textit{kirjanystaevaet} ist die Java-SQL-Datenbank H2. Sie bietet in unseren Augen den für unsere Anforderungen besten XY zwischen Funktionsumfang und Nutzungsfreundlichkeit. Zum einen ist die Datenbank selbst klein, zum anderen ohne größere Probleme und zusätzliche Fragestellungen (Server etc.) einzurichten. Trotzdem kann bei Bedarf auch eine kompliziertere Konfiguration vorgenommen werden. Die Datenbank von \textit{kirjanystaevaet} läuft auf dem gleichen Server wie die Anwendung selbst. Das Programm greift dabei lokal auf die Daten zu, startet dabei aber den H2 inhärenten Server, sodass theoretisch auch andere Software die Datenbank gleichzeitig nutzen könnten. Im aktuellen Anwendungsfall ist dies aber zu vernachlässigen.
+	Grundlage der Datenverwaltung von \textit{kirjanystaevaet} ist die Java-SQL-Datenbank H2. Sie bietet in unseren Augen die für unsere Anforderungen beste Gewichtung von Funktionsumfang und Nutzungsfreundlichkeit. Zum einen ist die Datenbank selbst klein, zum anderen ohne größere Probleme und zusätzliche Fragestellungen (Server etc.) einzurichten. Trotzdem kann bei Bedarf auch eine kompliziertere Konfiguration vorgenommen werden. Die Datenbank von \textit{kirjanystaevaet} läuft auf dem gleichen Server wie die Anwendung selbst. Das Programm greift dabei lokal auf die Daten zu, startet dabei aber den H2 inhärenten Server, sodass theoretisch auch andere Software die Datenbank gleichzeitig nutzen könnten. Im aktuellen Anwendungsfall ist dies aber zu vernachlässigen.
 	
 	In \textit{kirjanystaevaet} schließlich kommt Hibernate für objektrelationales Mapping zum Einsatz. Ziel ist es, einem Datensatz aus der Datenbank ein Java-Objekt zuzuordnen. Die Entscheidung zu dieser Vorgehensweise fiel vor allem aus persönlichem Interesse sowie aus Erfahrungen mit der Programmierung von rein SQL-basierten Anwendungen und den damit verbundenen Schwierigkeiten, kompliziertere Datenbankanfragen dynamisch zu konstruieren. Zwar kann es bei größeren Abfrageergebnissen mit vielen genesteten Objekten (bei ManyToMany-Verbindungen) bei unvorsichtiger Konfiguration schnell zu großen (unnützen) Datenmengen kommen, bei der abzuschätzenden Größe des Büchershops sollten sich diese Probleme jedoch im Rahmen halten. Wie im folgenden beschrieben, wurde im Programm dennoch eine überlegte Verwendung der FetchTypes eager und lazy angestrebt.
 		
