@@ -2,7 +2,12 @@
 
 Bei der Aufteilung der Klassen stand die Idee der \textit{seperation of concerns} im Vordergrund. In der Implementierung spiegelt sich also der Versuch wider, durch die Struktur möglichst deutliche, voneinander unabhängige und damit leichter austauschbare Schichten zu erzeugen.
 
-% \includesvg}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{files/db-schema}
+	\caption{Die Packagestruktur von \textit{kirjanystaevaet}}
+	\label{fig:packages}
+\end{figure}
 
 Das System ist dabei in Anwendung (\lstinline|appl|) und Web (\lstinline|web|) unterteilt. Damit soll die klare Trennung von Programmlogik und Userinterface hervorgehoben werden. Datenbankbezogene Packages befinden sich ebenfalls im Anwendungsteil, könnten aber auch als eigenes Package ausgelagert werden. Aufgrund der engen Verbindung von Anwendung zur Datenbank (und umgekehrt) ist dies jedoch nebensächlich. Extra stehen die Konfigurationsklassen sowie eigene Exceptions.
 
