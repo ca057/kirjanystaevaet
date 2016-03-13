@@ -14,7 +14,7 @@
 		<h1>Tipps aus unserem Sortiment</h1>
 	</div>
 
-	<div class="row">
+	<div class="row row-eq-height">
 		<c:forEach var="book" items="${recommendations}">
 			<div class="col-sm-6 col-md-3">
 				<div class="thumbnail">
