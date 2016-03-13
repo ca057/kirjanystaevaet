@@ -133,8 +133,6 @@ const manage = function() {
 					$('#autorinnen-anlegen-last').val('').prop('disabled', false);
 					$('#autorinnen-anlegen-submit').prop('disabled', false);
 				}).fail((jqXHR, status, err) => {
-					console.log(jqXHR.status);
-					console.log(jqXHR.status === 409);
 					if (jqXHR.status === 409) {
 						if (confirm("Die Datenbank enthält möglicherweise schon eine:n " +
 								"Autor:in mit diesem Namen. Datensatz trotzdem einfügen? \n" +
