@@ -26,8 +26,12 @@
 								<p><c:out value="${book.key.getPages()}"/> Seiten</p>
 								<p>Verlag: <c:out value="${book.key.getPublisher()}"/></p>
 				 				<p>ISBN: <c:out value="${book.key.getIsbn()}"/></p>
-								<p>Preis: <c:out value="${book.key.getPrice()}"/>€</p>
-			
+								<p>Preis: <c:out value="${book.key.getPrice()}"/>
+									€ -
+									<a href="<c:url value="${book.key.getIsbn()}" />" title="zum Buch <c:out value='${book.key.getTitle()}' />">
+										zum Buch
+									</a>
+								</p>
 								<form id="deleteBook" method="post">
 									<button class="btn btn-primary btn-sm" id="deleteButton" name="isbn" value="${book.key.getIsbn()}" type="submit" formaction="<c:url value='/buch_geloescht'/>">
 										<span class="glyphicon glyphicon-remove-circle"></span>
