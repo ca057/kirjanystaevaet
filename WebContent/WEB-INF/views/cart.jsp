@@ -16,27 +16,31 @@
 				<p>Keine Bücher im Warenkorb</p>
 			</c:when>
 			<c:otherwise>
+			<div class="row">
 				<c:forEach var="book" items="${bookItems}">
-				 	<div class="col-md-3">
-				 	<div class="thumbnail">
-					<img class="book-cover" src="<c:url value="/img/cover/${book.key.getIsbn()}.jpg"/>" title="<c:out value="Cover des Buchs '${book.key.getTitle()}'"/>">
-					<h3><c:out value="${book.key.getTitle()}"/></h3>
-<%-- 					<p><c:out value="${book.key.getDescription()}" escapeXml="false"/></p> --%>
-					<p><c:out value="${book.key.getPages()}"/> Seiten</p>
-					<p>Verlag: <c:out value="${book.key.getPublisher()}"/></p>
-	 				<p>ISBN: <c:out value="${book.key.getIsbn()}"/></p>
-					<p>Preis: <c:out value="${book.key.getPrice()}"/>€</p>
-
-					<form id="deleteBook" method="post">
-						<button class="btn btn-default btn-sm" id="deleteButton" name="isbn" value="${book.key.getIsbn()}" type="submit" formaction="<c:url value='/buch_geloescht'/>">
-							<span class="glyphicon glyphicon-remove-circle"></span>
-							aus Warenkorb entfernen
-						</button> 
-						<sec:csrfInput/>
-					</form>	
-					</div>
-					</div>
+					
+					 	<div class="col-md-3">
+						 	<div class="thumbnail">
+								<img class="book-cover" src="<c:url value="/img/cover/${book.key.getIsbn()}.jpg"/>" title="<c:out value="Cover des Buchs '${book.key.getTitle()}'"/>">
+								<h3><c:out value="${book.key.getTitle()}"/></h3>
+			<%-- 					<p><c:out value="${book.key.getDescription()}" escapeXml="false"/></p> --%>
+								<p><c:out value="${book.key.getPages()}"/> Seiten</p>
+								<p>Verlag: <c:out value="${book.key.getPublisher()}"/></p>
+				 				<p>ISBN: <c:out value="${book.key.getIsbn()}"/></p>
+								<p>Preis: <c:out value="${book.key.getPrice()}"/>€</p>
+			
+								<form id="deleteBook" method="post">
+									<button class="btn btn-default btn-sm" id="deleteButton" name="isbn" value="${book.key.getIsbn()}" type="submit" formaction="<c:url value='/buch_geloescht'/>">
+										<span class="glyphicon glyphicon-remove-circle"></span>
+										aus Warenkorb entfernen
+									</button> 
+									<sec:csrfInput/>
+								</form>	
+							</div>
+						</div>
+						
 				</c:forEach> 
+				</div>
 			</c:otherwise>
 		</c:choose>
 		
