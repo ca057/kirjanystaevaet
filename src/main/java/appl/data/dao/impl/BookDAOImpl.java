@@ -11,7 +11,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
-import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -215,24 +214,4 @@ public class BookDAOImpl implements BookDAO {
 		getSession().update(bookBuilder.createBook());
 		// getSession().update(book);
 	}
-
-	@Override
-	public List<Book> getMostVisitedBooks(int range) {
-		if (range < 0) {
-			throw new IllegalArgumentException("The passed range must be greater than 0.");
-		}
-		return setupAndGetCriteria().addOrder(Order.desc("visitCount")).setMaxResults(range).list();
-	}
-
-	@Override
-	public List<Book> getLeastVisitedBooks(int range) {
-		if (range < 0) {
-			throw new IllegalArgumentException("The passed range must be greater than 0.");
-		}
-		System.out.println("Range: " + range);
-		List result = setupAndGetCriteria().addOrder(Order.desc("visitCount")).setMaxResults(range).list();
-		System.out.println("Least Visited: " + result);
-		return result;
-	}
-
 }

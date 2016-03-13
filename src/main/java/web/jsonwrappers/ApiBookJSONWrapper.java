@@ -5,6 +5,13 @@ import java.util.stream.Collectors;
 
 import appl.data.items.Book;
 
+/**
+ * Wrapper for {@link Book}s when send or received as JSON via the API. Not all
+ * data of the underlying {@link Book} will be used.
+ * 
+ * @author Christian
+ *
+ */
 public class ApiBookJSONWrapper {
 	private String isbn;
 
@@ -26,10 +33,20 @@ public class ApiBookJSONWrapper {
 
 	private List<String> categories;
 
+	/**
+	 * Default constructor.
+	 */
 	public ApiBookJSONWrapper() {
 		super();
 	}
 
+	/**
+	 * Maps the data of the passed {@link Book} to the fields of the
+	 * {@code ApiBookJSONWrapper}.
+	 * 
+	 * @param book
+	 *            the {@link Book} which will get converted
+	 */
 	public ApiBookJSONWrapper(Book book) {
 		if (book == null) {
 			throw new IllegalArgumentException(
