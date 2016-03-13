@@ -30,5 +30,14 @@ documentation/abschlussbericht/*.lof
 documentation/abschlussbericht/*.lot
 documentation/abschlussbericht/*.synctex.gz
 # hab mal noch die folgenden Zeilen ergänzt
-documentation/abschlussbericht/*.out
-documentation/abschlussbericht/*.toc
+documentation/abschlussbericht/mi-proj-b_group2_abschlussbericht.out
+documentation/abschlussbericht/mi-proj-b_group2_abschlussbericht.toc
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+

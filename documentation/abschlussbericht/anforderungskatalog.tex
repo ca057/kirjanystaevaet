@@ -30,12 +30,12 @@
 		Soll ein Buch eingefügt werden, ist es wichtig, dass die zugehörigen Kategorien und Autoren schon vorher in der Datenbank gespeichert sind. Autoren erfahren hier außerdem eine spezielle Behandlung. Soll ein neuer Autor eingefügt werden, wird überprüft, ob es schon einen Autor mit exakt diesem Namen gibt und wenn ja, nochmals nachgefragt, ob es sich tatsächlich um eine neue Person handelt oder vielleicht eine der schon vorhandenen gemeint ist. Das trägt der Tatsache Rechnung, dass auch die Kombination von Vor- und Nachnamen keineswegs eindeutig sind. 
 		
 		\subsubsection{Löschen von Daten}\label{umsetzung:DB:Loeschen}
-		Das Löschen von Daten ist nur eingeschränkt möglich. Prinzipiell bieten die \textit{DAOs} die entsprechenden Funktionen dafür an. Zumindest bei Büchern werden sie von der entsprechenden Methode im Service jedoch nicht verwendet. Da es ein Bestell-Archiv gibt, das heißt jeder User kann jede Bestellung, die einmal getätigt wurde, einsehen, ist es nicht möglich die Datensätze zu löschen, auch wenn das Buch nicht mehr angeboten wird. In welchen Zustand sich ein Buch befindet wird über die Spalte \texttt{stock} geregelt. Im Prinzip zeigt diese an, wie viele Exemplare von einem Buch vorrätig sind, ist der Wert jedoch negativ, bedeutet das, dass das Buch nicht mehr verkauft gilt. Ruft man im Service also die \texttt{deleteBook}-Methode auf, wird nur der \texttt{stock} auf \texttt{-1} gesetzt.
+		Das Löschen von Daten ist nur eingeschränkt möglich. Prinzipiell bieten die \textit{DAOs} die entsprechenden Funktionen dafür an. Zumindest bei Büchern werden sie von der entsprechenden Methode im Service jedoch nicht verwendet. Da es ein Bestell-Archiv gibt, das heißt jeder User kann jede Bestellung, die einmal getätigt wurde, einsehen, ist es nicht möglich die Datensätze zu löschen, auch wenn das Buch nicht mehr angeboten wird. In welchen Zustand sich ein Buch befindet wird über die Spalte \texttt{stock} geregelt. Im Prinzip zeigt diese an, wie viele Exemplare von einem Buch vorrätig sind, ist der Wert jedoch negativ, bedeutet das, dass das Buch nicht mehr verkauft wird. Ruft man im Service also die \texttt{deleteBook}-Methode auf, wird nur der \texttt{stock} auf \texttt{-1} gesetzt.
 		
 		Daraus folgt, dass auch Kategorien und Autoren nicht gelöscht werden können, da dies nur möglich wäre, wenn keine Bücher mehr vorhanden wären, die mit dem jeweiligen Datensatz verknüpft sind.
 		
 		\subsubsection{Ändern von Daten}\label{umsetzung:DB:Aendern}
-		Ursprünglich war vorgesehen, dass nur sehr wenig an Büchern geändert werden kann, da die meisten Angaben von der ISBN abhängig sind. So kann sich der Titel einer Ausgabe nicht ändern. Veränderungen in den Daten, die in diesem Fall in der Datenbank gespeichert werden, erfordern eigentlich auch eine neue ISBN\footnote{siehe hierzu \url{https://de.wikipedia.org/wiki/Internationale_Standardbuchnummer} unter \textit{Regeln zur ISBN-Vergabe und -Nutzung}}. Solch ein restriktives Vorgehen würde jedoch zu anderen Problemen führen, nämlich dass z.B. Tippfehler, die ein Admin beim einfügen neuer Bücher macht, nicht ausgebessert werden können. Aus diesem Grund haben wir entschieden, dass bei Büchern alle Daten bis auf die ISBN geändert werden können und die Verantwortung für korrekte Daten damit dem Admin überlassen.
+		Ursprünglich war vorgesehen, dass nur sehr wenig an Büchern geändert werden kann, da die meisten Angaben von der ISBN abhängig sind. So kann sich beispielsweise der Titel einer Ausgabe nicht ändern. Veränderungen in den Daten, die in diesem Fall in der Datenbank gespeichert werden, erfordern eigentlich auch eine neue ISBN\footnote{siehe hierzu \url{https://de.wikipedia.org/wiki/Internationale_Standardbuchnummer} unter \textit{Regeln zur ISBN-Vergabe und -Nutzung}}. Solch ein restriktives Vorgehen würde jedoch zu anderen Problemen führen, nämlich dass z.B. Tippfehler, die ein Admin beim Einfügen neuer Bücher macht, nicht ausgebessert werden können. Aus diesem Grund haben wir entschieden, dass bei Büchern alle Daten -~bis auf die ISBN~- geändert werden können und die Verantwortung für korrekte Daten damit dem Admin überlassen bleibt.
 	
 		\subsubsection{Exception Handling}\label{umsetzung:DB:Exception}
 		Im Umgang mit der Datenbank können viele Fehler auftreten. Durch ein umfassendes Exception-Handling wird versucht den Shop vor dem Absturz zu bewahren.
@@ -76,22 +76,21 @@
 		Tritt ein größerer Fehler auf, der durch keinen Controller gefangen wurde, wird eine Standard-Fehlerseite angezeigt. Diese informiert nur über das Fehlschlagen der letzten Aktion, ohne Details über Interna preiszugeben.
 
 	\subsection{A3: Suchfunktion}\label{umsetzung:Suche}
-	Die Suchfunktion wird im \texttt{BookService} angeboten. Hierbei wurde sich auf eine Suche über die Metadaten beschränkt. Es kann nach \textit{Titel}, \textit{Vorname}, \textit{Nachname}, \textit{ISBN}, \textit{Erscheinungsjahr} und \textit{Kategorie} gesucht werden. Für Datenbankabfragen allgemein und die Suche im besonderen werden \textit{Criteria} verwendet, da sich auf diese Weise sehr einfach dynamische Anfragen generieren lassen. Bei der Suche werden die Angaben der verschiedenen Felder und-verknüpft und sind durch die Verwendung der \texttt{Restrictions.ilike} case-insensitiv und der Suchterm muss nicht exakt so in der Datenbank stehen, sondern kann von anderen Zeichen umgeben sein.
-	Auch wenn es in der Oberfläche nicht genutzt wird, kann die \texttt{getBookByMetadata}-Methode im \texttt{BookService} auch alle weiteren Felder in der Suche berücksichtigen. Bei Bedarf könnte der Webshop sehr einfach um diese Suchmöglichkeiten erweitert werden.
+	Die Suchfunktion wird im \texttt{BookService} angeboten. Hierbei wurde sich auf eine Suche über die Metadaten beschränkt. Im Front-End hat der Nutzer die Möglichkeit nach \textit{Titel}, \textit{Vorname}, \textit{Nachname}, \textit{ISBN}, \textit{Erscheinungsjahr} und \textit{Kategorie} zu suchen. Für Datenbankabfragen allgemein und die Suche im besonderen werden \textit{Criteria} verwendet, da sich auf diese Weise sehr einfach dynamische Anfragen generieren lassen. Bei der Suche werden die Angaben der verschiedenen Felder und-verknüpft und sind durch die Verwendung der \texttt{Restrictions.ilike} case-insensitiv und der Suchterm muss nicht exakt so in der Datenbank stehen, sondern kann von anderen Zeichen umgeben sein.
+	Auch wenn es in der Oberfläche nicht genutzt wird, kann die \texttt{getBookByMetadata}-Methode im \texttt{BookService} auch alle weiteren Felder von \texttt{Book} in der Suche berücksichtigen. Bei Bedarf könnte der Webshop sehr einfach um diese Suchmöglichkeiten erweitert werden.
 	
-	Im Laufe des Projekts wurde auch versucht eine offene Suche zu implementieren. Da dies jedoch mit Schwierigkeiten verbunden war und das als zu weitreichend für dieses Projekt betrachtet wurde, wurde dieses Vorhaben fallen gelassen. Dies ist jedoch ebenfalls eine Erweiterungsmöglichkeit für die Anwendung.
+	Im Laufe des Projekts wurde auch versucht eine offene Suche zu implementieren. Da dies jedoch mit Schwierigkeiten verbunden war und als zu weitreichend für dieses Projekt betrachtet wurde, wurde dieses Vorhaben fallen gelassen. Dies ist jedoch ebenfalls eine Erweiterungsmöglichkeit für die Anwendung. Eine Möglichkeit für die Umsetzung wäre dann zum Beispiel die Einbindung von \textit{Lucene}.
 
 	\subsection{A4: Backend}\label{sec:umsetzung:backend}
 	Das Backend ermöglicht die komplette Verwaltung des Shops. Insgesamt stellen die Services mehr Methoden zur Verfügung, als schlussendlich client-seitig im Backend umgesetzt wurden. Wie das Kapitel \ref{sec:umsetzung:analyse} zeigt, könnten durch eine Kombination der derzeit gespeicherten Daten komplexere Analysen ermöglicht werden als die derzeit im Dashboard dargestellten.
 	
-	%CO nachschauen welche bereiche
-	Das Backend ist in vier Bereiche gegliedert: Im Dashboard wird eine aktuelle Übersicht über den Shop angezeigt, in den Bereichen Bücher, Nutzer*innen und Autor*innen kann der Bestand verwaltet werden.
+	Das Backend ist in die Bereiche Dashboard, Bestand, Nutzer\_innen und Bestellungen gegliedert. Im Dashboard findet man eine Übersicht über den Shop, im Bereich Bestellungen eine solche über die aktuell laufenden Bestellungen. Der Bestand und alle Nutzer\_innen können in den jeweiligen Untergliederungen verwaltet werden.
 	
-	% genaue Gliederung nachschauen
-	
-		\subsubsection{Umsetzung der Administrationsmöglichkeiten per AJAX-Requests}
-		Notwendigkeit entsteht zum Beispiel bei Autor*innen einfügen -- gibt es diese/n bereits?
-	
+		\subsubsection{Bestandsverwaltung}
+		Die Bestandsverwaltung untergliedert sich in die Verwaltung der Kategorien, der Autor\_innen und der Bücher. Diese sind client- und server-seitig in unterschiedlicher Weise umgesetzt. So basiert die Nutzer\_innenverwaltung zu einem großen Teil auf AJAX-Requests, während bei der Bestandsverwaltung das Gegenteil der Fall ist.
+		
+		Ausgang für die unterschiedlichen Implementierungen ist der Ablauf beim Anlegen neuer Autor\_innen gewesen. Existiert ein neu angelegter Autor\_in mit dem gleichen Namen bereits in der Datenbank, muss überprüft werden, ob ein neues Datenbankobjekt mit neuer ID angelegt werden soll oder ob ein Versehen vorliegt. Daher wird der neue Datensatz per POST-Request an den Server gesendet, der ein Anlegen des Datensatzes versucht. Schlägt das fehl -- wahrscheinlich, weil ein solcher Datensatz schon existiert -- werden die Daten an den Client zusammen mit einem Http-Statuscode \lstinline|409| an den Client zurück geschickt. In diesem Fall öffnet sich ein Bestätigungs-Dialog, mit dem das Anlegen bestätigt oder abgebrochen werden kann. Ist ein\_e Autor\_in mit gleichem Namen noch nicht bekannt, wird die Aktion ohne Fehlermeldung durchgeführt. Gibt es server-seitig einen anderen Fehler, wird das client-seitig über ein Popup bekannt gemacht und die Aktion abgebrochen.
+		
 		\subsubsection{Fehlerbehandlung}
 		Im Gegensatz zum Frontend werden im Backend teils an die Oberfläche durchgereicht und zur Anzeige gebracht.
 	
@@ -123,6 +122,10 @@
 	In der aktuellen Implementierung kann die API nur für grundlegende Abfragen zu Büchern verwendet werden. Für die Bereitstellung von komplexeren Abfragen müsste das bisherige Schema um weitere Pfad- und Anfrage-Parameter ergänzt werden. Vor allem bei zunehmenden Datensätzen sollte dies in Erwägung gezogen werden, da eine Abfrage aller Bücher schnell große Datenmengen erzeugen kann, welche sowohl für den Server des Shops als auch für den Client zur Belastung werden können. Eine Reduzierung der Belastung kann zum Beispiel durch die Angabe eines \lstinline|offset|s zusätzlich zum \lstinline|limit| erreicht werden oder über die Ergänzung weiterer Parameter, zum Beispiel zur Abfrage aller Bücher einer bestimmten Autorin.
 	
 	\subsection{A8: Nutzeranalyse}\label{sec:umsetzung:analyse}
-	\dots
+	Die Nutzeranalyse kann in der Perspektive auf die Datenbank in zwei Bereiche eingeteilt werden. Der eine arbeitet mit \texttt{Orderx} und \texttt{OrderItem}, der andere mit \texttt{User\-Book\-Statistic} and \texttt{visitCount}.\\
+	Im Zusammenhang mit den \texttt{Orderx} und \texttt{OrderItems} bietet der \texttt{OrderService} Funktionen, die den Nutzer alle seine getätigten Bestellungen einsehen lässt. Außerdem gibt es die Möglichkeit alle insgesamt getätigten Bestellungen abzurufen, was im Admin-Backend genutzt wird. Außerdem wird eine Funktion angeboten, die \textit{Bestsellers} sowie \textit{Shelfwarmers} in der entsprechend sortierten Reihenfolge liefert. Diese sind im Admin-Backend im Dashboard einsehbar.\\
+	\textbf{Johannes, UserBookStatistics}
+	
+	
 	
 	
