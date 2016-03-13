@@ -403,3 +403,11 @@ div#homerow {
 	width: 40%;
 }
 
+#popupLoginBody{
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-conten: center;
+	align-items: flex-start;
+}
+
