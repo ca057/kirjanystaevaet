@@ -2,7 +2,7 @@
 
 
 *.prefs
-
+.settings/*
 *.DS_Store
 
 /.recommenders
