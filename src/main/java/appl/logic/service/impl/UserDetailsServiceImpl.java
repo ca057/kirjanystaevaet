@@ -1,4 +1,4 @@
-package appl.logic.security;
+package appl.logic.service.impl;
 
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import appl.data.items.User;
+import appl.logic.security.GrantedAuthorityImpl;
+import appl.logic.security.UserPrincipal;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 
