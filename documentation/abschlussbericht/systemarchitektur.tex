@@ -8,7 +8,6 @@ Das System ist dabei in Anwendung (\lstinline|appl|) und Web (\lstinline|web|) u
 
 Im Anwendungspackage herrscht eine vorwiegende Zweiteilung zwischen datenbankbezogenen (data) und datenverarbeitenden (logic) Klassen. Zusätzlich existiert ein Adminpackage, das für erste Initialisierungen des Programms zuständig ist. Data ist -- wie bei Hibernateanwendungen üblich -- in ein Package mit Entities (items) und den transaktionalen Zugriffsklassen (DAO) unterteilt. Hilfsklassen zum Aufbau von Entityobjekten sind im Builderpackage zu finden. Logic wiederrum enthält die ebenfalls konventionellen Serviceklassen, die den Zugriff auf DAOs verwalten, sowie ein Securitypackage, das die Implementation von Spring-Klassen für Login etc. enthält. Durch diese Aufteilung des Appl-Packages soll der Zugriff auf DAO-Klassen reglementiert und außerhalb der Services unnötig gemacht werden.
 
-% Missing: Webpackage
 Das Package \lstinline|web.controllers| stellt die Schnittstelle zwischen den Nutzer*innen und der Anwendungslogik dar. Auf oberster Ebene liegen neben allen Interfaces Beans für die Fehlerbehandlung sowie für das Setzen von globalen Attributen. Das Package ist wiederum unterteilt in die Bereiche
 \begin{itemize}
 	\item[Frontend] Darstellung aller Views, für die keine Authentifizierung notwendig ist sowie aller Views für eine*n eingeloggte*n Nutzer*in mit der Rolle \lstinline|USER|
