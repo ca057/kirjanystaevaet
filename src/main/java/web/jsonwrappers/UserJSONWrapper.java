@@ -2,6 +2,12 @@ package web.jsonwrappers;
 
 import java.io.File;
 
+/**
+ * Wrapper for sending and receiving user data as JSON to and from the client.
+ * 
+ * @author Christian
+ *
+ */
 public class UserJSONWrapper {
 	private String name;
 	private String surname;

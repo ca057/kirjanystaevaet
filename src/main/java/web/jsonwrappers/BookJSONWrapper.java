@@ -5,6 +5,13 @@ import java.util.List;
 
 import appl.data.items.Book;
 
+/**
+ * Wrapper for sending and receiving data of a {@link Book} to and from the
+ * client. Should not be used with the API as it containts internal data.
+ * 
+ * @author Christian
+ *
+ */
 public class BookJSONWrapper {
 	private String isbn;
 
@@ -28,10 +35,19 @@ public class BookJSONWrapper {
 
 	private List<Integer> categories = new ArrayList<>();
 
+	/**
+	 * Default constructor.
+	 */
 	public BookJSONWrapper() {
 		super();
 	}
 
+	/**
+	 * Constructor for converting a {@link Book} into a {@code BookJSONWrapper}.
+	 * 
+	 * @param book
+	 *            the {@link Book} to convert
+	 */
 	public BookJSONWrapper(Book book) {
 		if (book == null) {
 			throw new IllegalArgumentException(

@@ -1,5 +1,14 @@
 package web.jsonwrappers;
 
+import appl.data.items.Author;
+
+/**
+ * Wrapper for sending and receiving data of an {@link Author} as JSON to and
+ * from the client.
+ * 
+ * @author Christian
+ *
+ */
 public class AuthorJSONWrapper {
 	private String nameF;
 	private String nameL;
