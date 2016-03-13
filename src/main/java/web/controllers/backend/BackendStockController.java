@@ -31,7 +31,8 @@ import appl.enums.Searchfields;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
-import web.controllers.util.ProcessUpload;
+import exceptions.data.ErrorMessageHelper;
+import web.controllers.UploadHelper;
 import web.jsonwrappers.AuthorJSONWrapper;
 import web.jsonwrappers.BookJSONWrapper;
 
@@ -48,7 +49,10 @@ import web.jsonwrappers.BookJSONWrapper;
 public class BackendStockController {
 
 	@Autowired
-	public BookService bookService;
+	private UploadHelper upload;
+
+	@Autowired
+	private BookService bookService;
 
 	private Predicate<String> stringIsNotNullAndEmpty = s -> s != null && !s.isEmpty();
 	private Predicate<List> listIsNotNullAndEmpty = l -> l != null && !l.isEmpty();
@@ -218,8 +222,10 @@ public class BackendStockController {
 
 		try {
 			bookService.insertBook(book, authorIds, categoryIds);
-			new ProcessUpload().saveBookCover(isbn, file.getOriginalFilename().split("\\.")[1], file.getBytes(),
-					request, false);
+			if (!upload.saveBookCover(isbn, file.getOriginalFilename().split("\\.")[1], file.getBytes(),
+					request.getSession())) {
+				return "redirect:/backend/bestand?error&msg=" + ErrorMessageHelper.couldNotBeSaved("Picture");
+			}
 		} catch (DatabaseException | IOException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
@@ -275,8 +281,10 @@ public class BackendStockController {
 				data.put(Searchfields.pages, pages);
 			}
 			if (file.getContentType().contains("image")) {
-				new ProcessUpload().saveBookCover(isbn, file.getOriginalFilename().split("\\.")[1], file.getBytes(),
-						request, false);
+				if (!upload.saveBookCover(isbn, file.getOriginalFilename().split("\\.")[1], file.getBytes(),
+						request.getSession())) {
+					return "redirect:/backend/bestand?error&msg=" + ErrorMessageHelper.couldNotBeSaved("Picture");
+				}
 			}
 
 			System.out.println("data: " + data.toString());

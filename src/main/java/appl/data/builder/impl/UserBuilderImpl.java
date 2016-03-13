@@ -139,7 +139,7 @@ public class UserBuilderImpl implements UserBuilder {
 
 	@Override
 	public byte[] getImage() {
-		return image;
+		return image == null ? null : (byte[]) image.clone();
 	}
 
 	@Override

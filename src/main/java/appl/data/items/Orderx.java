@@ -1,4 +1,5 @@
 package appl.data.items;
+
 /**
  * @author Madeleine
  */
@@ -18,9 +19,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
 /**
- * Orderx is a POJO marked as persistent entity with table name
- * "orderx". It represents an order object with different variables:
+ * Orderx is a POJO marked as persistent entity with table name "orderx". It
+ * represents an order object with different variables:
  * <ul>
  * <li>orderId</li>
  * <li>date</li>
@@ -28,7 +30,9 @@ import javax.persistence.UniqueConstraint;
  * {@link Set} of {@link OrderItem} is joined via a one-to-many connection.
  * {@link User} is joined via a many-to-one connection.
  * 
- * The class is not called "Order" because it might cause problems in sql-statements, even if preparedStatements are used
+ * The class is not called "Order" because it might cause problems in
+ * sql-statements, even if preparedStatements are used
+ * 
  * @author Madeleine
  *
  */
@@ -40,23 +44,24 @@ public class Orderx {
 	private User user;
 
 	private Calendar date;
-	
+
 	/**
 	 * Required Constructor, may be private
 	 */
-	private Orderx(){
-		
+	private Orderx() {
+
 	}
+
 	/**
 	 * 
 	 * @param date
 	 */
-	public Orderx(Calendar date){
+	public Orderx(Calendar date) {
 		this.date = date;
 	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "orderId", unique = true, nullable = false)
 	public int getOrderId() {
 		return this.orderId;
@@ -77,8 +82,6 @@ public class Orderx {
 	public Set<OrderItem> getOrderItems() {
 		return orderItems;
 	}
-	
-
 
 	private void setOrderId(int orderId) {
 		this.orderId = orderId;
@@ -92,19 +95,21 @@ public class Orderx {
 		this.user = user;
 	}
 
-
 	private void setDate(Calendar date) {
 		this.date = date;
 	}
 
-
 	@Override
-	public String toString(){
-		String s = "OrderId + " +orderId + " UserId" +user.getUserId() + " UserSurName " + user.getSurname() + "\n" + "Amount of Ordered Items " +orderItems.size() + "\n";
-		for (OrderItem a : orderItems){
-			s = s + "Isbn " + a.getBook().getIsbn() + " Title" + a.getBook().getTitle() + " Ordering-Price " + a.getPrice() +"\n";
- 		}
-		return s;
+	public String toString() {
+		// FIXME Madeleine: Stringbuffer von Johannes eingebaut.
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("OrderId + " + orderId + " UserId" + user.getUserId() + " UserSurName " + user.getSurname() + "\n"
+				+ "Amount of Ordered Items " + orderItems.size() + "\n");
+		for (OrderItem a : orderItems) {
+			buffer.append("Isbn " + a.getBook().getIsbn() + " Title" + a.getBook().getTitle() + " Ordering-Price "
+					+ a.getPrice() + "\n");
+		}
+		return buffer.toString();
 	}
 
 }

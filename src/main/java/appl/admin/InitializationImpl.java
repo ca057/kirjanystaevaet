@@ -2,6 +2,7 @@ package appl.admin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -52,7 +53,7 @@ public class InitializationImpl implements InitializingBean {
 
 	private Map<Userfields, String> getNewUser(String name) {
 		Map<Userfields, String> data = new HashMap<>();
-		data.put(Userfields.name, name.substring(0, 1).toUpperCase() + name.substring(1));
+		data.put(Userfields.name, name.substring(0, 1).toUpperCase(Locale.GERMAN) + name.substring(1));
 		data.put(Userfields.surname, chooseSurname());
 		data.put(Userfields.email, name + "@ky.de");
 		data.put(Userfields.street, chooseStreet());

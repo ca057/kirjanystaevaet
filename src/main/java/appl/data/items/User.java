@@ -210,7 +210,7 @@ public class User {
 	@Lob
 	@Column(name = "image", nullable = true)
 	public byte[] getImage() {
-		return image;
+		return image == null ? null : (byte[]) image.clone();
 	}
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
@@ -261,7 +261,7 @@ public class User {
 
 	private void setRole(String role) {
 		if (role != null) {
-			this.role = role.toString();
+			this.role = role;
 		}
 	}
 

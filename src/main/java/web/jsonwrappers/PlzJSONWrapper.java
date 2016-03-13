@@ -2,6 +2,12 @@ package web.jsonwrappers;
 
 import appl.data.items.PLZ;
 
+/**
+ * Wrapper for sending and receiving PLZ data as JSON to and from a client.
+ * 
+ * @author Christian
+ *
+ */
 public class PlzJSONWrapper {
 
 	private int plzId;

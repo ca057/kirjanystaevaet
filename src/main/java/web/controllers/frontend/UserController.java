@@ -86,11 +86,11 @@ public class UserController {
 			throw new IllegalArgumentException("The uploaded file is not an image");
 		}
 		try {
-			uploadHelper.saveProfilePicture(helper.getUserId(), file.getBytes(), true);
+			return (uploadHelper.saveProfilePicture(helper.getUserId(), file.getBytes())) ? "redirect:/meinkonto"
+					: "redirect:/meinkonto?error";
 		} catch (IOException | ControllerOvertaxedException | DatabaseException e) {
 			return "redirect:/meinkonto?error";
 		}
-		return "redirect:/meinkonto";
 	}
 
 }
