@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Repository;
 import appl.data.dao.PlzDAO;
 import appl.data.items.PLZ;
 import appl.enums.Userfields;
+import exceptions.data.DatabaseException;
+import exceptions.data.ErrorMessageHelper;
 
 @Repository
 public class PlzDAOImpl implements PlzDAO {
@@ -29,8 +32,29 @@ public class PlzDAOImpl implements PlzDAO {
 		if (sessionFactory == null) {
 			throw new RuntimeException("[Error] SessionFactory is null");
 		}
-		Criteria cr = getSession().createCriteria(PLZ.class).setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		Criteria cr = getSession().createCriteria(PLZ.class)
+				.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		return cr;
+	}
+
+	@Override
+	public boolean insertPLZ(String postalCode, String place) throws DatabaseException {
+		try {
+			getSession().save(new PLZ(postalCode, place));
+			return true;
+		} catch (HibernateException e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
+	}
+
+	@Override
+	public boolean updatePLZ(int plzId, String postalCode, String place) throws DatabaseException {
+		try {
+			getSession().update(new PLZ(plzId, postalCode, place));
+			return true;
+		} catch (HibernateException e) {
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		}
 	}
 
 	@Override
@@ -54,8 +78,7 @@ public class PlzDAOImpl implements PlzDAO {
 
 	@Override
 	public List<PLZ> getPLZByPostalCode(String postalCode) {
-		return setupAndGetCriteria().add(Restrictions.ilike(Userfields.postcode.toString(), postalCode))
-				.list();
+		return setupAndGetCriteria().add(Restrictions.ilike(Userfields.postcode.toString(), postalCode)).list();
 	}
 
 	@Override

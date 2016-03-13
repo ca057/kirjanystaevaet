@@ -15,6 +15,8 @@ import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 
 /**
+ * This class provides some user accounts and one admin account.
+ * 
  * @author Johannes
  *
  */

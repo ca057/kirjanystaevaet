@@ -45,6 +45,12 @@ public class PLZ {
 		setPlace(place);
 	}
 
+	public PLZ(int plzId, String postalCode, String place2) {
+		setPlzId(plzId);
+		setPostcode(postcode);
+		setPlace(place);
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PLZID")
