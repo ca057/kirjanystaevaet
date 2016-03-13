@@ -403,6 +403,7 @@ div#homerow {
 	width: 40%;
 }
 
+/* Popup if not logged in */
 #popupLoginBody{
 	display: flex;
 	flex-direction: column;

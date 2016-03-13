@@ -47,31 +47,33 @@
 									<span class="glyphicon glyphicon-shopping-cart"></span> In den
 									Warenkorb
 								</button>
-								<div id="login" class="modal fade" role="dialog">
-									<div class="modal-dialog">
-
-										<!-- Modal content-->
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal">&times;</button>
-												<h4 class="modal-title">Login nötig</h4>
-											</div>
-												<div class="modal-body" id="popupLoginBody">
-													<p>Bitte erst als User einloggen!</p>
-													<form method="post" action="<c:url value="/login" />" method="post">
-														<input type="text" placeholder="E-Mail" id="username" name="username"> <input type="password" placeholder="Passwort" id="password" name="password"> <input
-														class="btn btn-primary btn-block" type="submit" value="Anmelden">
-														<sec:csrfInput />
-													</form>
+								<sec:authorize access="isAnonymous()">
+									<div id="login" class="modal fade" role="dialog">
+										<div class="modal-dialog">
+	
+											<!-- Modal content-->
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">Login nötig</h4>
 												</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-default"
-													data-dismiss="modal">Close</button>
+													<div class="modal-body" id="popupLoginBody">
+														<p>Bitte erst als User einloggen!</p>
+														<form method="post" action="<c:url value="/login" />" method="post">
+															<input type="text" placeholder="E-Mail" id="username" name="username"> <input type="password" placeholder="Passwort" id="password" name="password"> <input
+															class="btn btn-primary btn-block" type="submit" value="Anmelden">
+															<sec:csrfInput />
+														</form>
+													</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default"
+														data-dismiss="modal">Close</button>
+												</div>
 											</div>
+	
 										</div>
-
 									</div>
-								</div>
+								</sec:authorize>
 						</sec:authorize>
 						<sec:authorize access="hasRole('USER')">
 							<form action="<c:url value='categories' />" method="post"
