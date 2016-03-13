@@ -55,6 +55,13 @@
 		
 		Zudem wurde auf diese Weise versucht, \texttt{HibernateExceptions} schon auf der Ebene der \textit{Daos} und \textit{Services} abzufangen und ebenfalls in eine \texttt{DatabaseException} umzuwandeln. Es soll so verhindert werden, dass unchecked Exceptions den Shop zum Absturz bringen.
 		
+		\subsubsection{Testen der Funktionen der \textit{Services}}
+		Für das Testen der Funktionen der \textit{Services} wurde eine \texttt{Main}-Methode, die die \texttt{QueryFun}-Klasse einbindet, verwendet.
+		
+		Sobald eine Methode in einem \textit{Service} implementiert wurde, wurde im \texttt{QueryFun} ebenfalls eine Methode programmiert, um die neue Funktionalität zu debuggen und ihre Ergebnisse zu überprüfen.
+		
+		Wurde etwas Grundlegendes an den \textit{Services} verändert, wie beispielsweise die Einführung neuer Items, wurden nochmals alle Testmethoden ausgeführt, um sicherzustellen, dass nicht neue Fehler oder unerwünschte Verhaltensweisen entstanden sind.
+		
 	\subsection{A2: Frontend}
 	Zur Umsetzung des Frontends wurden die anfangs vorgestellten Java Server Pages verwendet, um ein angenehmes Erscheinungsbild zu erreichen, wurde auf das HTML und CSS Framework Bootstrap\footnote{\hyperlink{https://getbootstrap.com}{https://getbootstrap.com}} zurückgegriffen. Zur Verbesserung der Nutzung und Interaktivität des Shops wird an einigen Stellen JavaScript\footnote{Aufgrund der Verwendung von ECMAScript6 ohne die Umwandlung in eine frühere Version wird ein aktueller Browser zur vollständigen Nutzung der Seite benötigt.} und jQuery\footnote{\hyperlink{https://jquery.com}{https://jquery.com}} genutzt.
 	
