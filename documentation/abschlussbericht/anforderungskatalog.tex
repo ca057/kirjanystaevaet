@@ -68,7 +68,7 @@
 		\subsubsection{Zuordnung von Views und Controllern}	
 		Mit einzelnen Ausnahmen besitzt jeder View, das heißt jede im Browser dargestellte Seite, eine eigene \lstinline|.jsp|-Datei und einen eigenen Controller. Einzelne Views können dabei durchaus unterschiedlich auftreten, wie zum Beispiel die Darstellung der Kategorien. Der zuständige Controller erwartet als Pfad-Variable in der URL den gesuchten Kategoriennamen. Kann die Variable einer existierenden Kategorie zugeordnet werden, werden alle Bücher dieser Kategorie angezeigt, andernfalls wird eine Übersichtsseite angezeigt. Beide Darstellungen werden durch den gleichen Controller und \lstinline|.jsp|-Datei erzeugt.
 		
-		Die für die Anzeige benötigten Daten werden in den Controller-Methoden dem Model hinzugefügt und können anschließend im View abgegriffen werden. Im gesamten Shop werden alle zur Darstellung benötigten Daten auf diese Weise den Views zur Verfügung gestellt.
+		Die für die Anzeige benötigten Daten werden in den Controller-Methoden dem Model hinzugefügt und können anschließend im View abgegriffen werden. Im gesamten Shop werden alle zur Darstellung benötigten Daten auf diese Weise den Views zur Verfügung gestellt. Grundsätzlich werden anonymen Nutzer\_innen und Kund\_innen nur zum Verkauf stehende Bücher angezeigt.
 		
 		Ausgang für alle späteren HTML-Seiten ist eine grundlegende jsp-Datei, die von allen Views erweitert wird. Die Definition der Views und ihrer Dateien sind in der \lstinline|tiles.xml| festgelegt. Die Struktur ist sehr simpel, auf eine Verschachtelung wurde verzichtet. Das liegt unter anderem an einem zu Beginn fehlendem Konzept, wie die Views sinnvoll gegliedert werden können. Noch ist die Anzahl der entsprechenden Dateien und Beziehungen überschaubar, bei einer Erweiterung des Shops ist ein entsprechendes Konzept unabdingbar.
 		
@@ -104,7 +104,7 @@
 		Das Dashboard gibt eine Übersicht über aktuelle Werte und Zustände des Shops. Die Daten werden von einer Bean aus den Services abgefragt, in einer \lstinline|Map| zusammengefasst und an den zuständigen Controller weitergereicht. Bisher werden nur "`statische"' Werte abgefragt und angezeigt, auch wenn die Services bereits mehr Möglichkeiten bieten. Die zwischengeschaltete Bean würde es ermöglichen, die unterschiedlichen Werte in Beziehung zu setzen und damit auch komplexere Statistiken anzuzeigen.
 	
 		\subsubsection{Bestands- und Nutzer\_innenverwaltung}
-		Die Bestandsverwaltung untergliedert sich in die Verwaltung der Kategorien, der Autor\_innen und der Bücher. Diese sind client- und server-seitig in unterschiedlicher Weise umgesetzt. So basiert die Nutzer\_innenverwaltung zu einem großen Teil auf AJAX-Requests, während bei der Bestandsverwaltung das Gegenteil der Fall ist.
+		Die Bestandsverwaltung untergliedert sich in die Verwaltung der Kategorien, der Autor\_innen und der Bücher. Diese sind client- und server-seitig in unterschiedlicher Weise umgesetzt. So basiert die Nutzer\_innenverwaltung zu einem großen Teil auf AJAX-Requests, während bei der Bestandsverwaltung das Gegenteil der Fall ist. Im Gegensatz zum Frontend, in dem nur die zum Verkauf stehenden Bücher angezeigt werden, werden im Backend immer alle in der Datenbank vorkommenden Bücher angezeigt.
 		
 		Ausgang für die unterschiedlichen Implementierungen ist der Ablauf beim Anlegen neuer Autor\_innen gewesen. Existiert ein neu angelegter Autor\_in mit dem gleichen Namen bereits in der Datenbank, muss überprüft werden, ob ein neues Datenbankobjekt mit neuer ID angelegt werden soll oder ob ein Versehen vorliegt. Daher wird der neue Datensatz per POST-Request an den Server gesendet, der ein Anlegen des Datensatzes versucht. Schlägt das fehl -- wahrscheinlich, weil ein solcher Datensatz schon existiert -- werden die Daten an den Client zusammen mit einem Http-Statuscode \lstinline|409| an den Client zurück geschickt. In diesem Fall öffnet sich ein Bestätigungs-Dialog, mit dem das Anlegen bestätigt oder abgebrochen werden kann. Ist ein\_e Autor\_in mit gleichem Namen noch nicht bekannt, wird die Aktion ohne Fehlermeldung durchgeführt. Gibt es server-seitig einen anderen Fehler, wird das client-seitig über ein Popup bekannt gemacht und die Aktion abgebrochen.
 		
@@ -155,5 +155,8 @@
 	Wie bereits in Abschnitt \ref{sec:umsetzung:backend} beschrieben, werden die einzelnen Statistiken von der Bean \lstinline|DataKraken| zusammengesammelt und als Map an den Controller weitergereicht. Hier bietet sich die Möglichkeit, einzelne Werte in Verbindung zu setzen um einen tieferen Einblick in die Nutzung des Shops zu erhalten.
 	
 	\subsection{"`Known Issues"'}
-	Gehört vermutlich nicht hier her.
-	- Aufzählungen mithilfe von JSP listen einige Einträge doppelt.
+	Trotz ausführlichem Debuggen treten im gesamten System an einigen Stellen bekannte Fehler auf.
+	
+	\paragraph{Doppelte Autor\_inneneinträge in den Auswahllisten}
+	Die Auswahl der Autor\_innen, zum Beispiel beim Anlegen eines neuen Buchs, zeigt teilweise einige Autor\_innen doppelt an. Es kann derzeit nicht nachvollzogen werden, wann dieser Fehler auftritt und welche Daten davon betroffen sind. Die bisherige Fehlersuche vermutet einen Fehler beim Rendern der Views.
+	
