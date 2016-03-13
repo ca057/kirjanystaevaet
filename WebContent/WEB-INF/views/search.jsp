@@ -84,7 +84,7 @@
 													title="zum Buch <c:out value='${book.getTitle()}' />">zum
 													Buch</a>
 											</p>
-												<form action="../warenkorb" method="post" id="cartForm">
+												<form action="<c:url value='warenkorb' />" method="post" id="cartForm">
 													<button type="submit" form="cartForm"
 														value='<c:out value="${book.getIsbn()}"></c:out>'
 														name="isbn" class="btn btn-primary center-block">

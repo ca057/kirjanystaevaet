@@ -68,7 +68,7 @@
 							<!--  </div> -->
 						</div>
 						<div class="add-to-cart col-sm-5">
-							<form action="../warenkorb" method="post" id="cartForm">
+							<form action="<c:url value='warenkorb' />" method="post" id="cartForm">
 								<button type="submit" form="cartForm"
 									value='<c:out value="${book.getIsbn()}"></c:out>' name="isbn">
 									<img

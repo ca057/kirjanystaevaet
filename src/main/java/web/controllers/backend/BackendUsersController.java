@@ -2,6 +2,7 @@ package web.controllers.backend;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,11 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.enums.UserRoles;
 import appl.enums.Userfields;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
+import exceptions.web.ControllerOvertaxedException;
+import web.controllers.ControllerHelper;
 import web.jsonwrappers.UserJSONWrapper;
 
 @Controller
@@ -24,11 +28,17 @@ public class BackendUsersController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private ControllerHelper helper;
+
 	@RequestMapping(value = "/backend/nutzerinnen", method = RequestMethod.GET)
 	public String getUsers(Model m) {
 		try {
+			int id = helper.getUserId();
 			m.addAttribute("users", userService.getUsers());
-		} catch (DatabaseException e) {
+			m.addAttribute("usersToDelete",
+					userService.getUsers().stream().filter(u -> u.getUserId() != id).collect(Collectors.toList()));
+		} catch (DatabaseException | ControllerOvertaxedException e) {
 			m.addAttribute("errormsg", e.getMessage());
 			return "backend/users?error";
 		}
@@ -99,6 +109,19 @@ public class BackendUsersController {
 			e.printStackTrace();
 			return returnUnprocessableEntity(returnWrapper);
 		}
+	}
+
+	@RequestMapping(path = "/backend/nutzerinnen/delete", method = RequestMethod.POST)
+	public String deleteUsers(@RequestParam(value = "id") String id) {
+		if (id == null || id.isEmpty()) {
+			throw new IllegalArgumentException("The passed id is null or empty, user cannot be deleted.");
+		}
+		try {
+			userService.deleteAccount(Integer.parseInt(id));
+		} catch (NumberFormatException | DatabaseException e) {
+			return "redirect:/backend/nutzerinnen?error&msg=" + e.getMessage();
+		}
+		return "redirect:/backend/nutzerinnen";
 	}
 
 	private ResponseEntity<UserJSONWrapper> returnUnprocessableEntity(UserJSONWrapper response) {

@@ -20,6 +20,7 @@ import appl.logic.service.BookService;
 import exceptions.data.DatabaseException;
 import web.jsonwrappers.ApiBookJSONWrapper;
 
+//TODO JavaDoc
 @RestController
 public class RestApiController {
 

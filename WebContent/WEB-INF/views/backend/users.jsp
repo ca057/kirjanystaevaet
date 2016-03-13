@@ -6,13 +6,17 @@
 
 <div>
 	<c:if test="${param.error != null}">
-		<p>
-			<em>Fehler:</em> Bei der Abfrage der Daten ist ein Fehler mit der
-			folgenden Fehlermeldung aufgetreten: &bdquo;
-			<c:out value="${errormsg}"></c:out>
-			&ldquo;
-		</p>
+		<p class="error"><em>Fehler:</em> Es ist ein Fehler aufgetreten.</p>
+		<c:choose>
+			<c:when test="${errormsg != null}">
+				<p class="error">Fehlermeldung: &bdquo;<c:out value="${errormsg}"></c:out>&ldquo;</p>
+			</c:when>
+			<c:when test="${param.msg != null}">
+				<p class="error">Fehlermeldung: &bdquo;<c:out value="${param.msg}"></c:out>&ldquo;</p>
+			</c:when>
+		</c:choose>
 	</c:if>
+	
 	<div class="page-header">
 		<h1>Nutzer_innenverwaltung</h1>
 	</div>
@@ -86,10 +90,11 @@
 					<select name="edit-id" id="edit-id" class="form-control" required>
 						<c:forEach var="user" items="${users}">
 						<option value="">Datensatz auswählen</option>
-							<option value="${user.getUserId()}"><c:out
-									value="${user.getUserId()}" />:
+							<option value="${user.getUserId()}">
+								<c:out value="${user.getUserId()}" />:
 								<c:out value="${user.getName()}" />
-								<c:out value="${user.getSurname()}" /></option>
+								<c:out value="${user.getSurname()}" />
+							</option>
 						</c:forEach>
 					</select>
 
@@ -148,16 +153,26 @@
 			</c:choose>
 		</fieldset>
 	</form>
-
-	<form class="form-inline" id="loeschen">
+	
+	<form class="form-inline" id="loeschen" action="nutzerinnen/delete" method="POST">
 		<fieldset>
 			<legend>Nutzer_in löschen</legend>
 			<p>
 				<em>Hinweis: Neu angelegte Nutzer:innen sind derzeit erst nach
-					einem neuen Laden der Seite zu sehen.</em>
+					einem neuen Laden der Seite zu sehen, der eigene Account kann nicht gelöscht werden.</em>
 			</p>
-			<p>Noch nicht implementiert :(</p>
-			<!--  Bootstrap kannst du dir beim Löschen in der stock.jsp abschauen -->
+			<label for="delete-id">Account auswählen</label>
+			<select name="id" id="delete-id" class="form-control" required>
+				<option value="">Account auswählen</option>
+				<c:forEach var="user" items="${usersToDelete}">
+					<option value="${user.getUserId()}">
+						<c:out value="${user.getUserId()}" />: <c:out value="${user.getName()}" /> <c:out value="${user.getSurname()}" /> (<c:out value="${user.getRole()}"></c:out>)
+					</option>
+				</c:forEach>
+			</select>
+			
+			<button type="submit" class="btn btn-danger">Account löschen</button>
+			<sec:csrfInput />
 		</fieldset>
 	</form>
 </div>

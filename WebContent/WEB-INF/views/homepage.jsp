@@ -1,7 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-	
+<%@ page session="false" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
 
 <section>
 	<c:if test="${param.logout != null}">
@@ -38,15 +40,46 @@
 								title="zum Buch <c:out value='${book.getTitle()}' />">zum
 								Buch</a>
 						</p>
-						<form action="../warenkorb" method="post" id="cartForm">
-							<button type="submit" form="cartForm"
-								value='<c:out value="${book.getIsbn()}"></c:out>' name="isbn"
-								class="btn btn-primary center-block">
-								<span class="glyphicon glyphicon-shopping-cart"></span> In den
-								Warenkorb
-							</button>
-							<sec:csrfInput />
-						</form>
+
+						<sec:authorize access="isAnonymous() || hasRole('ADMIN') ">
+								<button data-toggle="modal" data-target="#login"
+									class="btn btn-primary center-block">
+									<span class="glyphicon glyphicon-shopping-cart"></span> In den
+									Warenkorb
+								</button>
+								<div id="login" class="modal fade" role="dialog">
+									<div class="modal-dialog">
+
+										<!-- Modal content-->
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">&times;</button>
+												<h4 class="modal-title">Login nötig</h4>
+											</div>
+											<div class="modal-body">
+												<p>Bitte erst als User einloggen!</p>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default"
+													data-dismiss="modal">Close</button>
+											</div>
+										</div>
+
+									</div>
+								</div>
+						</sec:authorize>
+						<sec:authorize access="hasRole('USER')">
+							<form action="<c:url value='categories' />" method="post"
+								id="cartForm">
+								<button type="submit" form="cartForm"
+									value='<c:out value="${book.getIsbn()}"></c:out>' name="isbn"
+									class="btn btn-primary center-block">
+									<span class="glyphicon glyphicon-shopping-cart"></span> In den
+									Warenkorb
+								</button>
+								<sec:csrfInput />
+							</form>
+						</sec:authorize>
 					</div>
 				</div>
 			</div>

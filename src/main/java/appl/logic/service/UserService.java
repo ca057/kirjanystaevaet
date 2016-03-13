@@ -19,6 +19,9 @@ import exceptions.data.DatabaseException;
  * An UserService manages all modifications on an user object. Therefore, it is
  * responsible for the communication to DAOs.
  * 
+ * This interface does not include methods regarding the manipulation of
+ * {@link PLZ} objects.
+ * 
  * @author Johannes
  * 
  */
@@ -163,15 +166,14 @@ public interface UserService {
 	public int getNumberOfAccounts() throws DatabaseException;
 
 	/**
-	 * Lists the books an user was interested in.
+	 * Lists several statistics of books an user was interested in.
 	 * 
 	 * @param userId
 	 *            the {@code id} of the user
-	 * @return a list with the seen books
+	 * @return a {@code list} with the statistics
 	 * @throws DatabaseException
 	 *             if an error occurs while interacting with the underlying DAO
 	 */
-	// TODO Update Javadoc
 	public List<UserBookStatistic> getUserBookStatistics(int userId) throws DatabaseException;
 
 	/**
@@ -193,7 +195,7 @@ public interface UserService {
 	 * 
 	 * @param postalCode
 	 *            the postal code inserted
-	 * @return a {link list} with all {link PLZ}s in question
+	 * @return a {@code list} with all {link PLZ}s in question
 	 * @throws DatabaseException
 	 *             if an error occurs while interacting with the underlying DAO
 	 */

@@ -114,31 +114,32 @@ public interface UserDAO {
 	boolean updateUser(User user) throws DatabaseException;
 
 	/**
-	 * Lists the books an user was interested in.
+	 * Lists the statistics of all {@link Book}s a specific {@link User} has
+	 * seen.
 	 * 
 	 * @param userId
 	 *            the {@code id} of the user
-	 * @return a list with seen books
+	 * @return a list with the statistics
 	 * @throws DatabaseException
 	 *             if an error occurs while accessing the database or if the
 	 *             user cannot be found
 	 */
-	// TODO Update Javadoc
 	List<UserBookStatistic> getUserBookStatistics(int userId) throws DatabaseException;
 
 	/**
-	 * Updates the list of visited books. Takes the ISBN of the recently seen
-	 * {@link Book}.
+	 * Updates the statistics concerning one specific {@link Book} and one
+	 * specific {@link User}.
 	 * 
 	 * @param userId
 	 *            the id of the user
 	 * @param book
 	 *            the last seen {@link Book}
-	 * @return true if successful or if the book is already in the list.
+	 * @param date
+	 *            the time the book was last visited by the {@code user}
+	 * @return true if successful or if the book is already in the list
 	 * @throws DatabaseException
 	 *             if an error occurs while accessing the database or if the
 	 *             user cannot be found
 	 */
-	// TODO Update Javadoc
 	boolean updateUserBookStatistic(User user, Book book, Calendar date) throws DatabaseException;
 }

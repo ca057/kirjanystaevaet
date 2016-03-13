@@ -15,6 +15,9 @@ import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 
 /**
+ * Class to authenticate Login and connect Springs
+ * {@link org.springframework.security.core.userdetails.User} with {@link User}.
+ * 
  * @author Johannes
  *
  */
@@ -28,8 +31,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		super();
 	}
 
-	// API
-
 	@Override
 	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
 		try {
@@ -42,5 +43,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 	}
 
-	// UTIL
 }
