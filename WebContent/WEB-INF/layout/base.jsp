@@ -18,60 +18,52 @@
 <link rel="stylesheet" href="<s:url value='/css/style.css'/>">
 <link rel="stylesheet" href="<s:url value='/css/login-popup.css'/>">
 
-<script type="text/javascript"
-	src="<s:url value='/js/jquery-2.2.1.min.js' />"></script>
-<script type="text/javascript"
-	src="<s:url value='/js/elevator.min.js' />"></script>
+<script type="text/javascript" src="<s:url value='/js/jquery-2.2.1.min.js' />"></script>
+<script type="text/javascript" src="<s:url value='/js/elevator.min.js' />"></script>
 <script type="text/javascript" src="<s:url value='/js/helpme.js'/>"></script>
-<script type="text/javascript"
-	src="<s:url value='/js/bootstrap.min.js"'/>"></script>
+<script type="text/javascript" src="<s:url value='/js/bootstrap.min.js"'/>"></script>
 <script type="text/javascript" src="<s:url value='/js/script.js'/>"></script>
 
 <sec:authorize access="hasRole('ADMIN')">
-	<script type="text/javascript"
-		src="<s:url value='/js/adminscript.js'/>"></script>
+	<script type="text/javascript" src="<s:url value='/js/adminscript.js'/>"></script>
 </sec:authorize>
 </head>
 
 <body>
-	<div id="content-wrapper">
 		<header>
-			<a href="<c:url value='/'/>" title="zur Startseite"> <t:insertAttribute
-					name="header"></t:insertAttribute>
+			<a href="<c:url value='/'/>" title="zur Startseite"> <t:insertAttribute name="header"></t:insertAttribute>
 			</a>
 		</header>
 
-		<nav class="shadow-1">
-			<t:insertAttribute name="navigation"></t:insertAttribute>
-		</nav>
-
-		<div id="content" class="container-fluid">
+		<div class="container">
 			<sec:authorize var="loggedIn" access="hasRole('ADMIN')" />
 			<c:choose>
 				<c:when test="${loggedIn}">
-					<div class="row row-eq-height">
-						<div class="col-sm-3 col-md-2">
-							<t:insertAttribute name="sidebar"></t:insertAttribute>
+					<div class="row">
+						<div class="col-sm-2">
+								<t:insertAttribute name="sidebar"></t:insertAttribute>
 						</div>
-						<div class="col-sm-9 col-md-10">
-							<t:insertAttribute name="content"></t:insertAttribute>
-							<footer>
-								<t:insertAttribute name="footer"></t:insertAttribute>
-							</footer>
+						<div class="col-sm-10">
+							<div class="container-fluid">
+								<t:insertAttribute name="navigation"></t:insertAttribute>
+								<t:insertAttribute name="content"></t:insertAttribute>
+							</div>
 						</div>
 					</div>
 				</c:when>
 				<c:otherwise>
-					<t:insertAttribute name="content"></t:insertAttribute>
-					<footer>
-						<t:insertAttribute name="footer"></t:insertAttribute>
-					</footer>
+					<div class="container-fluid">
+						<t:insertAttribute name="navigation"></t:insertAttribute>
+						<t:insertAttribute name="content"></t:insertAttribute>
+					</div>
 				</c:otherwise>
 			</c:choose>
 
 		</div>
-	</div>
-
+	
+		<footer class="footer">
+			<t:insertAttribute name="footer"></t:insertAttribute>
+		</footer>
 
 </body>
 </html>

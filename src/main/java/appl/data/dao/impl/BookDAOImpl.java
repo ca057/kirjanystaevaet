@@ -211,6 +211,7 @@ public class BookDAOImpl implements BookDAO {
 		bookBuilder.setStock(-1);
 //		book.setStock(-1);
 		getSession().update(bookBuilder.createBook());
+//		getSession().update(book);
 	}
 
 	@Override

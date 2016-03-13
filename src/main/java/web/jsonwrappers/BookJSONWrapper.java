@@ -1,5 +1,8 @@
 package web.jsonwrappers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import appl.data.items.Book;
 
 public class BookJSONWrapper {
@@ -19,6 +22,12 @@ public class BookJSONWrapper {
 
 	private String pages;
 
+	private int stock = 0;
+
+	private List<Integer> authors = new ArrayList<>();
+
+	private List<Integer> categories = new ArrayList<>();
+
 	public BookJSONWrapper() {
 		super();
 	}
@@ -36,70 +45,102 @@ public class BookJSONWrapper {
 		this.pubdate = book.getPubdate();
 		this.edition = book.getEdition();
 		this.pages = book.getPages();
+		book.getAuthors().forEach(a -> authors.add(a.getAuthorId()));
+		book.getCategories().forEach(c -> categories.add(c.getCategoryID()));
 	}
 
-	public String getIsbn() {
+	public final String getIsbn() {
 		return isbn;
 	}
 
-	public void setIsbn(String isbn) {
+	public final void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
 
-	public String getTitle() {
+	public final String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title) {
+	public final void setTitle(String title) {
 		this.title = title;
 	}
 
-	public String getDescription() {
+	public final String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public final void setDescription(String description) {
 		this.description = description;
 	}
 
-	public double getPrice() {
+	public final double getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public final void setPrice(double price) {
 		this.price = price;
 	}
 
-	public String getPublisher() {
+	public final String getPublisher() {
 		return publisher;
 	}
 
-	public void setPublisher(String publisher) {
+	public final void setPublisher(String publisher) {
 		this.publisher = publisher;
 	}
 
-	public String getPubdate() {
+	public final String getPubdate() {
 		return pubdate;
 	}
 
-	public void setPubdate(String pubdate) {
+	public final void setPubdate(String pubdate) {
 		this.pubdate = pubdate;
 	}
 
-	public String getEdition() {
+	public final String getEdition() {
 		return edition;
 	}
 
-	public void setEdition(String edition) {
+	public final void setEdition(String edition) {
 		this.edition = edition;
 	}
 
-	public String getPages() {
+	public final String getPages() {
 		return pages;
 	}
 
-	public void setPages(String pages) {
+	public final void setPages(String pages) {
 		this.pages = pages;
 	}
 
+	public final int getStock() {
+		return stock;
+	}
+
+	public final void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public final List<Integer> getAuthors() {
+		return authors;
+	}
+
+	public final void setAuthors(List<Integer> authors) {
+		this.authors = authors;
+	}
+
+	public final List<Integer> getCategories() {
+		return categories;
+	}
+
+	public final void setCategories(List<Integer> categories) {
+		this.categories = categories;
+	}
+
+	@Override
+	public String toString() {
+		return "BookJSONWrapper [isbn=" + isbn + ", title=" + title + ", description=" + description + ", price="
+				+ price + ", publisher=" + publisher + ", pubdate=" + pubdate + ", edition=" + edition + ", pages="
+				+ pages + ", stock=" + stock + ", authors=" + authors + ", categories=" + categories + "]";
+	}
 }

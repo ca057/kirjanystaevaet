@@ -23,7 +23,10 @@ public class BackendDashboardController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getBackend(Model m) throws ControllerOvertaxedException {
-		m.addAllAttributes(dataKraken.attack());
+		try {
+			m.addAllAttributes(dataKraken.attack());
+		} catch (DatabaseException ignore) {
+		}
 		try {
 			m.addAttribute("admin", helper.getUser().get());
 		} catch (DatabaseException e) {

@@ -31,8 +31,9 @@ import appl.enums.Searchfields;
 import appl.logic.service.BookService;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
-import web.controllers.helper.ProcessUpload;
+import web.controllers.util.ProcessUpload;
 import web.jsonwrappers.AuthorJSONWrapper;
+import web.jsonwrappers.BookJSONWrapper;
 
 /**
  * 
@@ -107,9 +108,6 @@ public class BackendStockController {
 					"The passed id of the category is null or empty and can not be deleted.");
 		}
 		try {
-			// FIXME: habe die Signatur von deleteCategory geändert, da es
-			// sinnlos ist, über den Namen zu löschen
-			// bookService.deleteCategory(bookService.getCategoryById(Integer.parseInt(id)).getCategoryName());
 			bookService.deleteCategory(Integer.parseInt(id));
 
 		} catch (DatabaseException e) {
@@ -131,6 +129,8 @@ public class BackendStockController {
 			bookService.insertAuthor(req.getNameF(), req.getNameL(), req.isNewAuthor());
 		} catch (AuthorMayExistException e) {
 			return new ResponseEntity<AuthorJSONWrapper>(req, HttpStatus.CONFLICT);
+		} catch (DatabaseException e) {
+			return new ResponseEntity<AuthorJSONWrapper>(req, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		return new ResponseEntity<AuthorJSONWrapper>(req, HttpStatus.OK);
 	}
@@ -325,6 +325,20 @@ public class BackendStockController {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
 		return "redirect:/backend/bestand";
+	}
+
+	@RequestMapping(value = "/backend/bestand/buecher/data", method = RequestMethod.GET)
+	public ResponseEntity<BookJSONWrapper> getBookByISBN(@RequestParam(value = "isbn", required = true) String isbn) {
+		if (isbn == null || isbn.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		try {
+			BookJSONWrapper wrapper = new BookJSONWrapper(bookService.getBookByIsbn(isbn, SearchMode.ALL));
+			System.out.println("WRAPPER: " + wrapper);
+			return new ResponseEntity<BookJSONWrapper>(wrapper, HttpStatus.OK);
+		} catch (DatabaseException e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	private void deleteImage(Path path, String title) throws IOException {

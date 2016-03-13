@@ -93,8 +93,6 @@ public class RootConfig {
 
 	private Properties createProperties() {
 		Properties prop = new Properties();
-		// FIXME Delete this.
-		prop.setProperty("hibernate.hbm2ddl.auto", "create");
 		prop.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
 		prop.setProperty("hibernate.connection.url", "jdbc:h2:./database/kirjanystaevaet;AUTO_SERVER=TRUE");
 		prop.setProperty("hibernate.c3p0.idle_test_period", "10");

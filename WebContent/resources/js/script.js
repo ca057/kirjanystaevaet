@@ -67,7 +67,8 @@ const handle = function () {
 	}
 
  	return {
- 		registration: () => registration()
+ 		registration: () => registration(),
+ 		bootstrap: () => bootstrap()
  	};
  };
 
@@ -75,6 +76,7 @@ $(document).ready(function () {
 	if (window.location.pathname.indexOf("/registrierung") != -1) {
 		handle().registration();
 	}
+	
 	window.onload = function() {
 		var elevator = new Elevator({
 			element: document.querySelector('.to-top'),

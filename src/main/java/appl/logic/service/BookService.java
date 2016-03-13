@@ -133,8 +133,9 @@ public interface BookService {
 	 * @param newAuthor set to true, if author should be isnerted in any case, also if author with that name already exists
 	 * @return newly generated Id oh author
 	 * @throws AuthorMayExistException only thrown when newAuthor == false and an author with exact that name already exists
+	 * @throws DatabaseException 
 	 */
-	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws AuthorMayExistException;
+	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws AuthorMayExistException, DatabaseException;
 
 	// Update
 	
@@ -306,8 +307,9 @@ public interface BookService {
 	 *            the amount of books the returned map should contain
 	 * @return the map with the amount of books passed as range sorted
 	 *         descending by their visit count
+	 * @throws DatabaseException 
 	 */
-	public SortedMap<Book, Integer> getMostVisitedBooks(int range);
+	public SortedMap<Book, Integer> getMostVisitedBooks(int range) throws DatabaseException;
 
 	/**
 	 * Returns a {@link SortedMap} with the least visited {@link Book}s sorted
@@ -318,7 +320,8 @@ public interface BookService {
 	 *            the amount of books the returned map should contain
 	 * @return the map with the amount of books passed as range sorted ascending
 	 *         by their visit count
+	 * @throws DatabaseException 
 	 */
-	public SortedMap<Book, Integer> getLeastVisitedBooks(int range);
+	public SortedMap<Book, Integer> getLeastVisitedBooks(int range) throws DatabaseException;
 
 }

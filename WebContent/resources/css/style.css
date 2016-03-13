@@ -113,6 +113,18 @@ div#content-wrapper>* {
 
 /* all the content */
 
+.header-bg {
+	height: 15vw;
+	max-height: 250px;
+	width: 100% !important;
+	background-image: url("../img/title.jpg");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	z-index: -1;
+}
+
 /* different stuff */
 .add-to-cart {
 	height: 30px;
@@ -190,12 +202,15 @@ ul.navigation-content li:hover .navigation-content-sub {
 	float: right;
 }
 
+/* Footer */
+
 .footer {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	height: 60px;
-	background-color: #f5f5f5;
+	background-color: #C0C0C0;
+	display: flex;
+	padding-top: 0.7em;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .footer-content li::AFTER {
@@ -224,100 +239,18 @@ form * {
 	animation: rainbow 1s infinite;
 }
 
-@
-keyframes rainbow { 0% {
-	color: #ff0000;
-}
-
-10%
-{
-color
-:
- 
-#ff8000
-;
- 
-}
-20%
-{
-color
-:
- 
-#ffff00
-;
-}
-30%
-{
-color
-:
- 
-#80ff00
-;
- 
-}
-40%
-{
-color
-:
- 
-#00ff00
-;
- 
-}
-50%
-{
-color
-:
- 
-#00ff80
-;
- 
-}
-60%
-{
-color
-:
- 
-#00ffff
-;
- 
-}
-70%
-{
-color
-:
- 
-#0080ff
-;
- 
-}
-80%
-{
-color
-:
- 
-#0000ff
-;
- 
-}
-90%
-{
-color
-:
- 
-#8000ff
-;
- 
-}
-100%
-{
-color
-:
- 
-#ff0080
-;
- 
-}
+@keyframes rainbow {
+	0% { color: #ff0000; }
+	10% { color: #ff8000; }
+	20% { color: #ffff00; }
+	30% { color: #80ff00; }
+	40% { color: #00ff00; }
+	50% { color: #00ff80; }
+	60% { color: #00ffff; }
+	70% { color: #0080ff; }
+	80% { color: #0000ff; }
+	90% { color: #8000ff; }
+	100% { color: #ff0080; }
 }
 
 /* media queries */
@@ -327,18 +260,25 @@ color
 	}
 }
 
+@media screen and (max-width: 767px) {
+	.thumbnail{        
+   	 	overflow: auto;
+   	 	height:100%;
+	}
+}
+
+@media screen and (min-width: 768px) {
+     .thumbnail {
+    	overflow: auto;
+     	height: 50vh;
+     }
+ }
+
 div#homerow {
 	width: 100%
 }
 
 /* Bootstrap changes */
-.thumbnail {
-	width: 90%;
-}
-
-.thumbnail img {
-	width: 40%;
-}
 
 #logout-form {
 	height: 100%;
@@ -354,30 +294,21 @@ div#homerow {
 	color: rgb(51, 51, 51);
 }
 
-.header-bg {
-	height: 15vw;
-	max-height: 250px;
-	width: 100% !important;
-	background-image: url("../img/title.jpg");
-	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
-	overflow: hidden;
-	z-index: -1;
-}
-
 /* Sidebar */
+/* modified sidebar from http://bootsnipp.com/snippets/featured/responsive-navigation-menu */
+
 .nav-side-menu {
 	overflow: auto;
 	background-color: #2e353d;
+    background-repeat: repeat;
+    padding:0;
+    position:relative;
 	width: 100%;
 	height: 100%;
 	color: #e1ffff;
+	
 }
 
-.nav-side-menu .toggle-btn {
-	display: none;
-}
 
 .nav-side-menu ul, .nav-side-menu li {
 	list-style: none;
@@ -385,17 +316,6 @@ div#homerow {
 	margin: 0px;
 	line-height: 2.7em;
 	cursor: pointer;
-}
-
-.nav-side-menu ul :not(collapsed) .arrow:before, .nav-side-menu li :not(collapsed) .arrow:before
-	{
-	font-family: FontAwesome;
-	content: "\f078";
-	display: inline-block;
-	padding-left: 1em;
-	padding-right: 1em;
-	vertical-align: middle;
-	float: right;
 }
 
 .nav-side-menu ul .active, .nav-side-menu li .active {
@@ -421,23 +341,8 @@ div#homerow {
 	margin-left: 0px;
 }
 
-.nav-side-menu ul .sub-menu li:hover, .nav-side-menu li .sub-menu li:hover
-	{
-	background-color: #020203;
-}
-
-.nav-side-menu ul .sub-menu li:before, .nav-side-menu li .sub-menu li:before
-	{
-	font-family: FontAwesome;
-	content: "\f105";
-	display: inline-block;
-	padding-left: 1em;
-	padding-right: 1em;
-	vertical-align: middle;
-}
-
 .nav-side-menu li {
-	padding-left: 0px;
+	padding-left: 1em;
 	border-left: 3px solid #2e353d;
 	border-bottom: 1px solid #23282e;
 }
@@ -445,6 +350,15 @@ div#homerow {
 .nav-side-menu li a {
 	text-decoration: none;
 	color: #e1ffff;
+}
+
+.nav-side-menu ul .sub-menu li:hover, .nav-side-menu li .sub-menu li:hover
+	{
+	background-color: #020203;
+}
+
+.nav-side-menu ul .sub-menu li span {
+	padding-left: 1.5em;
 }
 
 .nav-side-menu li:hover {
@@ -482,3 +396,10 @@ div#homerow {
     cursor: inherit;
     display: block;
 }
+
+/* Thumbnail */
+
+.thumbnail img {
+	width: 40%;
+}
+

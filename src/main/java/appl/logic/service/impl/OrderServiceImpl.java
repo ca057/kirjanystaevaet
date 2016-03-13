@@ -55,6 +55,8 @@ public class OrderServiceImpl implements OrderService{
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
 		} catch (HibernateException e){
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		} catch (Exception e){
+			throw new DatabaseException(ErrorMessageHelper.couldNotBeSaved("Order") + e.getMessage());
 		}
 		
 
@@ -66,6 +68,8 @@ public class OrderServiceImpl implements OrderService{
 			return orders;
 		} catch(HibernateException e){
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		} catch (Exception e){
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Orders") + e.getMessage());
 		}
 	}
 	@Override
@@ -76,6 +80,8 @@ public class OrderServiceImpl implements OrderService{
 		return orders;
 		} catch (HibernateException e){
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getLocalizedMessage()));
+		} catch (Exception e){
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Orders") + e.getMessage());
 		}
 	}
 	@Override
@@ -85,11 +91,15 @@ public class OrderServiceImpl implements OrderService{
 		}
 		catch(HibernateException e){
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		} catch (Exception e){
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("OrderItems")+ e.getMessage());
 		}
 	}
 
+
 	@Override
 	public LinkedHashMap<Book, Integer> getShelfWarmers(int range) throws DatabaseException {
+		try {
 		List<Book> shelfWarmers = orderDao.getBooksWithoutOrderItem();
 		LinkedHashMap<Book, Integer> sortedMap = new LinkedHashMap<Book, Integer>();
 		// sortedMap zunächst mit allen Books auffüllen, die gar nicht bestellt wurden
@@ -134,6 +144,13 @@ public class OrderServiceImpl implements OrderService{
 			}
 		}
 		return sortedMap;
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+
+		} catch (Exception e){
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("shelfWarmers") + e.getMessage());
+
+		}
 	}
 	@Override
 	public LinkedHashMap<Book, Integer> getBestsellers(int range) throws DatabaseException {
@@ -172,11 +189,14 @@ public class OrderServiceImpl implements OrderService{
 			
 		} catch (HibernateException e){
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		} catch (Exception e){
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Bestsellers") + e.getMessage());
 		}
 	}
 
 	@Override
 	public double getPriceOfOrder(int orderId) throws DatabaseException {
+		try {
 		Orderx order = orderDao.getOrderByOrderId(orderId);
 		Set<OrderItem> orderItems = order.getOrderItems();
 		double price = 0.0;
@@ -187,6 +207,11 @@ public class OrderServiceImpl implements OrderService{
 	    price = Math.round(price * 100) / 100.0;
 
 		return price;
+		} catch (HibernateException e){
+			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
+		} catch (Exception e){
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Price of order") + e.getMessage());
+		}
 	}
 	
 	

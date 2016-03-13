@@ -29,3 +29,6 @@ documentation/abschlussbericht/*.log
 documentation/abschlussbericht/*.lof
 documentation/abschlussbericht/*.lot
 documentation/abschlussbericht/*.synctex.gz
+# hab mal noch die folgenden Zeilen ergänzt
+documentation/abschlussbericht/*.out
+documentation/abschlussbericht/*.toc
