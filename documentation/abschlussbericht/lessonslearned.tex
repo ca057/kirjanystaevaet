@@ -1,21 +1,22 @@
+% !TeX spellcheck = de_DE
 \section{Lessons Learned}
 
-\subsection{Known Issues}
+	\subsection{weitere Kritik}	
+		\paragraph{Naming conventions} Zwar wurde das Thema von einheitlichen Namen und Messages desöfteren angerissen, aber nicht konsequent umgesetzt. Dadurch existieren mehrere Stellen im Code, an denen eine abstraktere Verwendung von Strings und eine einheitliche Benennung von Variablen etc. von Vorteil gewesen wären. Gleiches gilt für die Benennung der Branches, die nicht einheitlich gehalten ist. Aufgrund der geringen Wahrscheinlichkeit, das Programm über längere Zeit warten zu müssen, lag auf einer Behebung dieser Umstände jedoch kein Fokus. Bei frühzeitiger Umsetzung sollte dies beim nächsten Projekt kein Problem sein.
+		
+		\paragraph{Datenbankschema} Zwar wurde immer wieder über das Datenbankschema diskutiert, aber es fehlte die Festlegung auf ein vollständiges Datenbankschema zu einem relativ frühen Zeitpunkt. Zwar wurde sich an das vorgegebene Datenbankschema aus dem Anforderungskatalog gehalten und dieses diente als gute Orientierung, doch wurden so etwas wie \texttt{stock}, \texttt{Orderx}, \texttt{OrderItem} und \texttt{UserBookStatistic} erst später eingeführt und in das schon bestehende System ergänzt. Dieses Vorgehen ist fehleranfällig und die Integration dieser Teile in ein Schema, bevor es implementiert wird, hätte einem das Leben sehr erleichtert.
+		
+		\paragraph{Tests} Für die meisten Funktionen bestehen keine feste Testmethoden. Ausnahme ist die Klasse \textbf{QueryFun}, in der einige Tests für DAOs und Services existieren. Alle anderen Funktionen wurden nach dem Trial and Error-Prinzip angelegt. Erste Testversuche -- zum Beispiel für die Controller -- scheiterten schon an der korrekten Erstellung der Tests, da das Zusammenspiel der einzelnen Komponenten noch zu abstrakt und unbekannt war. Für ein größeres Projekt ist dies keine vernünftige Vorgehensweise und auch bei \textit{kirjanystaevaet} wäre testdriven developement mit Unit- und Integrationstests eine Möglichkeit gewesen. Aufgrund der langen Einarbeitungszeit in grundsätzliche Springfunktionsweisen blieben strukturierte Tests jedoch Theorie, dürften aber bei einem folgenden Spring-Projekt aufgrund der Kenntnisse des Frameworks einfacher fallen.
 
-Gehört vermutlich nicht hier her.
-- Aufzählungen mithilfe von JSP listen einige Einträge doppelt.
-
-\subsection{Kritik}
-
-\paragraph{Naming conventions} Zwar wurde das Thema von einheitlichen Namen und Messages desöfteren angerissen, aber nicht konsequent umgesetzt. Dadurch existieren mehrere Stellen im Code, an denen eine abstraktere Verwendung von Strings und eine einheitliche Benennung von Variablen etc. von Vorteil gewesen wären. Gleiches gilt für die Benennung der Branches, die nicht einheitlich gehalten ist. Aufgrund der geringen Wahrscheinlichkeit, das Programm über längere Zeit warten zu müssen, lag auf einer Behebung dieser Umstände jedoch kein Fokus. Bei frühzeitiger Umsetzung sollte dies beim nächsten Projekt kein Problem sein.
-
-\paragraph{Datenbankschema} Zwar wurde immer wieder über das Datenbankschema diskutiert, aber es fehlte die Festlegung auf ein vollständiges Datenbankschema zu einem relativ frühen Zeitpunkt. Zwar wurde sich an das vorgegebene Datenbankschema aus dem Anforderungskatalog gehalten und dieses diente als gute Orientierung, doch wurden so etwas wie \texttt{stock}, \texttt{Orderx}, \texttt{OrderItem} und \texttt{UserBookStatistic} erst später eingeführt und in das schon bestehende System ergänzt. Dieses Vorgehen ist fehleranfällig und die Integration dieser Teile in ein Schema, bevor es implementiert wird, hätte einem das Leben sehr erleichtert.
-
-\paragraph{Tests} Für die meisten Funktionen bestehen keine feste Testmethoden. Ausnahme ist die Klasse \textbf{QueryFun}, in der einige Tests für DAOs und Services existieren. Alle anderen Funktionen wurden nach dem Trial and Error-Prinzip angelegt. Für ein größeres Projekt ist dies keine vernünftige Vorgehensweise und auch bei \textit{kirjanystaevaet} wäre testdriven developement mit Unit- und Integrationstests eine Möglichkeit gewesen. Aufgrund der langen Einarbeitungszeit in grundsätzliche Springfunktionsweisen blieben strukturierte Tests jedoch Theorie.
-
-\section{Bliblablub}
-
-	\begin{itemize}
-		\item[Git] Wie lösen wir Merge-Konflikte? Wie teilen wir die Arbeit auf unterschiedliche Branches aus? Wie halten wir unseren Master einigermaßen fehlerfrei?
-		\item[Naming Conventions] Wie benennen wir unsere Feature-Branches? Wie benennen wir unsere Klassen? Wie benennen wir unsere Packages?
-	\end{itemize}
+	\subsection{Lernerfolge}
+		\paragraph{Hibernate}
+		
+		\paragraph{Beans, Dependency Injections}
+		
+		\paragraph{Server-seitige Absicherung}
+		
+		\paragraph{Zusammenspiel von Server und Client, Ablauf von "`Request"' und "`Response"'}
+		Das bisher nur aus der Theorie bekannte Zusammenspiel zwischen Serveranfragen und -antworten konnte selbst konzipiert und implementiert werden. Verschiedene Möglichkeiten zur Datenübermittlung wurden ausprobiert, wie die Nutzung von Variablen in der URL, Anfrageparametern oder die Übermittlung von JSON. Neben der korrekten Verarbeitung der Anfragen war auch die Übermittlung einer logischen Antwort von Bedeutung. Auch im Fehlerfall musste dem Client ein Ergebnis übermittelt werden, welches dieser ohne weitere Kenntnisse der server-internen Abläufe korrekt interpretieren und nutzen kann.
+		
+		\paragraph{Git}
+		Die Nutzung der verteilten Versionsverwaltung Git war für die Arbeit am Projekt unerlässlich. Neben den bekannten Standard-Funktionen mussten zu einigen Zeitpunkten "`komplexere"' Merge-Operationen durchgeführt werden oder auf einen früheren Stand gesprungen werden, was die Beschäftigung mit neuen Funktionen und ihren Seiteneffekten mit sich brachte.
