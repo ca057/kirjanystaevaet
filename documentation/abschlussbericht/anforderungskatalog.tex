@@ -6,7 +6,14 @@
 		
 		Nutzer\_innen halten über eine 1:n-Verbindung beliebig viele Orders. Zudem sind sie über eine Zwischentabelle mit Books assoziiert, in der verschiedene user- und buchspezifische Daten gespeichert sind. In der aktuellen Umsetzung sind das die Anzahl an Aufrufen eines bestimmten Buches über einen bestimmten Account sowie das Datum des letzten Aufrufs.
 	
-%	\includesvg{files/db-schema}
+	
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{files/db-schema}
+\caption{Das Datenbankschema von \textit{kirjanystaevaet}}
+\label{fig:db-schema}
+\end{figure}
+
 	
 	\subsection{A1: Datenmanagement}\label{sec:umsetzung:DB:DM}
 	Grundlage der Datenverwaltung von \textit{kirjanystaevaet} ist die Java-SQL-Datenbank H2. Sie bietet in unseren Augen die für unsere Anforderungen beste Gewichtung von Funktionsumfang und Nutzungsfreundlichkeit. Zum einen ist die Datenbank selbst klein, zum anderen ohne größere Probleme und zusätzliche Fragestellungen (Server etc.) einzurichten. Trotzdem kann bei Bedarf auch eine kompliziertere Konfiguration vorgenommen werden. Die Datenbank von \textit{kirjanystaevaet} läuft auf dem gleichen Server wie die Anwendung selbst. Das Programm greift dabei lokal auf die Daten zu, startet dabei aber den H2 inhärenten Server, sodass theoretisch auch andere Software die Datenbank gleichzeitig nutzen könnten. Im aktuellen Anwendungsfall ist dies aber zu vernachlässigen.
