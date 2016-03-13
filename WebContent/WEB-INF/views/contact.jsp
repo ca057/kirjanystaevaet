@@ -18,7 +18,7 @@
 				<p>Der Geruch beim ersten Öffnen. Die Danksrede, die noch nie
 					irgendjemand gelesen hat. Die Dokumente, die man mit dem Buch
 					geplättet hat. Die Postkarte der Exfreundin, die man als
-					Lesezeichen nach Jahren wieder findet. Die Schokoladenreste auf
+					Lesezeichen versteckt nach Jahren wieder findet. Die Schokoladenreste auf
 					Seite 117.</p>
 
 				<p>Bücher können einfach alles. Also schnapp dir ein kühles

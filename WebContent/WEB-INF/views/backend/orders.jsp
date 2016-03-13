@@ -15,17 +15,24 @@
 				<p>Derzeit gibt es keine laufenden Bestellungen.</p>
 			</c:when>
 			<c:otherwise>
-				<ul>
 					<c:forEach var="order" items="${orders}">
-						<li>Bestellung #<c:out value="${order.getOrderId()}" /> vom <fmt:formatDate pattern="dd.MM.yyyy" value="${order.getDate().getInstance().getTime()}" /> mit <c:out value="${order.getOrderItems().size()}"></c:out> Büchern:
-							<ul>
-								<c:forEach var="item" items="${order.getOrderItems()}">
-									<li><c:out value="${item.getBook().getTitle()}"></c:out> (Menge: <c:out value="${item.getNumberOf()}"></c:out>)</li>
-								</c:forEach>
-							</ul>
-						</li>
+						<div class="panel-heading">
+      										<h4 class="panel-title">
+      											<c:forEach var='item' items='${order.getOrderItems()}'><c:set var="totalprice" value="${totalprice + item.getPrice()}"/> </c:forEach>
+      											<a data-toggle="collapse" data-parent="#accordion" <c:out value="href=#collapse${order.getOrderId()}" />>Bestellung vom <fmt:formatDate pattern="dd.MM.yyyy"
+												value="${order.getDate().getInstance().getTime()}" />: <c:out value="${totalprice}"></c:out> €</a>
+      										</h4>
+    									</div>
+    									<div id="collapse<c:out value='${order.getOrderId()}'/>" class="panel-collapse collapse">
+											<ul>
+												<c:forEach var="item" items="${order.getOrderItems()}">
+													<li><c:out value="${item.getBook().getTitle()}"></c:out>
+														(Menge: <c:out value="${item.getNumberOf()}"></c:out>;
+														Einzelpreis: <c:out value="${item.getBook().getPrice()}"></c:out>€)</li>
+												</c:forEach>
+											</ul>
+										</div>
 					</c:forEach>
-				</ul>
 			</c:otherwise>
 		</c:choose>
 	</c:if>

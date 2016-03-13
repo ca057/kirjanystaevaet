@@ -99,7 +99,7 @@ public class InitializationImpl implements InitializingBean {
 		System.out.println("createAdmin");
 		Map<Userfields, String> data = new HashMap<>();
 		data.put(Userfields.name, "Sebastian");
-		data.put(Userfields.surname, "Boosz");
+		data.put(Userfields.surname, "Blank");
 		data.put(Userfields.email, "admin@ky.de");
 		data.put(Userfields.password, "admin");
 		data.put(Userfields.role, UserRoles.ADMIN.toString());
