@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page session="false" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+	
 
 <section>
 	<c:if test="${param.logout != null}">
@@ -10,130 +11,45 @@
 	<div class="page-header">
 		<h1>Tipps aus unserem Sortiment</h1>
 	</div>
-	
-	<div class="row">
-		<div class="col-sm-6 col-md-3">
-			<div class="thumbnail">
-				<article>
-					<img class="book-cover img-responsive center-block"
-						src="<c:url value="/img/cover/${recommendations.get(0).getIsbn()}.jpg"/>"
-						title="<c:out value="Cover des Buchs '${recommendations.get(0).getTitle()}'"/>">
-					<div class="caption">
-						<h4>
-							<c:out value="${recommendations.get(0).getTitle()}"></c:out>
-						</h4>
 
-						<p>
-							von
-							<c:set var="delimiter" value="" scope="request"></c:set>
-							<c:forEach var="a" items="${recommendations.get(0).getAuthors()}">${delimiter}<c:out
-									value="${a.getNameF()}" />
-								<c:out value="${a.getNameL()}" />
-								<c:set var="delimiter" value=", " scope="request"></c:set>
-							</c:forEach>
-						</p>
-						<p><c:out value="${recommendations.get(0).getPrice()}" /> €</p>
-							<a href="<c:url value='/buch/${recommendations.get(0).getIsbn()}' />" 
-							class="btn btn-primary center-block" role="button">zum Buch</a>
-					</div>
-				</article>
-			</div>
-		</div>
-		<div class="col-sm-6 col-md-3">
-			<div class="thumbnail">
-				<article>
+	<div class="row">
+		<c:forEach var="book" items="${recommendations}">
+			<div class="col-sm-6 col-md-3">
+				<div class="thumbnail">
 					<img class="book-cover img-responsive center-block"
-						src="<c:url value="/img/cover/${recommendations.get(1).getIsbn()}.jpg"/>"
-						title="<c:out value="Cover des Buchs '${recommendations.get(1).getTitle()}'"/>">
-					<div class="caption">
+						src="<c:url value="/img/cover/${book.getIsbn()}.jpg"/>"
+						title="<c:out value="Cover des Buchs '${book.getTitle()}'"/>">
+					<div class="caption center-block">
 						<h4>
-							<c:out value="${recommendations.get(1).getTitle()}"></c:out>
+							<c:out value="${book.getTitle()}" />
 						</h4>
 						<p>
 							von
 							<c:set var="delimiter" value="" scope="request"></c:set>
-							<c:forEach var="a" items="${recommendations.get(1).getAuthors()}">${delimiter}<c:out
+							<c:forEach var="a" items="${book.getAuthors()}">${delimiter}<c:out
 									value="${a.getNameF()}" />
 								<c:out value="${a.getNameL()}" />
 								<c:set var="delimiter" value=", " scope="request"></c:set>
 							</c:forEach>
 						</p>
-						<!--  <p><c:out value="${bookOfTheMoment.getDescription()}" escapeXml="false" ></c:out></p>  -->
 						<p>
-							<c:out value="${recommendations.get(1).getPrice()}" />
-							€
-						<p>
-							<a
-								href="<c:url value='/buch/${recommendations.get(1).getIsbn()}' />"
-								class="btn btn-primary center-block" role="button">zum Buch</a>
+							<c:out value="${book.getPrice()}" />
+							€ - <a href="<c:url value='/buch/${book.getIsbn()}' />"
+								title="zum Buch <c:out value='${book.getTitle()}' />">zum
+								Buch</a>
 						</p>
+						<form action="../warenkorb" method="post" id="cartForm">
+							<button type="submit" form="cartForm"
+								value='<c:out value="${book.getIsbn()}"></c:out>' name="isbn"
+								class="btn btn-primary center-block">
+								<span class="glyphicon glyphicon-shopping-cart"></span> In den
+								Warenkorb
+							</button>
+							<sec:csrfInput />
+						</form>
 					</div>
-				</article>
+				</div>
 			</div>
-		</div>
-		<div class="col-sm-6 col-md-3">
-			<div class="thumbnail">
-				<article>
-					<img class="book-cover img-responsive center-block"
-						src="<c:url value="/img/cover/${recommendations.get(2).getIsbn()}.jpg"/>"
-						title="<c:out value="Cover des Buchs '${recommendations.get(2).getTitle()}'"/>">
-					<div class="caption">
-						<h4>
-							<c:out value="${recommendations.get(2).getTitle()}"></c:out>
-						</h4>
-						<p>
-							von
-							<c:set var="delimiter" value="" scope="request"></c:set>
-							<c:forEach var="a" items="${recommendations.get(2).getAuthors()}">${delimiter}<c:out
-									value="${a.getNameF()}" />
-								<c:out value="${a.getNameL()}" />
-								<c:set var="delimiter" value=", " scope="request"></c:set>
-							</c:forEach>
-						</p>
-						<!--  <p><c:out value="${bookOfTheMoment.getDescription()}" escapeXml="false" ></c:out></p>  -->
-						<p>
-							<c:out value="${recommendations.get(2).getPrice()}" />
-							€
-						<p>
-							<a
-								href="<c:url value='/buch/${recommendations.get(2).getIsbn()}' />"
-								class="btn btn-primary center-block" role="button">zum Buch</a>
-						</p>
-					</div>
-				</article>
-			</div>
-		</div>
-		<div class="col-sm-6 col-md-3">
-			<div class="thumbnail center-block">
-				<article>
-					<img class="book-cover img-responsive center-block"
-						src="<c:url value="/img/cover/${recommendations.get(3).getIsbn()}.jpg"/>"
-						title="<c:out value="Cover des Buchs '${recommendations.get(2).getTitle()}'"/>">
-					<div class="caption">
-						<h4>
-							<c:out value="${recommendations.get(3).getTitle()}"></c:out>
-						</h4>
-						<p>
-							von
-							<c:set var="delimiter" value="" scope="request"></c:set>
-							<c:forEach var="a" items="${recommendations.get(2).getAuthors()}">${delimiter}<c:out
-									value="${a.getNameF()}" />
-								<c:out value="${a.getNameL()}" />
-								<c:set var="delimiter" value=", " scope="request"></c:set>
-							</c:forEach>
-						</p>
-						<!--  <p><c:out value="${bookOfTheMoment.getDescription()}" escapeXml="false" ></c:out></p>  -->
-						<p>
-							<c:out value="${recommendations.get(3).getPrice()}" />
-							€
-						<p>
-							<a
-								href="<c:url value='/buch/${recommendations.get(3).getIsbn()}' />"
-								class="btn btn-primary center-block" role="button">zum Buch</a>
-						</p>
-					</div>
-				</article>
-			</div>
-		</div>
+		</c:forEach>
 	</div>
 </section>
