@@ -408,7 +408,7 @@ div#homerow {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
-	justify-conten: center;
+	justify-content: center;
 	align-items: flex-start;
 }
 

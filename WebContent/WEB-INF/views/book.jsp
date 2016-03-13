@@ -98,7 +98,7 @@
 							<c:out value="${string2}" escapeXml="false">${string2}</c:out>
 							...
 						</p>
-						<a href="#desc" class="toggle btn btn-primary">weiterlesen</a>
+						<a href="#desc" class="btn btn-primary">weiterlesen &raquo;</a>
 					</div>
 				</div>
 			</div>

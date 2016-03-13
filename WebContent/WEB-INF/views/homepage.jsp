@@ -36,9 +36,8 @@
 						</p>
 						<p>
 							<c:out value="${book.getPrice()}" />
-							€ - <a href="<c:url value='/buch/${book.getIsbn()}' />"
-								title="zum Buch <c:out value='${book.getTitle()}' />">zum
-								Buch</a>
+							€ - <a href="<c:url value='/buch/${book.getIsbn()}' />" title="zum Buch <c:out value='${book.getTitle()}' />" class="btn btn-primary btn-small">
+									zum Buch</a>
 						</p>
 
 						<sec:authorize access="isAnonymous()">
