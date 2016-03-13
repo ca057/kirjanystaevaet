@@ -34,11 +34,10 @@ public class BookDAOImpl implements BookDAO {
 	private SessionFactory sessionFactory;
 	@Autowired
 	BuilderFactory builderFactory;
-	
+
 	private BookBuilder getBookBuilder() {
 		return builderFactory.getBookBuilder();
 	}
-
 
 	private Session getSession() {
 		return sessionFactory.getCurrentSession();
@@ -209,29 +208,35 @@ public class BookDAOImpl implements BookDAO {
 		BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
 
 		bookBuilder.setStock(-1);
-//		book.setStock(-1);
+		// book.setStock(-1);
 		getSession().update(bookBuilder.createBook());
-//		getSession().update(book);
+		// getSession().update(book);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Book> getMostVisitedBooks(int range) {
 		if (range < 0) {
 			throw new IllegalArgumentException("The passed range must be greater than 0.");
 		}
-		return setupAndGetCriteria().addOrder(Order.desc("visitCount")).setMaxResults(range).list();
+		return setupAndGetCriteria().add(Restrictions.gt("visitCount", -1)).addOrder(Order.desc("visitCount"))
+				.setMaxResults(range).list();
+
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Book> getLeastVisitedBooks(int range) {
 		if (range < 0) {
 			throw new IllegalArgumentException("The passed range must be greater than 0.");
 		}
-		System.out.println("Range: " + range);
-		List result = setupAndGetCriteria().addOrder(Order.desc("visitCount")).setMaxResults(range).list();
-		System.out.println("Least Visited: " + result);
-		return result;
+		// System.out.println("Range: " + range);
+		// List result =
+		// setupAndGetCriteria().addOrder(Order.desc("visitCount")).setMaxResults(range).list();
+		// System.out.println("Least Visited: " + result);
+		// return result;
+		return setupAndGetCriteria().add(Restrictions.gt("visitCount", -1)).addOrder(Order.asc("visitCount"))
+				.setMaxResults(range).list();
 	}
-
 
 }

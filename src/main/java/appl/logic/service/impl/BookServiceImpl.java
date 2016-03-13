@@ -4,9 +4,11 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -47,14 +49,16 @@ public class BookServiceImpl implements BookService {
 	CategoryDAO categoryDao;
 	@Autowired
 	BuilderFactory builderFactory;
-	
+
 	private BookBuilder getBookBuilder() {
 		return builderFactory.getBookBuilder();
 	}
-	private AuthorBuilder getAuthorBuilder(){
+
+	private AuthorBuilder getAuthorBuilder() {
 		return builderFactory.getAuthorBuilder();
 	}
-	private CategoryBuilder getCategoryBuilder(){
+
+	private CategoryBuilder getCategoryBuilder() {
 		return builderFactory.getCategoryBuilder();
 	}
 
@@ -67,8 +71,8 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category"));
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch(Exception e){
-			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Category" )+ e.getMessage());
+		} catch (Exception e) {
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Category") + e.getMessage());
 		}
 	}
 
@@ -82,8 +86,8 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category"));
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Category" )+ e.getMessage());
+		} catch (Exception e) {
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Category") + e.getMessage());
 		}
 
 	}
@@ -99,8 +103,8 @@ public class BookServiceImpl implements BookService {
 			return names;
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Categorynames" )+ e.getMessage());
+		} catch (Exception e) {
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Categorynames") + e.getMessage());
 		}
 
 	}
@@ -111,7 +115,7 @@ public class BookServiceImpl implements BookService {
 			return categoryDao.getCategories();
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Categories") + e.getMessage());
 		}
 
@@ -126,18 +130,18 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public boolean isExistingCategory(String category) throws DatabaseException {
-		try{ 
+		try {
 			if (categoryDao.getCategoriesByExactName(category) != null) {
 				return true;
 			} else {
 				return false;
 			}
-		} catch (EntityDoesNotExistException e){
+		} catch (EntityDoesNotExistException e) {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category"));
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Category" )+ e.getMessage());
+		} catch (Exception e) {
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Category") + e.getMessage());
 		}
 	}
 
@@ -160,7 +164,7 @@ public class BookServiceImpl implements BookService {
 				return id;
 			} catch (HibernateException f) {
 				throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(f.getMessage()));
-			}catch (Exception f){
+			} catch (Exception f) {
 				throw new DatabaseException(ErrorMessageHelper.insertFailed("Category") + f.getMessage());
 			}
 
@@ -175,13 +179,14 @@ public class BookServiceImpl implements BookService {
 			Category cat = categoryDao.getCategoryById(categoryId);
 			CategoryBuilder categoryBuilder = BuilderHelper.saveOldValues(cat, getCategoryBuilder());
 			categoryBuilder.setCategoryName(newCategoryName);
-//			cat.setCategoryName(newCategoryName);
+			// cat.setCategoryName(newCategoryName);
 			categoryDao.updateCategory(cat);
 
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.updateError("Category", String.valueOf(categoryId), e.getMessage()));
+		} catch (Exception e) {
+			throw new DatabaseException(
+					ErrorMessageHelper.updateError("Category", String.valueOf(categoryId), e.getMessage()));
 		}
 
 	}
@@ -200,8 +205,9 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.DataIntegrityViolation("Category", "Book", e.getMessage()));
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.deletionFailed("Category", String.valueOf(id), e.getMessage()));
+		} catch (Exception e) {
+			throw new DatabaseException(
+					ErrorMessageHelper.deletionFailed("Category", String.valueOf(id), e.getMessage()));
 		}
 
 	}
@@ -215,8 +221,8 @@ public class BookServiceImpl implements BookService {
 
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
-			throw new DatabaseException (ErrorMessageHelper.couldNotGetData("Author") + e.getMessage());
+		} catch (Exception e) {
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Author") + e.getMessage());
 		}
 
 	}
@@ -231,10 +237,9 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Author"));
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
-			throw new DatabaseException (ErrorMessageHelper.couldNotGetData("Author") +e.getMessage());
+		} catch (Exception e) {
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Author") + e.getMessage());
 		}
-
 
 	}
 
@@ -245,8 +250,8 @@ public class BookServiceImpl implements BookService {
 
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
-			throw new DatabaseException (ErrorMessageHelper.couldNotGetData("Authors") + e.getMessage());
+		} catch (Exception e) {
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Authors") + e.getMessage());
 		}
 
 	}
@@ -260,40 +265,38 @@ public class BookServiceImpl implements BookService {
 
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
-			throw new DatabaseException (ErrorMessageHelper.couldNotGetData("Authors") + e.getMessage());
+		} catch (Exception e) {
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Authors") + e.getMessage());
 		}
 
 	}
 
-	
 	@Override
 	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws DatabaseException {
 		try {
-		// Wenn noch kein bestimmter Autor ausgewählt wurde
-		if (!newAuthor) {
-			List<Author> authors = authorDao.getAuthorByExactNames(nameF, nameL);
-			// Testen ob es schon Autoren mit dem Namen gibt
-			if (authors.size() > 0) {
-				throw new AuthorMayExistException("This Author " + nameF + " " + nameL + " may already exist");
+			// Wenn noch kein bestimmter Autor ausgewählt wurde
+			if (!newAuthor) {
+				List<Author> authors = authorDao.getAuthorByExactNames(nameF, nameL);
+				// Testen ob es schon Autoren mit dem Namen gibt
+				if (authors.size() > 0) {
+					throw new AuthorMayExistException("This Author " + nameF + " " + nameL + " may already exist");
+				}
 			}
-		}
 
-		// Wenn ein neuer Autor eingefügt werden soll
-		AuthorBuilder ab = builderFactory.getAuthorBuilder();
-		Author author = ab.setNameF(nameF).setNameL(nameL).createAuthor();
-		System.out.println("\n\nEinmal den Autor checken\n\n" + author.toString());
-		int id = authorDao.insertAuthor(author);
+			// Wenn ein neuer Autor eingefügt werden soll
+			AuthorBuilder ab = builderFactory.getAuthorBuilder();
+			Author author = ab.setNameF(nameF).setNameL(nameL).createAuthor();
+			System.out.println("\n\nEinmal den Autor checken\n\n" + author.toString());
+			int id = authorDao.insertAuthor(author);
 
-		return id;
-		} catch (HibernateException e){
+			return id;
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.insertFailed("Author") + e.getMessage());
 		}
 
 	}
-
 
 	@Override
 	public void updateAuthor(int id, Map<Searchfields, String> newData) throws DatabaseException {
@@ -303,9 +306,9 @@ public class BookServiceImpl implements BookService {
 			for (Searchfields s : newData.keySet()) {
 				if (s == Searchfields.nameF) {
 					authorBuilder.setNameF(newData.get(s));
-//					author.setNameF(newData.get(s));
+					// author.setNameF(newData.get(s));
 				} else if (s == Searchfields.nameL) {
-//					author.setNameL(newData.get(s));
+					// author.setNameL(newData.get(s));
 					authorBuilder.setNameL(newData.get(s));
 				} else {
 					throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated(s.toString()));
@@ -314,7 +317,7 @@ public class BookServiceImpl implements BookService {
 			authorDao.updateAuthor(authorBuilder.createAuthor());
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.updateError("Author", String.valueOf(id), e.getMessage()));
 		}
 
@@ -329,8 +332,9 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Author"));
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.deletionFailed("Author", String.valueOf(id), e.getMessage()));
+		} catch (Exception e) {
+			throw new DatabaseException(
+					ErrorMessageHelper.deletionFailed("Author", String.valueOf(id), e.getMessage()));
 		}
 	}
 
@@ -341,8 +345,8 @@ public class BookServiceImpl implements BookService {
 
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
-			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books")+ e.getMessage());
+		} catch (Exception e) {
+			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books") + e.getMessage());
 		}
 	}
 
@@ -350,13 +354,13 @@ public class BookServiceImpl implements BookService {
 	public List<Book> getAllBooks(SearchMode mode, int range) throws DatabaseException {
 		try {
 			List<Book> books = getAllBooks(mode);
-		
+
 			if (books.size() < range) {
 				return books;
 			}
 			List<Book> smallList = books.subList(0, range);
 			return smallList;
-		}catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books") + e.getMessage());
 		}
 	}
@@ -369,7 +373,7 @@ public class BookServiceImpl implements BookService {
 			return bookDao.getBooksByMetadata(map, mode);
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books") + e.getMessage());
 		}
 	}
@@ -383,7 +387,7 @@ public class BookServiceImpl implements BookService {
 			}
 			List<Book> smallList = books.subList(0, range);
 			return smallList;
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books") + e.getMessage());
 		}
 	}
@@ -391,32 +395,32 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public Book getBookByIsbn(String isbn, SearchMode mode) throws DatabaseException {
 		try {
-		isbn = onlyLeaveLettersAndNumbers(isbn);
-		Book book = bookDao.getBookByIsbn(isbn);
-		switch (mode) {
-		case ALL:
-			break;
-		case SELL:
-			if (book.getStock() < 0) {
-				throw new DatabaseException(ErrorMessageHelper.bookNotSold(isbn));
-			}
-			break;
+			isbn = onlyLeaveLettersAndNumbers(isbn);
+			Book book = bookDao.getBookByIsbn(isbn);
+			switch (mode) {
+			case ALL:
+				break;
+			case SELL:
+				if (book.getStock() < 0) {
+					throw new DatabaseException(ErrorMessageHelper.bookNotSold(isbn));
+				}
+				break;
 
-		case AVAILABLE:
-			if (book.getStock() == 0) {
-				throw new DatabaseException(ErrorMessageHelper.bookNotAvailable(isbn));
-			} else if (book.getStock() < 0) {
-				throw new DatabaseException(ErrorMessageHelper.bookNotSold(isbn));
-			}
-			break;
+			case AVAILABLE:
+				if (book.getStock() == 0) {
+					throw new DatabaseException(ErrorMessageHelper.bookNotAvailable(isbn));
+				} else if (book.getStock() < 0) {
+					throw new DatabaseException(ErrorMessageHelper.bookNotSold(isbn));
+				}
+				break;
 
-		}
-		return book;
+			}
+			return book;
 		} catch (EntityDoesNotExistException e) {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Book") + e.getMessage());
 		}
 
@@ -437,7 +441,7 @@ public class BookServiceImpl implements BookService {
 
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("Books") + e.getMessage());
 		}
 
@@ -513,10 +517,9 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.primaryKeyViolation());
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError("Book could not be inserted"));
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.insertFailed("Book") + e.getMessage());
 		}
-
 
 	}
 
@@ -524,106 +527,101 @@ public class BookServiceImpl implements BookService {
 	public void updateBook(String isbn, Map<Searchfields, String> data, Set<Integer> authorIds,
 			Set<Integer> categoryIds) throws DatabaseException {
 		try {
-			
-		
-		isbn = onlyLeaveLettersAndNumbers(isbn);
 
-		Book book = bookDao.getBookByIsbn(isbn);
-		Set<Author> authors = new HashSet<Author>();
-		for (int id : authorIds){
-			authors.add(authorDao.getAuthorByID(id));
-		}
-		
-		Set<Category> categories = new HashSet<Category>();
-		for (int id : categoryIds){
-			categories.add(categoryDao.getCategoryById(id));
-		}
-		// Save old Values
-//		BookBuilder bookBuilder = saveOldValues(book, getBookBuilder());
-		BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
-		
-		bookBuilder.setAuthors(authors);
-		bookBuilder.setCategories(categories);
-		
-//		book.setAuthors(authors);
+			isbn = onlyLeaveLettersAndNumbers(isbn);
 
-//		book.setCategories(categories);
-		
-		for (Searchfields s : data.keySet()) {
-			if (s == Searchfields.isbn) {
-				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("isbn"));
-			} else if (s == Searchfields.description) {
-//				book.setDescription(data.get(s));
-				bookBuilder.setDescription(data.get(s));
-			} else if (s == Searchfields.price) {
-				double price = Double.parseDouble(data.get(s).replace(",", "."));
-//				book.setPrice(price);
-				bookBuilder.setPrice(price);
-			} else if (s == Searchfields.pages) {
-//				book.setPages(data.get(s));
-				bookBuilder.setPages(data.get(s));
-			} else if (s == Searchfields.pubdate) {
-//				book.setPubdate(data.get(s));
-				bookBuilder.setPubdate(data.get(s));
-			} else if (s == Searchfields.edition) {
-				bookBuilder.setEdition(data.get(s));
-//				book.setEdition(data.get(s));
-			} else if (s == Searchfields.publisher) {
-				bookBuilder.setPublisher(data.get(s));
-//				book.setPublisher(data.get(s));
-			} else if (s == Searchfields.stock) {
-				throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("stock"));
-			} else if (s == Searchfields.title) {
-//				book.setTitle(data.get(s));
-				bookBuilder.setTitle(data.get(s));
+			Book book = bookDao.getBookByIsbn(isbn);
+			Set<Author> authors = new HashSet<Author>();
+			for (int id : authorIds) {
+				authors.add(authorDao.getAuthorByID(id));
 			}
-		}
 
-		
+			Set<Category> categories = new HashSet<Category>();
+			for (int id : categoryIds) {
+				categories.add(categoryDao.getCategoryById(id));
+			}
+			// Save old Values
+			// BookBuilder bookBuilder = saveOldValues(book, getBookBuilder());
+			BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
+
+			bookBuilder.setAuthors(authors);
+			bookBuilder.setCategories(categories);
+
+			// book.setAuthors(authors);
+
+			// book.setCategories(categories);
+
+			for (Searchfields s : data.keySet()) {
+				if (s == Searchfields.isbn) {
+					throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("isbn"));
+				} else if (s == Searchfields.description) {
+					// book.setDescription(data.get(s));
+					bookBuilder.setDescription(data.get(s));
+				} else if (s == Searchfields.price) {
+					double price = Double.parseDouble(data.get(s).replace(",", "."));
+					// book.setPrice(price);
+					bookBuilder.setPrice(price);
+				} else if (s == Searchfields.pages) {
+					// book.setPages(data.get(s));
+					bookBuilder.setPages(data.get(s));
+				} else if (s == Searchfields.pubdate) {
+					// book.setPubdate(data.get(s));
+					bookBuilder.setPubdate(data.get(s));
+				} else if (s == Searchfields.edition) {
+					bookBuilder.setEdition(data.get(s));
+					// book.setEdition(data.get(s));
+				} else if (s == Searchfields.publisher) {
+					bookBuilder.setPublisher(data.get(s));
+					// book.setPublisher(data.get(s));
+				} else if (s == Searchfields.stock) {
+					throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("stock"));
+				} else if (s == Searchfields.title) {
+					// book.setTitle(data.get(s));
+					bookBuilder.setTitle(data.get(s));
+				}
+			}
+
 			bookDao.updateBook(bookBuilder.createBook());
-		} catch(EntityDoesNotExistException e){
+		} catch (EntityDoesNotExistException e) {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("An Entity"));
-		}  catch (HibernateException e) {
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.updateError("Book", isbn, e.getMessage()));
 		}
-		
 
 	}
 
 	@Override
 	public void deleteCategoryOfBook(String isbn, int categoryId) throws DatabaseException {
 		try {
-		isbn = onlyLeaveLettersAndNumbers(isbn);
+			isbn = onlyLeaveLettersAndNumbers(isbn);
 
-		
 			Book book = bookDao.getBookByIsbn(isbn);
 
-		
-		Set<Category> categories = book.getCategories();
-		boolean flag = false;
-		Category toBeDeleted = null;
-		for (Category c : categories) {
-			if (c.getCategoryID() == categoryId) {
-				flag = true;
-				toBeDeleted = c;
-				break;
+			Set<Category> categories = book.getCategories();
+			boolean flag = false;
+			Category toBeDeleted = null;
+			for (Category c : categories) {
+				if (c.getCategoryID() == categoryId) {
+					flag = true;
+					toBeDeleted = c;
+					break;
+				}
+
+			}
+			if (flag) {
+				categories.remove(toBeDeleted);
+			} else {
+				throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category"));
 			}
 
-		}
-		if (flag) {
-			categories.remove(toBeDeleted);
-		} else {
-			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category"));
-		}
-		
 			bookDao.updateBook(book);
-		}catch (EntityDoesNotExistException e){
+		} catch (EntityDoesNotExistException e) {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("An Entity"));
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.updateError("Book", isbn, e.getMessage()));
 		}
 	}
@@ -637,11 +635,11 @@ public class BookServiceImpl implements BookService {
 			Category toBeAdded = categoryDao.getCategoryById(categoryId);
 			book.getCategories().add(toBeAdded);
 			bookDao.updateBook(book);
-		}catch (EntityDoesNotExistException e){
+		} catch (EntityDoesNotExistException e) {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("An Entity"));
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.updateError("Book", isbn, e.getMessage()));
 		}
 	}
@@ -655,14 +653,13 @@ public class BookServiceImpl implements BookService {
 			int newStock = book.addToStock(additional);
 			bookDao.updateBook(book);
 			return newStock;
-		}catch (EntityDoesNotExistException e){
+		} catch (EntityDoesNotExistException e) {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("An Entity"));
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.updateError("Book", isbn, e.getMessage()));
 		}
-		
 
 	}
 
@@ -671,20 +668,21 @@ public class BookServiceImpl implements BookService {
 		isbn = onlyLeaveLettersAndNumbers(isbn);
 
 		try {
-//			Book book = getBookByIsbn(isbn, SearchMode.ALL);
+			// Book book = getBookByIsbn(isbn, SearchMode.ALL);
 			Book book = bookDao.getBookByIsbn(isbn);
 			BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
 			bookBuilder.setStock(-1);
-//			bookDao.setStockToNegative(isbn);
+			// bookDao.setStockToNegative(isbn);
 			bookDao.updateBook(bookBuilder.createBook());
 
-//		} catch (EntityDoesNotExistException e) {
-//			e.printStackTrace();
-//			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
+			// } catch (EntityDoesNotExistException e) {
+			// e.printStackTrace();
+			// throw new
+			// DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DatabaseException(ErrorMessageHelper.deletionFailed("Book", isbn, e.getMessage()));
 		}
@@ -723,10 +721,9 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("visitCount") + e.getMessage());
 		}
-
 
 	}
 
@@ -744,7 +741,7 @@ public class BookServiceImpl implements BookService {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		}catch (Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.increaseOfVisitCountFailed("Book", isbn, e.getMessage()));
 		}
 
@@ -753,50 +750,68 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public SortedMap<Book, Integer> getMostVisitedBooks(int range) throws DatabaseException {
 		try {
-		if (range < 0) {
-			throw new IllegalArgumentException("The passed range must be greater 0.");
-		}
-		SortedMap<Book, Integer> map = new TreeMap<>(new Comparator<Book>() {
-
-			@Override
-			public int compare(Book b1, Book b2) {
-				return Integer.compare(b2.getVisitCount(), b1.getVisitCount());
+			if (range < 0) {
+				throw new IllegalArgumentException("The passed range must be greater 0.");
 			}
-		});
-		for (Book b : bookDao.getMostVisitedBooks(range)) {
-			map.put(b, b.getVisitCount());
-		}
-		return map;
-		} catch (HibernateException e){
+			SortedMap<Book, Integer> map = new TreeMap<>(new Comparator<Book>() {
+
+				@Override
+				public int compare(Book b1, Book b2) {
+					return Integer.compare(b2.getVisitCount(), b1.getVisitCount());
+				}
+			});
+			bookDao.getAllBooks(SearchMode.ALL).forEach(b -> map.put(b, b.getVisitCount()));
+			int counter = 0;
+			Iterator<Book> iterator = map.keySet().iterator();
+			Book tmp = new Book();
+			while (counter <= range) {
+				try {
+					tmp = iterator.next();
+					counter++;
+				} catch (NoSuchElementException e) {
+					break;
+				}
+			}
+			return map.subMap(map.firstKey(), tmp);
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch(Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("MostVisitedBooks") + e.getMessage());
 		}
-		 
+
 	}
+
 	@Override
 	public SortedMap<Book, Integer> getLeastVisitedBooks(int range) throws DatabaseException {
 		try {
-		if (range < 0) {
-			throw new IllegalArgumentException("The passed range must be greater 0.");
-		}
-		SortedMap<Book, Integer> map = new TreeMap<>(new Comparator<Book>() {
-
-			@Override
-			public int compare(Book b1, Book b2) {
-				return Integer.compare(b1.getVisitCount(), b2.getVisitCount());
+			if (range < 0) {
+				throw new IllegalArgumentException("The passed range must be greater 0.");
 			}
-		});
-		for (Book b : bookDao.getLeastVisitedBooks(range)) {
-			map.put(b, b.getVisitCount());
-		}
-		return map;
-		} catch (HibernateException e){
+			SortedMap<Book, Integer> map = new TreeMap<>(new Comparator<Book>() {
+
+				@Override
+				public int compare(Book b1, Book b2) {
+					return Integer.compare(b1.getVisitCount(), b2.getVisitCount());
+				}
+			});
+			bookDao.getAllBooks(SearchMode.ALL).forEach(b -> map.put(b, b.getVisitCount()));
+			int counter = 0;
+			Iterator<Book> iterator = map.keySet().iterator();
+			Book tmp = new Book();
+			while (counter <= range) {
+				try {
+					tmp = iterator.next();
+					counter++;
+				} catch (NoSuchElementException e) {
+					break;
+				}
+			}
+			return map.subMap(map.firstKey(), tmp);
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-		} catch(Exception e){
+		} catch (Exception e) {
 			throw new DatabaseException(ErrorMessageHelper.couldNotGetData("VisitCount") + e.getMessage());
 		}
 	}
-
 
 }
