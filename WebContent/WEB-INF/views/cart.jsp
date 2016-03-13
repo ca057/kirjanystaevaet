@@ -41,13 +41,21 @@
 		</c:choose>
 		
 		<p>Gesamtpreis: <c:out value="${sum}"/>€</p>
-	
-	<form id="orderForm" method="post">
-		<button class="btn btn-default btn-sm" id="orderButton" type="submit" formaction="<c:url value='/bestellung_aufgegeben'/>">
-			<span class="glyphicon glyphicon-ok"></span>
-			bestellen
-		</button> 
-		<sec:csrfInput/>
-	</form>	
-	
+		<form id="orderForm" method="post">
+			<c:choose>
+				<c:when test="${bookItems.isEmpty()}">
+					<button class="btn btn-default btn-sm" id="orderButton" type="submit" formaction="<c:url value='/bestellung_aufgegeben'/>" disabled>
+						<span class="glyphicon glyphicon-ok"></span>
+						bestellen
+					</button> 
+				</c:when>
+				<c:otherwise>
+					<button class="btn btn-default btn-sm" id="orderButton" type="submit" formaction="<c:url value='/bestellung_aufgegeben'/>">
+						<span class="glyphicon glyphicon-ok"></span>
+						bestellen
+					</button> 
+				</c:otherwise>
+			</c:choose>
+			<sec:csrfInput/>
+		</form>
  </section>  
