@@ -47,7 +47,6 @@
 									<span class="glyphicon glyphicon-shopping-cart"></span> In den
 									Warenkorb
 								</button>
-								<sec:authorize access="isAnonymous()">
 									<div id="login" class="modal fade" role="dialog">
 										<div class="modal-dialog">
 	
@@ -73,7 +72,6 @@
 	
 										</div>
 									</div>
-								</sec:authorize>
 								</sec:authorize>
 								<sec:authorize access="hasRole('ADMIN')">
 									<button data-toggle="modal" data-target="#adminPopup" class="btn btn-primary center-block">
