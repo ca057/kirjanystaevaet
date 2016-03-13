@@ -94,6 +94,7 @@
 	Das Backend ist in die Bereiche Dashboard, Bestand, Nutzer\_innen und Bestellungen gegliedert. Im Dashboard findet man eine Übersicht über den Shop, im Bereich Bestellungen eine solche über die aktuell laufenden Bestellungen. Der Bestand und alle Nutzer\_innen können in den jeweiligen Untergliederungen verwaltet werden.
 	
 		\subsubsection{Dashboard}
+		Das Dashboard gibt eine Übersicht über aktuelle Werte und Zustände des Shops. Die Daten werden von einer Bean aus den Services abgefragt, in einer \lstinline|Map| zusammengefasst und an den zuständigen Controller weitergereicht. Bisher werden nur "`statische"' Werte abgefragt und angezeigt, auch wenn die Services bereits mehr Möglichkeiten bieten. Die zwischengeschaltete Bean würde es ermöglichen, die unterschiedlichen Werte in Beziehung zu setzen und damit auch komplexere Statistiken anzuzeigen.
 	
 		\subsubsection{Bestands- und Nutzer\_innenverwaltung}
 		Die Bestandsverwaltung untergliedert sich in die Verwaltung der Kategorien, der Autor\_innen und der Bücher. Diese sind client- und server-seitig in unterschiedlicher Weise umgesetzt. So basiert die Nutzer\_innenverwaltung zu einem großen Teil auf AJAX-Requests, während bei der Bestandsverwaltung das Gegenteil der Fall ist.
@@ -105,6 +106,7 @@
 		Der im Projekt vorliegende Bestand sowie die umgesetzten Use Cases sind derzeit sehr beschränkt, sodass das gesamte Projekt noch überschaubar ist. Bei zunehmender Größe und Komplexität empfiehlt sich allerdings ein eigenständiges Konzept für den kompletten client-seitigen Bereich, insbesondere auch für die Verwaltung der Daten im Backend. Hilfreich kann hier zudem die Nutzung eines weiteren Frameworks sein, welches die Anbindung an den Server sowie den Datenfluss übernimmt.
 		
 		\subsubsection{Bestellungen}
+		Die Übersicht über die Bestellungen zeigt derzeit eine einfache Liste aller laufenden Bestellungen, eine Unterscheidung zwischen laufenden und abgeschlossenen Bestellungen gibt es aufgrund der Datenschemas nicht. Ebenfalls ist eine Administration der Bestellungen nicht möglich. Mit zunehmender Bestellanzahl wird eine solche Liste nicht mehr ausreichen, ebenso wenn eine Unterscheidung im Bestellstatus erfolgt. Für den geforderten Use Case und Umfang des Projekts erscheint die derzeitige Umsetzung jedoch als ausreichend. Ähnlich wie bei der Bestellverwaltung würde sich auch hier die Nutzung eines Frontend-Frameworks anbieten.
 		
 		\subsubsection{Fehlerbehandlung}
 		Im Gegensatz zum Frontend werden im Backend die meisten Fehler an die Oberfläche durchgereicht und zur Anzeige gebracht.
