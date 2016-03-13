@@ -385,7 +385,7 @@ div#homerow {
 
 .thumbnail{        
     width: 90%;
-    height: 35vw;
+    height: 100%;
     overflow: auto;
 }
 

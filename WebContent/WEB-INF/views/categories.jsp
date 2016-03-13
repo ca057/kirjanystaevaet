@@ -39,7 +39,7 @@
 						</c:when>
 						<c:otherwise>
 							<c:forEach var="book" items="${books}">
-								<div class="col-sm-6 col-md-4">
+								<div class="col-sm-6 col-md-3">
 									<div class="thumbnail">
 										<img class="book-cover img-responsive center-block"
 											src="<c:url value="/img/cover/${book.getIsbn()}.jpg"/>"
