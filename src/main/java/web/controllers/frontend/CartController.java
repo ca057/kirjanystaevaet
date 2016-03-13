@@ -46,14 +46,13 @@ public class CartController {
 		try {
 			System.out.println("User in Cart: " + getUser());
 		} catch (ControllerOvertaxedException e1) {
-			e1.printStackTrace();
+			System.out.println("Fehler 1");
 		}
 		if (isbn != null && !isbn.isEmpty()) {
 			try {
 				cart.addBook(bookService.getBookByIsbn(isbn, SearchMode.AVAILABLE));
 			} catch (DatabaseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Fehler 2");
 			}
 		}
 		return "redirect:/warenkorb";
@@ -68,19 +67,6 @@ public class CartController {
 		}
 		return "redirect:/warenkorb";
 	}
-
-	// @RequestMapping(value = "/warenkorb", method = RequestMethod.DELETE)
-	// public String deleteFromCart(@RequestParam(value = "isbn") String isbn) {
-	// if (isbn != null && !isbn.isEmpty()) {
-	// try {
-	// cart.deleteBook(bookService.getBookByIsbn(isbn));
-	// } catch (DatabaseException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// }
-	// return "redirect:/warenkorb";
-	// }
 
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.GET)
 	public String getCart(Model m) {
