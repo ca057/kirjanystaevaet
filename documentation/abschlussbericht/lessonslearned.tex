@@ -11,6 +11,8 @@ Gehört vermutlich nicht hier her.
 
 \paragraph{Datenbankschema} Zwar wurde immer wieder über das Datenbankschema diskutiert, aber es fehlte die Festlegung auf ein vollständiges Datenbankschema zu einem relativ frühen Zeitpunkt. Zwar wurde sich an das vorgegebene Datenbankschema aus dem Anforderungskatalog gehalten und dieses diente als gute Orientierung, doch wurden so etwas wie \texttt{stock}, \texttt{Orderx}, \texttt{OrderItem} und \texttt{UserBookStatistic} erst später eingeführt und in das schon bestehende System ergänzt. Dieses Vorgehen ist fehleranfällig und die Integration dieser Teile in ein Schema, bevor es implementiert wird, hätte einem das Leben sehr erleichtert.
 
+\paragraph{Tests} Für die meisten Funktionen bestehen keine feste Testmethoden. Ausnahme ist die Klasse \textbf{QueryFun}, in der einige Tests für DAOs und Services existieren. Alle anderen Funktionen wurden nach dem Trial and Error-Prinzip angelegt. Für ein größeres Projekt ist dies keine vernünftige Vorgehensweise und auch bei \textit{kirjanystaevaet} wäre testdriven developement mit Unit- und Integrationstests eine Möglichkeit gewesen. Aufgrund der langen Einarbeitungszeit in grundsätzliche Springfunktionsweisen blieben strukturierte Tests jedoch Theorie.
+
 \section{Bliblablub}
 
 	\begin{itemize}
