@@ -273,12 +273,6 @@ public class User {
 		this.userBookStatistics = userBookStatistics;
 	}
 
-	// FIXME Um Orders persitieren zu können -> noch benötigt?
-	public void addOrder(Orderx order) {
-		order.setUser(this);
-		orders.add(order);
-	}
-
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", surname=" + surname
