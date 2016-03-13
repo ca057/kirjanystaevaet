@@ -1,7 +1,6 @@
 
 package appl.data.dao.impl;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +37,12 @@ public class UserDAOImpl implements UserDAO {
 		if (sessionFactory == null) {
 			throw new RuntimeException("[Error] SessionFactory is null");
 		}
-		Criteria cr = getSession().createCriteria(User.class).setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-		// return cr.createAlias("PLZ", "p");
+		Criteria cr = getSession().createCriteria(User.class)
+				.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		return cr;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getUsers() throws DatabaseException {
 		try {
@@ -52,6 +52,7 @@ public class UserDAOImpl implements UserDAO {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getUserByMetadata(Map<Userfields, String> map) throws DatabaseException {
 		Criteria cr = setupAndGetCriteria();
@@ -114,15 +115,10 @@ public class UserDAOImpl implements UserDAO {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserBookStatistic> getUserBookStatistics(int userId) throws DatabaseException {
-		User user = getUserByUniqueField(Userfields.userId, String.valueOf(userId))
-				.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
-		List<UserBookStatistic> result = new ArrayList<UserBookStatistic>();
-		return getSession().createCriteria(UserBookStatistic.class).list();
-		// TODO Methode für get() anbieten?
-		// result.addAll(user.getUserBookStatistics());
-		// return result;
+		return (List<UserBookStatistic>) getSession().createCriteria(UserBookStatistic.class).list();
 	}
 
 	@Override
@@ -153,16 +149,5 @@ public class UserDAOImpl implements UserDAO {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
-
-	// private boolean saveUserBookStatistic(UserBookStatistic statistic) throws
-	// DatabaseException {
-	// try {
-	// getSession().save(statistic);
-	// return true;
-	// } catch (HibernateException e) {
-	// throw new
-	// DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
-	// }
-	// }
 
 }

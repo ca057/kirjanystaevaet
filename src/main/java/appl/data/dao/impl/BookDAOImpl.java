@@ -34,11 +34,10 @@ public class BookDAOImpl implements BookDAO {
 	private SessionFactory sessionFactory;
 	@Autowired
 	BuilderFactory builderFactory;
-	
+
 	private BookBuilder getBookBuilder() {
 		return builderFactory.getBookBuilder();
 	}
-
 
 	private Session getSession() {
 		return sessionFactory.getCurrentSession();
@@ -149,8 +148,11 @@ public class BookDAOImpl implements BookDAO {
 			case pages:
 				cr.add(Restrictions.eq(key, entry.getValue()));
 				break;
+			default:
+				break;
 			}
 		}
+		@SuppressWarnings("unchecked")
 		List<Book> result = cr.list();
 		return result;
 
@@ -209,9 +211,9 @@ public class BookDAOImpl implements BookDAO {
 		BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
 
 		bookBuilder.setStock(-1);
-//		book.setStock(-1);
+		// book.setStock(-1);
 		getSession().update(bookBuilder.createBook());
-//		getSession().update(book);
+		// getSession().update(book);
 	}
 
 	@Override
@@ -232,6 +234,5 @@ public class BookDAOImpl implements BookDAO {
 		System.out.println("Least Visited: " + result);
 		return result;
 	}
-
 
 }

@@ -197,7 +197,7 @@ public class BookServiceImpl implements BookService {
 
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Category"));
 		} catch (DataIntegrityViolationException e) {
-			throw new DatabaseException(ErrorMessageHelper.DataIntegrityViolation("Category", "Book", e.getMessage()));
+			throw new DatabaseException(ErrorMessageHelper.dataIntegrityViolation("Category", "Book", e.getMessage()));
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		} catch (Exception e){
