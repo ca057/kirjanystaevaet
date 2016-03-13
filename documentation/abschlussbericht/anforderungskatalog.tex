@@ -109,7 +109,7 @@
 		Die Übersicht über die Bestellungen zeigt derzeit eine einfache Liste aller laufenden Bestellungen, eine Unterscheidung zwischen laufenden und abgeschlossenen Bestellungen gibt es aufgrund der Datenschemas nicht. Ebenfalls ist eine Administration der Bestellungen nicht möglich. Mit zunehmender Bestellanzahl wird eine solche Liste nicht mehr ausreichen, ebenso wenn eine Unterscheidung im Bestellstatus erfolgt. Für den geforderten Use Case und Umfang des Projekts erscheint die derzeitige Umsetzung jedoch als ausreichend. Ähnlich wie bei der Bestellverwaltung würde sich auch hier die Nutzung eines Frontend-Frameworks anbieten.
 		
 		\subsubsection{Fehlerbehandlung}
-		Im Gegensatz zum Frontend werden im Backend die meisten Fehler an die Oberfläche durchgereicht und zur Anzeige gebracht.
+		Im Gegensatz zum Frontend werden im Backend die meisten Fehler an die Oberfläche durchgereicht und zur Anzeige gebracht. Dies erfolgt in vielen Fällen durch die Ergänzung des Models um die Fehlermeldung oder das Hinzufügen der Fehlermeldung als URL-Parameter. Beim Rendern der Views werden diese Parameter oder Attribute angefragt und zur Anzeige gebracht.
 	
 	\subsection{A5: Warenkorb}\label{sec:umsetzung:cart}
 	%LT Implementierung beschreiben
