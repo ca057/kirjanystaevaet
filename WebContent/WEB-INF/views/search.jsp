@@ -7,6 +7,8 @@
 		<h1>Suche</h1>
 	</div>
 	
+	<div class="row">
+	
 	<form class="form">
 		<div class="col-sm-6 col-md-4 col-lg-2">
 			<label for="title">Titel</label>
@@ -37,6 +39,8 @@
 		</div>
 	</form>
 	
+	</div>
+	
 	
 	
 	<!-- Suchanfrage wird nur angezeigt, wenn der übergebene String nicht leer ist. -->
@@ -55,21 +59,42 @@
 				</c:when>
 				<c:otherwise>
 					<c:forEach var="book" items="${results}">
-					<h4><c:out value="${book.getTitle()}"/></h4>
-					<h5>Inhalt</h5>
-						<div class="row">
-							<div class="col-sm-8">
-								<c:out value="${book.getDescription()}" escapeXml="false"/>
-								<h5>Details</h5>
-								<p>Seitenzahl: <c:out value="${book.getPages()}"/></p>
-								<p>Verlag: <c:out value="${book.getPublisher()}"/></p>
-								<p>ISBN: <c:out value="${book.getIsbn()}"/></p>
-								<p>Preis <c:out value="${book.getPrice()}"/></p>
-							</div>
-							<div class="col-sm-4">
-								<img class="book-cover img-responsive" src="<c:url value="/img/cover/${book.getIsbn()}.jpg"/>" title="<c:out value="Cover des Buchs '${book.getTitle()}'"/>">
-							</div>
-						</div>
+					<div class="col-sm-6 col-md-3">
+									<div class="thumbnail">
+										<img class="book-cover img-responsive center-block"
+											src="<c:url value="/img/cover/${book.getIsbn()}.jpg"/>"
+											title="<c:out value="Cover des Buchs '${book.getTitle()}'"/>">
+										<div class="caption center-block">
+											<h4>
+												<c:out value="${book.getTitle()}" />
+											</h4>
+											<p>
+												von
+												<c:set var="delimiter" value="" scope="request"></c:set>
+												<c:forEach var="a" items="${book.getAuthors()}">${delimiter}<c:out
+														value="${a.getNameF()}" />
+													<c:out value="${a.getNameL()}" />
+													<c:set var="delimiter" value=", " scope="request"></c:set>
+												</c:forEach>
+											</p>
+											<p>
+												<c:out value="${book.getPrice()}" />
+												€ - <a href="<c:url value='/buch/${book.getIsbn()}' />"
+													title="zum Buch <c:out value='${book.getTitle()}' />">zum
+													Buch</a>
+											</p>
+												<form action="../warenkorb" method="post" id="cartForm">
+													<button type="submit" form="cartForm"
+														value='<c:out value="${book.getIsbn()}"></c:out>'
+														name="isbn" class="btn btn-primary center-block">
+														<span class="glyphicon glyphicon-shopping-cart"></span> In
+														den Warenkorb
+													</button>
+													<sec:csrfInput />
+												</form>
+										</div>
+									</div>
+								</div>
 					</c:forEach> 
 				</c:otherwise>
 			</c:choose>
