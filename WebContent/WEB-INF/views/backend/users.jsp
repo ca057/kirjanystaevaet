@@ -17,31 +17,32 @@
 		<h1>Nutzer_innenverwaltung</h1>
 	</div>
 
-	<form class="form-inline">
+	<div class="row">
+	<form class="form">
 		<fieldset>
 			<legend>Daten erfassen</legend>
-			<div class="form-group">
+			<div class="form-group col-sm-6 col-lg-4">
 				<label for="name">Vorname</label> <input type="text" id="name"
-					name="name" required />
+					name="name" class="form-control" required />
 			</div>
 
-			<div class="form-group">
+			<div class="form-group col-sm-6 col-lg-4">
 				<label for="surname">Nachname</label> <input type="text"
-					id="surname" name="surname" required />
+					id="surname" name="surname" class="form-control" required />
 			</div>
 
-			<div class="form-group">
+			<div class="form-group col-sm-6 col-lg-4">
 				<label for="street">Straße</label> <input type="text" id="street"
-					name="street" required />
+					name="street" class="form-control" required />
 			</div>
 
-			<div class="form-group">
+			<div class="form-group col-sm-6 col-lg-4">
 				<label for="streetnumber">Hausnummer</label> <input type="text"
-					id="streetnumber" name="streetnumber" required />
+					id="streetnumber" name="streetnumber" class="form-control" required />
 			</div>
 
-			<div class="form-group">
-				<label for="plz">PLZ</label> <input type="text" id="plz" name="plz"
+			<div class="form-group col-sm-6 col-lg-4">
+				<label for="plz">PLZ</label> <input type="text" id="plz" name="plz" class="form-control"
 					required />
 				<div class="hidden-info" id="plz-info-wrapper">
 					<p id="plz-info"></p>
@@ -49,12 +50,12 @@
 				</div>
 			</div>
 
-			<div class="form-group">
+			<div class="form-group col-sm-6 col-lg-4">
 				<label for="email">E-Mail</label> <input type="email" id="email"
-					name="email" required />
+					name="email" class="form-control" required />
 			</div>
 
-			<div class="form-group">
+			<div class="form-group col-sm-6 col-lg-4">
 				<label for="role">Rolle</label> <select name="role" id="role"
 					class="form-control" required>
 					<option value="">Rolle auswählen</option>
@@ -62,15 +63,17 @@
 					<option value="ADMIN">Administrator_in</option>
 				</select>
 			</div>
-
-			<button type="submit" id="add-user-submit" class="btn btn-default">Nutzer_in anlegen</button>
+			
+			<div class="col-xs-12">
+				<button type="submit" id="add-user-submit" class="btn btn-primary">Nutzer_in anlegen</button>
+			</div>
 		</fieldset>
 	</form>
+	</div>
 
-	<form class="form-inline">
-		<p>
-			<em>Hinweis: Neu angelegte Nutzer:innen sind derzeit erst nach
-				einem neuen Laden der Seite zu sehen.</em>
+	<form class="form">
+		<p class="help-block">Hinweis: Neu angelegte Nutzer:innen sind derzeit erst nach
+				einem neuen Laden der Seite zu sehen.
 		</p>
 		<fieldset>
 			<legend>Änderungen in bestehenden Account eintragen</legend>
@@ -90,46 +93,46 @@
 						</c:forEach>
 					</select>
 
-					<div class="form-group">
+					<div class="form-group col-sm-6 col-lg-4">
 					<label for="edit-name">Vorname</label>
-					<input type="text" id="edit-name" name="edit-name" />
+					<input type="text" id="edit-name" name="edit-name" class="form-control"/>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group col-sm-6 col-lg-4">
 					<label for="edit-surname">Nachname</label>
-					<input type="text" id="edit-surname" name="edit-surname" />
+					<input type="text" id="edit-surname" name="edit-surname" class="form-control"/>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group col-sm-6 col-lg-4">
 					<label for="edit-street">Straße</label>
-					<input type="text" id="edit-street" name="edit-street" />
+					<input type="text" id="edit-street" name="edit-street" class="form-control"/>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group col-sm-6 col-lg-4">
 					<label for="edit-streetnumber">Hausnummer</label>
-					<input type="text" id="edit-streetnumber" name="edit-streetnumber" />
+					<input type="text" id="edit-streetnumber" name="edit-streetnumber" class="form-control"/>
 						</div>
 
-					<div class="form-group">
+					<div class="form-group col-sm-6 col-lg-4">
 					<label for="edit-plz">PLZ</label>
-					<input type="text" id="edit-plz" name="edit-plz" />
+					<input type="text" id="edit-plz" name="edit-plz" class="form-control"/>
 					<div class="hidden-info" id="edit-plz-info-wrapper">
 						<p id="edit-plz-info"></p>
 						<div id="edit-plz-selection"></div>
 					</div>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group col-sm-6 col-lg-4">
 					<label for="edit-email">E-Mail</label>
-					<input type="email" id="edit-email" name="edit-email" />
+					<input type="email" id="edit-email" name="edit-email" class="form-control"/>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group col-sm-6 col-lg-4">
 					<label for="edit-password">Passwort <span class="glyphicon glyphicon-info-sign" title="mind. 6 Zeichen"></span></label>
-					<input type="password" id="edit-password" name="edit-password" />
+					<input type="password" id="edit-password" name="edit-password" class="form-control"/>
 						</div>
 
-					<div class="form-group">
+					<div class="form-group col-sm-6 col-lg-4">
 					<label for="edit-role">Rolle</label>
 					<select name="edit-role" id="edit-role" class="form-control" >
 						<option value="">Rolle auswählen</option>
@@ -138,7 +141,9 @@
 					</select>
 					</div>
 
-					<button type="submit" class="btn btn-default" id="edit-user-submit">Datensatz ändern</button>
+					<div class="col-xs-12">
+						<button type="submit" class="btn btn-primary" id="edit-user-submit">Datensatz ändern</button>
+					</div>
 				</c:otherwise>
 			</c:choose>
 		</fieldset>
@@ -152,6 +157,7 @@
 					einem neuen Laden der Seite zu sehen.</em>
 			</p>
 			<p>Noch nicht implementiert :(</p>
+			<!--  Bootstrap kannst du dir beim Löschen in der stock.jsp abschauen -->
 		</fieldset>
 	</form>
 </div>

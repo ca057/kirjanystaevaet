@@ -28,11 +28,11 @@
 			<input type="text" id="category" name="category" placeholder="Kategorie" class="form-control">
 		</div>
 		<div class="col-sm-6 col-md-4 col-lg-2">
-			<label for="authorFirst">Autor_in (Vorname)</label>
+			<label for="authorFirst">Autor_in</label>
 			<input type="text" id="authorFirst" name="authorFirst" placeholder="Vorname" class="form-control">
 		</div>
 		<div class="col-sm-6 col-md-4 col-lg-2">
-			<label for="authorLast">Autor_in (Nachname)</label>
+			<label for="authorLast">Autor_in</label>
 			<input type="text" id="authorLast" name="authorLast" placeholder="Nachname" class="form-control">
 		</div>
 		<div class="col-xs-12">
