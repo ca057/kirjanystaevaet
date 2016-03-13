@@ -30,7 +30,7 @@
 								<p>Preis: <c:out value="${book.key.getPrice()}"/>€</p>
 			
 								<form id="deleteBook" method="post">
-									<button class="btn btn-default btn-sm" id="deleteButton" name="isbn" value="${book.key.getIsbn()}" type="submit" formaction="<c:url value='/buch_geloescht'/>">
+									<button class="btn btn-primary btn-sm" id="deleteButton" name="isbn" value="${book.key.getIsbn()}" type="submit" formaction="<c:url value='/buch_geloescht'/>">
 										<span class="glyphicon glyphicon-remove-circle"></span>
 										aus Warenkorb entfernen
 									</button> 
@@ -48,13 +48,13 @@
 		<form id="orderForm" method="post">
 			<c:choose>
 				<c:when test="${bookItems.isEmpty()}">
-					<button class="btn btn-default btn-sm" id="orderButton" type="submit" formaction="<c:url value='/bestellung_aufgegeben'/>" disabled>
+					<button class="btn btn-primary btn-sm" id="orderButton" type="submit" formaction="<c:url value='/bestellung_aufgegeben'/>" disabled>
 						<span class="glyphicon glyphicon-ok"></span>
 						bestellen
 					</button> 
 				</c:when>
 				<c:otherwise>
-					<button class="btn btn-default btn-sm" id="orderButton" type="submit" formaction="<c:url value='/bestellung_aufgegeben'/>">
+					<button class="btn btn-primary btn-sm" id="orderButton" type="submit" formaction="<c:url value='/bestellung_aufgegeben'/>">
 						<span class="glyphicon glyphicon-ok"></span>
 						bestellen
 					</button> 
