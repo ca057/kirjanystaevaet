@@ -19,7 +19,6 @@ public class Main {
 
 		// new QueryFun().doSomeTesting2(ctx);
 		// new QueryFun().doSomeTesting(sessionFactory);
-		// FIXME DB auch bei Serverbetrieb anlegen!
 
 		// JdbcTemplate jdbc = ctx.getBean(JdbcTemplate.class);
 		// new QueryFun().jdbcStuff(jdbc);
@@ -37,9 +36,9 @@ public class Main {
 
 		qf.testAuthorInsert(ctx);
 		qf.testAuthorDelete(ctx);
-//
+		//
 		qf.testInsertBook(ctx);
-//		qf.testDeleteBook(ctx);
+		// qf.testDeleteBook(ctx);
 		qf.testInsertOrder(ctx);
 		qf.testBestsellers(ctx);
 		qf.testExistingCategory(ctx);
@@ -51,12 +50,11 @@ public class Main {
 		qf.testUpdateCategory(ctx);
 		qf.testUpdateAuthor(ctx);
 		qf.testRangeOfBookList(ctx);
-//		
+		//
 
-		//qf.testUser(ctx);
 		qf.testStatistics(ctx);
 
-//		qf.testGetAuthorsByIsbn(ctx);;
+		// qf.testGetAuthorsByIsbn(ctx);;
 	}
 
 }

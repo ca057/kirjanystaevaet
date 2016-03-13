@@ -1,9 +1,5 @@
 package appl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,21 +28,22 @@ import exceptions.data.EntityDoesNotExistException;
 
 public class QueryFun {
 
-//	public void doSomeTesting2(ApplicationContext ctx) throws DatabaseException {
-//		BookService service = ctx.getBean(BookService.class);
-//		// CategoryService ct = ctx.getBean(CategoryService.class);
-//		// System.out.println("Kategorien: " + ct.getAllCategoryNames());
-//		HashMap<Searchfields, String> map = new HashMap<Searchfields, String>();
-//		map.put(Searchfields.categoryName, "php");
-//		// map.put(Searchfields.title, "Architecture");
-//		// map.put(Searchfields.nameF, "Thomas");
-//		List result = service.getBooksByMetadata(map, SearchMode.ALL);
-//		System.out.println("Criteria:" + result);
-//		System.out.println("Alle Bücher: " + service.getAllBooks());
-//
-//		System.out.println();
-//		System.exit(0);
-//	}
+	// public void doSomeTesting2(ApplicationContext ctx) throws
+	// DatabaseException {
+	// BookService service = ctx.getBean(BookService.class);
+	// // CategoryService ct = ctx.getBean(CategoryService.class);
+	// // System.out.println("Kategorien: " + ct.getAllCategoryNames());
+	// HashMap<Searchfields, String> map = new HashMap<Searchfields, String>();
+	// map.put(Searchfields.categoryName, "php");
+	// // map.put(Searchfields.title, "Architecture");
+	// // map.put(Searchfields.nameF, "Thomas");
+	// List result = service.getBooksByMetadata(map, SearchMode.ALL);
+	// System.out.println("Criteria:" + result);
+	// System.out.println("Alle Bücher: " + service.getAllBooks());
+	//
+	// System.out.println();
+	// System.exit(0);
+	// }
 
 	public void testStatistics(ApplicationContext ctx) {
 		UserService service = ctx.getBean(UserService.class);
@@ -69,12 +66,12 @@ public class QueryFun {
 
 		service.getCategoryByExactName("Some Shit");
 	}
-	
-	public void testGetAuthorsByIsbn(ApplicationContext ctx)throws DatabaseException{
+
+	public void testGetAuthorsByIsbn(ApplicationContext ctx) throws DatabaseException {
 		BookService service = ctx.getBean(BookService.class);
 		List<Author> authors = service.getAuthorByIsbn("0131428985");
 		System.out.println("Authors must be Thomas Somenthing");
-		for(Author a : authors){
+		for (Author a : authors) {
 			System.out.println(a.toString());
 		}
 	}
@@ -281,32 +278,38 @@ public class QueryFun {
 
 		User user = userService.findByID(2).get();
 		List<Book> books = dataService.getAllBooks(SearchMode.ALL);
-		
-		 for (Book b : books){ System.out.println(b.toString()); }
-		 
-		 Book book = dataService.getBookByIsbn("9101010101", SearchMode.ALL);
-		 //Set<String> isbns = new HashSet<String>();
-		 //isbns.add("9101010101");
+
+		for (Book b : books) {
+			System.out.println(b.toString());
+		}
+
+		Book book = dataService.getBookByIsbn("9101010101", SearchMode.ALL);
+		// Set<String> isbns = new HashSet<String>();
+		// isbns.add("9101010101");
 		Map<String, Integer> isbns = new HashMap<String, Integer>();
 		isbns.put("9101010101", 2);
 		Calendar cal = Calendar.getInstance();
 		int orderId = orderService.createOrder(isbns, user.getUserId(), cal);
-//		List<Book> books4 = dataService.getAllBooks();
-//		
+		// List<Book> books4 = dataService.getAllBooks();
+		//
 		// for (Book b : books4){ System.out.println(b.toString()); }
-		//System.out.println("OrderId " + orderId + " ");
-		//Set<Orderx> ordersOfThisUser = userService.findByID(2).get().getOrders();
+		// System.out.println("OrderId " + orderId + " ");
+		// Set<Orderx> ordersOfThisUser =
+		// userService.findByID(2).get().getOrders();
 		// Set<Orderx> ordersOfThisUser = user.getOrders();
-		//System.out.println("\nOrder of this User amunt \n" + ordersOfThisUser.size());
-//		for (Orderx o : ordersOfThisUser) {
-//			Set<OrderItem> items = o.getOrderItems();
-//			//System.out.println("Größe der Bestellung" + o.getOrderItems().size());
-//			for (OrderItem a : items) {
-//				System.out.println("Title " + a.getBook().getTitle() + "Stock " + a.getBook().getStock());
-//			}
-//		}
+		// System.out.println("\nOrder of this User amunt \n" +
+		// ordersOfThisUser.size());
+		// for (Orderx o : ordersOfThisUser) {
+		// Set<OrderItem> items = o.getOrderItems();
+		// //System.out.println("Größe der Bestellung" +
+		// o.getOrderItems().size());
+		// for (OrderItem a : items) {
+		// System.out.println("Title " + a.getBook().getTitle() + "Stock " +
+		// a.getBook().getStock());
+		// }
+		// }
 
-//		// Zweite Order
+		// // Zweite Order
 		Map<String, Integer> isbns2 = new HashMap<String, Integer>();
 		isbns2.put("9101010101", 6);
 		isbns2.put("0101010101", 5);
@@ -315,111 +318,117 @@ public class QueryFun {
 		Calendar cal2 = Calendar.getInstance();
 		int orderId2 = orderService.createOrder(isbns2, 1, cal2);
 		System.out.println("Price of Order: " + orderService.getPriceOfOrder(orderId2));
-		//System.out.println("OrderId " + orderId2 + " ");
-//		List<Book> orderedBooks = orderService.getOrderedBooksOfUser(1);
-//		System.out.println("\nOrdered Books of User 1\n");
-//		for (Book b : orderedBooks){
-//			System.out.println(b.toString());
-//		}
-		//Set<Orderx> userOrders = userService.findByID(1).get().getOrders();
-//		System.out.println("\n\nGet Order of user\nSize " + userOrders.size() + "\n");
-//		for (Orderx o : userOrders) {
-//			System.out.println(o.toString());
-//		}
+		// System.out.println("OrderId " + orderId2 + " ");
+		// List<Book> orderedBooks = orderService.getOrderedBooksOfUser(1);
+		// System.out.println("\nOrdered Books of User 1\n");
+		// for (Book b : orderedBooks){
+		// System.out.println(b.toString());
+		// }
+		// Set<Orderx> userOrders = userService.findByID(1).get().getOrders();
+		// System.out.println("\n\nGet Order of user\nSize " + userOrders.size()
+		// + "\n");
+		// for (Orderx o : userOrders) {
+		// System.out.println(o.toString());
+		// }
 
-//		List<Orderx> allOrders = orderService.getAllOrders();
-//		System.out.println("\n\nGet all orders\n\n");
-//		System.out.println("Size of Orderlist: " + allOrders.size());
-//		for (Orderx o : allOrders) {
-//			System.out.println(o.toString());
-//		}
+		// List<Orderx> allOrders = orderService.getAllOrders();
+		// System.out.println("\n\nGet all orders\n\n");
+		// System.out.println("Size of Orderlist: " + allOrders.size());
+		// for (Orderx o : allOrders) {
+		// System.out.println(o.toString());
+		// }
 
-//		List<OrderItem> allOrderItems = orderService.getAllOrderItems();
-//		System.out.println("\n all order items size: \n" + allOrderItems.size());
-//		for (OrderItem o : allOrderItems) {
-//			System.out.println(o.toString());
-//		}
+		// List<OrderItem> allOrderItems = orderService.getAllOrderItems();
+		// System.out.println("\n all order items size: \n" +
+		// allOrderItems.size());
+		// for (OrderItem o : allOrderItems) {
+		// System.out.println(o.toString());
+		// }
 
 	}
-	public void testBestsellers(ApplicationContext ctx) throws DatabaseException{
+
+	public void testBestsellers(ApplicationContext ctx) throws DatabaseException {
 		BookService dataService = ctx.getBean(BookService.class);
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
-		
-		//List<Map.Entry<String, Integer>> bestseller = orderService.getBestsellers(2);
+
+		// List<Map.Entry<String, Integer>> bestseller =
+		// orderService.getBestsellers(2);
 		LinkedHashMap<Book, Integer> bestseller = orderService.getBestsellers(3);
 		System.out.println("\nBestsellers\n");
-		for (Map.Entry<Book, Integer> m : bestseller.entrySet()){
+		for (Map.Entry<Book, Integer> m : bestseller.entrySet()) {
 			System.out.println(m.getKey().getTitle() + " " + m.getValue());
 		}
 	}
-	
-	public void testDeleteCategoryOfBook(ApplicationContext ctx) throws DatabaseException{
+
+	public void testDeleteCategoryOfBook(ApplicationContext ctx) throws DatabaseException {
 		BookService dataService = ctx.getBean(BookService.class);
 		Book book = dataService.getBookByIsbn("0101010101", SearchMode.ALL);
 		Set<Category> cats = book.getCategories();
 		System.out.println("Categories of Book\n");
-		for (Category c : cats){
+		for (Category c : cats) {
 			System.out.println(c.toString());
 		}
-		List<Book> books = dataService.getBooksByCategory("Bestseller",SearchMode.ALL);
-		System.out.println("Books with that Category");	
-		for(Book b: books){
+		List<Book> books = dataService.getBooksByCategory("Bestseller", SearchMode.ALL);
+		System.out.println("Books with that Category");
+		for (Book b : books) {
 			System.out.println(b.getTitle());
 		}
-		
-//		
-		
+
+		//
+
 		Category cat = dataService.getCategoryByExactName("Bestseller");
 		dataService.deleteCategoryOfBook("0101010101", cat.getCategoryID());
-		
-//		book = dataService.getBookByIsbn("0101010101");
-//		cats = book.getCategories();
-//		System.out.println("Categories of Book\n");
-//		for (Category c : cats){
-//			System.out.println(c.toString());
-//		}
-		
-//		List<Book> books = dataService.getBooksByCategory("Bestseller");
-//		System.out.println("Books with that Category");	
-//		for(Book b: books){
-//			System.out.println(b.getTitle());
-//		}
-		
+
+		// book = dataService.getBookByIsbn("0101010101");
+		// cats = book.getCategories();
+		// System.out.println("Categories of Book\n");
+		// for (Category c : cats){
+		// System.out.println(c.toString());
+		// }
+
+		// List<Book> books = dataService.getBooksByCategory("Bestseller");
+		// System.out.println("Books with that Category");
+		// for(Book b: books){
+		// System.out.println(b.getTitle());
+		// }
+
 	}
-	public void testExistingCategory(ApplicationContext ctx) throws DatabaseException{
+
+	public void testExistingCategory(ApplicationContext ctx) throws DatabaseException {
 		BookService dataService = ctx.getBean(BookService.class);
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
-		if (dataService.isExistingCategory("children's fantasy")){
+		if (dataService.isExistingCategory("children's fantasy")) {
 			System.out.println("true");
-		}else{
+		} else {
 			System.out.println("Something went wrong");
 		}
-		
+
 		String exactName = dataService.getCategoryName("children's fantasy");
 		System.out.println(exactName + " exactName");
 	}
-	
-	public void testAddCategoryToBook(ApplicationContext ctx) throws DatabaseException{
+
+	public void testAddCategoryToBook(ApplicationContext ctx) throws DatabaseException {
 		BookService dataService = ctx.getBean(BookService.class);
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
-		
+
 		Category category = dataService.getCategoryByExactName("PHP");
 		dataService.addCategoryToBook("0101010101", category.getCategoryID());
 		Book book = dataService.getBookByIsbn("0101010101", SearchMode.ALL);
 		Set<Category> cats = book.getCategories();
 		System.out.println("Categories of Book\n");
-		for (Category c : cats){
+		for (Category c : cats) {
 			System.out.println(c.toString());
 		}
 	}
-	public void testUpdateBook(ApplicationContext ctx) throws DatabaseException{
+
+	public void testUpdateBook(ApplicationContext ctx) throws DatabaseException {
 		BookService dataService = ctx.getBean(BookService.class);
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
-		
+
 		Map<Searchfields, String> map = new HashMap<Searchfields, String>();
 		map.put(Searchfields.description, "New Description");
 		map.put(Searchfields.price, "100,11");
@@ -429,46 +438,47 @@ public class QueryFun {
 		Set<Integer> authors = new HashSet<Integer>();
 		authors.add(author1.get(0).getAuthorId());
 		authors.add(author2.get(0).getAuthorId());
-		
+
 		Set<Category> categories = dataService.getBookByIsbn("0131428985", SearchMode.ALL).getCategories();
 		Set<Integer> catIds = new HashSet<Integer>();
-		for (Category c : categories){
+		for (Category c : categories) {
 			catIds.add(c.getCategoryID());
 		}
-		
+
 		dataService.updateBook("0131428985", map, authors, catIds);
 		Book book = dataService.getBookByIsbn("0131428985", SearchMode.ALL);
 		System.out.println(book.toString());
 		Set<Author> authorsOfBook = book.getAuthors();
 		System.out.println("Authors of Book");
-		for (Author a : authorsOfBook){
+		for (Author a : authorsOfBook) {
 			System.out.println(a.toString());
 		}
-		
+
 	}
-	public void testUpdateCategory(ApplicationContext ctx) throws DatabaseException{
+
+	public void testUpdateCategory(ApplicationContext ctx) throws DatabaseException {
 		BookService dataService = ctx.getBean(BookService.class);
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
-		
+
 		Category cat = dataService.getCategoryByExactName("PHP");
 		int id = cat.getCategoryID();
 		dataService.updateCategory(id, "stuff");
 		Category newCat = dataService.getCategoryById(id);
 		System.out.println("New cat " + newCat.toString());
-		
+
 		List<Book> books = dataService.getBooksByCategory("stuff", SearchMode.ALL);
-		for (Book b : books){
+		for (Book b : books) {
 			System.out.println(b.toString());
 		}
-		
+
 	}
-	
-	public void testUpdateAuthor(ApplicationContext ctx) throws DatabaseException{
+
+	public void testUpdateAuthor(ApplicationContext ctx) throws DatabaseException {
 		BookService dataService = ctx.getBean(BookService.class);
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
-		
+
 		List<Author> authors = dataService.getAuthorByExactName("Michael", "Ende");
 		Author author = authors.get(0);
 		int id = author.getAuthorId();
@@ -476,62 +486,62 @@ public class QueryFun {
 		newData.put(Searchfields.nameF, "Someone");
 		newData.put(Searchfields.nameL, "Else");
 		dataService.updateAuthor(id, newData);
-		
+
 		Book book = dataService.getBookByIsbn("9101010101", SearchMode.ALL);
 		Set<Author> newAuthor = book.getAuthors();
 		System.out.println("New Author in Momo: " + book.toString());
 		System.out.println("New Author in Momo:\n");
-		for (Author a : newAuthor){
+		for (Author a : newAuthor) {
 			System.out.println(a.toString());
 		}
-		
+
 	}
-	
-	public void testGetBooksSell(ApplicationContext ctx) throws DatabaseException{
+
+	public void testGetBooksSell(ApplicationContext ctx) throws DatabaseException {
 		BookService dataService = ctx.getBean(BookService.class);
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
-		
+
 		List<Book> allBooks = dataService.getAllBooks(SearchMode.ALL);
 		System.out.println("\nAll\n");
-		for (Book b : allBooks){
+		for (Book b : allBooks) {
 			System.out.println(b.toString());
 		}
-		
+
 		Book book = dataService.getBookByIsbn("0101010101", SearchMode.AVAILABLE);
 		System.out.println(book.toString());
 	}
-	
-	public void testGetShelveWarmers(ApplicationContext ctx) throws DatabaseException{
+
+	public void testGetShelveWarmers(ApplicationContext ctx) throws DatabaseException {
 		BookService dataService = ctx.getBean(BookService.class);
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
 		LinkedHashMap<Book, Integer> shelveWarmers = orderService.getShelfWarmers(19);
 		System.out.println("\n Shelve Warmers \n");
-		for (Entry<Book, Integer> e : shelveWarmers.entrySet()){
+		for (Entry<Book, Integer> e : shelveWarmers.entrySet()) {
 			System.out.println("Isbn: " + e.getKey().getIsbn() + " anzahl " + e.getValue());
 		}
-		
-//		List<Book> allBooks = dataService.getAllBooks(SearchMode.AVAILABLE);
-//		System.out.println("\nAll\n");
-//		for (Book b : allBooks){
-//			System.out.println(b.toString());
-//		}
+
+		// List<Book> allBooks = dataService.getAllBooks(SearchMode.AVAILABLE);
+		// System.out.println("\nAll\n");
+		// for (Book b : allBooks){
+		// System.out.println(b.toString());
+		// }
 	}
-	
-	public void testRangeOfBookList(ApplicationContext ctx) throws DatabaseException{
+
+	public void testRangeOfBookList(ApplicationContext ctx) throws DatabaseException {
 		BookService dataService = ctx.getBean(BookService.class);
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
 		List<Book> books = dataService.getAllBooks(SearchMode.ALL, 5);
-		System.out.println("Only 5 books" );
-		for (Book b : books){
+		System.out.println("Only 5 books");
+		for (Book b : books) {
 			System.out.println(b.toString());
 		}
-		
+
 		List<Book> books2 = dataService.getBooksByCategory("MySQL", SearchMode.ALL, 20);
-		System.out.println("Only 20 books" );
-		for (Book b : books2){
+		System.out.println("Only 20 books");
+		for (Book b : books2) {
 			System.out.println(b.toString());
 		}
 	}
@@ -769,30 +779,6 @@ public class QueryFun {
 	 * 
 	 * }
 	 */
-
-	public void testUser(ApplicationContext ctx) {
-		UserService service = ctx.getBean(UserService.class);
-		File file = new File("WebContent/resources/img/cover/0131428985.jpg");
-		byte[] bFile = new byte[(int) file.length()];
-		try {
-			FileInputStream fileInputStream = new FileInputStream(file);
-			fileInputStream.read(bFile);
-			service.updateAccount(service.findbyMail("admin@ky.de").get().getUserId(), new HashMap<>(), bFile);
-			fileInputStream.close();
-			FileOutputStream fos = new FileOutputStream("output.jpg");
-			User user = service.findbyMail("admin@ky.de")
-					.orElseThrow(() -> new EntityDoesNotExistException("User nicht gefunden"));
-			System.out.println(user);
-			fos.write(user.getImage());
-			fos.close();
-
-		} catch (DatabaseException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	/*
 	 * 

@@ -24,14 +24,16 @@ public class ProcessUpload implements UploadHelper {
 	public boolean saveBookCover(String title, String extension, byte[] inputFile, HttpSession httpSession) {
 		File dir = new File(httpSession.getServletContext()
 				.getRealPath(File.separator + "uploaded" + File.separator + "img" + File.separator + "cover"));
-		if (!dir.exists()) {
-			dir.mkdirs();
-		}
-		File serverFile = new File(dir.getAbsolutePath() + File.separator + title + "." + extension);
-		try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
-			stream.write(inputFile);
-			return true;
-		} catch (IOException e) {
+		try {
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			File serverFile = new File(dir.getAbsolutePath() + File.separator + title + "." + extension);
+			try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
+				stream.write(inputFile);
+				return true;
+			}
+		} catch (IOException | SecurityException e) {
 			return false;
 		}
 	}
