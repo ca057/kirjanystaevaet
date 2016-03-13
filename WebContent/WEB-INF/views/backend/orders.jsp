@@ -23,7 +23,7 @@
 												value="${order.getDate().getInstance().getTime()}" />: <c:out value="${totalprice}"></c:out> €</a>
       										</h4>
     									</div>
-    									<div id="collapse<c:out value='${order.getOrderId()}'/>" class="panel-collapse collapse in">
+    									<div id="collapse<c:out value='${order.getOrderId()}'/>" class="panel-collapse collapse">
 											<ul>
 												<c:forEach var="item" items="${order.getOrderItems()}">
 													<li><c:out value="${item.getBook().getTitle()}"></c:out>

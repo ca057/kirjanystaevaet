@@ -36,11 +36,12 @@
 									<c:forEach var="order" items="${lastOrders}">
 										<div class="panel-heading">
       										<h4 class="panel-title">
+      											<c:forEach var='item' items='${order.getOrderItems()}'><c:set var="totalprice" value="${totalprice + item.getPrice()}"/> </c:forEach>
       											<a data-toggle="collapse" data-parent="#accordion" <c:out value="href=#collapse${order.getOrderId()}" />>Bestellung vom <fmt:formatDate pattern="dd.MM.yyyy"
-												value="${order.getDate().getInstance().getTime()}" /></a>
+												value="${order.getDate().getInstance().getTime()}" />: <c:out value="${totalprice}"></c:out> €</a>
       										</h4>
     									</div>
-    									<div id="collapse<c:out value='${order.getOrderId()}'/>" class="panel-collapse collapse in">
+    									<div id="collapse<c:out value='${order.getOrderId()}'/>" class="panel-collapse collapse">
 											<ul>
 												<c:forEach var="item" items="${order.getOrderItems()}">
 													<li><c:out value="${item.getBook().getTitle()}"></c:out>
