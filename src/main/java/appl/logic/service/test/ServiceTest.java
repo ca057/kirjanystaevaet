@@ -26,6 +26,12 @@ import exceptions.data.CategoryExistsException;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
 
+/**
+ * Class for testing the service implementations.
+ * 
+ * @author Madeleine
+ *
+ */
 public class ServiceTest {
 
 	// public void doSomeTesting2(ApplicationContext ctx) throws
@@ -270,8 +276,8 @@ public class ServiceTest {
 		OrderService orderService = ctx.getBean(OrderService.class);
 		UserService userService = ctx.getBean(UserService.class);
 
-//		dataService.updateStock("9101010101", 45);
-//		dataService.updateStock("0101010101", 68);
+		// dataService.updateStock("9101010101", 45);
+		// dataService.updateStock("0101010101", 68);
 		List<User> users = userService.getUsers();
 		System.out.println("List of Users");
 		for (User u : users) {
@@ -320,10 +326,10 @@ public class ServiceTest {
 		Calendar cal2 = Calendar.getInstance();
 		int orderId2 = orderService.createOrder(isbns2, 1, cal2);
 		System.out.println("Price of Order: " + orderService.getPriceOfOrder(orderId2));
-		
+
 		System.out.println("All books now");
 		List<Book> allBook = dataService.getAllBooks(SearchMode.ALL);
-		for(Book b : allBook){
+		for (Book b : allBook) {
 			System.out.println(b.toString());
 		}
 		// System.out.println("OrderId " + orderId2 + " ");

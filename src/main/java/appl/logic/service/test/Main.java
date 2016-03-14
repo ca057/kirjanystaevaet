@@ -9,6 +9,11 @@ import exceptions.data.CategoryExistsException;
 import exceptions.data.DatabaseException;
 import exceptions.data.PrimaryKeyViolationException;
 
+/**
+ * 
+ * @author Madeleine
+ *
+ */
 public class Main {
 
 	public static void main(String[] args)
@@ -31,28 +36,28 @@ public class Main {
 		// new QueryFun().testExceptions(ctx);
 		ServiceTest st = new ServiceTest();
 
-//		st.testCategoryInsert(ctx);
-//		st.testCategoryDelete(ctx);
-//
-//		st.testAuthorInsert(ctx);
-//		st.testAuthorDelete(ctx);
-//		//
-//		st.testInsertBook(ctx);
+		// st.testCategoryInsert(ctx);
+		// st.testCategoryDelete(ctx);
+		//
+		// st.testAuthorInsert(ctx);
+		// st.testAuthorDelete(ctx);
+		// //
+		// st.testInsertBook(ctx);
 		// qf.testDeleteBook(ctx);
 		st.testInsertOrder(ctx);
-//		st.testBestsellers(ctx);
-//		st.testExistingCategory(ctx);
-//		st.testDeleteCategoryOfBook(ctx);
-//		st.testAddCategoryToBook(ctx);
-//		st.testUpdateBook(ctx);
-//		st.testGetBooksSell(ctx);
-//		st.testGetShelveWarmers(ctx);
-//		st.testUpdateCategory(ctx);
-//		st.testUpdateAuthor(ctx);
-//		st.testRangeOfBookList(ctx);
+		// st.testBestsellers(ctx);
+		// st.testExistingCategory(ctx);
+		// st.testDeleteCategoryOfBook(ctx);
+		// st.testAddCategoryToBook(ctx);
+		// st.testUpdateBook(ctx);
+		// st.testGetBooksSell(ctx);
+		// st.testGetShelveWarmers(ctx);
+		// st.testUpdateCategory(ctx);
+		// st.testUpdateAuthor(ctx);
+		// st.testRangeOfBookList(ctx);
 		//
 
-//		st.testStatistics(ctx);
+		// st.testStatistics(ctx);
 
 		// qf.testGetAuthorsByIsbn(ctx);;
 	}
