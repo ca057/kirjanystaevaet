@@ -1,4 +1,5 @@
 package appl.data.dao.impl;
+
 /**
  * @author Madeleine
  */
@@ -41,11 +42,11 @@ public class OrderDAOImpl implements OrderDAO {
 	BookService dataService;
 	@Autowired
 	UserService userService;
-	
+
 	private Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
-	
+
 	private Criteria setupAndGetCriteria() {
 		if (sessionFactory == null) {
 			throw new RuntimeException("[Error] SessionFactory is null");
@@ -54,16 +55,14 @@ public class OrderDAOImpl implements OrderDAO {
 		Criteria cr = s.createCriteria(Orderx.class);
 		cr.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		return cr;
-		
+
 	}
 
 	@Override
 	public int insertOrder(Orderx order) throws DatabaseException {
 		int id = (int) getSession().save(order);
 		return id;
-			
-		
-		
+
 	}
 
 	@Override
@@ -77,6 +76,7 @@ public class OrderDAOImpl implements OrderDAO {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Orderx> getAllOrders() {
 		return setupAndGetCriteria().list();
@@ -87,53 +87,54 @@ public class OrderDAOImpl implements OrderDAO {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq("orderId", id));
 		Object result = cr.uniqueResult();
-		if ( result != null){
+		if (result != null) {
 			Orderx order = (Orderx) result;
 			return order;
 		} else {
 			throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Order"));
 		}
-	
+
 	}
 
 	@Override
-	public int createOrder(Map<String, Integer> isbnsNumberOf, int userId, Calendar cal) throws EntityDoesNotExistException, DatabaseException {
+	public int createOrder(Map<String, Integer> isbnsNumberOf, int userId, Calendar cal)
+			throws EntityDoesNotExistException, DatabaseException {
 		Orderx order = new Orderx(cal);
 		try {
 			int orderId = insertOrder(order);
-			for (String isbn : isbnsNumberOf.keySet()){
-			
+			for (String isbn : isbnsNumberOf.keySet()) {
+
 				Book book = bookDao.getBookByIsbn(isbn);
 				OrderItem orderItem = new OrderItem(book, book.getPrice(), isbnsNumberOf.get(isbn), order);
-					
+
 				// OrderItem im Buch setzen
 				book.getOrderItems().add(orderItem);
 				// OrderItem in der Order setzen
 				order.getOrderItems().add(orderItem);
-				
+
 				// OrderItems speichern
 				orderItemDao.insert(orderItem);
-				
+
 				// Stock in Books updaten
 				bookDao.decrementStock(isbn, isbnsNumberOf.get(isbn));
 
-
 			}
-			
+
 			// Verbindung zwischen User und Order herstellen
-			User user = userService.findByID(userId).orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
+			User user = userService.findByID(userId)
+					.orElseThrow(() -> new DatabaseException(ErrorMessageHelper.entityDoesNotExist("User")));
 			user.getOrders().add(order);
 			order.setUser(user);
 			updateOrder(order);
-			
+
 			return orderId;
 
-		} catch (HibernateException e){
+		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
 
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Book> getBooksWithoutOrderItem() {
 		Session s = getSession();
@@ -142,7 +143,5 @@ public class OrderDAOImpl implements OrderDAO {
 		cr.add(Restrictions.isEmpty("book.orderItems"));
 		return cr.list();
 	}
-
-	
 
 }

@@ -1,4 +1,5 @@
 package appl.data.dao.impl;
+
 /**
  * @author Madeleine
  */
@@ -21,12 +22,11 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	private Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
 
-	
 	private Criteria setupAndGetCriteria() {
 		if (sessionFactory == null) {
 			throw new RuntimeException("[Error] SessionFactory is null");
@@ -35,34 +35,37 @@ public class CategoryDAOImpl implements CategoryDAO {
 		Criteria cr = s.createCriteria(Category.class);
 		cr.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		return cr;
-		//return cr.createAlias("books", "b").createAlias("authors", "a");
-		//return cr.createAlias("books", "b"); // Category hat keinen Author -> kein Alias dafür angeben
+		// return cr.createAlias("books", "b").createAlias("authors", "a");
+		// return cr.createAlias("books", "b"); // Category hat keinen Author ->
+		// kein Alias dafür angeben
 	}
 
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Category> getCategories() {
 		return getSession().createCriteria(Category.class).list();
 	}
+
 	@Override
 	public Category getCategoriesByExactName(String name) throws EntityDoesNotExistException {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq("categoryName", name).ignoreCase());
 		Object result = cr.uniqueResult();
-		if ( result != null){
+		if (result != null) {
 			Category cat = (Category) result;
 			return cat;
 		} else {
 			throw new EntityDoesNotExistException();
 		}
-		
+
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Category> getCategoriesByName(String categoryName) {
-		
+
 		Criteria cr = setupAndGetCriteria();
-		cr.add(Restrictions.ilike("categoryName", "%" + categoryName + "%" ));
+		cr.add(Restrictions.ilike("categoryName", "%" + categoryName + "%"));
 		return cr.list();
 	}
 
@@ -77,27 +80,23 @@ public class CategoryDAOImpl implements CategoryDAO {
 		getSession().update(category);
 	}
 
-
 	@Override
 	public Category getCategoryById(int id) throws EntityDoesNotExistException {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq("categoryID", id));
 		Object result = cr.uniqueResult();
-		if ( result != null){
+		if (result != null) {
 			Category cat = (Category) result;
 			return cat;
 		} else {
 			throw new EntityDoesNotExistException();
 		}
 	}
+
 	@Override
-	public void deleteCategory(int id){
-		Category category = getSession().get(Category.class, id);			             
+	public void deleteCategory(int id) {
+		Category category = getSession().get(Category.class, id);
 		getSession().delete(category);
 	}
 
-
-
-	
 }
-

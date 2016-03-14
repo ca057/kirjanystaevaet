@@ -76,11 +76,13 @@ public class PlzDAOImpl implements PlzDAO {
 						.add(Restrictions.ilike(Userfields.place.toString(), place)).uniqueResult()).getPlzId());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<PLZ> getPLZByPostalCode(String postalCode) {
 		return setupAndGetCriteria().add(Restrictions.ilike(Userfields.postcode.toString(), postalCode)).list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<PLZ> getPLZByPlace(String place) {
 		return setupAndGetCriteria().add(Restrictions.ilike(Userfields.place.toString(), place)).list();

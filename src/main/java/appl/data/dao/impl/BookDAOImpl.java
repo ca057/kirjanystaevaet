@@ -63,6 +63,7 @@ public class BookDAOImpl implements BookDAO {
 		return cr;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Book> getAllBooks(SearchMode mode) {
 		Criteria cr = setupAndGetCriteria();
@@ -198,7 +199,7 @@ public class BookDAOImpl implements BookDAO {
 		if (book.getStock() >= decrement) {
 			book.decrementStock(decrement);
 			getSession().update(book);
-		}else if (book.getStock() == 0){
+		} else if (book.getStock() == 0) {
 			throw new DatabaseException(ErrorMessageHelper.stockIsNull(book.getTitle()));
 		} else {
 			throw new DatabaseException(ErrorMessageHelper.notEnoughBooksAvailable(book.getTitle()));

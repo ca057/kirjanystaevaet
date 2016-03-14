@@ -1,4 +1,5 @@
 package appl.data.dao.impl;
+
 /**
  * @author Madeleine
  */
@@ -20,7 +21,7 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	public OrderItemDAOImpl() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -37,20 +38,23 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 		cr.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		return cr;
 	}
+
 	@Override
 	public void update(OrderItem orderItem) {
 		getSession().update(orderItem);
-		
+
 	}
+
 	@Override
-	public int insert(OrderItem orderItem){
+	public int insert(OrderItem orderItem) {
 		int id = (int) getSession().save(orderItem);
 		return id;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<OrderItem> getAllOrderItems() {
-		return setupAndGetCriteria().list();		
+		return setupAndGetCriteria().list();
 	}
 
 }
