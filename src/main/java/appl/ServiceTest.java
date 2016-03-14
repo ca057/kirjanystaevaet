@@ -26,7 +26,7 @@ import exceptions.data.CategoryExistsException;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
 
-public class QueryFun {
+public class ServiceTest {
 
 	// public void doSomeTesting2(ApplicationContext ctx) throws
 	// DatabaseException {

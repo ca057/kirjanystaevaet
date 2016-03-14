@@ -29,30 +29,30 @@ public class Main {
 		// new QueryFun().testDao(ctx);
 		// new QueryFun().testBookInsert(ctx);
 		// new QueryFun().testExceptions(ctx);
-		QueryFun qf = new QueryFun();
+		ServiceTest st = new ServiceTest();
 
-		qf.testCategoryInsert(ctx);
-		qf.testCategoryDelete(ctx);
+		st.testCategoryInsert(ctx);
+		st.testCategoryDelete(ctx);
 
-		qf.testAuthorInsert(ctx);
-		qf.testAuthorDelete(ctx);
+		st.testAuthorInsert(ctx);
+		st.testAuthorDelete(ctx);
 		//
-		qf.testInsertBook(ctx);
+		st.testInsertBook(ctx);
 		// qf.testDeleteBook(ctx);
-		qf.testInsertOrder(ctx);
-		qf.testBestsellers(ctx);
-		qf.testExistingCategory(ctx);
-		qf.testDeleteCategoryOfBook(ctx);
-		qf.testAddCategoryToBook(ctx);
-		qf.testUpdateBook(ctx);
-		qf.testGetBooksSell(ctx);
-		qf.testGetShelveWarmers(ctx);
-		qf.testUpdateCategory(ctx);
-		qf.testUpdateAuthor(ctx);
-		qf.testRangeOfBookList(ctx);
+		st.testInsertOrder(ctx);
+		st.testBestsellers(ctx);
+		st.testExistingCategory(ctx);
+		st.testDeleteCategoryOfBook(ctx);
+		st.testAddCategoryToBook(ctx);
+		st.testUpdateBook(ctx);
+		st.testGetBooksSell(ctx);
+		st.testGetShelveWarmers(ctx);
+		st.testUpdateCategory(ctx);
+		st.testUpdateAuthor(ctx);
+		st.testRangeOfBookList(ctx);
 		//
 
-		qf.testStatistics(ctx);
+		st.testStatistics(ctx);
 
 		// qf.testGetAuthorsByIsbn(ctx);;
 	}
