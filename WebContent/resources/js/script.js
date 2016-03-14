@@ -1,3 +1,6 @@
+/*
+ * Provides function which supports (in its current version) a function to deal with the registration.
+ */
 const handle = function () {
  	const registration = function () {
  		console.log("Registration is active.")
@@ -68,7 +71,6 @@ const handle = function () {
 
  	return {
  		registration: () => registration(),
- 		bootstrap: () => bootstrap()
  	};
  };
 

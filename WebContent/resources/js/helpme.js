@@ -1,4 +1,8 @@
-// TODO add documentation
+/*
+ * This basic script is a wrapper for some often used functions throughout the 
+ * client-side application. It helps to simplify the main scripts which handles
+ * e.g. the registration of new users.
+ */
 
 KY = {
 	// wrapper for performing AJAX-requests 
@@ -41,8 +45,8 @@ KY = {
 	},
 	// checks if the given array of html-ids of inputs without leading '#' are not empty
 	inputsAreNotEmpty: function (inputs) {
-		// TODO refactor, so it works with or without leading '#'
 		return inputs.filter(e => $('#' + e).val().trim() === "").length === 0;
 	},
+	// simple regular expression used for validating emails
 	MAIL: /[A-Za-z0-9\.\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]+\@[A-Za-z0-9\_\-]+\.[A-Za-z]{2,3}/g
 };

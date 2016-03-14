@@ -1,5 +1,8 @@
 console.log('¯\\_(ツ)_/¯');
 
+/*
+ * Provides functions which support management of data.
+ */
 const manage = function() {
 	const userManagement = function () {
 		console.info("USERS ARE MANAGED");
@@ -51,7 +54,6 @@ const manage = function() {
 				});
 		});
 		
-		// handles adding a user		
 		$("#add-user-submit").on('click', (e) => {
 			if (!KY.inputsAreNotEmpty(addInputs) && !KY.MAIL.test($("#email").val().trim())) {
 				console.error('Something with the inputs of adding a user is wrong...');
@@ -75,7 +77,6 @@ const manage = function() {
 					$("#add-user-submit").prop('disabled', false);
 				})
 				.fail((jqXHR, status, err) => {
-					// TODO show error message
 					alert('Nutzer:in konnte nicht angelegt werden.');
 					addInputs.forEach(e => {
 						const id = '#' + e;
@@ -86,7 +87,6 @@ const manage = function() {
 		});
 		// handles editing a user
 		$('#edit-user-submit').on('click', (e) => {
-			// TODO check password
 			e.preventDefault();
 			const data = {};
 
@@ -184,6 +184,9 @@ const manage = function() {
 	};
 };
 
+/*
+ * Function which supports working with bootstrap.
+ */
 const frontend = function () {
 	return {
 		bootstrap: () => {
