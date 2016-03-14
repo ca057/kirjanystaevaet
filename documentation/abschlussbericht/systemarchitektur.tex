@@ -1,6 +1,9 @@
 \section{Systemarchitektur}
 
+\subsection{Packagestruktur}
+
 Bei der Aufteilung der Klassen stand die Idee der \textit{seperation of concerns} im Vordergrund. In der Implementierung spiegelt sich also der Versuch wider, durch die Struktur möglichst deutliche, voneinander unabhängige und damit leichter austauschbare Schichten zu erzeugen.
+
 
 \begin{figure}[h]
 	\centering
@@ -20,3 +23,9 @@ Das Package \lstinline|web.controllers| stellt die Schnittstelle zwischen den Nu
 	\item[API] Verwaltung der als API deklarierten URLs, Zugriff ohne Authentifizierung möglich
 \end{itemize}
 Die Controller sind nach ihrem primären Einsatz einem Bereich zugeordnet, der Zugriff und die Authentifizierung wird in der Security-Konfigurationsklasse geregelt. Dazu werden in einem weiteren Sub-Package Hilfsklassen beziehungsweise -Beans gehalten.
+
+\subsection{Allgemeine Grundsätze}
+
+Neben dem oben bereits angesprochenem \textit{separation of concerns} ist das Programm komplett auf Java-Konfiguration gestützt und verzichtet auf die Einbindung von XML-basierten Dateien. Dies hat den Vorteil, dass Java im Gegensatz zum XML type-safe ist, wodurch viele Fehler bereits durch den Compiler entdeckt werden können, und -- vor allem in Verbindung mit IDEs -- eine flexiblere Navigation zwischen einzelnen Dateien bietet. Nachteil dagegen sind die im Internet zu findenden Lösungsvorschläge, die zum Großteil auf XML basieren.
+
+Eng damit verbunden ist die Verwendung von Annotationen, wo immer möglich. Dadurch ist in den jeweiligen Javaklassen sofort ersichtlich, welchen Bestandteil die jeweilige Klasse im Programm erfüllen soll. Zudem sind unübersichtliche Konfigurationsdateien obsolet, da ein Componentscan die angegebenen Packages nach als Bean definierten Klassen durchsucht. Ebenfalls auf Annotationen basiert die Injection von Beans, die auf zwei Zeilen -- die Angabe der Variable samt darüber stehendem \texttt{@Autowired} -- beschränkt ist.
