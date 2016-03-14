@@ -166,6 +166,29 @@ public class BackendStockController {
 		return "redirect:/backend/bestand";
 	}
 
+	/**
+	 * Takes a set of request parameters and decides on the basis of the last
+	 * URL part which action to perform.
+	 * 
+	 * @param action
+	 * @param categories
+	 * @param title
+	 * @param isbn
+	 * @param description
+	 * @param price
+	 * @param publisher
+	 * @param day
+	 * @param month
+	 * @param year
+	 * @param edition
+	 * @param pages
+	 * @param stock
+	 * @param authors
+	 * @param file
+	 * @param request
+	 * @return a redirect to the URL responsible for displaying the view for the
+	 *         stock management
+	 */
 	@RequestMapping(value = "/backend/bestand/buecher/{action}", method = RequestMethod.POST)
 	public String addOrEditBook(@PathVariable("action") String action,
 			@RequestParam(value = "categories", required = false) List<String> categories,
@@ -198,6 +221,28 @@ public class BackendStockController {
 		}
 	}
 
+	/**
+	 * Private method responsible for adding a new book. All parameters are
+	 * required.
+	 * 
+	 * @param categories
+	 * @param title
+	 * @param description
+	 * @param price
+	 * @param isbn
+	 * @param publisher
+	 * @param day
+	 * @param month
+	 * @param year
+	 * @param edition
+	 * @param pages
+	 * @param stock
+	 * @param authors
+	 * @param file
+	 * @param request
+	 * @return the string for the redirect to the URL responsible for displaying
+	 *         the view for the stock management
+	 */
 	private String addBook(List<String> categories, String title, String description, String price, String isbn,
 			String publisher, String day, String month, String year, String edition, String pages, String stock,
 			List<String> authors, MultipartFile file, HttpServletRequest request) {
@@ -244,8 +289,25 @@ public class BackendStockController {
 	}
 
 	/**
+	 * Private method for editing a book. If a parameter is {@code null} or an
+	 * empty {@link String} it will be ignored.
 	 * 
-	 * @return
+	 * @param categories
+	 * @param title
+	 * @param description
+	 * @param price
+	 * @param isbn
+	 * @param publisher
+	 * @param day
+	 * @param month
+	 * @param year
+	 * @param edition
+	 * @param pages
+	 * @param authors
+	 * @param file
+	 * @param request
+	 * @return the string for the redirect to the URL responsible for displaying
+	 *         the view for the stock management
 	 */
 	private String editBook(List<String> categories, String title, String description, String price, String isbn,
 			String publisher, String day, String month, String year, String edition, String pages, List<String> authors,
@@ -306,13 +368,22 @@ public class BackendStockController {
 		return "redirect:/backend/bestand";
 	}
 
+	/**
+	 * Responsible for adjusting the stock of a {@link Book}.
+	 * 
+	 * @param isbn
+	 *            the ISBN of the {@link Book} where the stock will get updated
+	 * @param stock
+	 *            the value for incrementing or decrementing the stock, will be
+	 *            parsed to an {@code int}
+	 * @return a redirect to the URL responsible for displaying the view for the
+	 *         stock management
+	 */
 	@RequestMapping(value = "/backend/bestand/buecher/stock", method = RequestMethod.POST)
 	public String editStock(@RequestParam(value = "isbn", required = true) String isbn,
 			@RequestParam(value = "stock", required = true) String stock) {
 		try {
-			System.out.println("Davor: " + bookService.getBookByIsbn(isbn, SearchMode.ALL).getStock());
 			bookService.updateStock(isbn, Integer.parseInt(stock));
-			System.out.println("Danach: " + bookService.getBookByIsbn(isbn, SearchMode.ALL).getStock());
 		} catch (NumberFormatException | DatabaseException e) {
 			return "redirect:/backend/bestand?error&msg=" + e.getMessage();
 		}
@@ -320,8 +391,13 @@ public class BackendStockController {
 	}
 
 	/**
+	 * Responsible for deleting a {@link Book}.
 	 * 
-	 * @return
+	 * @param isbn
+	 *            the ISBN of the {@link Book} to delete
+	 * @param request
+	 * @return a redirect to the URL responsible for displaying the view for the
+	 *         stock management
 	 */
 	@RequestMapping(value = "/backend/bestand/buecher/delete", method = RequestMethod.POST)
 	public String deleteBook(@RequestParam(value = "isbn") String isbn, HttpServletRequest request) {
@@ -345,6 +421,15 @@ public class BackendStockController {
 		return "redirect:/backend/bestand";
 	}
 
+	/**
+	 * Returns the data of book identified by the ISBN passed as request
+	 * parameter, for example for auto filling the input fields when editing a
+	 * book.
+	 * 
+	 * @param isbn
+	 *            the ISBN of the requested {@link Book}
+	 * @return the data of the requested {@link Book} as {@link BookJSONWrapper}
+	 */
 	@RequestMapping(value = "/backend/bestand/buecher/data", method = RequestMethod.GET)
 	public ResponseEntity<BookJSONWrapper> getBookByISBN(@RequestParam(value = "isbn", required = true) String isbn) {
 		if (isbn == null || isbn.isEmpty()) {
@@ -359,6 +444,13 @@ public class BackendStockController {
 		}
 	}
 
+	/**
+	 * Method for deleting a given image.
+	 * 
+	 * @param path
+	 * @param title
+	 * @throws IOException
+	 */
 	private void deleteImage(Path path, String title) throws IOException {
 		Files.walk(path).parallel().filter(tmpPath -> tmpPath.toString().contains(title))
 				.forEach(tmpPath -> tmpPath.toFile().delete());

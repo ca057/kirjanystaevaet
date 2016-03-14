@@ -11,8 +11,13 @@ import exceptions.data.DatabaseException;
 import exceptions.web.ControllerOvertaxedException;
 import web.controllers.ControllerHelper;
 
+/**
+ * Controller responsible for displaying the dashboard.
+ * 
+ * @author Christian
+ *
+ */
 @Controller
-@RequestMapping(value = "/backend")
 public class BackendDashboardController {
 
 	@Autowired
@@ -21,7 +26,17 @@ public class BackendDashboardController {
 	@Autowired
 	private DataKraken dataKraken;
 
-	@RequestMapping(method = RequestMethod.GET)
+	/**
+	 * Uses the {@link DataKraken} to add all statistics to the {@link Model}
+	 * and returns the view responsible for displaying the dashboard.
+	 * 
+	 * @param m
+	 *            the {@link Model} for the view
+	 * @return the name of the view
+	 * @throws ControllerOvertaxedException
+	 *             if the current logged in admin could be identified
+	 */
+	@RequestMapping(value = "/backend", method = RequestMethod.GET)
 	public String getBackend(Model m) throws ControllerOvertaxedException {
 		try {
 			m.addAllAttributes(dataKraken.attack());

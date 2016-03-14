@@ -8,28 +8,28 @@
 <!DOCTYPE html>
 
 <html>
-<head lang="de">
-<title>WebShop</title>
-
-<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<link href="<s:url value='/css/bootstrap.min.css'/>" rel="stylesheet">
-<link rel="stylesheet" href="<s:url value='/css/style.css'/>">
-<link rel="stylesheet" href="<s:url value='/css/login-popup.css'/>">
-
-<script type="text/javascript" src="<s:url value='/js/jquery-2.2.1.min.js' />"></script>
-<script type="text/javascript" src="<s:url value='/js/elevator.min.js' />"></script>
-<script type="text/javascript" src="<s:url value='/js/helpme.js'/>"></script>
-<script type="text/javascript" src="<s:url value='/js/bootstrap.min.js"'/>"></script>
-<script type="text/javascript" src="<s:url value='/js/script.js'/>"></script>
-
-<sec:authorize access="hasRole('ADMIN')">
-	<script type="text/javascript" src="<s:url value='/js/adminscript.js'/>"></script>
-</sec:authorize>
-</head>
-
-<body>
+	<head lang="de">
+		<title>WebShop</title>
+		
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<link href="<s:url value='/css/bootstrap.min.css'/>" rel="stylesheet">
+		<link rel="stylesheet" href="<s:url value='/css/style.css'/>">
+		<link rel="stylesheet" href="<s:url value='/css/login-popup.css'/>">
+		
+		<script type="text/javascript" src="<s:url value='/js/jquery-2.2.1.min.js' />"></script>
+		<script type="text/javascript" src="<s:url value='/js/elevator.min.js' />"></script>
+		<script type="text/javascript" src="<s:url value='/js/helpme.js'/>"></script>
+		<script type="text/javascript" src="<s:url value='/js/bootstrap.min.js"'/>"></script>
+		<script type="text/javascript" src="<s:url value='/js/script.js'/>"></script>
+		
+		<sec:authorize access="hasRole('ADMIN')">
+			<script type="text/javascript" src="<s:url value='/js/adminscript.js'/>"></script>
+		</sec:authorize>
+	</head>
+	
+	<body>
 		<header>
 			<a href="<c:url value='/'/>" title="zur Startseite"> <t:insertAttribute name="header"></t:insertAttribute>
 			</a>
@@ -64,6 +64,5 @@
 		<footer class="footer">
 			<t:insertAttribute name="footer"></t:insertAttribute>
 		</footer>
-
-</body>
+	</body>
 </html>
