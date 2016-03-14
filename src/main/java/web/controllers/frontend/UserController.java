@@ -64,6 +64,12 @@ public class UserController {
 		return "user";
 	}
 
+	/**
+	 * Returns the profile picture of an user.
+	 * 
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value = "/meinkonto/profilbild", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<byte[]> getPicture(HttpServletResponse response) {
 		byte[] imageBytes;
@@ -80,6 +86,13 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * Allows uploading a new profile picture.
+	 * 
+	 * @param file
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/meinkonto/bildhochladen", method = RequestMethod.POST)
 	public String addPicture(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
 		if (!file.getContentType().contains("image")) {

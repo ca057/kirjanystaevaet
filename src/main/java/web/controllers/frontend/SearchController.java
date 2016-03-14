@@ -3,6 +3,7 @@ package web.controllers.frontend;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,8 @@ import exceptions.data.DatabaseException;
  */
 @Controller
 public class SearchController {
+
+	private Predicate<String> stringIsNotNullAndEmpty = s -> s != null && !s.isEmpty();
 
 	private String queryTerm = "";
 
@@ -91,27 +94,27 @@ public class SearchController {
 	private List<Book> processSearchTerms(String title, String authorFirst, String authorLast, String isbn, String year,
 			String category) throws DatabaseException {
 		Map<Searchfields, String> searchMap = new HashMap<Searchfields, String>();
-		if (title != null && !title.isEmpty()) {
+		if (stringIsNotNullAndEmpty.test(title)) {
 			searchMap.put(Searchfields.title, title.trim());
 			queryTerm += " Titel: " + title.trim();
 		}
-		if (authorFirst != null && !authorFirst.isEmpty()) {
+		if (stringIsNotNullAndEmpty.test(authorFirst)) {
 			searchMap.put(Searchfields.nameF, authorFirst.trim());
 			queryTerm += " Vorname: " + authorFirst.trim();
 		}
-		if (authorLast != null && !authorLast.isEmpty()) {
+		if (stringIsNotNullAndEmpty.test(authorLast)) {
 			searchMap.put(Searchfields.nameL, authorLast.trim());
 			queryTerm += " Nachname: " + authorLast;
 		}
-		if (isbn != null && !isbn.isEmpty()) {
+		if (stringIsNotNullAndEmpty.test(isbn)) {
 			searchMap.put(Searchfields.isbn, isbn.trim());
 			queryTerm += " ISBN: " + isbn;
 		}
-		if (year != null && !year.isEmpty()) {
+		if (stringIsNotNullAndEmpty.test(year)) {
 			searchMap.put(Searchfields.pubdate, year.trim());
 			queryTerm += " Jahr: " + year;
 		}
-		if (category != null && !category.isEmpty()) {
+		if (stringIsNotNullAndEmpty.test(category)) {
 			searchMap.put(Searchfields.categoryName, category.trim());
 			queryTerm += " Kategorie: " + category;
 		}

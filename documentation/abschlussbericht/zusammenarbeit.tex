@@ -1,12 +1,13 @@
+% !TeX spellcheck = de_DE
 \section{Zusammenarbeit}
 
-Bei der Anfertigung von kirjanystaevaet mussten viele Anwendungsfälle und Problemstellungen gemeinsam gelöst werden. Mit folgenden Ansätzen haben wir versucht, unsere Zusammenarbeit effektiv zu gestalten:
-
-\paragraph{Wöchentliche Treffen} Fast durch das gesamte Semester standen wöchentliche Treffen an, häufig auch mit den Betreuern. Vor allem gegen Ende der Bearbeitungszeit wurden diese Termine ausgeweitet und viel Code gemeinsam produziert. Dadurch konnten viele Fragen geklärt sowie Anforderungen von anderen Stellen des Codes eingearbeitet werden.
-
-\paragraph{Feature-Branches} Da eine in ihren Grundzügen funktionsfähige Version elementar für die meisten Implementierungen war, wurden neu zu implementierende Features auf andere Branches ausgelegt und erst nach (mehr oder weniger) erfolgreichem Testen auf dem Master-Branch zur Verfügung gestellt. Dadurch konnten wir Zeitverluste aufgrund von Bugs anderer Teammitglieder gering halten. 
-
-	\begin{itemize}
-		\item GitHub-Issues
-		\item Austausch/Updates per Mail
-	\end{itemize}
+	Bei der Anfertigung von kirjanystaevaet mussten viele Anwendungsfälle und Problemstellungen gemeinsam gelöst werden. Mit folgenden Ansätzen haben wir versucht, unsere Zusammenarbeit effektiv zu gestalten:
+	
+	\paragraph{Wöchentliche Treffen und Kommunikation}
+	Fast durch das gesamte Semester standen wöchentliche Treffen an, häufig auch mit den Betreuern. Vor allem gegen Ende der Bearbeitungszeit wurden diese Termine ausgeweitet und viel Code gemeinsam produziert. Dadurch konnten viele Fragen geklärt sowie Anforderungen von anderen Stellen des Codes eingearbeitet werden. Neben der direkten Kommunikation wurden viele Fragen und Diskussionen auch über Emails geklärt, wodurch gleichzeitig eine Dokumentation von Lösungen und Entscheidungen vorhanden war.
+	
+	\paragraph{Feature-Branches}
+	Für die Implementierung der geforderten Funktionalitäten war eine Aufteilung der Arbeit sowie ein Austausch der einzelnen Teile erforderlich. Dies wurde durch die Verwendung von Git in Kombination mit Feature-Branches gelöst. Dabei lag auf dem Master-Branch eine möglichst fehlerfreie und lauffähige Version der Software, die Entwicklung einzelner Komponenten fand auf davon abzweigenden Branches statt. Nach Abschluss eines Features wurde dies -- nach grundlegenden Tests -- in den Master-Branch überspielt und, falls benötigt, von dort in einen anderen Feature-Branch überführt. Dadurch konnten Konflikte bei der Zusammenarbeit weitestgehend reduziert werden.
+	
+	\paragraph{Aufgaben- und Fehlertracking}
+	Erst zur Mitte der Projektlaufzeit wurde begonnen, anstehende Aufgaben und aufgetretene Fehler in den GitHub Issues\footnote{\hyperlink{https://github.com/ca057/kirjanystaevaet/issues}{https://github.com/ca057/kirjanystaevaet/issues}} des dort liegenden Repositorys zu verwalten. Da eine Synchronisation der Issues mit der verwendeten Spring Tool Suite möglich ist, ist dies eine komfortable Lösung zur Dokumentation von Aufgaben und Fehlern. Vor allem gegen Ende des Projekts wurde dieses Werkzeug jedoch weniger genutzt zu Gunsten eines direkteren und schnelleren Austausch per Mail.
