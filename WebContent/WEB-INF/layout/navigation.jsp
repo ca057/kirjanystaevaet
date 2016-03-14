@@ -33,8 +33,8 @@
 						</ul></li>
 				</c:otherwise>
 			</c:choose>
-			<li><a href="<c:url value='/kontakt'/>">Über uns</a></li>
 			<li><a href="<c:url value='/suche' />" title="Suche">Suche</a></li>
+			<li><a href="<c:url value='/kontakt'/>">Über uns</a></li>
 
 		</ul>
 
