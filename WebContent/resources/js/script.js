@@ -84,4 +84,5 @@ $(document).ready(function () {
 			endAudio: 'http://tholman.com/elevator.js/music/ding.mp3'
 		});
 	}
+	
 });

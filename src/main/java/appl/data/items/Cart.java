@@ -35,21 +35,7 @@ public class Cart {
 	public Map<String, Integer> getBooks() {
 		return books;
 	}
-	// private List<Book> books = new ArrayList<Book>();
-	//
-	// public void addBook(Book book) {
-	// if (book == null) {
-	// throw new IllegalArgumentException("added book is null");
-	// }
-	// books.add(book);
-	// // TODO implement me
-	// }
-	//
-	// public List<Book> getBooks() {
-	// return books;
-	// }
 
-	// TODO: adjust getPrice!!!!
 	public double getPrice() throws DatabaseException {
 		Set<String> keys = books.keySet();
 		double sum = 0;
@@ -83,7 +69,5 @@ public class Cart {
 	public void deleteContent() {
 		books.clear();
 	}
-	// Warenbestand prüfen Order-Service muss Liste mit Büchern gegeben werden.
 	// Soll prüfen, ob Bücher da sind und entsprechende Meldung rausgeben.
-
 }

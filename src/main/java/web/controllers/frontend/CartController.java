@@ -52,7 +52,7 @@ public class CartController {
 			try {
 				cart.addBook(bookService.getBookByIsbn(isbn, SearchMode.AVAILABLE));
 			} catch (DatabaseException e) {
-				System.out.println("Fehler 2");
+				return "error";
 			}
 		}
 		return "redirect:/warenkorb";
@@ -77,8 +77,7 @@ public class CartController {
 			try {
 				b = bookService.getBookByIsbn(s, SearchMode.ALL);
 			} catch (DatabaseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				return "error";
 			}
 			if (tempBooks.containsKey(b)) {
 				tempBooks.put(b, tempBooks.get(b) + 1);
@@ -91,7 +90,7 @@ public class CartController {
 		try {
 			m.addAttribute("sum", cart.getPrice());
 		} catch (DatabaseException e) {
-			e.printStackTrace();
+			return "error";
 		}
 
 		return "cart";
@@ -108,7 +107,7 @@ public class CartController {
 					orderService.createOrder(cart.getBooks(), user.getUserId(), cal);
 					cart.deleteContent();
 				} else {
-					System.out.println("User has no data.");
+					return "error";
 				}
 				m.addAttribute("name", user.getName());
 				m.addAttribute("surname", user.getSurname());
