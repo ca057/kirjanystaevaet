@@ -12,15 +12,19 @@ import appl.logic.service.OrderService;
 import exceptions.data.DatabaseException;
 import exceptions.data.EntityDoesNotExistException;
 
+/**
+ * @author Madeleine
+ *
+ */
 @Transactional
 public interface BookDAO {
+
 	/**
 	 * Is not implemented, can be done in the future to extend the project
 	 * 
 	 * @param searchTerm
 	 * @return
 	 */
-
 	public List<Book> getBooksByOpenSearch(String searchTerm);
 
 	/**
@@ -31,7 +35,6 @@ public interface BookDAO {
 	 * @param mode
 	 * @return
 	 */
-
 	public List<Book> getBooksByMetadata(Map<Searchfields, String> map, SearchMode mode);
 
 	/**
@@ -59,7 +62,6 @@ public interface BookDAO {
 	 * @return
 	 * @throws DatabaseException
 	 */
-
 	public String insertBook(Book book) throws DatabaseException;
 
 	/**
@@ -67,7 +69,6 @@ public interface BookDAO {
 	 * 
 	 * @param isbn
 	 */
-
 	public void deleteBook(String isbn);
 
 	/**
@@ -75,7 +76,6 @@ public interface BookDAO {
 	 * @param book
 	 *            must contain all the data to be updated
 	 */
-
 	public void updateBook(Book book);
 
 	/**
@@ -91,6 +91,5 @@ public interface BookDAO {
 	/**
 	 * @param isbn
 	 */
-
 	public void setStockToNegative(String isbn);
 }

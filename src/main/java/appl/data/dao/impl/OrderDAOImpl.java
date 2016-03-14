@@ -1,8 +1,5 @@
 package appl.data.dao.impl;
 
-/**
- * @author Madeleine
- */
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -109,6 +106,7 @@ public class OrderDAOImpl implements OrderDAO {
 
 				// OrderItem im Buch setzen
 				book.getOrderItems().add(orderItem);
+
 				// OrderItem in der Order setzen
 				order.getOrderItems().add(orderItem);
 

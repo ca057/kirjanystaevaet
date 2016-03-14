@@ -2,14 +2,12 @@ package appl.data.builder.impl;
 
 import appl.data.builder.CategoryBuilder;
 import appl.data.items.Category;
-/**
- * @author Madeleine
- *
- */
-public class CategoryBuilderImpl implements CategoryBuilder{
+
+public class CategoryBuilderImpl implements CategoryBuilder {
 
 	private int categoryId = -1;
 	private String categoryName;
+
 	public CategoryBuilderImpl() {
 	}
 
@@ -18,6 +16,7 @@ public class CategoryBuilderImpl implements CategoryBuilder{
 		this.categoryId = categoryId;
 		return this;
 	}
+
 	@Override
 	public CategoryBuilder setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
@@ -26,14 +25,12 @@ public class CategoryBuilderImpl implements CategoryBuilder{
 
 	@Override
 	public Category createCategory() {
-		if(categoryId < 0 ){
-			return new Category(this.categoryId, this.categoryName );
+		if (categoryId < 0) {
+			return new Category(this.categoryId, this.categoryName);
 		} else {
 			return new Category(this.categoryName);
-	
+
 		}
 	}
-
-	
 
 }

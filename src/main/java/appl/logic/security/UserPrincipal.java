@@ -16,6 +16,7 @@ import appl.data.items.User;
  *
  */
 public class UserPrincipal extends User implements UserDetails {
+	private static final long serialVersionUID = 5341519721167335979L;
 	private List<GrantedAuthority> authorities;
 
 	/**

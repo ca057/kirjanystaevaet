@@ -21,7 +21,7 @@ public class UserBuilderImpl implements UserBuilder {
 	private String street;
 	private String streetnumber;
 	private PLZ plz;
-	private UserRoles role;
+	private UserRoles role = UserRoles.USER;
 	private byte[] image;
 	private Set<UserBookStatistic> userBookStatistics;
 	private Set<Orderx> orders;
@@ -82,7 +82,7 @@ public class UserBuilderImpl implements UserBuilder {
 
 	@Override
 	public UserBuilder setImage(byte[] image) {
-		this.image = image;
+		this.image = image.clone();
 		return this;
 	}
 

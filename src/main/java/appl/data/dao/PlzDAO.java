@@ -12,7 +12,7 @@ import exceptions.data.DatabaseException;
  * Interface for a Data Access Object. Manages all access to the database
  * connected with the {@link PLZ} entity.
  * 
- * @author Hannes
+ * @author Johannes
  *
  */
 @Transactional
