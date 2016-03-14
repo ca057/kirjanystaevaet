@@ -1,6 +1,3 @@
-/**
- * Created by Sunflower
- */
 package appl.data.builder.impl;
 
 import java.util.HashSet;
@@ -27,7 +24,6 @@ public class BookBuilderImpl implements BookBuilder {
 	private int visitCount;
 	private Set<UserBookStatistic> userBookStatistics = new HashSet<UserBookStatistic>(0);
 
-	
 	public BookBuilderImpl() {
 	}
 
@@ -90,24 +86,24 @@ public class BookBuilderImpl implements BookBuilder {
 		this.categories = categories;
 		return this;
 	}
+
 	@Override
 	public BookBuilder setStock(int stock) {
 		this.stock = stock;
 		return this;
 	}
+
 	@Override
 	public BookBuilder setVisitCount(int visitCount) {
 		this.visitCount = visitCount;
 		return this;
 	}
-	
-	
+
 	@Override
 	public BookBuilder setUserBookStatistics(Set<UserBookStatistic> userBookStatistics) {
 		this.userBookStatistics = userBookStatistics;
 		return this;
 	}
-
 
 	@Override
 	public Book createBook() {
@@ -115,8 +111,4 @@ public class BookBuilderImpl implements BookBuilder {
 				this.pages, this.stock, this.categories, this.authors, this.visitCount, this.userBookStatistics);
 	}
 
-	
-
-	
-	
 }
