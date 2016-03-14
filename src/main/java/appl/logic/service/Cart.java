@@ -5,6 +5,10 @@ import java.util.Map;
 import appl.data.items.Book;
 import exceptions.data.DatabaseException;
 
+/**
+ * @author Ludwig
+ *
+ */
 public interface Cart {
 
 	void addBook(Book book);
