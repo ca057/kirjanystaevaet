@@ -1,8 +1,5 @@
 package appl.data.dao.impl;
 
-/**
- * @author Madeleine
- */
 import java.util.List;
 
 import org.hibernate.Criteria;

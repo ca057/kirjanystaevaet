@@ -31,10 +31,9 @@ import javax.persistence.UniqueConstraint;
  * <li>stock</li>
  * <li>visitCount</li>
  * </ul>
- * {@link Set}s of {@link Author} and {@link Category} are joined via many-to-many
- * connections.
- * {@link Set}s of {@link OrderItem} and {@link UserBookStatistic} are joined via one-to-many
- * connections.
+ * {@link Set}s of {@link Author} and {@link Category} are joined via
+ * many-to-many connections. {@link Set}s of {@link OrderItem} and
+ * {@link UserBookStatistic} are joined via one-to-many connections.
  * 
  * @author Johannes
  * @author Madeleine
@@ -77,7 +76,8 @@ public class Book {
 	 * @param authors
 	 */
 	public Book(String isbn, String title, String description, double price, String publisher, String pubdate,
-			String edition, String pages, int stock, Set<Category> categories, Set<Author> authors, int visitCount, Set<UserBookStatistic> userBookStatistics) {
+			String edition, String pages, int stock, Set<Category> categories, Set<Author> authors, int visitCount,
+			Set<UserBookStatistic> userBookStatistics) {
 		this.isbn = isbn;
 		this.title = title;
 		this.description = description;
@@ -145,13 +145,13 @@ public class Book {
 	}
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "bookcategoriesbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "categoryId") )
+	@JoinTable(name = "bookcategoriesbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn"), inverseJoinColumns = @JoinColumn(name = "categoryId"))
 	public Set<Category> getCategories() {
 		return categories;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-	@JoinTable(name = "bookauthorsbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn") , inverseJoinColumns = @JoinColumn(name = "authorId") )
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@JoinTable(name = "bookauthorsbooks", schema = "public", joinColumns = @JoinColumn(name = "isbn"), inverseJoinColumns = @JoinColumn(name = "authorId"))
 	public Set<Author> getAuthors() {
 		return authors;
 	}
@@ -225,7 +225,6 @@ public class Book {
 	public void decrementStock(int decrement) {
 		stock -= decrement;
 	}
-	// TODO bessere Lösung finden
 
 	public int addToStock(int add) {
 		stock += add;

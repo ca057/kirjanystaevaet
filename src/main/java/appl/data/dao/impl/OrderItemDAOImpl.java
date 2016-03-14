@@ -1,8 +1,5 @@
 package appl.data.dao.impl;
 
-/**
- * @author Madeleine
- */
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -19,7 +16,6 @@ import appl.data.items.OrderItem;
 public class OrderItemDAOImpl implements OrderItemDAO {
 
 	public OrderItemDAOImpl() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Autowired

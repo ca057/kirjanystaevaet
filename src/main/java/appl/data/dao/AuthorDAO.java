@@ -7,6 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import appl.data.items.Author;
 import exceptions.data.EntityDoesNotExistException;
 
+/**
+ * @author Madeleine
+ *
+ */
 @Transactional
 public interface AuthorDAO {
 
@@ -15,13 +19,15 @@ public interface AuthorDAO {
 	 * @return
 	 */
 	public List<Author> getAuthors();
+
 	/**
 	 * 
 	 * @param isbn
 	 * @return
 	 */
-	
+
 	public List<Author> getAuthorsByIsbn(String isbn);
+
 	/**
 	 * 
 	 * @param nameF
@@ -36,13 +42,16 @@ public interface AuthorDAO {
 	 * @return
 	 */
 	public List<Author> getAuthorsByNameL(String nameL);
+
 	/**
 	 * Case-Sensitive
+	 * 
 	 * @param nameF
 	 * @param nameL
 	 * @return
 	 */
-	public List<Author> getAuthorByExactNames (String nameF, String nameL);
+	public List<Author> getAuthorByExactNames(String nameF, String nameL);
+
 	/**
 	 * 
 	 * @param authorID
@@ -51,14 +60,17 @@ public interface AuthorDAO {
 	 */
 
 	public Author getAuthorByID(int authorID) throws EntityDoesNotExistException;
-	
+
 	/**
-	 * @param author must hold all data of author
+	 * @param author
+	 *            must hold all data of author
 	 * @return
 	 */
 	public int insertAuthor(Author author);
+
 	/**
 	 * deletes author physically
+	 * 
 	 * @param author
 	 */
 
@@ -66,7 +78,8 @@ public interface AuthorDAO {
 
 	/**
 	 * 
-	 * @param author ust hold all data of author
+	 * @param author
+	 *            ust hold all data of author
 	 */
 	public void updateAuthor(Author author);
 

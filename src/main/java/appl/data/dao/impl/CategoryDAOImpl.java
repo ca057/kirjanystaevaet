@@ -1,8 +1,5 @@
 package appl.data.dao.impl;
 
-/**
- * @author Madeleine
- */
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -35,9 +32,6 @@ public class CategoryDAOImpl implements CategoryDAO {
 		Criteria cr = s.createCriteria(Category.class);
 		cr.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		return cr;
-		// return cr.createAlias("books", "b").createAlias("authors", "a");
-		// return cr.createAlias("books", "b"); // Category hat keinen Author ->
-		// kein Alias dafür angeben
 	}
 
 	@SuppressWarnings("unchecked")

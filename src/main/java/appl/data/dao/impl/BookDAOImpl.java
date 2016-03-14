@@ -1,8 +1,5 @@
 package appl.data.dao.impl;
 
-/**
- * @author Madeleine
- */
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -10,6 +7,7 @@ import java.util.Map.Entry;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.NotYetImplementedException;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +48,6 @@ public class BookDAOImpl implements BookDAO {
 		Criteria cr = s.createCriteria(Book.class);
 		cr.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		return cr;
-		// return cr.createAlias("categories", "c").createAlias("authors", "a");
 	}
 
 	private Criteria getCriteriaForSell(Criteria cr) {
@@ -84,8 +81,8 @@ public class BookDAOImpl implements BookDAO {
 
 	@Override
 	public List<Book> getBooksByOpenSearch(String searchTerm) {
-		// TODO Auto-generated method stub
-		return null;
+		// Siehe Projektbericht
+		throw new NotYetImplementedException();
 	}
 
 	@Override
@@ -97,7 +94,6 @@ public class BookDAOImpl implements BookDAO {
 		case SELL:
 			cr = getCriteriaForSell(cr);
 			break;
-
 		case AVAILABLE:
 			cr = getCriteriaForAvailable(cr);
 			break;
@@ -213,8 +209,6 @@ public class BookDAOImpl implements BookDAO {
 		BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
 
 		bookBuilder.setStock(-1);
-		// book.setStock(-1);
 		getSession().update(bookBuilder.createBook());
-		// getSession().update(book);
 	}
 }
