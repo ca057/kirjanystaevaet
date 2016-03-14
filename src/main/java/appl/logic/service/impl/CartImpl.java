@@ -24,9 +24,6 @@ public class CartImpl implements Cart {
 	private BookService bookService;
 	private Map<String, Integer> books = new HashMap<String, Integer>();
 
-	/* (non-Javadoc)
-	 * @see appl.logic.service.impl.CartInterface#addBook(appl.data.items.Book)
-	 */
 	@Override
 	public void addBook(Book book) {
 		if (book == null) {
@@ -39,17 +36,11 @@ public class CartImpl implements Cart {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see appl.logic.service.impl.CartInterface#getBooks()
-	 */
 	@Override
 	public Map<String, Integer> getBooks() {
 		return books;
 	}
 
-	/* (non-Javadoc)
-	 * @see appl.logic.service.impl.CartInterface#getPrice()
-	 */
 	@Override
 	public String getPrice() throws DatabaseException {
 		DecimalFormat df = new DecimalFormat("0.00");
@@ -63,9 +54,6 @@ public class CartImpl implements Cart {
 	}
 
 	// Item aus Warenkorb entfernen
-	/* (non-Javadoc)
-	 * @see appl.logic.service.impl.CartInterface#deleteBook(java.lang.String)
-	 */
 	@Override
 	public void deleteBook(String isbn) {
 		if (isbn == null || isbn.isEmpty()) {
@@ -75,9 +63,6 @@ public class CartImpl implements Cart {
 	}
 
 	// post order
-	/* (non-Javadoc)
-	 * @see appl.logic.service.impl.CartInterface#postOrder(appl.data.items.Book)
-	 */
 	@Override
 	public void postOrder(Book book) {
 		if (book == null) {
@@ -86,17 +71,11 @@ public class CartImpl implements Cart {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see appl.logic.service.impl.CartInterface#isEmpty()
-	 */
 	@Override
 	public boolean isEmpty() {
 		return books.isEmpty();
 	}
 
-	/* (non-Javadoc)
-	 * @see appl.logic.service.impl.CartInterface#deleteContent()
-	 */
 	@Override
 	public void deleteContent() {
 		books.clear();
