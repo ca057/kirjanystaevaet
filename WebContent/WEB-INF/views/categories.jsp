@@ -40,30 +40,32 @@
 						<c:otherwise>
 							<c:forEach var="book" items="${books}">
 								<div class="col-sm-6 col-md-3">
-									<div class="thumbnail">
-										<div class="caption center-block">
-										<img class="book-cover img-responsive center-block"
-											src="<c:url value="/img/cover/${book.getIsbn()}.jpg"/>"
-											title="<c:out value="Cover des Buchs '${book.getTitle()}'"/>">
-											<h4>
-												<c:out value="${book.getTitle()}" />
-											</h4>
-											<p>
-												von
-												<c:set var="delimiter" value="" scope="request"></c:set>
-												<c:forEach var="a" items="${book.getAuthors()}">${delimiter}<c:out
-														value="${a.getNameF()}" />
-													<c:out value="${a.getNameL()}" />
-													<c:set var="delimiter" value=", " scope="request"></c:set>
-												</c:forEach>
-											</p>
-											<p>
-												<c:out value="${book.getPrice()}" />
-												€ - <a href="<c:url value='/buch/${book.getIsbn()}' />"
-													title="zum Buch <c:out value='${book.getTitle()}' />">zum
-													Buch</a>
-											</p>
-										</div>
+
+				<div class="thumbnail">
+					
+						<div class="caption center-block">
+						<img class="book-cover img-responsive center-block"
+							src="<c:url value="/img/cover/${book.getIsbn()}.jpg"/>"
+							title="<c:out value="Cover des Buchs '${book.getTitle()}'"/>">
+							<h4>
+								<c:out value="${book.getTitle()}" />
+							</h4>
+							<p>
+								von
+								<c:set var="delimiter" value="" scope="request"></c:set>
+								<c:forEach var="a" items="${book.getAuthors()}">${delimiter}<c:out
+										value="${a.getNameF()}" />
+									<c:out value="${a.getNameL()}" />
+									<c:set var="delimiter" value=", " scope="request"></c:set>
+								</c:forEach>
+							</p>
+							<p>
+								<c:out value="${book.getPrice()}" />
+								€ - <a href="<c:url value='/buch/${book.getIsbn()}' />" title="zum Buch <c:out value='${book.getTitle()}' />" class="noDeco">
+										zum Buch</a>
+							</p>
+						
+					</div>
 						<sec:authorize access="isAnonymous()">
 								<button data-toggle="modal" data-target="#login"
 									class="btn btn-primary center-block">
@@ -73,6 +75,7 @@
 									<div id="login" class="modal fade" role="dialog">
 										<div class="modal-dialog">
 	
+											<!-- Modal content-->
 											<div class="modal-content">
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -103,6 +106,7 @@
 									<div id="adminPopup" class="modal fade" role="dialog">
 										<div class="modal-dialog">
 	
+											<!-- Modal content-->
 											<div class="modal-content">
 												<div class="modal-header">
 													<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -134,6 +138,7 @@
 						</sec:authorize>																					
 									</div>
 								</div>
+
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
