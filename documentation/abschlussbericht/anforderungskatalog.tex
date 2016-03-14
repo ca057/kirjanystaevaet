@@ -143,7 +143,7 @@
 	
 	In der aktuellen Implementierung kann die API nur für grundlegende Abfragen zu Büchern verwendet werden. Für die Bereitstellung von komplexeren Abfragen müsste das bisherige Schema um weitere Pfad- und Anfrage-Parameter ergänzt werden. Vor allem bei zunehmenden Datensätzen sollte dies in Erwägung gezogen werden, da eine Abfrage aller Bücher schnell große Datenmengen erzeugen kann, welche sowohl für den Server des Shops als auch für den Client zur Belastung werden können. Eine Reduzierung der Belastung kann zum Beispiel durch die Angabe eines \lstinline|offset|s zusätzlich zum \lstinline|limit| erreicht werden oder über die Ergänzung weiterer Parameter, zum Beispiel zur Abfrage aller Bücher einer bestimmten Autorin.
 	
-	\subsection{A8: Nutzeranalyse}\label{sec:umsetzung:analyse}
+	\subsection{A8: Nutzer\_innenanalyse}\label{sec:umsetzung:analyse}
 	Die Nutzeranalyse kann in der Perspektive auf die Datenbank in zwei Bereiche eingeteilt werden. Der eine arbeitet mit \texttt{Orderx} und \texttt{OrderItem}, der andere mit \texttt{User\-Book\-Statistic} and \texttt{visitCount}.
 	
 	Im Zusammenhang mit den \texttt{Orderx} und \texttt{OrderItems} bietet der \texttt{OrderService} Funktionen, die den Nutzer alle seine getätigten Bestellungen einsehen lässt. Außerdem gibt es die Möglichkeit alle insgesamt getätigten Bestellungen abzurufen, was im Admin-Backend genutzt wird. Außerdem wird eine Funktion angeboten, die \textit{Bestsellers} sowie \textit{Shelfwarmers} in der entsprechend sortierten Reihenfolge liefert. Diese sind im Admin-Backend im Dashboard einsehbar.
@@ -158,3 +158,8 @@
 	\paragraph{Doppelte Autor\_inneneinträge in den Auswahllisten}
 	Die Auswahl der Autor\_innen, zum Beispiel beim Anlegen eines neuen Buchs, zeigt teilweise einige Autor\_innen doppelt an. Es kann derzeit nicht nachvollzogen werden, wann dieser Fehler auftritt und welche Daten davon betroffen sind. Die bisherige Fehlersuche vermutet einen Fehler beim Rendern der Views.
 	
+	\paragraph{Ungenauigkeiten in CSS}
+	Aufgrund des Anforderungskataloges lag weniger Priorität auf dem Anfertigen der "`Homepage"' als auf der Implementierung des eigentlichen Codes. Dies führt an wenigen Stellen zu kleineren Problemen bei der Darstellung der Seite, vor allem in Bezug auf Responsivität.
+	
+	\paragraph{Ungenutzte Implementierungen}
+	Nicht alle implementierte Methoden werden letztendlich auch genutzt. Dies hängt mit der Idee zusammen, am Ende verschiedene Programmteile anzubieten, die gut zusammenspielen, bei Bedarf aber ausgetauscht beziehungsweise um weitere Funktionen erweitert werden können.
