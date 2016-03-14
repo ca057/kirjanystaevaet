@@ -152,14 +152,19 @@
 	
 	Wie bereits in Abschnitt \ref{sec:umsetzung:backend} beschrieben, werden die einzelnen Statistiken von der Bean \lstinline|DataKraken| zusammengesammelt und als Map an den Controller weitergereicht. Hier bietet sich die Möglichkeit, einzelne Werte in Verbindung zu setzen um einen tieferen Einblick in die Nutzung des Shops zu erhalten.
 	
+	\subsection{Absicherung des Shops gegen unberechtigten Zugriff}
+	Zentrales Element der Absicherung des Shops ist die Klasse \lstinline|SecurityConfig|. In dieser werden die Zugriffsberechtigungen für einzelne URLs und der Service für die Authentifizierung definiert.
+	
+	Bei der Festlegung der Zugriffsberechtigungen wurden drei Gruppen unterteilt: Anonyme Nutzer\_innen, angemeldete Nutzer\_innen mit der Rolle \lstinline|USER| und solche mit der Rolle \lstinline|ADMIN|. Statische Ressourcen (CSS, JavaScript, Bilder) s
+		
 	\subsection{"`Known Issues"'}
 	Trotz ausführlichem Debuggen treten im gesamten System an einigen Stellen bekannte Fehler auf.
 	
-	\paragraph{Doppelte Autor\_inneneinträge in den Auswahllisten}
-	Die Auswahl der Autor\_innen, zum Beispiel beim Anlegen eines neuen Buchs, zeigt teilweise einige Autor\_innen doppelt an. Es kann derzeit nicht nachvollzogen werden, wann dieser Fehler auftritt und welche Daten davon betroffen sind. Die bisherige Fehlersuche vermutet einen Fehler beim Rendern der Views.
+		\paragraph{Doppelte Autor\_inneneinträge in den Auswahllisten}
+		Die Auswahl der Autor\_innen, zum Beispiel beim Anlegen eines neuen Buchs, zeigt teilweise einige Autor\_innen doppelt an. Es kann derzeit nicht nachvollzogen werden, wann dieser Fehler auftritt und welche Daten davon betroffen sind. Die bisherige Fehlersuche vermutet einen Fehler beim Rendern der Views.
+		
+		\paragraph{Ungenauigkeiten in CSS}
+		Aufgrund des Anforderungskataloges lag weniger Priorität auf dem Anfertigen der "`Homepage"' als auf der Implementierung des eigentlichen Codes. Dies führt an wenigen Stellen zu kleineren Problemen bei der Darstellung der Seite, vor allem in Bezug auf Responsivität.
 	
-	\paragraph{Ungenauigkeiten in CSS}
-	Aufgrund des Anforderungskataloges lag weniger Priorität auf dem Anfertigen der "`Homepage"' als auf der Implementierung des eigentlichen Codes. Dies führt an wenigen Stellen zu kleineren Problemen bei der Darstellung der Seite, vor allem in Bezug auf Responsivität.
-	
-	\paragraph{Ungenutzte Implementierungen}
-	Nicht alle implementierte Methoden werden letztendlich auch genutzt. Dies hängt mit der Idee zusammen, am Ende verschiedene Programmteile anzubieten, die gut zusammenspielen, bei Bedarf aber ausgetauscht beziehungsweise um weitere Funktionen erweitert werden können.
+		\paragraph{Ungenutzte Implementierungen}
+		Nicht alle implementierte Methoden werden letztendlich auch genutzt. Dies hängt mit der Idee zusammen, am Ende verschiedene Programmteile anzubieten, die gut zusammenspielen, bei Bedarf aber ausgetauscht beziehungsweise um weitere Funktionen erweitert werden können.

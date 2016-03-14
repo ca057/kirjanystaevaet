@@ -118,7 +118,7 @@ public class UserDAOImpl implements UserDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserBookStatistic> getUserBookStatistics(int userId) throws DatabaseException {
-		return (List<UserBookStatistic>) getSession().createCriteria(UserBookStatistic.class).list();
+		return getSession().createCriteria(UserBookStatistic.class).list();
 	}
 
 	@Override

@@ -18,7 +18,8 @@ public interface DataKraken {
 	 * The kraken is awake? Be aware of his attack and use the data wisely.
 	 * 
 	 * @return all the data the kraken could found all around the seas
-	 * @throws DatabaseException 
+	 * @throws DatabaseException
+	 *             if it gets sick while searching
 	 */
 	public Map<String, ?> attack() throws DatabaseException;
 
