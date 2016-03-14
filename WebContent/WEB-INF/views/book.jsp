@@ -64,7 +64,6 @@
 								Preis
 								<c:out value="${book.getPrice()}" />
 							</p>
-							<h3>Kurzbeschreibung</h3>
 							<!--  </div> -->
 						</div>
 						<div class="add-to-cart col-sm-5">
@@ -77,28 +76,19 @@
 								<sec:csrfInput />
 							</form>
 						</sec:authorize>
-						
-<%-- 					<sec:authorize access="hasRole('USER')"> --%> 
-<%-- 							<form action="<c:url value='/warenkorb' />" method="post" id="cartForm"> --%>
-<%-- 								<button type="submit" form="cartForm" value='<c:out value="${book.getIsbn()}"></c:out>' name="isbn"> --%>
-<%-- 									<img src="<c:url value="/img/icons/ic_add_shopping_cart_black_36dp.png" />" title="Zum Warenkorb hinzufügen" /> --%>
-<!-- 									<p>In den Warenkorb</p> -->
-<!-- 								</button> -->
-<%-- 								<sec:csrfInput /> --%>
-<!-- 							</form> -->
-<%--  					</sec:authorize> --%>
+					
 						</div>
 					</div>
 					<div>
-						<p>
-							<!--  <div class="crop">
-							<c:out value="${book.getDescription()}" escapeXml="false" />  -->
-							<c:set var="string1" value="${book.getDescription()}" />
-							<c:set var="string2" value="${fn:substring(string1, 3, 350)}" />
-							<c:out value="${string2}" escapeXml="false">${string2}</c:out>
-							...
-						</p>
-						<a href="#desc" class="btn btn-primary">weiterlesen &raquo;</a>
+					<a class="collapsed" href="#colDesc" data-parent="#accordion" data-toggle="collapse">Beschreibung &downarrow;</a>
+						<div id="colDesc" class="collapse">
+							<c:out value="${book.getDescription()}" escapeXml="false" /> 
+<%-- 							<c:set var="string1" value="${book.getDescription()}" /> --%>
+<%-- 							<c:set var="string2" value="${fn:substring(string1, 3, 350)}" /> --%>
+<%-- 							<c:out value="${string2}" escapeXml="false">${string2}</c:out> --%>
+<!-- 							... -->
+						</div>
+						
 					</div>
 				</div>
 			</div>

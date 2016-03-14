@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import appl.data.items.Author;
 import appl.data.items.Book;
 import appl.enums.SearchMode;
 import appl.enums.Searchfields;
@@ -121,8 +122,12 @@ public class BackendStockController {
 	}
 
 	/**
+	 * Responsible for adding a new {@link Author} when data send as JSON.
 	 * 
-	 * @return
+	 * @param req
+	 *            the data as {@link AuthorJSONWrapper}
+	 * @return a {@link ResponseEntity} with a {@link HttpStatus} code
+	 *         indicating success or failure
 	 */
 	@RequestMapping(value = "/backend/bestand/autorinnen/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<AuthorJSONWrapper> addAuthor(@RequestBody final AuthorJSONWrapper req) {
@@ -140,8 +145,13 @@ public class BackendStockController {
 	}
 
 	/**
+	 * Responsible for deleting an {@link Author}, id of author must be sent as
+	 * request parameter.
 	 * 
-	 * @return
+	 * @param id
+	 *            the id of the {@link Author} to delete
+	 * @return a redirect to the URL responsible for displaying the view for the
+	 *         data management
 	 */
 	@RequestMapping(value = "/backend/bestand/autorinnen/delete", method = RequestMethod.POST)
 	public String deleteAuthor(@RequestParam(value = "author") String id) {
