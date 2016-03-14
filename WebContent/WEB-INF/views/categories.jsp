@@ -41,10 +41,10 @@
 							<c:forEach var="book" items="${books}">
 								<div class="col-sm-6 col-md-3">
 									<div class="thumbnail">
+										<div class="caption center-block">
 										<img class="book-cover img-responsive center-block"
 											src="<c:url value="/img/cover/${book.getIsbn()}.jpg"/>"
 											title="<c:out value="Cover des Buchs '${book.getTitle()}'"/>">
-										<div class="caption center-block">
 											<h4>
 												<c:out value="${book.getTitle()}" />
 											</h4>
@@ -63,6 +63,7 @@
 													title="zum Buch <c:out value='${book.getTitle()}' />">zum
 													Buch</a>
 											</p>
+										</div>
 						<sec:authorize access="isAnonymous()">
 								<button data-toggle="modal" data-target="#login"
 									class="btn btn-primary center-block">
@@ -130,9 +131,7 @@
 								</button>
 								<sec:csrfInput />
 							</form>
-						</sec:authorize>											
-
-										</div>
+						</sec:authorize>																					
 									</div>
 								</div>
 							</c:forEach>
