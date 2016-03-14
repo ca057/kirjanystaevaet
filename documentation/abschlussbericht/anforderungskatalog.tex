@@ -148,7 +148,7 @@
 	
 	Im Zusammenhang mit den \texttt{Orderx} und \texttt{OrderItems} bietet der \texttt{OrderService} Funktionen, die den Nutzer alle seine getätigten Bestellungen einsehen lässt. Außerdem gibt es die Möglichkeit alle insgesamt getätigten Bestellungen abzurufen, was im Admin-Backend genutzt wird. Außerdem wird eine Funktion angeboten, die \textit{Bestsellers} sowie \textit{Shelfwarmers} in der entsprechend sortierten Reihenfolge liefert. Diese sind im Admin-Backend im Dashboard einsehbar.
 	
-	\textbf{Johannes, UserBookStatistics}
+	Die \texttt{UserBookStatistics} dienen zur Abfrage von Statistiken, die sich die Interaktion eines bestimmten Accounts mit einem bestimmten Buch beziehen. Die momentan implementierten Daten sind rudimentär, können aber als gutes Beispiel dienen, welche Informationen gespeichert werden könnten. Über den \texttt{UserService} stehen Methoden bereit, über die sich die Häufigkeit, wie oft ein\_e Nutzer\_in ein Buch angesehen hat, sowie das Datum des letzten Besuchs abrufen sowie ändern lassen.
 	
 	Wie bereits in Abschnitt \ref{sec:umsetzung:backend} beschrieben, werden die einzelnen Statistiken von der Bean \lstinline|DataKraken| zusammengesammelt und als Map an den Controller weitergereicht. Hier bietet sich die Möglichkeit, einzelne Werte in Verbindung zu setzen um einen tieferen Einblick in die Nutzung des Shops zu erhalten.
 	
