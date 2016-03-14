@@ -8,7 +8,6 @@
 	<div class="page-header">
 	<h1>Warenkorb</h1>
 	</div>
-	<p>Hallo <c:out value="${name}" />!</p>
  	<h2>Bücher in deinem Warenkorb</h2> 
 
 		<c:choose>

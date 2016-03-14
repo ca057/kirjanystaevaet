@@ -56,15 +56,6 @@ public class CartController {
 		return "redirect:/warenkorb";
 	}
 
-	@RequestMapping(value = "/warenkorb", method = RequestMethod.DELETE)
-	public String deleteFromCart(@RequestParam(value = "isbn") String isbn) {
-		if (isbn != null && !isbn.isEmpty()) {
-			cart.deleteBook(isbn);
-
-		}
-		return "redirect:/warenkorb";
-	}
-
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.GET)
 	public String getCart(Model m) {
 		Book b = null;
