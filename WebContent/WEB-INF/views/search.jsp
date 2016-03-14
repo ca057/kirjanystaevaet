@@ -61,41 +61,103 @@
 				<c:otherwise>
 					<c:forEach var="book" items="${results}">
 					<div class="col-sm-6 col-md-3">
-									<div class="thumbnail">
-										<img class="book-cover img-responsive center-block"
-											src="<c:url value="/img/cover/${book.getIsbn()}.jpg"/>"
-											title="<c:out value="Cover des Buchs '${book.getTitle()}'"/>">
-										<div class="caption center-block">
-											<h4>
-												<c:out value="${book.getTitle()}" />
-											</h4>
-											<p>
-												von
-												<c:set var="delimiter" value="" scope="request"></c:set>
-												<c:forEach var="a" items="${book.getAuthors()}">${delimiter}<c:out
-														value="${a.getNameF()}" />
-													<c:out value="${a.getNameL()}" />
-													<c:set var="delimiter" value=", " scope="request"></c:set>
-												</c:forEach>
-											</p>
-											<p>
-												<c:out value="${book.getPrice()}" />
-												€ - <a href="<c:url value='/buch/${book.getIsbn()}' />"
-													title="zum Buch <c:out value='${book.getTitle()}' />">zum
-													Buch</a>
-											</p>
-												<form action="<c:url value='warenkorb' />" method="post" id="cartForm">
-													<button type="submit" form="cartForm"
-														value='<c:out value="${book.getIsbn()}"></c:out>'
-														name="isbn" class="btn btn-primary center-block">
-														<span class="glyphicon glyphicon-shopping-cart"></span> In
-														den Warenkorb
-													</button>
-													<sec:csrfInput />
-												</form>
+				<div class="thumbnail">
+					
+						<div class="caption center-block">
+						<img class="book-cover img-responsive center-block"
+							src="<c:url value="/img/cover/${book.getIsbn()}.jpg"/>"
+							title="<c:out value="Cover des Buchs '${book.getTitle()}'"/>">
+							<h4>
+								<c:out value="${book.getTitle()}" />
+							</h4>
+							<p>
+								von
+								<c:set var="delimiter" value="" scope="request"></c:set>
+								<c:forEach var="a" items="${book.getAuthors()}">${delimiter}<c:out
+										value="${a.getNameF()}" />
+									<c:out value="${a.getNameL()}" />
+									<c:set var="delimiter" value=", " scope="request"></c:set>
+								</c:forEach>
+							</p>
+							<p>
+								<c:out value="${book.getPrice()}" />
+								€ - <a href="<c:url value='/buch/${book.getIsbn()}' />" title="zum Buch <c:out value='${book.getTitle()}' />" class="noDeco">
+										zum Buch</a>
+							</p>
+						
+					</div>
+						<sec:authorize access="isAnonymous()">
+								<button data-toggle="modal" data-target="#login"
+									class="btn btn-primary center-block">
+									<span class="glyphicon glyphicon-shopping-cart"></span> In den
+									Warenkorb
+								</button>
+									<div id="login" class="modal fade" role="dialog">
+										<div class="modal-dialog">
+	
+											<!-- Modal content-->
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">Login nötig</h4>
+												</div>
+													<div class="modal-body" id="popupLoginBody">
+														<p>Bitte erst als User einloggen!</p>
+														<form method="post" action="<c:url value="/login" />" method="post">
+															<input type="text" placeholder="E-Mail" id="username" name="username"> <input type="password" placeholder="Passwort" id="password" name="password"> <input
+															class="btn btn-primary btn-block" type="submit" value="Anmelden">
+															<sec:csrfInput />
+														</form>
+													</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default"
+														data-dismiss="modal">Close</button>
+												</div>
+											</div>
+	
 										</div>
 									</div>
-								</div>
+								</sec:authorize>
+								<sec:authorize access="hasRole('ADMIN')">
+									<button data-toggle="modal" data-target="#adminPopup" class="btn btn-primary center-block">
+										<span class="glyphicon glyphicon-shopping-cart"></span>
+										In den Warenkorb
+									</button>
+									<div id="adminPopup" class="modal fade" role="dialog">
+										<div class="modal-dialog">
+	
+											<!-- Modal content-->
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+													<h4 class="modal-title">Kein Zugriff</h4>
+												</div>
+													<div class="modal-body">
+														<p>Der Warenkorb steht nur der Kundschaft zur Verfügung.</p>
+													</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default"
+														data-dismiss="modal">Close</button>
+												</div>
+											</div>
+	
+										</div>
+									</div>
+								</sec:authorize>
+						
+						<sec:authorize access="hasRole('USER')">
+							<form action="<c:url value='warenkorb' />" method="post" id="cartForm">
+								<button type="submit" form="cartForm"
+									value='<c:out value="${book.getIsbn()}"></c:out>' name="isbn"
+									class="btn btn-primary center-block">
+									<span class="glyphicon glyphicon-shopping-cart"></span> 
+									In den Warenkorb
+								</button>
+								<sec:csrfInput />
+							</form>
+						</sec:authorize>
+				</div>
+			</div>
 					</c:forEach> 
 				</c:otherwise>
 			</c:choose>
