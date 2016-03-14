@@ -1,13 +1,3 @@
-/* html {
-	box-sizing: border-box;
-}
-
-*, *:before, *:after {
-	box-sizing: inherit;
-	margin: 0;
-}
-
-*/
 html {
 	width: 100%;
 	height: 100%;
@@ -23,13 +13,6 @@ body {
 	margin: 0 auto 0 auto;
 }
 
-/* all font stuff */
-/*p {
-	font-size: 1em;
-	line-height: 150%;
-	margin-bottom: 0.5em;
-	text-align: justify;
-} */
 .error {
 	color: red;
 }
@@ -62,25 +45,6 @@ h3 {
 	margin: 0.5em 0 0.5em 0;
 }
 
-/* all links */
-/* a {
-	cursor: pointer;
-	border-bottom: 1px solid #212121;
-}
-
-a:link, a:visited {
-	color: #212121;
-	text-decoration: none;
-	border-bottom: 1px solid #212121;
-}
-
-a:focus, a:hover, a:active {
-	color: #212121;
-	text-decoration: none;
-	border-bottom: 0px solid #212121;
-} */
-
-/* all containers */
 div#wrapper {
 	min-height: 100%;
 	max-width: 1000px;
@@ -90,28 +54,6 @@ div#wrapper {
 	margin: 0 auto 0 auto;
 	background-color: #FFFFFF;
 }
-
-div#wrapper>* {
-	width: 100%;
-	height: auto;
-}
-
-div.wrapper {
-	min-height: 100%;
-	max-width: 1000px;
-	display: flex;
-	flex-direction: row;
-}
-
-div#content-wrapper {
-	height: auto;
-}
-
-div#content-wrapper>* {
-	padding: 5px;
-}
-
-/* all the content */
 
 .header-bg {
 	height: 15vw;
@@ -153,16 +95,6 @@ div#content-wrapper>* {
 	display: inline-block;
 }
 
-/* see https://medium.com/@Florian/freebie-google-material-design-shadow-helper-2a0501295a2d#.wvtibc8bk */
-.shadow-1 {
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-
-.shadow-2 {
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
-
-/* all lists */
 .list-inline {
 	list-style: none;
 	padding: 0;
@@ -172,37 +104,9 @@ div#content-wrapper>* {
 	display: inline-block;
 }
 
-ul.navigation-content {
-	
-}
-
-ul.navigation-content li {
-	width: auto;
-}
-
-ul.navigation-content li ul.navigation-content-sub {
-	width: inherit;
-	background-color: #009688;
-	display: none;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	position: absolute;
-}
-
-ul.navigation-content li ul.navigation-content-sub li {
-	display: block;
-}
-
-ul.navigation-content li:hover .navigation-content-sub {
-	display: block;
-}
-
 .float-right {
 	float: right;
 }
-
-/* Footer */
 
 .footer {
 	background-color: #C0C0C0;
@@ -221,9 +125,6 @@ ul.navigation-content li:hover .navigation-content-sub {
 	content: none;
 }
 
-/* input fields */
-
-/* on homepage */
 form * {
 	display: block;
 	margin-bottom: 0.3em;
@@ -234,7 +135,7 @@ form * {
 }
 
 /* animations */
-/* rainbow stolen from http://codepen.io/beben-koben/pen/gfuvc */
+/* rainbow copied from http://codepen.io/beben-koben/pen/gfuvc */
 .rainbow {
 	animation: rainbow 1s infinite;
 }
@@ -252,33 +153,6 @@ form * {
 	90% { color: #8000ff; }
 	100% { color: #ff0080; }
 }
-
-/* media queries */
-@media screen and (max-width: 1000px) {
-	body {
-		padding: 0 10px 0 10px;
-	}
-}
-
-@media screen and (max-width: 767px) {
-	.thumbnail{        
-   	 	overflow: auto;
-   	 	height:100%;
-	}
-}
-
-@media screen and (min-width: 768px) {
-     .thumbnail {
-    	overflow: auto;
-     	height: 50vh;
-     }
- }
-
-div#homerow {
-	width: 100%
-}
-
-/* Bootstrap changes */
 
 #logout-form {
 	height: 100%;
@@ -308,7 +182,6 @@ div#homerow {
 	color: #e1ffff;
 	
 }
-
 
 .nav-side-menu ul, .nav-side-menu li {
 	list-style: none;
@@ -375,35 +248,10 @@ div#homerow {
 	display: block;
 }
 
-/* Upload-Button */
-
-.btn-file {
-    position: relative;
-    overflow: hidden;
-}
-.btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
-}
-
-/* Thumbnail */
-
 .thumbnail img {
 	width: 40%;
 }
 
-/* Popup if not logged in */
 #popupLoginBody{
 	display: flex;
 	flex-direction: column;
@@ -417,3 +265,20 @@ div#homerow {
 	flex-direction: row;
 	align-items: center;
 }
+
+ .thumbnail{        
+   	 	overflow: auto;
+   	 	height:50vh;
+}
+
+@media screen and (max-width: 1000px) {
+	body {
+		padding: 0 10px 0 10px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+     .thumbnail {
+     	height: 100%;
+     }
+ }
