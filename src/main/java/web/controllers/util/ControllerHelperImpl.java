@@ -25,8 +25,11 @@ public class ControllerHelperImpl implements ControllerHelper {
 
 	@Override
 	public int getUserId() throws ControllerOvertaxedException {
-		return ((User) getAuthentication().orElseThrow(() -> new ControllerOvertaxedException()).getPrincipal())
-				.getUserId();
+		if (getAuthentication().orElseThrow(() -> new ControllerOvertaxedException()).getPrincipal() instanceof User) {
+			return ((User) getAuthentication().orElseThrow(() -> new ControllerOvertaxedException()).getPrincipal())
+					.getUserId();
+		}
+		throw new ControllerOvertaxedException("Return value of Authentication is not an User object as expected.");
 	}
 
 	@Override

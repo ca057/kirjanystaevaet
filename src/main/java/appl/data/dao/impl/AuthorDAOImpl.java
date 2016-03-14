@@ -22,11 +22,11 @@ public class AuthorDAOImpl implements AuthorDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	private Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
-	
+
 	private Criteria setupAndGetCriteria() {
 		if (sessionFactory == null) {
 			throw new RuntimeException("[Error] SessionFactory is null");
@@ -34,34 +34,36 @@ public class AuthorDAOImpl implements AuthorDAO {
 		Session s = getSession();
 		Criteria cr = s.createCriteria(Author.class);
 		cr.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-		
+
 		return cr;
 
-//		return cr.createAlias("books", "b");
+		// return cr.createAlias("books", "b");
 	}
 
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Author> getAuthors() {
 		return getSession().createCriteria(Author.class).list();
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Author> getAuthorsByNameF(String nameF) {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.ilike("nameF", nameF));
 		List<Author> authors = cr.list();
-		
+
 		return authors;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Author> getAuthorsByNameL(String nameL) {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.ilike("nameL", nameL));
 		List<Author> authors = cr.list();
-		
+
 		return authors;
 	}
 
@@ -70,12 +72,12 @@ public class AuthorDAOImpl implements AuthorDAO {
 		Criteria cr = setupAndGetCriteria();
 		cr.add(Restrictions.eq("authorId", authorID));
 		Object result = cr.uniqueResult();
-		if ( result != null){
+		if (result != null) {
 			Author author = (Author) result;
 			return author;
 		} else {
 			throw new EntityDoesNotExistException();
-		
+
 		}
 
 	}
@@ -96,6 +98,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 		getSession().update(author);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Author> getAuthorByExactNames(String nameF, String nameL) {
 		Criteria cr = setupAndGetCriteria();
@@ -105,6 +108,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 		return authors;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Author> getAuthorsByIsbn(String isbn) {
 		Criteria cr = setupAndGetCriteria();

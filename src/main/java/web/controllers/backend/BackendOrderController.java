@@ -9,12 +9,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import appl.logic.service.OrderService;
 import exceptions.data.DatabaseException;
 
+/**
+ * Controller responsible for displaying the orders.
+ * 
+ * @author Christian
+ *
+ */
 @Controller
 public class BackendOrderController {
 
 	@Autowired
 	private OrderService orderService;
 
+	/**
+	 * Returns the view which is responsible for displaying the orders. All
+	 * orders will be added as an attriubte to the {@link Model}.
+	 * 
+	 * @param m
+	 *            the {@link Model} for the view
+	 * @return the name of the view
+	 */
 	@RequestMapping(value = "/backend/bestellungen", method = RequestMethod.GET)
 	public String getBackend(Model m) {
 		try {

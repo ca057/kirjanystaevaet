@@ -210,4 +210,13 @@ public abstract class ErrorMessageHelper {
 	public static String increaseOfVisitCountFailed(String entity, String id, String information) {
 		return String.format("Increase of visitCount of %s with identifier %s failed: %s", entity, id, information);
 	}
+	
+	/**
+	 * Used when the amount of ordered book is higher then the stock
+	 * @param title
+	 * @return
+	 */
+	public static String notEnoughBooksAvailable(String title){
+		return String.format("Sorry, there are not enough Exemplars of %s available to fulfill your order", title);
+	}
 }

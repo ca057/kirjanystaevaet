@@ -1,10 +1,16 @@
 package exceptions.web;
 
+/**
+ * Exception used in the controllers if a situation occurs which cannot be
+ * handled by them.
+ * 
+ * @author Christian
+ * @author Ludwig
+ * @author Johannes
+ *
+ */
 public class ControllerOvertaxedException extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6037231727038290180L;
 
 	public ControllerOvertaxedException() {
