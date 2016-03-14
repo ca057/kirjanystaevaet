@@ -16,6 +16,10 @@ import appl.logic.service.BookService;
 import appl.logic.service.Cart;
 import exceptions.data.DatabaseException;
 
+/**
+ * @author Ludwig
+ *
+ */
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
 @Service
 public class CartImpl implements Cart {
@@ -53,7 +57,6 @@ public class CartImpl implements Cart {
 		return df.format(sum);
 	}
 
-	// Item aus Warenkorb entfernen
 	@Override
 	public void deleteBook(String isbn) {
 		if (isbn == null || isbn.isEmpty()) {

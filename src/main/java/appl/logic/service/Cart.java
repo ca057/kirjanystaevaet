@@ -17,15 +17,12 @@ public interface Cart {
 
 	String getPrice() throws DatabaseException;
 
-	// Item aus Warenkorb entfernen
 	void deleteBook(String isbn);
 
-	// post order
 	void postOrder(Book book);
 
 	boolean isEmpty();
 
 	void deleteContent();
-	// Soll prüfen, ob Bücher da sind und entsprechende Meldung rausgeben.
 
 }
