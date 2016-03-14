@@ -26,7 +26,9 @@ public class ProcessUpload implements UploadHelper {
 				.getRealPath(File.separator + "uploaded" + File.separator + "img" + File.separator + "cover"));
 		try {
 			if (!dir.exists()) {
-				dir.mkdirs();
+				if (!dir.mkdirs()) {
+					return false;
+				}
 			}
 			File serverFile = new File(dir.getAbsolutePath() + File.separator + title + "." + extension);
 			try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {

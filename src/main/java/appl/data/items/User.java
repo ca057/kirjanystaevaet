@@ -60,7 +60,7 @@ public class User {
 	private Set<UserBookStatistic> userBookStatistics;
 	private byte[] image;
 
-	private User() {
+	public User() {
 	}
 
 	/**
