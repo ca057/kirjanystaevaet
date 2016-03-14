@@ -7,8 +7,6 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +22,7 @@ import appl.logic.service.OrderService;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 import exceptions.web.ControllerOvertaxedException;
+import web.controllers.ControllerHelper;
 
 @Controller
 public class CartController {
@@ -38,13 +37,16 @@ public class CartController {
 	private UserService userService;
 
 	@Autowired
+	private ControllerHelper controllerHelper;
+
+	@Autowired
 	private Cart cart;
 
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.POST)
-	public String addToCart(@RequestParam(value = "isbn") String isbn) {
+	public String addToCart(@RequestParam(value = "isbn") String isbn) throws DatabaseException {
 		System.out.println(isbn);
 		try {
-			System.out.println("User in Cart: " + getUser());
+			System.out.println("User in Cart: " + controllerHelper.getUser().get());
 		} catch (ControllerOvertaxedException e1) {
 			return "redirect:/warenkorb";
 		}
@@ -97,7 +99,7 @@ public class CartController {
 	@RequestMapping(value = "/bestellung_aufgegeben", method = RequestMethod.POST)
 	public String orderContent(Model m) {
 		try {
-			User user = getUser();
+			User user = controllerHelper.getUser().get();
 			System.out.println(user.toString());
 			if (!cart.isEmpty()) {
 				if (user.getStreet() != null && user.getStreetnumber() != null && user.getPlz() != null) {
@@ -133,17 +135,18 @@ public class CartController {
 		return "redirect:/warenkorb";
 	}
 
-	private User getUser() throws ControllerOvertaxedException {
-		Authentication a = SecurityContextHolder.getContext().getAuthentication();
-		if (a == null) {
-			throw new ControllerOvertaxedException("Authentication is null");
-		} else {
-			try {
-				return userService.findByID(((User) a.getPrincipal()).getUserId()).get();
-			} catch (DatabaseException | NoSuchElementException e) {
-				throw new ControllerOvertaxedException(e.getMessage());
-			}
-		}
-	}
+	// private User getUser() throws ControllerOvertaxedException {
+	// Authentication a =
+	// SecurityContextHolder.getContext().getAuthentication();
+	// if (a == null) {
+	// throw new ControllerOvertaxedException("Authentication is null");
+	// } else {
+	// try {
+	// return userService.findByID(((User) a.getPrincipal()).getUserId()).get();
+	// } catch (DatabaseException | NoSuchElementException e) {
+	// throw new ControllerOvertaxedException(e.getMessage());
+	// }
+	// }
+	// }
 
 }
