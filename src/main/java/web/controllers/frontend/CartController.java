@@ -105,7 +105,7 @@ public class CartController {
 				} else {
 					return "error";
 				}
-				m.addAttribute("name", user.getSurname());
+				m.addAttribute("name", user.getName());
 				m.addAttribute("surname", user.getSurname());
 				m.addAttribute("street", user.getStreet());
 				m.addAttribute("streetnumber", user.getStreetnumber());
