@@ -1,4 +1,8 @@
 package appl.data.builder;
+/**
+ * Class contains some methode that help to fill the Builder with data, the further goal is to keep the Entity-Objects immutable.
+ * @author Madeleine
+ */
 
 import appl.data.items.Author;
 import appl.data.items.Book;
