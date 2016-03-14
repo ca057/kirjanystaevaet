@@ -22,6 +22,13 @@ import exceptions.web.ControllerOvertaxedException;
 import web.controllers.ControllerHelper;
 import web.jsonwrappers.UserJSONWrapper;
 
+/**
+ * Controller handles all requests for managing {@link User}s in the admin
+ * backend.
+ * 
+ * @author Christian
+ *
+ */
 @Controller
 public class BackendUsersController {
 
@@ -31,6 +38,13 @@ public class BackendUsersController {
 	@Autowired
 	private ControllerHelper helper;
 
+	/**
+	 * Returns the view associated with managing the {@link User}s.
+	 * 
+	 * @param m
+	 *            the {@link Model} for the view
+	 * @return the name of the view
+	 */
 	@RequestMapping(value = "/backend/nutzerinnen", method = RequestMethod.GET)
 	public String getUsers(Model m) {
 		try {
@@ -45,6 +59,14 @@ public class BackendUsersController {
 		return "backend/users";
 	}
 
+	/**
+	 * Handles a JSON request send to the path for adding a new {@link User}.
+	 * 
+	 * @param req
+	 *            the request as {@link UserJSONWrapper}
+	 * @return a {@link ResponseEntity} with a {@link HttpStatus} giving
+	 *         information about success or failure
+	 */
 	@RequestMapping(path = "/backend/nutzerinnen/add", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<UserJSONWrapper> addUser(@RequestBody final UserJSONWrapper req) {
 		if (req == null) {
@@ -72,6 +94,15 @@ public class BackendUsersController {
 		}
 	}
 
+	/**
+	 * Responsible for editing data of a {@link User}, consumes data as a
+	 * {@link UserJSONWrapper}.
+	 * 
+	 * @param req
+	 *            the request as {@link UserJSONWrapper}
+	 * @return a {@link ResponseEntity} with a {@link HttpStatus} giving
+	 *         information about success or failure
+	 */
 	@RequestMapping(path = "/backend/nutzerinnen/edit", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<UserJSONWrapper> editUser(@RequestBody final UserJSONWrapper req) {
 		if (req == null) {
@@ -111,6 +142,15 @@ public class BackendUsersController {
 		}
 	}
 
+	/**
+	 * Responsible for handling the deletion of an {@link User}. Takes the id of
+	 * the user as request parameter.
+	 * 
+	 * @param id
+	 *            the id of the user to delete
+	 * @return redirects the client to the URL responsible for displaying the
+	 *         view for managing users
+	 */
 	@RequestMapping(path = "/backend/nutzerinnen/delete", method = RequestMethod.POST)
 	public String deleteUsers(@RequestParam(value = "id") String id) {
 		if (id == null || id.isEmpty()) {
@@ -124,6 +164,13 @@ public class BackendUsersController {
 		return "redirect:/backend/nutzerinnen";
 	}
 
+	/**
+	 * Internal method used for better readability of code, returns a
+	 * {@link ResponseEntity} with an HTTP status code of 422.
+	 * 
+	 * @param response
+	 * @return
+	 */
 	private ResponseEntity<UserJSONWrapper> returnUnprocessableEntity(UserJSONWrapper response) {
 		if (response == null) {
 			throw new IllegalArgumentException(

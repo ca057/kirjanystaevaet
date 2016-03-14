@@ -8,7 +8,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import appl.data.items.User;
-import appl.logic.service.BookService;
 import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 import exceptions.web.ControllerOvertaxedException;
@@ -19,9 +18,6 @@ public class ControllerHelperImpl implements ControllerHelper {
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private BookService bookService;
 
 	private Optional<Authentication> getAuthentication() {
 		return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication());

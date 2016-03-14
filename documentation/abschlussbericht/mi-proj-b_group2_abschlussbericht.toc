@@ -1,37 +1,46 @@
 \select@language {ngerman}
-\contentsline {section}{\numberline {1}Einleitung}{3}{section.1}
-\contentsline {section}{\numberline {2}Systemarchitektur}{4}{section.2}
-\contentsline {section}{\numberline {3}Umsetzung des Anforderungskatalogs}{5}{section.3}
-\contentsline {subsection}{\numberline {3.1}Datenbank}{5}{subsection.3.1}
-\contentsline {subsubsection}{\numberline {3.1.1}Datenbankschema}{5}{subsubsection.3.1.1}
-\contentsline {subsection}{\numberline {3.2}A1: Datenmanagement}{5}{subsection.3.2}
-\contentsline {subsubsection}{\numberline {3.2.1}Architektur der Datenbankfunktionen}{6}{subsubsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2}Einf\IeC {\"u}gen von Daten}{7}{subsubsection.3.2.2}
-\contentsline {subsubsection}{\numberline {3.2.3}L\IeC {\"o}schen von Daten}{7}{subsubsection.3.2.3}
-\contentsline {subsubsection}{\numberline {3.2.4}\IeC {\"A}ndern von Daten}{7}{subsubsection.3.2.4}
-\contentsline {subsubsection}{\numberline {3.2.5}Exception Handling}{8}{subsubsection.3.2.5}
-\contentsline {subsection}{\numberline {3.3}A2: Frontend}{8}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Zuordnung von Views und Controllern}{9}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}Funktionalit\IeC {\"a}ten des Frontends}{9}{subsubsection.3.3.2}
-\contentsline {subsubsection}{\numberline {3.3.3}Fehlerbehandlung}{10}{subsubsection.3.3.3}
-\contentsline {subsection}{\numberline {3.4}A3: Suchfunktion}{10}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}A4: Backend}{10}{subsection.3.5}
-\contentsline {subsubsection}{\numberline {3.5.1}Umsetzung der Administrationsm\IeC {\"o}glichkeiten per AJAX-Requests}{11}{subsubsection.3.5.1}
-\contentsline {subsubsection}{\numberline {3.5.2}Fehlerbehandlung}{11}{subsubsection.3.5.2}
-\contentsline {subsection}{\numberline {3.6}A5: Warenkorb}{11}{subsection.3.6}
-\contentsline {subsection}{\numberline {3.7}A6: Bestellverwaltung}{11}{subsection.3.7}
-\contentsline {subsection}{\numberline {3.8}A7: REST-API}{12}{subsection.3.8}
-\contentsline {subsection}{\numberline {3.9}A8: Nutzeranalyse}{12}{subsection.3.9}
-\contentsline {section}{\numberline {4}User Stories}{13}{section.4}
-\contentsline {subsection}{\numberline {4.1}Registrierung und Login}{13}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Buchauswahl und Bestellung}{13}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Kund\_innen m\IeC {\"o}chten die B\IeC {\"u}cher ihrer Wahl bestellen}{13}{subsection.4.3}
-\contentsline {subsection}{\numberline {4.4}Administration des Web-Shops}{13}{subsection.4.4}
-\contentsline {section}{\numberline {5}Zusammenarbeit}{14}{section.5}
-\contentsline {paragraph}{W\IeC {\"o}chentliche Treffen}{14}{section*.4}
-\contentsline {paragraph}{Feature-Branches}{14}{section*.5}
-\contentsline {section}{\numberline {6}Lessons Learned}{15}{section.6}
-\contentsline {subsection}{\numberline {6.1}Known Issues}{15}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Kritik}{15}{subsection.6.2}
-\contentsline {paragraph}{Naming conventions}{15}{section*.6}
-\contentsline {section}{\numberline {7}Bliblablub}{15}{section.7}
+\contentsline {section}{\numberline {1}Einleitung}{4}{section.1}
+\contentsline {section}{\numberline {2}Systemarchitektur}{5}{section.2}
+\contentsline {section}{\numberline {3}Umsetzung des Anforderungskatalogs}{7}{section.3}
+\contentsline {subsection}{\numberline {3.1}Datenbank}{7}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}Datenbankschema}{7}{subsubsection.3.1.1}
+\contentsline {subsection}{\numberline {3.2}A1: Datenmanagement}{7}{subsection.3.2}
+\contentsline {subsubsection}{\numberline {3.2.1}Architektur der Datenbankfunktionen}{8}{subsubsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2}Einf\IeC {\"u}gen von Daten}{9}{subsubsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.3}L\IeC {\"o}schen von Daten}{9}{subsubsection.3.2.3}
+\contentsline {subsubsection}{\numberline {3.2.4}\IeC {\"A}ndern von Daten}{9}{subsubsection.3.2.4}
+\contentsline {subsubsection}{\numberline {3.2.5}Exception Handling}{10}{subsubsection.3.2.5}
+\contentsline {subsubsection}{\numberline {3.2.6}Testen der Funktionen der \textit {Services}}{10}{subsubsection.3.2.6}
+\contentsline {subsection}{\numberline {3.3}A2: Frontend}{11}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Zuordnung von Views und Controllern}{11}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}Funktionalit\IeC {\"a}ten des Frontends}{11}{subsubsection.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.3}Fehlerbehandlung}{12}{subsubsection.3.3.3}
+\contentsline {subsection}{\numberline {3.4}A3: Suchfunktion}{12}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}A4: Backend}{13}{subsection.3.5}
+\contentsline {subsubsection}{\numberline {3.5.1}Dashboard}{13}{subsubsection.3.5.1}
+\contentsline {subsubsection}{\numberline {3.5.2}Bestands- und Nutzer\_innenverwaltung}{13}{subsubsection.3.5.2}
+\contentsline {subsubsection}{\numberline {3.5.3}Bestellungen}{14}{subsubsection.3.5.3}
+\contentsline {subsubsection}{\numberline {3.5.4}Fehlerbehandlung}{14}{subsubsection.3.5.4}
+\contentsline {subsection}{\numberline {3.6}A5: Warenkorb}{15}{subsection.3.6}
+\contentsline {subsection}{\numberline {3.7}A6: Bestellverwaltung}{15}{subsection.3.7}
+\contentsline {subsection}{\numberline {3.8}A7: REST-API}{15}{subsection.3.8}
+\contentsline {subsection}{\numberline {3.9}A8: Nutzeranalyse}{16}{subsection.3.9}
+\contentsline {subsection}{\numberline {3.10}"`Known Issues"'}{16}{subsection.3.10}
+\contentsline {paragraph}{Doppelte Autor\_inneneintr\IeC {\"a}ge in den Auswahllisten}{16}{section*.4}
+\contentsline {section}{\numberline {4}User Stories}{18}{section.4}
+\contentsline {subsection}{\numberline {4.1}Kund\_innen m\IeC {\"o}chten die B\IeC {\"u}cher ihrer Wahl bestellen}{18}{subsection.4.1}
+\contentsline {section}{\numberline {5}Zusammenarbeit}{19}{section.5}
+\contentsline {paragraph}{W\IeC {\"o}chentliche Treffen und Kommunikation}{19}{section*.5}
+\contentsline {paragraph}{Feature-Branches}{19}{section*.6}
+\contentsline {paragraph}{Aufgaben- und Fehlertracking}{19}{section*.7}
+\contentsline {section}{\numberline {6}Lessons Learned}{20}{section.6}
+\contentsline {subsection}{\numberline {6.1}weitere Kritik}{20}{subsection.6.1}
+\contentsline {paragraph}{Naming conventions}{20}{section*.8}
+\contentsline {paragraph}{Datenbankschema}{20}{section*.9}
+\contentsline {paragraph}{Tests}{20}{section*.10}
+\contentsline {subsection}{\numberline {6.2}Lernerfolge}{20}{subsection.6.2}
+\contentsline {paragraph}{Hibernate}{20}{section*.11}
+\contentsline {paragraph}{Beans, Dependency Injections}{20}{section*.12}
+\contentsline {paragraph}{Server-seitige Absicherung}{20}{section*.13}
+\contentsline {paragraph}{Zusammenspiel von Server und Client, Ablauf von "`Request"' und "`Response"'}{21}{section*.14}
+\contentsline {paragraph}{Git}{21}{section*.15}
