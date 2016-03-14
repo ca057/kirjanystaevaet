@@ -23,6 +23,14 @@ import exceptions.data.DatabaseException;
 import exceptions.web.ControllerOvertaxedException;
 import web.controllers.ControllerHelper;
 
+/**
+ * @author Ludwig
+ *
+ */
+/**
+ * @author Ludwig
+ *
+ */
 @Controller
 public class CartController {
 
@@ -38,6 +46,14 @@ public class CartController {
 	@Autowired
 	private Cart cart;
 
+	/**
+	 * Adds a book to the cart's map. Uses a post method since you don't want
+	 * this cached or bookmarked.
+	 * 
+	 * @param isbn
+	 * @return
+	 * @throws DatabaseException
+	 */
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.POST)
 	public String addToCart(@RequestParam(value = "isbn") String isbn) throws DatabaseException {
 		System.out.println(isbn);
@@ -56,6 +72,12 @@ public class CartController {
 		return "redirect:/warenkorb";
 	}
 
+	/**
+	 * Delivers the books in the cart to the view.
+	 * 
+	 * @param m
+	 * @return
+	 */
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.GET)
 	public String getCart(Model m) {
 		Book b = null;
@@ -83,6 +105,14 @@ public class CartController {
 		return "cart";
 	}
 
+	/**
+	 * Prompts the order and returns a view which indicates that the order was
+	 * conducted. Uses a post method since you don't want this cached or
+	 * bookmarked.
+	 * 
+	 * @param m
+	 * @return
+	 */
 	@RequestMapping(value = "/bestellung_aufgegeben", method = RequestMethod.POST)
 	public String orderContent(Model m) {
 		try {
@@ -111,6 +141,12 @@ public class CartController {
 
 	}
 
+	/**
+	 * Deletes a book from the cart if a user has pressed the respective button.
+	 * 
+	 * @param isbn
+	 * @return
+	 */
 	@RequestMapping(value = "/buch_geloescht", method = RequestMethod.POST)
 	public String deleteBook(@RequestParam(value = "isbn") String isbn) {
 		try {
