@@ -23,7 +23,7 @@ public interface ControllerHelper {
 	 * 
 	 * @return the id as {@code int} of the current logged in user
 	 * @throws ControllerOvertaxedException
-	 *             if an error occurs while requesting the id or parsing the
+	 *             if an error occurs while requesting the id or casting the
 	 *             needed user object
 	 */
 	public int getUserId() throws ControllerOvertaxedException;
