@@ -19,7 +19,6 @@ import appl.data.items.User;
 import appl.enums.SearchMode;
 import appl.logic.service.BookService;
 import appl.logic.service.OrderService;
-import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 import exceptions.web.ControllerOvertaxedException;
 import web.controllers.ControllerHelper;
@@ -32,9 +31,6 @@ public class CartController {
 
 	@Autowired
 	private OrderService orderService;
-
-	@Autowired
-	private UserService userService;
 
 	@Autowired
 	private ControllerHelper controllerHelper;
@@ -109,7 +105,7 @@ public class CartController {
 				} else {
 					return "error";
 				}
-				m.addAttribute("name", user.getName());
+				m.addAttribute("name", user.getSurname());
 				m.addAttribute("surname", user.getSurname());
 				m.addAttribute("street", user.getStreet());
 				m.addAttribute("streetnumber", user.getStreetnumber());
@@ -134,19 +130,4 @@ public class CartController {
 
 		return "redirect:/warenkorb";
 	}
-
-	// private User getUser() throws ControllerOvertaxedException {
-	// Authentication a =
-	// SecurityContextHolder.getContext().getAuthentication();
-	// if (a == null) {
-	// throw new ControllerOvertaxedException("Authentication is null");
-	// } else {
-	// try {
-	// return userService.findByID(((User) a.getPrincipal()).getUserId()).get();
-	// } catch (DatabaseException | NoSuchElementException e) {
-	// throw new ControllerOvertaxedException(e.getMessage());
-	// }
-	// }
-	// }
-
 }

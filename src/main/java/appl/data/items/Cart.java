@@ -38,7 +38,7 @@ public class Cart {
 	}
 
 	public String getPrice() throws DatabaseException {
-		DecimalFormat df = new DecimalFormat("#.00");
+		DecimalFormat df = new DecimalFormat("0.00");
 		Set<String> keys = books.keySet();
 		double sum = 0;
 		for (String s : keys) {

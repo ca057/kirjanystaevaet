@@ -83,10 +83,6 @@
 					<a class="collapsed" href="#colDesc" data-parent="#accordion" data-toggle="collapse">Beschreibung &downarrow;</a>
 						<div id="colDesc" class="collapse">
 							<c:out value="${book.getDescription()}" escapeXml="false" /> 
-<%-- 							<c:set var="string1" value="${book.getDescription()}" /> --%>
-<%-- 							<c:set var="string2" value="${fn:substring(string1, 3, 350)}" /> --%>
-<%-- 							<c:out value="${string2}" escapeXml="false">${string2}</c:out> --%>
-<!-- 							... -->
 						</div>
 						
 					</div>
