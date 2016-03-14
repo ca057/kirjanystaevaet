@@ -198,7 +198,7 @@ public class Book {
 		this.pages = pages;
 	}
 
-	public void setStock(int stock) {
+	private void setStock(int stock) {
 		this.stock = stock;
 	}
 
