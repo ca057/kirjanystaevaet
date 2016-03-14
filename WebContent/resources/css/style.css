@@ -13,6 +13,11 @@ body {
 	margin: 0 auto 0 auto;
 }
 
+ht {
+	color: white;
+	font-size: 3.5em;
+}
+
 .error {
 	color: red;
 }
@@ -58,7 +63,7 @@ div#wrapper {
 .header-bg {
 	height: 15vw;
 	max-height: 250px;
-	width: 100% !important;
+	width: 100%;
 	background-image: url("../img/title.jpg");
 	background-size: cover;
 	background-position: center;
