@@ -66,8 +66,7 @@
 					data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span>
 						Anmelden</a>
 					<div class="dropdown-menu">
-						<form method="post" action="<c:url value="/login" />"
-							method="post">
+						<form method="post" action="<c:url value="/login" />" >
 							<input type="text" placeholder="E-Mail" id="username"
 								name="username"> <input type="password"
 								placeholder="Passwort" id="password" name="password"> <input
