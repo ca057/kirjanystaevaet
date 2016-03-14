@@ -541,42 +541,30 @@ public class BookServiceImpl implements BookService {
 				categories.add(categoryDao.getCategoryById(id));
 			}
 			// Save old Values
-			// BookBuilder bookBuilder = saveOldValues(book, getBookBuilder());
 			BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
 
 			bookBuilder.setAuthors(authors);
 			bookBuilder.setCategories(categories);
 
-			// book.setAuthors(authors);
-
-			// book.setCategories(categories);
-
 			for (Searchfields s : data.keySet()) {
 				if (s == Searchfields.isbn) {
 					throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("isbn"));
 				} else if (s == Searchfields.description) {
-					// book.setDescription(data.get(s));
 					bookBuilder.setDescription(data.get(s));
 				} else if (s == Searchfields.price) {
 					double price = Double.parseDouble(data.get(s).replace(",", "."));
-					// book.setPrice(price);
 					bookBuilder.setPrice(price);
 				} else if (s == Searchfields.pages) {
-					// book.setPages(data.get(s));
 					bookBuilder.setPages(data.get(s));
 				} else if (s == Searchfields.pubdate) {
-					// book.setPubdate(data.get(s));
 					bookBuilder.setPubdate(data.get(s));
 				} else if (s == Searchfields.edition) {
 					bookBuilder.setEdition(data.get(s));
-					// book.setEdition(data.get(s));
 				} else if (s == Searchfields.publisher) {
 					bookBuilder.setPublisher(data.get(s));
-					// book.setPublisher(data.get(s));
 				} else if (s == Searchfields.stock) {
 					throw new DatabaseException(ErrorMessageHelper.mayNotBeUpdated("stock"));
 				} else if (s == Searchfields.title) {
-					// book.setTitle(data.get(s));
 					bookBuilder.setTitle(data.get(s));
 				}
 			}
@@ -668,17 +656,14 @@ public class BookServiceImpl implements BookService {
 		isbn = onlyLeaveLettersAndNumbers(isbn);
 
 		try {
-			// Book book = getBookByIsbn(isbn, SearchMode.ALL);
 			Book book = bookDao.getBookByIsbn(isbn);
 			BookBuilder bookBuilder = BuilderHelper.saveOldValues(book, getBookBuilder());
 			bookBuilder.setStock(-1);
-			// bookDao.setStockToNegative(isbn);
 			bookDao.updateBook(bookBuilder.createBook());
 
-			// } catch (EntityDoesNotExistException e) {
-			// e.printStackTrace();
-			// throw new
-			// DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
+		} catch (EntityDoesNotExistException e) {
+			 e.printStackTrace();
+			 throw new DatabaseException(ErrorMessageHelper.entityDoesNotExist("Book"));
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));

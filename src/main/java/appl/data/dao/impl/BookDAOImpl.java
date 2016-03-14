@@ -195,11 +195,13 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public void decrementStock(String isbn, int decrement) throws DatabaseException {
 		Book book = getSession().get(Book.class, isbn);
-		if (book.getStock() > 0) {
+		if (book.getStock() >= decrement) {
 			book.decrementStock(decrement);
 			getSession().update(book);
-		} else {
+		}else if (book.getStock() == 0){
 			throw new DatabaseException(ErrorMessageHelper.stockIsNull(book.getTitle()));
+		} else {
+			throw new DatabaseException(ErrorMessageHelper.notEnoughBooksAvailable(book.getTitle()));
 		}
 
 	}
