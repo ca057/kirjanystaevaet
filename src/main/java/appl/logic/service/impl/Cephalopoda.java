@@ -15,6 +15,8 @@ import appl.logic.service.UserService;
 import exceptions.data.DatabaseException;
 
 /**
+ * Implementation of a {@link DataKraken}. Collects all the data from the
+ * different services and processes them for displaying them in the views.
  * 
  * @author Christian
  *
@@ -22,26 +24,14 @@ import exceptions.data.DatabaseException;
 @Component
 public class Cephalopoda implements DataKraken {
 
+	@Autowired
 	private BookService bookService;
 
+	@Autowired
 	private UserService userService;
 
+	@Autowired
 	private OrderService orderService;
-
-	@Autowired
-	public void setBookService(BookService bookService) {
-		this.bookService = bookService;
-	}
-
-	@Autowired
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	@Autowired
-	public void setOrderService(OrderService orderService) {
-		this.orderService = orderService;
-	}
 
 	@Override
 	public Map<String, ?> attack() throws DatabaseException {
@@ -81,17 +71,19 @@ public class Cephalopoda implements DataKraken {
 	}
 
 	/**
-	 * Compute top sellers and shelf warmers. Get users which order more than
-	 * others. Find users which did not ordered anything.
+	 * Wraps the computation of more complex data. In the current implementation
+	 * it collects datasets and adds them to passed map. Could be used to
+	 * interrelate the different datasets.
 	 * 
 	 * @param m
+	 *            the map the processed data should be added to
 	 */
-	private void consumeComplexData(Map<String, Object> map)throws DatabaseException {
-		computeTopSellersAndShelfWarmers(map);
-		computeMostAndLeastVisitedBooks(map);
+	private void consumeComplexData(Map<String, Object> map) throws DatabaseException {
+		getTopSellersAndShelfWarmers(map);
+		getMostAndLeastVisitedBooks(map);
 	}
 
-	private void computeTopSellersAndShelfWarmers(Map<String, Object> map) {
+	private void getTopSellersAndShelfWarmers(Map<String, Object> map) {
 		try {
 			map.put("topSellers", orderService.getBestsellers(5));
 			map.put("shelfWarmers", orderService.getShelfWarmers(5));
@@ -99,7 +91,7 @@ public class Cephalopoda implements DataKraken {
 		}
 	}
 
-	private void computeMostAndLeastVisitedBooks(Map<String, Object> map)throws DatabaseException {
+	private void getMostAndLeastVisitedBooks(Map<String, Object> map) throws DatabaseException {
 		map.put("mostVisitedBooks", bookService.getMostVisitedBooks(5));
 		map.put("leastVisitedBooks", bookService.getLeastVisitedBooks(5));
 	}
