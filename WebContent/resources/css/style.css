@@ -266,6 +266,10 @@ form * {
 	align-items: center;
 }
 
+.noDeco{
+	text-decoration: none;
+}
+
  .thumbnail{        
    	 	overflow: auto;
    	 	height:50vh;
