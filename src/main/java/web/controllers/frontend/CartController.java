@@ -46,7 +46,7 @@ public class CartController {
 		try {
 			System.out.println("User in Cart: " + getUser());
 		} catch (ControllerOvertaxedException e1) {
-			System.out.println("Fehler 1");
+			return "redirect:/warenkorb";
 		}
 		if (isbn != null && !isbn.isEmpty()) {
 			try {
@@ -61,7 +61,6 @@ public class CartController {
 	@RequestMapping(value = "/warenkorb", method = RequestMethod.DELETE)
 	public String deleteFromCart(@RequestParam(value = "isbn") String isbn) {
 		if (isbn != null && !isbn.isEmpty()) {
-
 			cart.deleteBook(isbn);
 
 		}
@@ -92,7 +91,6 @@ public class CartController {
 		} catch (DatabaseException e) {
 			return "error";
 		}
-
 		return "cart";
 	}
 

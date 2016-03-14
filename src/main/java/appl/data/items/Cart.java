@@ -1,5 +1,6 @@
 package appl.data.items;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -36,14 +37,15 @@ public class Cart {
 		return books;
 	}
 
-	public double getPrice() throws DatabaseException {
+	public String getPrice() throws DatabaseException {
+		DecimalFormat df = new DecimalFormat("#.00");
 		Set<String> keys = books.keySet();
 		double sum = 0;
 		for (String s : keys) {
 			double singlePrice = bookService.getBookByIsbn(s, SearchMode.ALL).getPrice();
 			sum += singlePrice;
 		}
-		return sum;
+		return df.format(sum);
 	}
 
 	// Item aus Warenkorb entfernen
