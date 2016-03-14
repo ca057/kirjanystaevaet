@@ -42,19 +42,17 @@ public class UserDAOImpl implements UserDAO {
 		return cr;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getUsers() throws DatabaseException {
 		try {
-			try {
-				return setupAndGetCriteria().list();
-			} catch (ClassCastException e) {
-				throw new DatabaseException();
-			}
+			return setupAndGetCriteria().list();
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getUserByMetadata(Map<Userfields, String> map) throws DatabaseException {
 		Criteria cr = setupAndGetCriteria();
@@ -117,6 +115,7 @@ public class UserDAOImpl implements UserDAO {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserBookStatistic> getUserBookStatistics(int userId) throws DatabaseException {
 		return getSession().createCriteria(UserBookStatistic.class).list();
