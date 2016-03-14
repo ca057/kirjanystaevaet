@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import appl.data.items.Book;
-import appl.data.items.Cart;
 import appl.data.items.User;
 import appl.enums.SearchMode;
 import appl.logic.service.BookService;
+import appl.logic.service.Cart;
 import appl.logic.service.OrderService;
 import exceptions.data.DatabaseException;
 import exceptions.web.ControllerOvertaxedException;
