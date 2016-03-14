@@ -1,4 +1,4 @@
-package appl;
+package appl.logic.service.test;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

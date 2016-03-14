@@ -1,4 +1,4 @@
-package appl;
+package appl.logic.service.test;
 
 import java.util.Calendar;
 import java.util.HashMap;
