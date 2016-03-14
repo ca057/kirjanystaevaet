@@ -173,6 +173,16 @@ form * {
 	color: rgb(51, 51, 51);
 }
 
+.btn-primary {
+	background-color: #A9977D;
+	border-color: #5A5040;
+}
+
+.btn-primary:HOVER {
+	background-color: #9A8971;
+	border-color: #716653;
+}
+
 /* Sidebar */
 /* modified sidebar from http://bootsnipp.com/snippets/featured/responsive-navigation-menu */
 
@@ -253,10 +263,6 @@ form * {
 	display: block;
 }
 
-.thumbnail img {
-	width: 40%;
-}
-
 #popupLoginBody{
 	display: flex;
 	flex-direction: column;
@@ -275,6 +281,10 @@ form * {
 	text-decoration: none;
 }
 
+.thumbnail img {
+	width: 40%;
+}
+
  .thumbnail{     
  		display: flex;
  		flex-direction: column;
@@ -282,6 +292,7 @@ form * {
  		align-items: center; 
    	 	overflow: auto;
    	 	height: 45vh;
+   	 	background: rgba(202, 179, 147, .3);
 }
 
 @media screen and (max-width: 768px) {
