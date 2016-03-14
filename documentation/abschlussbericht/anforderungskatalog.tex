@@ -117,7 +117,26 @@
 		Im Gegensatz zum Frontend werden im Backend die meisten Fehler an die Oberfläche durchgereicht und zur Anzeige gebracht. Dies erfolgt in vielen Fällen durch die Ergänzung des Models um die Fehlermeldung oder das Hinzufügen der Fehlermeldung als URL-Parameter. Beim Rendern der Views werden diese Parameter oder Attribute angefragt und zur Anzeige gebracht.
 	
 	\subsection{A5: Warenkorb}\label{sec:umsetzung:cart}
-	%LT Implementierung beschreiben
+	Die Speicherung der für Nutzer_innen interessanten Bücher nach deren Auswahl in einem Warenkorb ist der obligatorische Schritt vor einer endgültigen Bestellung. Somit mussten bei der Implementierung des Warenkorbes aus Nutzer_innenperspektive entstehende Szenarien beachtet werden. Typische User-Stories sind folgende:
+
+1. <Als Kund_in möchte ich ein Buch in den Warenkorb legen, damit ich es bestellen kann.>
+2. <Als Kund_in möchte ich einen Überblick über die Bücher haben, die ich bestellen möchte.>
+und folglich 3.<Als Kund_in möchte ich eine Übersicht über den Gesamtpreis meiner Bestellung erhalten.>
+4. <Als Kund_in möchte ich im Warenkorb liegende Bücher wieder entfernen>
+5. <Als Kund_in möchte ich eine Bestellung aufgeben>
+
+Um diese Anforderungen zu erfüllen, wurde der Warenkorb technisch aus drei interagierenden Komponenten implementiert:
+1. Ein Warenkorbobjekt als Bean (Cart.java), das eine Datenstruktur zur Zwischenspeicherung der Bücher enthält, sowie Funktionen zum Hinzufügen und Löschen von Büchern und zur Berechnung des Gesamteinkaufspreises.
+2. Ein View (cart.jsp), das die in den Warenkorb gelegten Bücher adäquat darstellt, den Nutzer_innen die Möglichkeit bietet, einzelne Bücher wieder aus dem Warenkorb zu entfernen, sich einen Überblick über die Gesamtkosten des Einkaufs zu machen und die Bestellung aufzugeben.
+3. Ein Controller (CartController.java), der die clientseitigen Anfragen (Hinzufügen, Löschen, Bestellen) bearbeitet und dem View die den Warenkorb beinhaltenden Bücher mit allen nötigen Informationen und den Gesamteinkaufspreis übergibt.
+
+Die Datenstruktur in der Bean zur Zwischenspeicherung der Bücher ist eine Hashmap (Map<String, Integer> books). Die Entscheidung fiel hierfür, weil dem im Controller aufgerufenen OrderService zur Bestellung eine Hashmap übergeben werden muss und diese somit direkt übertragen werden kann, ohne dass der Inhalt des Warenkorbs von der einen Datenstruktur in eine andere übertragen werden muss. Aus demselben Grund ergibt sich die Key-Value-Paarung mit entsprechenden ISB-Nummern (String) als Keys und der Anzahl des jeweiligen Buches (Integer) als Values.  
+Per Klick auf einen In-den-Warenkorb-Button (bei jeder graphischen Darstellung der Bücher im Client, außer beim Warenkorb selbst) wird im Controller die Funktion addToCart() aufgerufen, der die ISBN des gewünschten Buches übergeben wird. Anschließend wird die Methode addBook() in der Bean aufgerufen und ihr das zu der ISBN gehörende Book-Objekt übergeben.  addBook() fügt nun wiederum der Hashmap books als Key die ISBN hinzu und  erhöht den Value um 1. Das Buch ist nun entsprechend der ersten oben stehenden User-Story im Warenkorb abgelegt.
+Beim Aufruf des Warenkorbs (durch Klick auf den entsprechenden Link in der Navigationsleiste oder auf den Warenkorb-Button) wird zudem im Controller die Funktion getCart() aufgerufen, die dem View mittels Model die im Warenkorb liegenden Bücher und die zu zahlende Summe der Buchpreise (berechnet durch getPrice() in der Bean) übergibt. Zur Darstellung der Bücher wird eine neue Hashmap (Map<Book, Integer> tempBooks) erstellt, auf die im View mittels JSTL zugegriffen wird und die anzuzeigenden Informationen aus den keys durch die Getter-Funktionen im Book-Objekt geholt werden. Dies ermöglicht die zweite und dritte User-Story.
+Das Entfernen eines Buches aus dem Warenkorb geschieht letztlich in der Bean selbst (deleteBook()), weil hier sehr einfach auf die der Map inhärenten remove()-Methode zugegriffen werden kann.
+Die Bestellung erfolgt im Controller durch die Funktion orderContent(). Hier wird auf mittels OrderService die Bestellung veranlasst und alle für diese Funktion nötigen Parameter generiert. Anschließend wird der Warenkorb geleert und ein neues View (orderConducted) zurückgegeben, damit die Nutzer_innen sehen, dass die Bestellung ausgeführt wurde.
+
+
 	\dots
 	
 	\subsection{A6: Bestellverwaltung}\label{sec:umsetzung:Bestellverwaltung}
