@@ -13,11 +13,6 @@ body {
 	margin: 0 auto 0 auto;
 }
 
-ht {
-	color: white;
-	font-size: 3.5em;
-}
-
 .error {
 	color: red;
 }
@@ -282,7 +277,7 @@ form * {
 }
 
 .thumbnail img {
-	width: 40%;
+	max-height: 15vh;
 }
 
  .thumbnail{     
