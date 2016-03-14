@@ -1,4 +1,3 @@
-
 package appl.logic.service;
 
 import java.util.Calendar;

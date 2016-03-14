@@ -1,7 +1,5 @@
 package appl.logic.service;
-/**
- * @author Madeleine, Johannes
- */
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +13,9 @@ import appl.enums.Searchfields;
 import exceptions.data.AuthorMayExistException;
 import exceptions.data.DatabaseException;
 
+/**
+ * @author Madeleine, Johannes
+ */
 public interface BookService {
 	// Category Methoden
 
@@ -22,6 +23,7 @@ public interface BookService {
 
 	/**
 	 * Gets Category object by its exact name, case-insensitive
+	 * 
 	 * @param name
 	 * @return
 	 * @throws DatabaseException
@@ -47,9 +49,10 @@ public interface BookService {
 	 * @throws DatabaseException
 	 */
 	public List<Category> getAllCategories() throws DatabaseException;
-	
+
 	/**
 	 * Gets the exact name of a category in a case-insensitive Search
+	 * 
 	 * @param name
 	 * @return
 	 * @throws DatabaseException
@@ -58,12 +61,13 @@ public interface BookService {
 
 	/**
 	 * Search is case insensitive here
+	 * 
 	 * @param category
 	 * @return
 	 * @throws DatabaseException
 	 */
 	public boolean isExistingCategory(String category) throws DatabaseException;
-	
+
 	// Insert
 	/**
 	 * 
@@ -78,6 +82,7 @@ public interface BookService {
 	// Update
 	/**
 	 * Used to update a categoryName
+	 * 
 	 * @param categoryId
 	 * @param newCategoryName
 	 * @throws DatabaseException
@@ -87,7 +92,9 @@ public interface BookService {
 	// Delete
 
 	/**
-	 * Deletes category physically, only possible if no Book of this category is stored in the Database
+	 * Deletes category physically, only possible if no Book of this category is
+	 * stored in the Database
+	 * 
 	 * @param id
 	 * @throws DatabaseException
 	 */
@@ -105,6 +112,7 @@ public interface BookService {
 
 	/**
 	 * case-sensitive
+	 * 
 	 * @param NameF
 	 * @param NameL
 	 * @return
@@ -130,18 +138,26 @@ public interface BookService {
 	 * 
 	 * @param nameF
 	 * @param nameL
-	 * @param newAuthor set to true, if author should be isnerted in any case, also if author with that name already exists
+	 * @param newAuthor
+	 *            set to true, if author should be isnerted in any case, also if
+	 *            author with that name already exists
 	 * @return newly generated Id oh author
-	 * @throws AuthorMayExistException only thrown when newAuthor == false and an author with exact that name already exists
-	 * @throws DatabaseException 
+	 * @throws AuthorMayExistException
+	 *             only thrown when newAuthor == false and an author with exact
+	 *             that name already exists
+	 * @throws DatabaseException
 	 */
-	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws AuthorMayExistException, DatabaseException;
+	public int insertAuthor(String nameF, String nameL, boolean newAuthor)
+			throws AuthorMayExistException, DatabaseException;
 
 	// Update
-	
+
 	/**
 	 * @param id
-	 * @param newData {@link Map} with {@link Searchfields} as key to determine which field to update and {@link String} as value with the new data
+	 * @param newData
+	 *            {@link Map} with {@link Searchfields} as key to determine
+	 *            which field to update and {@link String} as value with the new
+	 *            data
 	 * @throws DatabaseException
 	 */
 	public void updateAuthor(int id, Map<Searchfields, String> newData) throws DatabaseException;
@@ -162,8 +178,10 @@ public interface BookService {
 	 * @throws DatabaseException
 	 */
 	public List<Book> getAllBooks(SearchMode mode) throws DatabaseException;
+
 	/**
 	 * Used for API
+	 * 
 	 * @param mode
 	 * @param range
 	 * @return
@@ -173,6 +191,7 @@ public interface BookService {
 
 	/**
 	 * Used for API
+	 * 
 	 * @param category
 	 * @param mode
 	 * @param range
@@ -180,6 +199,7 @@ public interface BookService {
 	 * @throws DatabaseException
 	 */
 	public List<Book> getBooksByCategory(String category, SearchMode mode, int range) throws DatabaseException;
+
 	/**
 	 * @param category
 	 * @param mode
@@ -198,6 +218,7 @@ public interface BookService {
 
 	/**
 	 * Not implemented, project can be extended by that
+	 * 
 	 * @param searchTerm
 	 * @return
 	 */
@@ -205,12 +226,17 @@ public interface BookService {
 
 	/**
 	 * Returns {@link List} of {@link Book} fulfilling the searchterms
-	 * @param map {@link Map} with {@link Searchfields} as key to define which field to be searched and {@link String} as value with the searchterms
+	 * 
+	 * @param map
+	 *            {@link Map} with {@link Searchfields} as key to define which
+	 *            field to be searched and {@link String} as value with the
+	 *            searchterms
 	 * @param mode
 	 * @return
 	 * @throws DatabaseException
 	 */
 	public List<Book> getBooksByMetdata(Map<Searchfields, String> map, SearchMode mode) throws DatabaseException;
+
 	// Insert
 	/**
 	 * 
@@ -232,28 +258,35 @@ public interface BookService {
 	/**
 	 * 
 	 * @param isbn
-	 * @param data {@link Map} with {@link Searchfields} as key to determine the fields to be updated and {@link String} as value with the new data
+	 * @param data
+	 *            {@link Map} with {@link Searchfields} as key to determine the
+	 *            fields to be updated and {@link String} as value with the new
+	 *            data
 	 * @param authorIds
 	 * @param categoryIds
-	 * @throws DatabaseException thrown e.g. if one tries to update isbn
+	 * @throws DatabaseException
+	 *             thrown e.g. if one tries to update isbn
 	 */
-	public void updateBook(String isbn, Map<Searchfields, String> data, Set<Integer> authorIds, Set<Integer> categoryIds) throws DatabaseException;
-	
+	public void updateBook(String isbn, Map<Searchfields, String> data, Set<Integer> authorIds,
+			Set<Integer> categoryIds) throws DatabaseException;
+
 	/**
 	 * used to delete a {@link Category} from a {@link Book}
+	 * 
 	 * @param isbn
 	 * @param categoryId
 	 * @throws DatabaseException
 	 */
 	public void deleteCategoryOfBook(String isbn, int categoryId) throws DatabaseException;
+
 	/**
 	 * used to add a {@link Category} to a {@link Book}
+	 * 
 	 * @param isbn
 	 * @param categoryId
 	 * @throws DatabaseException
 	 */
 	public void addCategoryToBook(String isbn, int categoryId) throws DatabaseException;
-
 
 	// Update Stock
 	/**
@@ -268,6 +301,7 @@ public interface BookService {
 	// Delete
 	/**
 	 * Book is not deleted physically from database, but stock is set to -1
+	 * 
 	 * @param isbn
 	 * @throws DatabaseException
 	 */
@@ -307,7 +341,7 @@ public interface BookService {
 	 *            the amount of books the returned map should contain
 	 * @return the map with the amount of books passed as range sorted
 	 *         descending by their visit count
-	 * @throws DatabaseException 
+	 * @throws DatabaseException
 	 */
 	public SortedMap<Book, Integer> getMostVisitedBooks(int range) throws DatabaseException;
 
@@ -320,7 +354,7 @@ public interface BookService {
 	 *            the amount of books the returned map should contain
 	 * @return the map with the amount of books passed as range sorted ascending
 	 *         by their visit count
-	 * @throws DatabaseException 
+	 * @throws DatabaseException
 	 */
 	public SortedMap<Book, Integer> getLeastVisitedBooks(int range) throws DatabaseException;
 
