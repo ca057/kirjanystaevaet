@@ -270,9 +270,12 @@ form * {
 	text-decoration: none;
 }
 
- .thumbnail{        
+ .thumbnail{     
+ 		display: flex;
+ 		flex-direction: column;
+ 		justify-content: space-between;   
    	 	overflow: auto;
-   	 	height:50vh;
+   	 	height: 40vh;
 }
 
 @media screen and (max-width: 1000px) {
