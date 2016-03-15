@@ -10,7 +10,7 @@
 	
        \begin{figure}[h]
 		 \centering
-		\includegraphics[width=\linewidth]{files/db-schema}
+		\includegraphics[height=0.55\textheight,keepaspectratio]{files/db-schema}
 		\caption{Das Datenbankschema von \textit{kirjanystävät}}
 		\label{fig:db-schema}
 		\end{figure}
@@ -126,7 +126,7 @@
 	
 	Um diese Anforderungen zu erfüllen, wurde der Warenkorb technisch aus vier interagierenden Komponenten implementiert:
 	\begin{enumerate}
-		\item Ein Warenkorb-Interface als Bean (\lstinline|Cart.java|), auf das per \lstinline|@Autowired|-Annotation im Controller (s.u.) zugegriffen wird und dessen Funktionen in einer eigenen Klasse (s. nächster Punkt) implementiert sind. 
+		\item Ein Warenkorb-Interface als Bean (\lstinline|Cart.java|), auf das per \lstinline|@Autowired|-An\-no\-tation im Controller (s.u.) zugegriffen wird und dessen Funktionen in einer eigenen Klasse (s. nächster Punkt) implementiert sind. 
 		\item Eine Klasse (\lstinline|CartImpl.java|), die die Funktionen des Intefaces implementiert. Hierzu gehören eine Datenstruktur zur Zwi\-schen\-spei\-che\-rung der Bücher enthält, sowie Funktionen zum Hinzufügen und Lö\-schen von Büchern und zur Berechnung des Gesamteinkaufspreises.
 		\item Ein View (\lstinline|cart.jsp|), das die in den Warenkorb gelegten Bücher adäquat darstellt, den Nutzer\_innen die Möglichkeit bietet, einzelne Bücher wieder aus dem Warenkorb zu entfernen, sich einen Überblick über die Gesamtkosten des Einkaufs zu machen und die Bestellung aufzugeben.
 		\item Ein Controller (\lstinline|CartController.java|), der die clientseitigen Anfragen (Hinzufügen, Löschen, Bestellen) bearbeitet und dem View die den Warenkorb beinhaltenden Bücher mit allen nötigen Informationen und den Gesamteinkaufspreis übergibt.
@@ -155,13 +155,13 @@
 	
 	Wird die Anfrage ohne Parameter übermittelt, wird eine komplette Liste aller Datensätze der Entität zurückgegeben, hier eine Liste aller Bücher. Zur Einschränkung der Abfrage können in der bekannten Form (\lstinline|URL?name=value|) die folgenden Parameter mitgegeben werden:
 	\begin{itemize}
-		\item[\texttt{category}] der Name einer Kategorie
-		\item[\texttt{isbn}] die ISBN-Nummer eines Buches
+		\item[] \lstinline|category| der Name einer Kategorie
+		\item[] \lstinline|isbn| die ISBN-Nummer eines Buches
 	\end{itemize}
 	
 	Die bereits beschriebenen Parameter können um den folgenden ergänzt werden:
 	\begin{itemize}
-		\item[\texttt{limit}] begrenzt die Anzahl der zurück gelieferten Ergebnisse, wird server-seitig in einen Integer-Wert umgewandelt
+		\item[] \lstinline|limit| begrenzt die Anzahl der zurück gelieferten Ergebnisse, wird server-seitig in einen Integer-Wert umgewandelt
 	\end{itemize}
 	
 	Bei Abfrage eines einzelnen Buchs über die \lstinline|isbn| wird die Limitierung ignoriert, da in jedem Fall maximal ein Buch zurückgeliefert wird.

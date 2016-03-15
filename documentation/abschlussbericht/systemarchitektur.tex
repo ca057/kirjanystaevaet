@@ -7,7 +7,7 @@ Bei der Aufteilung der Klassen stand die Idee der \textit{seperation of concerns
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\linewidth]{files/packages}
+	\includegraphics[height=\textwidth,keepaspectratio]{files/packages}
 	\caption{Die Packagestruktur von \textit{kirjanystävät}}
 	\label{fig:packages}
 \end{figure}
@@ -19,9 +19,9 @@ Im Anwendungspackage herrscht eine vorwiegende Zweiteilung zwischen datenbankbez
 
 Das Package \lstinline|web.controllers| stellt die Schnittstelle zwischen den Nutzer\_innen und der Anwendungslogik dar. Auf oberster Ebene liegen neben allen Interfaces Beans für die Fehlerbehandlung sowie für das Setzen von globalen Attributen. Das Package ist wiede\-rum unterteilt in die Bereiche
 \begin{itemize}
-	\item[Frontend] Darstellung aller Views, für die keine Authentifizierung notwendig ist, sowie aller Views für eingeloggte Nutzer\_innen mit der Rolle \lstinline|USER|
-	\item[Backend] Darstellung aller Views für die Verwaltung des Shops, Authentifizierung als \lstinline|ADMIN| erforderlich
-	\item[API] Verwaltung der als API deklarierten URLs, Zugriff ohne Authentifizierung möglich
+	\item Frontend: Darstellung aller Views, für die keine Authentifizierung notwendig ist, sowie aller Views für eingeloggte Nutzer\_innen mit der Rolle \lstinline|USER|
+	\item Backend: Darstellung aller Views für die Verwaltung des Shops, Authentifizierung als \lstinline|ADMIN| erforderlich
+	\item API: Verwaltung der als API deklarierten URLs, Zugriff ohne Authentifizierung möglich
 \end{itemize}
 Die Controller sind nach ihrem primären Einsatz einem Bereich zugeordnet, der Zugriff und die Authentifizierung wird in der Security-Konfigurationsklasse geregelt. Darüber hi\-naus werden in einem weiteren Sub-Package Hilfsklassen beziehungsweise -Beans gehalten.
 
