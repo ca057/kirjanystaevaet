@@ -79,8 +79,7 @@
 		Eine Hauptfunktionalität für Kund\_innen ist die Auswahl und Bestellung von Büchern, was durch die Implementierung eines Warenkorbs gemanagt wird. Dieser wird detailliert in Abschnitt \ref{sec:umsetzung:cart} beschrieben. 
 		
 		\subsubsection{Fehlerbehandlung}
-		%TODO mehr mehr mehr!
-		Beim Datenbank auftretende Fehler sollen Nutzer\_innen möglichst nicht auffallen, so dass der Shopbesuch auch bei einem Fehlverhalten des Systems möglichst nicht unterbrochen und gestört wird. Es wird daher in den meisten Fällen zur Fehlerbehandlung ein server-seitiger Redirect eingesetzt, um Nutzer*innen wieder an eine logische und nachvollziehbare Position zu bringen. Diese Strategie wird nicht beim Fehlschlagen von Aktionen eingesetzt, war zum Beispiel die Registrierung oder der Login nicht erfolgreich, wird ein entsprechende Fehlermeldung ausgegeben.
+		Beim Datenbank auftretende Fehler sollen Nutzer\_innen möglichst nicht auffallen, so dass der Shopbesuch auch bei einem Fehlverhalten des Systems möglichst nicht unterbrochen und gestört wird. Es wird daher in den meisten Fällen zur Fehlerbehandlung ein server-seitiger Redirect eingesetzt, um Nutzer\_innen wieder an eine logische und nachvollziehbare Position zu bringen. Diese Strategie wird nicht beim Fehlschlagen von Aktionen eingesetzt, war zum Beispiel die Registrierung oder der Login nicht erfolgreich, wird ein entsprechende Fehlermeldung ausgegeben.
 		
 		Tritt ein größerer Fehler auf, der durch keinen Controller gefangen wurde, wird eine Standard-Fehlerseite angezeigt. Diese informiert nur über das Fehlschlagen der letzten Aktion, ohne Details über Interna preiszugeben.
 
@@ -126,8 +125,8 @@
 	
 	Um diese Anforderungen zu erfüllen, wurde der Warenkorb technisch aus vier interagierenden Komponenten implementiert:
 	\begin{enumerate}
-		\item Ein Warenkorb-Interface als Bean (\lstinline|Cart.java|), auf das per @Autowired-Annotation im Controller (s.u.) zugegriffen wird und dessen Funktionen in einer eigenen Datei (s. nächster Punkt) implementiert sind. 
-		\item Eine Datei (CartImpl.java), die die Funktionen des Intefaces implementiert. Hierzu gehören eine Datenstruktur zur Zwi\-schen\-spei\-che\-rung der Bücher enthält, sowie Funktionen zum Hinzufügen und Lö\-schen von Büchern und zur Berechnung des Gesamteinkaufspreises.
+		\item Ein Warenkorb-Interface als Bean (\lstinline|Cart.java|), auf das per \lstinline|@Autowired|-Annotation im Controller (s.u.) zugegriffen wird und dessen Funktionen in einer eigenen Klasse (s. nächster Punkt) implementiert sind. 
+		\item Eine Klasse (\lstinline|CartImpl.java|), die die Funktionen des Intefaces implementiert. Hierzu gehören eine Datenstruktur zur Zwi\-schen\-spei\-che\-rung der Bücher enthält, sowie Funktionen zum Hinzufügen und Lö\-schen von Büchern und zur Berechnung des Gesamteinkaufspreises.
 		\item Ein View (\lstinline|cart.jsp|), das die in den Warenkorb gelegten Bücher adäquat darstellt, den Nutzer\_innen die Möglichkeit bietet, einzelne Bücher wieder aus dem Warenkorb zu entfernen, sich einen Überblick über die Gesamtkosten des Einkaufs zu machen und die Bestellung aufzugeben.
 		\item Ein Controller (\lstinline|CartController.java|), der die clientseitigen Anfragen (Hinzufügen, Löschen, Bestellen) bearbeitet und dem View die den Warenkorb beinhaltenden Bücher mit allen nötigen Informationen und den Gesamteinkaufspreis übergibt.
 	\end{enumerate}
@@ -142,7 +141,7 @@
 	
 	Die Bestellung erfolgt im Controller durch die Funktion \lstinline|orderContent()|. Hier wird mittels \textit{OrderService} die Bestellung veranlasst und alle für diese Funktion nötigen Parameter generiert. Anschließend wird der Warenkorb geleert und ein neues View (orderConducted) zurückgegeben, damit die Nutzer\_innen sehen, dass die Bestellung ausgeführt wurde.
 	
-	Ein weitereres Detail des Warenkorbes ist sein sessionabhängiger Geltungsbereich. Er ist innerhalb einer Session unverändert aufruf- und benutzbar, was durch die @Scope-Annotation (CartImpl.java) bewirkt wird. Zudem ist der Warenkorb nur nutzbar, wenn man als User_in eingeloggt ist, was durch in verschiedenen Views (meist beim Klick auf den Warenkorb-Button) durch Security-Tags abgefragt wird.
+	Ein weitereres Detail des Warenkorbes ist sein sessionabhängiger Geltungsbereich. Er ist innerhalb einer Session unverändert aufruf- und benutzbar, was durch die \lstinline|@Scope|-Annotation (\lstinline|CartImpl.java|) bewirkt wird. Zudem ist der Warenkorb nur nutzbar, wenn man als User\_in eingeloggt ist, was durch Security-Tags in verschiedenen Views (meist beim Klick auf den Warenkorb-Button) abgefragt wird.
 	
 	\subsection{A6: Bestellverwaltung}\label{sec:umsetzung:Bestellverwaltung}
 	Die Bestellverwaltung findet im \texttt{OrderService} statt. Eine Bestellung ist mit einem \texttt{User} und den \texttt{OrderItems}, die die bestellten Bücher repräsentieren, verknüpft. Ein wichtiger Aspekt der Bestellverwaltung ist die Archivierung der Bestellungen für den User. Aus diesem Grund wurden die \texttt{OrderItems} eingeführt, anstatt einfach eine \texttt{Order} mit den entsprechenden \texttt{Books} selbst zu verknüpfen, denn so können Informationen der bestellten Bücher, wie sie zum Zeitpunkt der Bestellung aktuell waren, gespeichert werden. In dieser Anwendung ist das nur der Preis. Somit kann der Benutzer jederzeit einsehen, zu welchem Preis ein Buch gekauft wurde, auch wenn dieser sich zwischenzeitlich geändert hat. Außerdem wird im \texttt{OrderItem} die Anzahl der bestellten Artikel gespeichert.
@@ -173,7 +172,7 @@
 	
 	Die \texttt{UserBookStatistics} dienen zur Abfrage von Statistiken, die sich die Interaktion eines bestimmten Accounts mit einem bestimmten Buch beziehen. Die momentan implementierten Daten sind rudimentär, können aber als gutes Beispiel dienen, welche Informationen gespeichert werden könnten. Über den \texttt{UserService} stehen Methoden bereit, über die sich die Häufigkeit, wie oft ein\_e Nutzer\_in ein Buch angesehen hat, sowie das Datum des letzten Besuchs abrufen sowie ändern lassen.
 	
-	Wie bereits in Abschnitt \ref{sec:umsetzung:backend} beschrieben, werden die einzelnen Statistiken von der Bean \lstinline|DataKraken| zusammengesammelt und als Map an den Controller weitergereicht. Hier bietet sich die Möglichkeit, einzelne Werte in Verbindung zu setzen um einen tieferen Einblick in die Nutzung des Shops zu erhalten.
+	Wie bereits in Abschnitt \ref{sec:umsetzung:backend} beschrieben, werden die einzelnen Statistiken von der Bean \lstinline|DataKraken| zusammengesammelt und als Map an den Controller weitergereicht. Hier bietet sich die Möglichkeit, einzelne Werte in Verbindung zu setzen um einen tieferen Einblick in die Nutzung des Shops zu erhalten. In der derzeitigen Umsetzung wird diese Möglichkeit noch nicht genutzt.
 	
 	\subsection{Absicherung des Shops gegen unberechtigten Zugriff}\label{sec:umsetzung:absicherung}
 	Zentrales Element der Absicherung des Shops ist die Klasse \lstinline|SecurityConfig|. In dieser werden die Zugriffsberechtigungen für einzelne URLs und der Service für die Authentifizierung definiert.
