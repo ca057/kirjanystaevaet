@@ -154,14 +154,16 @@
 	
 	Wird die Anfrage ohne Parameter übermittelt, wird eine komplette Liste aller Datensätze der Entität zurückgegeben, hier eine Liste aller Bücher. Zur Einschränkung der Abfrage können in der bekannten Form (\lstinline|URL?name=value|) die folgenden Parameter mitgegeben werden:
 	\begin{itemize}
-		\item[category] der Name einer Kategorie
-		\item[isbn] die ISBN-Nummer eines Buches
+		\item[\texttt{category}] der Name einer Kategorie
+		\item[\texttt{isbn}] die ISBN-Nummer eines Buches
 	\end{itemize}
 	
 	Die bereits beschriebenen Parameter können um den folgenden ergänzt werden:
 	\begin{itemize}
-		\item[limit] begrenzt die Anzahl der zurück gelieferten Ergebnisse, wird server-seitig in einen Integer-Wert umgewandelt
+		\item[\texttt{limit}] begrenzt die Anzahl der zurück gelieferten Ergebnisse, wird server-seitig in einen Integer-Wert umgewandelt
 	\end{itemize}
+	
+	Bei Abfrage eines einzelnen Buchs über die \lstinline|isbn| wird die Limitierung ignoriert, da in jedem Fall maximal ein Buch zurückgeliefert wird.
 	
 	In der aktuellen Implementierung kann die API nur für grundlegende Abfragen zu Büchern verwendet werden. Für die Bereitstellung von komplexeren Abfragen müsste das bisherige Schema um weitere Pfad- und Anfrage-Parameter ergänzt werden. Vor allem bei zunehmenden Datensätzen sollte dies in Erwägung gezogen werden, da eine Abfrage aller Bücher schnell große Datenmengen erzeugen kann, welche sowohl für den Server des Shops als auch für den Client zur Belastung werden können. Eine Reduzierung der Belastung kann zum Beispiel durch die Angabe eines \lstinline|offset|s zusätzlich zum \lstinline|limit| erreicht werden oder über die Ergänzung weiterer Parameter, zum Beispiel zur Abfrage aller Bücher einer bestimmten Autorin.
 	
