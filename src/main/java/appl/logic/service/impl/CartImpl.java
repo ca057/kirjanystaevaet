@@ -16,6 +16,10 @@ import appl.logic.service.BookService;
 import appl.logic.service.Cart;
 import exceptions.data.DatabaseException;
 
+/**
+ * @author Ludwig
+ *
+ */
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, value = "session")
 @Service
 public class CartImpl implements Cart {
@@ -53,22 +57,12 @@ public class CartImpl implements Cart {
 		return df.format(sum);
 	}
 
-	// Item aus Warenkorb entfernen
 	@Override
 	public void deleteBook(String isbn) {
 		if (isbn == null || isbn.isEmpty()) {
 			throw new IllegalArgumentException("book to remove is null");
 		}
 		books.remove(isbn);
-	}
-
-	// post order
-	@Override
-	public void postOrder(Book book) {
-		if (book == null) {
-			throw new IllegalArgumentException("all books are null");
-		}
-
 	}
 
 	@Override
@@ -80,5 +74,4 @@ public class CartImpl implements Cart {
 	public void deleteContent() {
 		books.clear();
 	}
-	// Soll prüfen, ob Bücher da sind und entsprechende Meldung rausgeben.
 }
