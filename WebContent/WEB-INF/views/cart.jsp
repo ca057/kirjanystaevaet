@@ -20,7 +20,8 @@
 					
 					 	<div class="col-md-3">
 						 	<div class="thumbnail">
-								<img class="book-cover" src="<c:url value="/img/cover/${book.key.getIsbn()}.jpg"/>" title="<c:out value="Cover des Buchs '${book.key.getTitle()}'"/>">
+						 	<div class="caption center-block">
+								<img class="book-cover img-responsive center-block" src="<c:url value="/img/cover/${book.key.getIsbn()}.jpg"/>" title="<c:out value="Cover des Buchs '${book.key.getTitle()}'"/>">
 								<h3><c:out value="${book.key.getTitle()}"/></h3>
 								<p><c:out value="${book.key.getPages()}"/> Seiten</p>
 								<p>Verlag: <c:out value="${book.key.getPublisher()}"/></p>
@@ -31,6 +32,7 @@
 										zum Buch
 									</a>
 								</p>
+							</div>	
 								<form id="deleteBook" method="post">
 									<button class="btn btn-primary btn-sm" id="deleteButton" name="isbn" value="${book.key.getIsbn()}" type="submit" formaction="<c:url value='/buch_geloescht'/>">
 										<span class="glyphicon glyphicon-remove-circle"></span>
