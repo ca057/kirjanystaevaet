@@ -26,6 +26,10 @@ public class CartImpl implements Cart {
 
 	@Autowired
 	private BookService bookService;
+	/**
+	 * The heart of the cart. This data structure stores the isbns of the books
+	 * deposited in the cart.
+	 */
 	private Map<String, Integer> books = new HashMap<String, Integer>();
 
 	@Override
@@ -63,15 +67,6 @@ public class CartImpl implements Cart {
 			throw new IllegalArgumentException("book to remove is null");
 		}
 		books.remove(isbn);
-	}
-
-	// post order
-	@Override
-	public void postOrder(Book book) {
-		if (book == null) {
-			throw new IllegalArgumentException("all books are null");
-		}
-
 	}
 
 	@Override
