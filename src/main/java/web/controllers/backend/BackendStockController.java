@@ -137,8 +137,12 @@ public class BackendStockController {
 		try {
 			bookService.insertAuthor(req.getNameF(), req.getNameL(), req.isNewAuthor());
 		} catch (AuthorMayExistException e) {
+			System.out.println("Author DB Exception");
+			e.printStackTrace();
 			return new ResponseEntity<AuthorJSONWrapper>(req, HttpStatus.CONFLICT);
 		} catch (DatabaseException e) {
+			System.out.println("General DB Exception");
+			e.printStackTrace();
 			return new ResponseEntity<AuthorJSONWrapper>(req, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		return new ResponseEntity<AuthorJSONWrapper>(req, HttpStatus.OK);

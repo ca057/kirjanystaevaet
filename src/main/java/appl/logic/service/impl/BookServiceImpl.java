@@ -272,13 +272,14 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws DatabaseException {
+	public int insertAuthor(String nameF, String nameL, boolean newAuthor) throws AuthorMayExistException, DatabaseException {
 		try {
 			// Wenn noch kein bestimmter Autor ausgewählt wurde
 			if (!newAuthor) {
 				List<Author> authors = authorDao.getAuthorByExactNames(nameF, nameL);
 				// Testen ob es schon Autoren mit dem Namen gibt
 				if (authors.size() > 0) {
+					
 					throw new AuthorMayExistException("This Author " + nameF + " " + nameL + " may already exist");
 				}
 			}
@@ -290,6 +291,8 @@ public class BookServiceImpl implements BookService {
 			int id = authorDao.insertAuthor(author);
 
 			return id;
+		}catch(AuthorMayExistException e){
+			throw new AuthorMayExistException(e.getMessage());
 		} catch (HibernateException e) {
 			throw new DatabaseException(ErrorMessageHelper.generalDatabaseError(e.getMessage()));
 		} catch (Exception e) {
